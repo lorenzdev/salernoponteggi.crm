@@ -1,0 +1,129 @@
+<html>
+   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <style>
+	  
+	  	.show{
+			
+		display:block;	
+		}
+		
+		.hide{
+			
+		display:none;	
+		}
+	  
+	  	.row{
+			float:left;
+			font-size:12px;
+			color:#000;
+			hyphens: auto;	
+		}
+		
+		.row div{
+			margin:0px 10px 0px 10px;
+		}
+		
+		.first_row{
+			width:170px;
+			text-align:left;
+		}
+		
+		.central_row1{
+			width:244px;
+			text-align:left;
+		}
+		
+		.central_row2{
+			width:50px;
+			text-align:center !important;
+		}
+		
+		.central_row3{
+			width:120px;
+			text-align:right !important;
+		}
+		
+		.central_row4{
+			width:55px;
+			text-align:center !important;	
+		}
+		
+		.last_row{
+			width:145px;
+			text-align:right !important;
+		}
+		
+		@page :first{
+			
+			margin-top: 0cm;
+			
+		}
+		
+		@page{
+			
+			size: auto; /* <length>{1,2} | auto | portrait | landscape */ 
+	      	/* 'em' 'ex' and % are not allowed; length values are width height */
+			margin-header: 0px; /* <any of the usual CSS values for margins> */
+			margin-footer: 0px; /* <any of the usual CSS values for margins> */
+			marks: none; /*crop | cross | none*/
+			margin-top: 0cm;
+			top: 0cm;
+		}
+
+		.label{
+			color:#03004d;
+			font-family: "helveticacd";
+			font-weight:bold;
+		}
+		
+		.name_column{
+			color:#FFF;
+			background-color:#03004d;
+			height:30px;
+			border-right:1px solid #FFF;
+			border-top:2px solid #FFF;
+			text-align:center;
+		}	
+		
+      </style>
+   </head>
+   <body style="font-size:14px;font-family: 'helveticacd';">
+		
+
+         
+      <!-- BODY -->
+        <div style="width:100%;padding-top:10px;clear:both;">
+            <div style="width:112px;border-right:1px solid #03004d;float:left;height:135px;">
+            	<center><img src="../../htmls/templates/preventivi/logo_cerrato.png" style='margin:15px;'/></center>
+          	</div>
+            <div style="width:680px;height:60px;float:left;">
+            	<div style="width:680px;height:60px;clear:both;border-bottom:1mm solid #03004d;">
+                	<div style="width:422px;height:60px;border-right:0.1mm solid #03004d;float:left;">
+                    	<div class="label" style='margin-left:8px;margin-top:15px;font-size:16px;'><b>PROPOSTA D'ORDINE</b></div>
+                        <div style="margin-left:7;margin-top:0px;width:500px;clear:both;">
+                        	<div style="float:left;height:20px;width:42px;">
+                            	<div style="margin-top:5px;color:#03004d;"><b>Agente</b></div>
+                           	</div>
+                            <div style="float:left;text-align:left;border-bottom:0.1mm solid #03004d;height:20px;width:155px;font-size:10px;">
+                            	<div style='padding:6px 0px 0px 6px;' id="agente"></div>
+                           	</div>
+                            <div style="float:left;height:20px;width:65px;margin-left:5px;">
+                            	<div style="margin-top:5px;color:#03004d;"><b>Resp. area</b></div>
+                           	</div>
+                            <div style="float:left;text-align:left;height:20px;width:145px;font-size:10px;border-bottom:0.1mm solid #03004d;">
+                            	<div style="padding:6px 0px 0px 6px;" id="resp_area"></div>
+                            </div>
+                      	</div>
+                    
+                    </div>
+                    
+    
+	</div>
+        
+        
+
+   </body>
+</html>
+
+

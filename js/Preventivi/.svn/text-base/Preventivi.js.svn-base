@@ -1,0 +1,674 @@
+var Preventivi = function(content){
+
+	var _this = this;
+	_this.content = content;
+	_this.elem;
+	_this.CostiExtra;
+	_this.macroFamiglie = {
+		"ST":0,
+		"RF":0,
+		"SRF":0,
+		"ST-co":0,
+		"RF-co":0,
+		"SRF-co":0,
+		"ST-mo":0,
+		"RF-mo":0,
+		"SRF-mo":0,
+		"ST-co-mo":0,
+		"RF-co-mo":0,
+		"SRF-co-mo":0,
+		"ST30":0,
+		"ST60":0,
+		"ST90":0,
+		"RF30":0,
+		"RF60":0,
+		"RF90":0,
+		"SRF30":0,
+		"SRF60":0,
+		"SRF90":0
+	}
+
+	_this.init = function(elem){
+		_this.elem = elem;
+		_this.elem.html("<script language=\"javascript\" src=\"js/Preventivi/CostiExtra.js\" type=\"text/javascript\"></script>");
+		
+		_this.CostiExtra = new CostiExtra();
+		
+		var utente = jQuery.getCookie("utente");
+		
+		function callBackPreventivi(dato){
+			//console.log(dato);
+			
+			
+			if(!dato.success){
+				alert(dato.errorMessage);
+				return;	
+			}
+			
+			_this.elem.html("");	
+			
+			if(dato.results.length <= 0){
+				_this.elem.html("<h4 align='center'>Non ci sono preventivi salvati</h4>");
+				_this.content.loader.remove();
+				return;	
+			}
+			
+			
+			
+			
+			
+			_this.content.loader.remove();
+			
+	var tabella = "<div style='clear:both;width:1000px;'>";
+				tabella += "<div style='float:left;text-align:center;width:3%;'>";
+				tabella += "	<ul id='checkbox_preventivi' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>&nbsp;</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style='float:left;text-align:center;width:5%;'>";
+				tabella += "	<ul id='codice' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Codice</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style='float:left;text-align:center;width:10%;'>";
+				tabella += "	<ul id='data' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Data Ins.</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style='float:left;text-align:center;width:10%;'>";
+				tabella += "	<ul id='totale' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Totale</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style='float:left;text-align:center;width:10%;'>";
+				tabella += "	<ul id='totaleScontato' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Totale Scont.</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style='float:left;text-align:center;width:10%;'>";
+				tabella += "	<ul id='stato' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Stato</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				
+				
+				if(utente.ruolo == "ROLE_ADMIN"){
+					tabella += "<div style='float:left;text-align:center;width:170px;'>";
+					tabella += "	<ul id='autore' style='list-style-type:none;margin:0;padding:0;'>";
+					tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Autore</b></li>";
+					tabella += 		"</ul>";
+					tabella += "</div>";
+					tabella += "<div style='float:left;text-align:center;width:250px;'>";
+					tabella += "	<ul id='email' style='list-style-type:none;margin:0;padding:0;'>";
+					tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Email</b></li>";
+					tabella += 		"</ul>";
+					tabella += "</div>";
+				}
+				
+				tabella += "<div style='float:left;text-align:center;width:80px;'>";
+				tabella += "	<ul id='azioni' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Azioni</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+			
+			tabella += "</div><br><br>";
+			
+			
+			tabella += "<div style=\"text-align:center;width:100%;display: inline-block;\">";
+			tabella += "<input style=\"margin-top:50px;\" disabled type=\"button\" value=\"CANCELLA SELEZIONATI\" id=\"cancella_selezionati\" align=\"center\">&nbsp;&nbsp;";
+			tabella += "<input style=\"margin-top:50px;\" type=\"button\" stato=\"1\" value=\"SELEZIONA TUTTI I PREVENTIVI\" id=\"seleziona_tutti\" align=\"center\">";
+			tabella += "</div>";
+			
+			_this.elem.append(tabella);
+			
+			for(var i = 0;i < dato.results.length;i++){
+			
+			
+				var bold = "";
+				if(Number(dato.results[i].letto) == 1)
+					bold = true;
+			
+				var data_inserimento = new Date(parseInt(dato.results[i].data));
+				var dataLi="<li class='elem_"+i+"' id='dettaglio_"+i+"' codice='"+dato.results[i].codice+"'>"+data_inserimento.getDate()+"-";
+					dataLi += (data_inserimento.getMonth()+1)+"-"+data_inserimento.getFullYear()+"</li>";
+					
+					
+				var tmpCodice = "00000";
+				tmpCodice = tmpCodice.substring(0,tmpCodice.length - dato.results[i].codice.length);
+					
+				var codiceLi = "<li class='elem_"+i+"'>"+tmpCodice+""+dato.results[i].codice+"</li>";
+				var checkboxLi = "<li class='elem_"+i+"' ><input type='checkbox' class='checkbox_preventivi' data='"+dato.results[i].data+"' elem='elem_"+i+"'/></li>";
+				var totaleLi = "";
+				var totaleScontatoLi = "";
+				var azioniLi = "";
+				var autoreLi = "";
+				var emailLi = "";
+				var statoLi = "";
+				
+				if(parseInt(dato.results[i].approvazione)){
+					totaleLi = "<li class='elem_"+i+"' >"+parseFloat(dato.results[i].totale).format(true)+" €</li>";
+					totaleScontatoLi = "<li class='elem_"+i+"' >"+parseFloat(dato.results[i].totaleScontato).format(true)+" €</li>";
+					azioniLi = "<li class='elem_"+i+"' style='cursor:pointer;text-decoration:uderline;color:#FF0000;'>";
+					azioniLi += "<a id='elimina_"+i+"' data='"+dato.results[i].data+"' elem='elem_"+i+"' class='table '><img src='images/delete.png' width='16' height='16' border='0' title='elimina'></a>&nbsp;&nbsp;";
+					if(utente.ruolo != "ROLE_ADMIN")
+					azioniLi += "<a id='ripristina_"+i+"' data='"+dato.results[i].data+"' class='table' style='cursor:pointer;text-decoration:uderline;color:#FF0000;'><img src='images/edit.png' width='16' height='16' border='0' title='ripristina'></a>&nbsp;&nbsp;";
+					azioniLi += "<a id='dett_"+i+"' data='"+dato.results[i].data+"' class='table' style='cursor:pointer;text-decoration:uderline;color:#FF0000;'><img src='images/dettagli.png' width='16' height='16' border='0' title='dettagli'></a></li>";
+					
+					
+					autoreLi = "<li class='elem_"+i+"'>"+dato.results[i].nome+" "+dato.results[i].cognome+"</li>";
+					emailLi = "<li class='elem_"+i+"'>"+dato.results[i].email+"</li>";
+					statoLi = "<li class='elem_"+i+"' style='color:green;'>Valido</li>";
+				}else{
+					
+					totaleLi = "<li class='elem_"+i+"' >/</li>";
+					azioniLi = "<li class='elem_"+i+"' style='cursor:pointer;text-decoration:uderline;color:#FF0000;'>";
+					azioniLi += "<a id='elimina_"+i+"' data='"+dato.results[i].data+"' elem='elem_"+i+"' class='table'><img src='images/delete.png' width='16' height='16' border='0' title='elimina'></a>&nbsp;&nbsp;";
+					if(utente.ruolo != "ROLE_ADMIN")
+					azioniLi += "<a id='ripristina_"+i+"' data='"+dato.results[i].data+"' class='table' style='cursor:pointer;text-decoration:uderline;color:#FF0000;'><img src='images/edit.png' width='16' height='16' border='0' title='ripristina'></a>&nbsp;&nbsp;";
+					azioniLi += "<a id='dett_"+i+"' data='"+dato.results[i].data+"' class='table' '><img src='images/dettagli.png' width='16' height='16' border='0' title='dettagli'></a></li>";
+					autoreLi += "<li class='elem_"+i+"' style='cursor:pointer;text-decoration:uderline;color:#FF0000;'>"+dato.results[i].nome+" "+dato.results[i].cognome;
+				
+					emailLi += "<li class='elem_"+i+"'>"+dato.results[i].email+"</li>";
+					statoLi = "<li class='elem_"+i+"' style='color:red;'>a progetto</li>";
+				}
+				
+				jQuery("#checkbox_preventivi").append(checkboxLi);
+				jQuery("#data").append(dataLi);
+				jQuery("#codice").append(codiceLi);
+				jQuery("#totale").append(totaleLi);
+				jQuery("#totaleScontato").append(totaleScontatoLi);
+				jQuery("#azioni").append(azioniLi);
+				jQuery("#autore").append(autoreLi);
+				jQuery("#email").append(emailLi);
+				jQuery("#stato").append(statoLi);
+				
+				jQuery("#dett_"+i).bind("click",function(){
+					var dataPreventivo = jQuery(this).attr("data");
+					_this.content.loader.init(function(){_this.viewDettagliPreventivi(dataPreventivo);});
+				});
+				
+				jQuery("#elimina_"+i).bind("click",function(){
+					var result = confirm("Sei sicuro di voler eliminare il preventivo selezionato?");
+					var elemThis = jQuery(this);
+					if(result){
+						var data = jQuery(this).attr("data");
+						
+						_this.content.loader.init(function(){
+							var classe = elemThis.attr("elem");
+							jQuery("."+classe).remove();
+							_this.cancellaPreventivo(data);
+						});
+						
+					}
+				});
+				
+				
+				jQuery("#ripristina_"+i).bind("click",function(){
+						var data = jQuery(this).attr("data");
+						_this.content.loader.init(function(){
+							_this.ripristinaCarrello(data);
+						});
+						
+				});
+				
+			}
+			
+			
+			jQuery("#seleziona_tutti").bind("click",function(){
+			
+				var stato = jQuery("#seleziona_tutti").attr("stato");
+				if(stato == "1"){
+					jQuery("#seleziona_tutti").attr("stato",0);
+					jQuery("#seleziona_tutti").attr("value", "DESELEZIONA TUTTI I PREVENTIVI");
+					jQuery("#cancella_selezionati").prop("disabled",false);
+					jQuery(".checkbox_preventivi").each(function(){
+						jQuery(this).prop("checked",true);
+					});
+				}else{
+					jQuery("#seleziona_tutti").attr("stato",1);
+					jQuery("#seleziona_tutti").attr("value", "SELEZIONA TUTTI I PREVENTIVI");
+					jQuery("#cancella_selezionati").prop("disabled",true);
+					jQuery(".checkbox_preventivi").each(function(){
+						jQuery(this).prop("checked",false);
+					});	
+				}
+			});
+			
+			
+			
+			jQuery("#cancella_selezionati").bind("click",function(){
+				_this.cancellaSelezionati();
+			});	
+			
+			
+			jQuery(".checkbox_preventivi").bind("click",function(){
+				jQuery("#cancella_selezionati").prop("disabled",_this.isChecked())
+			});	
+		}
+		
+		
+		jQuery.postJSON("Preventivi","getAllPreventivi","private", jQuery.getCookie("utente"), false, callBackPreventivi);
+			
+	}
+	
+	_this.isChecked = function(){
+		var boo = true;
+				jQuery(".checkbox_preventivi").each(function(){
+					if(jQuery(this).is(":checked")){
+						boo = false;
+					}
+				});
+				
+		return boo;	
+	}
+	
+	_this.cancellaPreventivo = function(data){
+		
+		function callBackPreventivi(dato){
+			if(dato.success){
+				//console.log(dato);
+				if(dato.results.numeroPreventivi <= 0) _this.elem.html("<h4 align='center'>Non ci sono preventivi salvati</h4>");
+				//alert("Preventivo rimosso con successo");
+				
+				_this.content.loader.remove();
+				
+				return;	
+			}
+		}
+		
+		jQuery.postJSON("Preventivi","removePreventivo","private", {"data":data,"account":jQuery.getCookie("utente").email}, false, callBackPreventivi);
+	}
+	
+	
+	_this.ripristinaCarrello = function(data){
+		
+		function callBackRipristino(dato){
+			//console.log("Il prodotto che ho ripristinato!");
+			//console.log(dato);
+			if(!dato.success){
+				alert(dato.errorMessage);
+				_this.content.loader.remove();
+				return;
+			}
+				
+			_this.content.aggiornaCarrello();	
+			jQuery("#Carrello").trigger("click");
+				
+				
+		}
+		
+		
+		jQuery.postJSON("Preventivi","ripristinaCarrello","private", {"data":data,"autore":jQuery.getCookie("utente").email}, false, callBackRipristino);
+		
+	}
+	
+	_this.viewDettagliPreventivi = function(data){
+		
+		
+		console.log(data);
+		
+		_this.elem.html("");
+		var totalePreventivo = 0;
+			
+			function callBackPreventivo(preventivo){
+				
+				//console.log("Preventivo!");
+				//console.log(preventivo);
+				
+				
+				
+				if(preventivo.results.length <= 0){
+					alert("Nessun preventivo trovato!");
+					return;	
+				}
+				
+				var dettaglio = "";
+				if(jQuery.validaValore(preventivo.results.codice)){
+					var tmpCodice = "00000";
+					tmpCodice = tmpCodice.substring(0,tmpCodice.length - preventivo.results.codice.length);
+					
+					dettaglio = "<h3>Codice del preventivo: <b>" + tmpCodice + ""+preventivo.results.codice + "</b><br>"; 
+				}
+				
+				var dataOK = new Date(parseInt(preventivo.results.data));
+				dettaglio += "Data inserimento: <b>" + dataOK.getDate() + "-"+(dataOK.getMonth()+1)+"-"+dataOK.getFullYear()+"</b><br>"; 
+				dettaglio += "Numero articoli scelti: <b>" + preventivo.results.carrello.length+"</b></h3><hr>";
+					
+					
+				
+				//INIZIO FOR CARRELLO	
+				for(var i = 0;i < preventivo.results.carrello.length;i++){
+					
+					//console.log("Guarda quqa!");
+					//console.log(JSON.parse(preventivo.results.carrello[i].descrizione));
+					
+					var descrizione = JSON.parse(preventivo.results.carrello[i].descrizione);
+					_this.elem.append("<script language=\"javascript\" src=\"js/Prodotti/"+descrizione.tipologia+".js\" type=\"text/javascript\"></script>");	
+			
+					var obj = eval("new "+descrizione.tipologia+"()");
+					obj.init(descrizione);
+					
+					dettaglio += obj.getRiepilogo();
+					
+					_this.CostiExtra.init(obj);
+					
+					function callBackGetImage(datoImage){
+						
+						//console.log("IMMAGINI");
+						//console.log(datoImage);
+						dettaglio += "<div style='width:100%;float:left;clear: both;'>"
+						for(var i = 0;i < datoImage.results.length;i++){
+							dettaglio += "<img src=\""+datoImage.results[i]+"\" border=\"0\" style='max-width:400px;max-width:400px;float:left;'/><br>";
+						}
+						dettaglio += "</div><br><hr>";
+					}
+					jQuery.postJSON("GestioneImmagini", "getImageCarrello","private", {"carrello":descrizione.id}, false, callBackGetImage);
+				
+				}//FINE FOR CARRELLO
+				
+				
+			
+				var totalePreventivo = preventivo.results.totaleScontato;
+				
+				
+				
+				if(preventivo.results.approvazione > 0){
+					
+				
+					dettaglio += "<h3>Totale preventivo: <b>"+ parseFloat(totalePreventivo).format(true)+" €</b></h3><hr>";
+					
+				
+					dettaglio += _this.CostiExtra.calcolaCostiExtra(preventivo.results);
+					
+					dettaglio += "<hr><div id='contentEmail'>";
+					dettaglio += "<input type='button' id='view_pdf_preventivo' value='preview preventivo'>&nbsp;&nbsp;&nbsp;<input type='button' id='stampa_riepilogo' value='stampa riepilogo'><br><br><br>";
+					dettaglio += "<a id='aggiungi_rubrica' style='cursor:pointer;text-decoration:uderline;color:#FF0000;'>Aggiungi una nuova voce alla rubrica</a><br><br>";
+					dettaglio += "Invia preventivo a: <select id='select_rubrica' style='width:200px;'><option value='null'>Seleziona dalla rubrica</option></select>";
+					//dettaglio += "<input type='button' id='genera_pdf' value='invia preventivo'><br><br></div>";
+				}else{
+					
+					//console.log("UTENTE");
+					//console.log(jQuery.getCookie("utente"));
+					
+					if(jQuery.getCookie("utente").ruolo != "ROLE_ADMIN")
+					dettaglio += "<input type='button' id='invio_preventivo_per_approvazione' value='invia preventivo per approvazione'>&nbsp;&nbsp;&nbsp;<input type='button' id='stampa_riepilogo' value='stampa riepilogo'><br><br>";
+				}
+				
+				
+				//console.log(_this.macroFamiglie);
+					
+				
+				_this.elem.html("<input type='button' class='indietro' value='torna ai preventivi' />"); 
+				_this.elem.append("<h3>Dettagli preventivo</h3><hr>"); 
+				_this.elem.append(dettaglio+"<hr><br>");
+				_this.elem.find(".containerBoxRepeat").remove();
+				_this.elem.find(".sconto").prop("disabled",true);
+				_this.elem.find(".quantitaProdotto").prop("disabled",true);
+				_this.elem.find(".sconto").css({background:"#ececec"});
+				_this.elem.find(".quantitaProdotto").css({background:"#ececec"});
+				
+				jQuery("#view_pdf_preventivo").unbind("click");
+				jQuery("#view_pdf_preventivo").bind("click",function(){
+					var tmp = jQuery("#select_rubrica option:selected").val();
+					var referente = _this.getClienteDaRubrica(tmp);
+					//console.log("Referente");
+					//console.log(referente);
+					_this.content.loader.init(function(){_this.previewPreventivo(preventivo,referente)});
+				});
+				
+				
+				jQuery(".indietro").bind("click", function(){
+					jQuery("#GestionePreventivi").trigger("click");
+				});
+				
+				jQuery("#stampa_riepilogo").bind("click",function(){
+					window.print();
+					//jQuery.jPrintArea('#Container');
+				});
+				
+				jQuery("#invio_preventivo_per_approvazione").unbind("click");
+				jQuery("#invio_preventivo_per_approvazione").bind("click",function(){
+					_this.content.loader.init(function(){_this.invioPerApprovazione(preventivo)});
+				});
+				
+				jQuery(".costi_trasporto").keypress(function(e){
+					return jQuery.onlyDecimal(e);
+				});
+				
+				jQuery(".costi_montaggio_meccanica").keypress(function(e){
+					return jQuery.onlyDecimal(e);
+				});
+				
+				jQuery(".costi_montaggio_sopraluce").keypress(function(e){
+					return jQuery.onlyDecimal(e);
+				});
+				
+				jQuery(".costi_montaggio_elettrica").keypress(function(e){
+					return jQuery.onlyDecimal(e);
+				});
+				
+				jQuery(".costi_distribuzione").keypress(function(e){
+					return jQuery.onlyDecimal(e);
+				});
+				
+				
+				jQuery("#checkCostiTrasporto").bind("click",function(){
+					if(jQuery(this).is(":checked")){
+						jQuery("#boxCostiTrasporto").css({display:"none"});	
+					}else{
+						jQuery("#boxCostiTrasporto").css({display:"block"});
+					}
+				});
+				
+				jQuery("#checkCostiDistribuzione").bind("click",function(){
+					if(jQuery(this).is(":checked")){
+						jQuery("#boxCostiDistribuzione").css({display:"none"});	
+					}else{
+						jQuery("#boxCostiDistribuzione").css({display:"block"});
+					}
+				});
+				
+				jQuery("#checkCostiMontaggio").bind("click",function(){
+					if(jQuery(this).is(":checked")){
+						jQuery("#boxCostiMontaggio").css({display:"none"});	
+					}else{
+						jQuery("#boxCostiMontaggio").css({display:"block"});
+					}
+				});
+				
+				jQuery("#aggiungi_rubrica").bind("click",function(){
+					_this.content.active(jQuery("#Rubrica"));
+					_this.content.loadSezione("Rubrica");
+				});
+			
+				
+				function callBackRubrica(datoRubrica){
+					
+					if(!datoRubrica.success){
+						alert("Errore rubrica!");	
+						return;
+					}
+					
+					for(var i = 0;i < datoRubrica.results.length;i++){
+						//console.log(datoRubrica.results[i]);
+						var rubricaEmail = "<option value='"+datoRubrica.results[i].data_inserimento+"'>"+datoRubrica.results[i].ragione_sociale+"-";
+						rubricaEmail += datoRubrica.results[i].referente_cantiere+"</option>";
+						jQuery("#select_rubrica").append(rubricaEmail);
+					}
+					
+					
+					_this.content.loader.remove();
+				}
+				
+				jQuery.postJSON("Rubrica", "getRubrica", "private", {"account":jQuery.getCookie("utente").email}, false, callBackRubrica);
+				
+				
+				jQuery("#select_rubrica").change(function(){
+					//jQuery("#view_pdf_preventivo").remove();
+					jQuery("#invia_pdf_preventivo").remove();
+					if(jQuery(this).val() != "null"){
+						var azioni = "";
+							azioni += "<input type='button' id='invia_pdf_preventivo' value='invia preventivo'>";
+						_this.elem.append(azioni);
+						
+						jQuery("#invia_pdf_preventivo").unbind("click");
+						jQuery("#invia_pdf_preventivo").bind("click",function(){
+							var tmp = jQuery("#select_rubrica option:selected").val();
+							var referente = _this.getClienteDaRubrica(tmp);
+							//console.log(referente);
+							_this.content.loader.init(function(){_this.inviaPreventivo(preventivo,referente);});
+						});
+						
+					}
+				});
+				
+				
+				
+				
+				
+			}
+				
+			jQuery.postJSON("Preventivi","getPreventivo","private", {"data":data}, false, callBackPreventivo);
+			_this.content.loader.remove();
+	}
+	
+	
+	_this.inviaPreventivo = function(preventivo,referente){
+		////console.log(preventivo);
+		/*var email = jQuery("#select_rubrica option:selected").val();
+			if(email == undefined || email == "null"){
+				alert("Non hai seleziona nessuna voce dall'elenco rubrica");	
+				return;
+			}
+		*/
+		
+		preventivo.results["servizi"] = {};
+		preventivo.results.servizi = _this.CostiExtra.getCostiAggiuntivi();		
+					
+			
+		function callBack(dato){
+			//console.log(dato);
+			
+			if(!dato.success){
+				alert(dato.message);	
+				return;
+			}
+			
+			//var datauri = 'data:application/pdf;base64,' + dato.documento;
+			//var attributes = "width=1024,height=768,resizable=yes,scrollbars=yes,toolbar=no,location=no,directories=no,status=no,menubar=no,copyhistory=no";
+    		//var win = window.open("", "Preview Preventivo", attributes);
+    		//win.document.location.href = datauri;
+			_this.content.loader.remove();
+			_this.elem.html("<h3>Preventivo inviato correttamente!</h3>");
+		}
+		
+		
+				
+		jQuery.postJSON("FunctionPreventivi","inviaPreventivo","private", {"preventivo":JSON.stringify(preventivo),"referente":JSON.stringify(referente)}, false, callBack);	
+		
+	}
+	
+
+	
+	_this.previewPreventivo = function(preventivo,referente){
+		////console.log(preventivo);
+		/*var email = jQuery("#select_rubrica option:selected").val();
+			if(email == undefined || email == "null"){
+				alert("Non hai seleziona nessuna voce dall'elenco rubrica");	
+				return;
+			}
+		*/
+		
+		
+		
+		preventivo.results["servizi"] = {};
+		preventivo.results.servizi = _this.CostiExtra.getCostiAggiuntivi();
+			
+		
+		function callBack(dato){
+			//console.log(dato);
+			
+			if(!dato.success){
+				alert(dato.message);	
+				return;
+			}
+			
+			_this.content.loader.remove();
+			
+			var datauri = 'data:application/pdf;base64,' + dato.documento;
+			var attributes = "width=1024,height=768,resizable=yes,scrollbars=yes,toolbar=no,location=no,directories=no,status=no,menubar=no,copyhistory=no";
+    		var win = window.open("", "Preview Preventivo", attributes);
+    		win.document.location.href = datauri;
+		}
+		
+		
+	jQuery.postJSON("FunctionPreventivi","generaPreviewPdf","private", {"preventivo":JSON.stringify(preventivo),"referente":JSON.stringify(referente)}, false, callBack);	
+		
+	}
+	
+	_this.getClienteDaRubrica = function(data_inserimento){
+		var referente;
+		function callBackRubrica(datoRubrica){
+			if(!datoRubrica.success){
+				alert("Errore rubrica!");	
+				return;
+			}
+			
+			referente = datoRubrica.results;
+				
+		}
+		jQuery.postJSON("Rubrica", "getRubrica", "private", {"account":jQuery.getCookie("utente").email,"data_inserimento":data_inserimento}, false, callBackRubrica);
+		return referente[0];
+	}
+	
+	
+	_this.invioPerApprovazione = function(preventivo){
+		
+		//console.log("Preventivo");
+		//console.log(preventivo);
+		
+		var dataIns = new Date(parseInt(preventivo.results.data));
+		
+		var param = {
+			"nome": preventivo.results.nome,
+			"cognome": preventivo.results.cognome,
+			"account":preventivo.results.email,
+			"data_inserimento": dataIns.getDate()+"/"+(dataIns.getMonth()+1)+"/"+dataIns.getFullYear(),
+			"codice_preventivo": preventivo.results.codice
+		}
+		
+		//console.log("OOOOO!!!");
+		//console.log(param);
+		
+		var result;
+		function callBackApprovazione(datoApprovazione){
+			if(!datoApprovazione.success){
+				alert(datoApprovazione.messageError);	
+				return;
+			}
+			
+			result = datoApprovazione.results;
+			_this.content.loader.remove();
+			_this.elem.html("<h3>Preventivo inviato correttamente in approvazione!</h3>");
+		}
+		jQuery.postJSON("FunctionPreventivi", "invioPreventivoPerApprovazione", "private", param, false, callBackApprovazione);
+		return result;
+	}
+	
+	_this.cancellaSelezionati = function(){
+		var result = confirm("Sei sicuro di voler eliminare tutti i preventivi selezionati?");
+		if(result){
+			_this.content.loader.init(function(){
+				jQuery(".checkbox_preventivi").each(function(){
+					if(jQuery(this).is(":checked")){
+							var elemThis = jQuery(this);
+							var data = jQuery(this).attr("data");
+							var classe = elemThis.attr("elem");
+							jQuery("."+classe).remove();
+							_this.cancellaPreventivo(data);
+					}
+				});
+			});
+		}
+	}
+}

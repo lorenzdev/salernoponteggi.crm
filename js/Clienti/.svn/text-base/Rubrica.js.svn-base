@@ -1,0 +1,1014 @@
+function Rubrica(content){
+
+	var _this = this;
+	
+	_this.content = content;	
+	_this.elem;
+	_this.user = {}
+	_this.numElementRubrica = 0;
+	
+	_this.init = function (elem){
+		
+		_this.elem = elem;
+		_this.elem.html("");
+		
+		//console.log(jQuery.getCookie("utente"));
+		
+		function callBackRubrica(datoRubrica){
+		
+			//console.log(datoRubrica);
+		
+			if(!datoRubrica.success){
+				alert("Errore caricamento rubrica!");	
+				return;
+			}
+			
+			
+			_this.content.loader.remove();
+			
+			var rubrica = datoRubrica.results;
+				
+			_this.elem.append("<a id='nuova_voce' style='cursor:pointer;text-decoration:uderline;color:#FF0000;'>inserisci una nuova voce alla rubrica</a>");
+			
+			jQuery("#nuova_voce").bind("click",function(){
+				_this.content.loader.init(function(){
+					_this.inserisciRubrica();
+				});
+			});
+			
+			if(rubrica.length <= 0){
+				_this.elem.append("<h4 align=\"center\">Nessuna voce nella rubrica</h4>");
+				return;
+			}
+			
+			
+			
+			var tabella = "<div id='tabellaRubrica'><div style='clear:both;width:100%;font-size:10px;font-family:arial;' id='contentRubrica'>";
+				tabella += "<div style='float:left;text-align:center;width:5%;'>";
+				tabella += "	<ul id='checkbox_rubrica' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>&nbsp;</b></li>";
+				tabella += 		"</ul>";
+				tabella += 	"</div>";
+				tabella += "<div style='float:left;text-align:center;width:100px;'>";
+				tabella += "	<ul id='data_inserimento' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Data ins.</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style='float:left;text-align:center;width:200px;'>";
+				tabella += "	<ul id='ragione_sociale' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Ragione sociale</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style='float:left;text-align:center;width:200px;'>";
+				tabella += "	<ul id='email' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Email</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style='float:left;text-align:center;width:10%;'>";
+				tabella += "	<ul id='telefono' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Telefono</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style='float:left;text-align:center;width:150px;'>";
+				tabella += "	<ul id='responsabile' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Responsabile</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style='float:left;text-align:center;width:130px;'>";
+				tabella += "	<ul id='cellulare_responsabile' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Cellulare</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style='float:left;text-align:center;width:70px;'>";
+				tabella += "	<ul id='azioni' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Azioni</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style=\"text-align:center;width:100%;display: inline-block;\">";
+				tabella += "<input style=\"margin-top:50px;\" disabled type=\"button\" value=\"CANCELLA SELEZIONATI\" id=\"cancella_selezionati\" align=\"center\">&nbsp;&nbsp;";
+				tabella += "<input style=\"margin-top:50px;\" type=\"button\" stato=\"1\" value=\"SELEZIONA TUTTI\" id=\"seleziona_tutti\" align=\"center\">";
+				tabella += "</div></div>";
+				_this.elem.append(tabella);
+			
+				_this.numElementRubrica = rubrica.length;
+			
+				for(var i = 0;i < rubrica.length;i++){
+					
+					console.log("Ecco la rubrica");
+					console.log(rubrica[i]);
+					
+					var data = new Date(parseInt(rubrica[i].data_inserimento));
+					jQuery("#data_inserimento").append("<li class='elem_"+i+"'>"+data.getDate()+"/"+(data.getMonth()+1)+"/"+data.getFullYear()+"</li>");
+					
+					if(rubrica[i].ragione_sociale == "")
+						rubrica[i].ragione_sociale = "&nbsp;";
+					
+					jQuery("#checkbox_rubrica").append("<li class='elem_"+i+"'><input type='checkbox' class='checkbox_rubrica' data='"+rubrica[i].data_inserimento+"' indirizzo='"+rubrica[i].id_indirizzo+"' indirizzo_cantiere='"+rubrica[i].id_indirizzo_cantiere+"'/></li>");
+					jQuery("#ragione_sociale").append("<li class='elem_"+i+"'>"+rubrica[i].ragione_sociale+"</li>");	
+					jQuery("#email").append("<li class='elem_"+i+"'>"+rubrica[i].email+"</li>");
+					jQuery("#telefono").append("<li class='elem_"+i+"'>"+rubrica[i].telefono+"</li>");
+					jQuery("#responsabile").append("<li class='elem_"+i+"'>"+rubrica[i].responsabile+"</li>");
+					jQuery("#cellulare_responsabile").append("<li class='elem_"+i+"'>"+rubrica[i].cellulare+"</li>");
+					
+					if(rubrica[i].inserito_da == jQuery.getCookie("utente").email)
+						rubrica[i].inserito_da = "me";
+					
+					jQuery("#inserito_da").append("<li class='elem_"+i+"'>"+rubrica[i].inserito_da+"</li>");
+					
+	var azioniLi = "<a id='elimina_"+i+"' data='"+rubrica[i].data_inserimento+"' indirizzo='"+rubrica[i].id_indirizzo+"' indirizzo_cantiere='"+rubrica[i].id_indirizzo_cantiere+"' elem='elem_"+i+"' class='table riga_"+i+"'><img src='images/delete.png' width='16' height='16' border='0' title='elimina'></a>&nbsp;&nbsp;";
+						azioniLi += "<a id='dett_"+i+"' data='"+rubrica[i].data_inserimento+"' class='table riga_"+i+"'><img src='images/dettagli.png' width='16' height='16' border='0' title='dettagli'></a>&nbsp;&nbsp;";
+						azioniLi += "<a id='modifica_"+i+"' data='"+rubrica[i].data_inserimento+"' class='table riga_"+i+"'><img src='images/edit.png' width='16' height='16' border='0' title='modifica'></a>";
+						
+					jQuery("#azioni").append("<li class='elem_"+i+"' style='cursor:pointer;text-decoration:uderline;color:#FF0000;'>"+azioniLi+"</li>");
+					jQuery("#dett_"+i).bind("click",function(){
+						var data = jQuery(this).attr("data");
+						_this.content.loader.init(function(){_this.visualizzaVoceRubrica(data);});
+					});
+					
+					jQuery("#modifica_"+i).bind("click",function(){
+						var data = jQuery(this).attr("data");
+						_this.content.loader.init(function(){_this.modificaVoceRubrica(data);});
+					});
+					
+					jQuery("#elimina_"+i).bind("click",function(){
+						var rubrica = {
+							"email": jQuery.getCookie("utente").email,
+							"data_inserimento": jQuery(this).attr("data"),
+							"indirizzo": jQuery(this).attr("indirizzo"),
+							"indirizzo_cantiere": jQuery(this).attr("indirizzo_cantiere")
+						}
+						
+						_this.content.loader.init(function(){_this.eliminaRubrica(rubrica);});
+						////console.log("."+jQuery(this).attr("elem"));
+						jQuery("."+jQuery(this).attr("elem")).remove();
+						
+						_this.numElementRubrica--;
+						//console.log(_this.numElementRubrica);
+						if(_this.numElementRubrica <= 0){
+							
+							jQuery("#tabellaRubrica").html("<h4 align='center'>Rubrica vuota</h4>");
+						}
+							
+						
+						//var data = jQuery(this).attr("data");
+						//_this.modificaVoceRubrica(data);
+					});
+				}
+				
+				
+				jQuery("#seleziona_tutti").bind("click",function(){
+			
+				var stato = jQuery("#seleziona_tutti").attr("stato");
+				if(stato == "1"){
+					jQuery("#seleziona_tutti").attr("stato",0);
+					jQuery("#seleziona_tutti").attr("value", "DESELEZIONA TUTTI");
+					jQuery("#cancella_selezionati").prop("disabled",false);
+					jQuery(".checkbox_rubrica").each(function(){
+						jQuery(this).prop("checked",true);
+					});
+				}else{
+					jQuery("#seleziona_tutti").attr("stato",1);
+					jQuery("#seleziona_tutti").attr("value", "SELEZIONA TUTTI");
+					jQuery("#cancella_selezionati").prop("disabled",true);
+					jQuery(".checkbox_rubrica").each(function(){
+						jQuery(this).prop("checked",false);
+					});	
+				}
+			});
+			
+			
+			
+			jQuery("#cancella_selezionati").bind("click",function(){
+				_this.content.loader.init(function(){_this.cancellaSelezionati();});
+			});	
+			
+			
+			jQuery(".checkbox_rubrica").bind("click",function(){
+				jQuery("#cancella_selezionati").prop("disabled",_this.isChecked())
+			});	
+				
+				
+		}
+		
+		var email = "";
+		if(jQuery.getCookie("utente").ruolo != "ROLE_ADMIN")
+			email = jQuery.getCookie("utente").email;
+		
+		jQuery.postJSON("Rubrica", "getRubrica","private", {"account":email}, false, callBackRubrica);
+	}
+	
+	_this.isChecked = function(){
+		var boo = true;
+				jQuery(".checkbox_rubrica").each(function(){
+					if(jQuery(this).is(":checked")){
+						boo = false;
+					}
+				});
+				
+		return boo;	
+	}
+	
+	_this.visualizzaVoceRubrica = function(data){
+		
+		function callBackVoceRubrica(datoRubrica){
+			//console.log(datoRubrica);
+			_this.elem.html("<input type='button' class='indietro' value='torna alla rubrica' /><br><br>"); 
+			_this.elem.append("Codice: <b>" + datoRubrica.results[0].data_inserimento + "</b><br>"); 
+			_this.elem.append("Ragione sociale: <b>" + datoRubrica.results[0].ragione_sociale + "</b><br>");
+			_this.elem.append("Partita iva: <b>" + datoRubrica.results[0].partita_iva + "</b><br>");
+			_this.elem.append("Codice fiscale: <b>" + datoRubrica.results[0].codice_fiscale + "</b><br>");
+			_this.elem.append("Attività: <b>" + datoRubrica.results[0].attivita + "</b><br>");
+			_this.elem.append("Telefono: <b>" + datoRubrica.results[0].telefono + "</b><br>");
+			_this.elem.append("Fax: <b>" + datoRubrica.results[0].fax + "</b><br>");
+			_this.elem.append("Email: <b>" + datoRubrica.results[0].email + "</b><br>");
+			_this.elem.append("Responsabile: <b>" + datoRubrica.results[0].responsabile + "</b><br>");
+			_this.elem.append("Banca: <b>" + datoRubrica.results[0].banca + "</b><br>");
+			_this.elem.append("Iban: <b>" + datoRubrica.results[0].iban + "</b><br>");
+			_this.elem.append("Agente: <b>" + datoRubrica.results[0].agente + "</b><br>");
+			_this.elem.append("Regione: <b>" + datoRubrica.results[0].regione + "</b><br>");
+			_this.elem.append("Provincia: <b>" + datoRubrica.results[0].provincia + "</b><br>");
+			_this.elem.append("Capo area: <b>" + datoRubrica.results[0].capo_area + "</b><br>");
+			_this.elem.append("Denominazione cantiere: <b>" + datoRubrica.results[0].denominazione_cantiere + "</b><br>");
+			_this.elem.append("Referente cantiere: <b>" + datoRubrica.results[0].referente_cantiere + "</b><br>");
+			_this.elem.append("Email referente cantiere: <b>" + datoRubrica.results[0].email_referente + "</b><br>");
+			_this.elem.append("Cellulare: <b>" + datoRubrica.results[0].cellulare + "</b><br>");
+			_this.elem.append("Nazione cantiere: <b>" + datoRubrica.results[0].nazione_cantiere + "</b><br>");
+			_this.elem.append("Regione cantiere: <b>" + datoRubrica.results[0].regione_cantiere + "</b><br>");
+			_this.elem.append("Provincia cantiere: <b>" + datoRubrica.results[0].provincia_cantiere + "</b><br>");
+			_this.elem.append("Comune cantiere: <b>" + datoRubrica.results[0].comune_cantiere + "</b><br>");
+			_this.elem.append("Indirizzo cantiere: <b>" + datoRubrica.results[0].indirizzo_cantiere + "</b><br>");
+			_this.elem.append("Civico cantiere: <b>" + datoRubrica.results[0].civico_cantiere + "</b><br>");
+			_this.elem.append("Cap cantiere: <b>" + datoRubrica.results[0].cap_cantiere + "</b><br>");
+			_this.elem.append("Nazione: <b>" + datoRubrica.results[0].nazione + "</b><br>");
+			_this.elem.append("Regione: <b>" + datoRubrica.results[0].regione + "</b><br>");
+			_this.elem.append("Provincia: <b>" + datoRubrica.results[0].provincia + "</b><br>");
+			_this.elem.append("Comune: <b>" + datoRubrica.results[0].comune + "</b><br>");
+			_this.elem.append("Indirizzo: <b>" + datoRubrica.results[0].indirizzo + "</b><br>");
+			_this.elem.append("Civico: <b>" + datoRubrica.results[0].civico + "</b><br>");
+			_this.elem.append("Cap: <b>" + datoRubrica.results[0].cap + "</b><br>");
+			_this.elem.append("Aliquota iva: <b>" + datoRubrica.results[0].aliquota_iva + "</b><br>");
+			_this.elem.append("Modalità pagamento: <b>" + datoRubrica.results[0].modalita_pagamento + "</b><br>");
+			 
+			 
+			 jQuery(".indietro").bind("click", function(){
+				jQuery("#Rubrica").trigger("click"); 
+			 });
+			 
+			 _this.content.loader.remove();
+			 
+		}
+		
+		var email = "";
+		if(jQuery.getCookie("utente").ruolo != "ROLE_ADMIN")
+			email = jQuery.getCookie("utente").email;
+		
+		
+		jQuery.postJSON("Rubrica", "getRubrica","private", {"account":email,"data_inserimento":data}, false, callBackVoceRubrica);
+	}
+	
+	
+	
+	
+	_this.modificaVoceRubrica = function(data){
+		
+		
+		jQuery.get(P_FORM_RUBRICA, function(datoForm){
+			_this.elem.html("<input type='button' class='indietro' value='torna alla rubrica' />");
+				
+			_this.elem.append(datoForm);
+		
+			function callBackVoceRubrica(datoRubrica){
+				//console.log(datoRubrica);
+				
+				jQuery("#data_inserimento").val(datoRubrica.results[0].data_inserimento);
+				jQuery("#ragione_sociale").val(datoRubrica.results[0].ragione_sociale);
+				jQuery("#partita_iva").val(datoRubrica.results[0].partita_iva);
+				jQuery("#codice_fiscale").val(datoRubrica.results[0].codice_fiscale);
+				jQuery("#email").val(datoRubrica.results[0].email);
+				jQuery("#responsabile").val(datoRubrica.results[0].responsabile);
+		 		jQuery("#cellulare").val(datoRubrica.results[0].cellulare);
+		 		jQuery("#telefono").val(datoRubrica.results[0].telefono);
+		 		jQuery("#attivita").val(datoRubrica.results[0].attivita);
+		 		jQuery("#banca").val(datoRubrica.results[0].banca);
+		 		jQuery("#iban").val(datoRubrica.results[0].iban);
+				jQuery("#fax").val(datoRubrica.results[0].fax);
+				jQuery("#agente").val(datoRubrica.results[0].agente);
+		 		jQuery("#capo_area").val(datoRubrica.results[0].capo_area);
+		 		jQuery("#denominazione_cantiere").val(datoRubrica.results[0].denominazione_cantiere);
+		 		jQuery("#referente_cantiere").val(datoRubrica.results[0].referente_cantiere);
+		 		jQuery("#cellulare_referente_cantiere").val(datoRubrica.results[0].cellulare_responsabile);
+				jQuery("#id_indirizzo").val(datoRubrica.results[0].id_indirizzo);
+				jQuery("#id_indirizzo_cantiere").val(datoRubrica.results[0].id_indirizzo_cantiere);
+				jQuery("#indirizzo_cantiere").val(datoRubrica.results[0].indirizzo_cantiere);
+				jQuery("#indirizzo").val(datoRubrica.results[0].indirizzo);
+				jQuery("#civico").val(datoRubrica.results[0].civico);
+				jQuery("#cap").val(datoRubrica.results[0].cap);
+				jQuery("#civico_cantiere").val(datoRubrica.results[0].civico_cantiere);
+				jQuery("#cap_cantiere").val(datoRubrica.results[0].cap_cantiere);
+		 		jQuery("#email_referente_cantiere").val(datoRubrica.results[0].email_referente);
+				jQuery("#aliquota_iva").val(datoRubrica.results[0].aliquota_iva);
+				jQuery("#regione_cantiere").val(datoRubrica.results[0].regione_cantiere);
+				jQuery("#provincia_cantiere").val(datoRubrica.results[0].provincia_cantiere);
+				
+				
+				jQuery("#regione").val(datoRubrica.results[0].regione);
+				jQuery("#provincia").val(datoRubrica.results[0].provincia);
+		 		
+				jQuery("#tipologia_pagamento option").each(function(){
+					if(jQuery(this).val() == datoRubrica.results[0].modalita_pagamento)
+						jQuery(this).prop("selected",true);
+				});
+				
+				_this.popolaNazioni(jQuery("#nazione"));
+				_this.popolaRegioni(jQuery("#regione"));
+				
+				jQuery("#regione option").each(function(){
+					if(jQuery(this).text() == datoRubrica.results[0].regione){
+						jQuery(this).prop("selected",true);
+						return;
+					}
+				});
+				
+				_this.popolaProvince(jQuery("#regione option:selected").val(),jQuery("#provincia"));
+				jQuery("#provincia").removeAttr("disabled");
+				jQuery("#provincia option").each(function(){
+					if(jQuery(this).text() == datoRubrica.results[0].provincia){
+						jQuery(this).prop("selected",true);
+						return;
+					}
+				});
+				
+				_this.popolaComuni(jQuery("#provincia option:selected").val(),jQuery("#comune"));
+				jQuery("#comune option").each(function(){
+					if(jQuery(this).text() == datoRubrica.results[0].comune){
+						jQuery(this).prop("selected",true);
+						return;
+					}
+				});
+				jQuery("#comune").removeAttr("disabled");
+				
+				
+				_this.popolaNazioni(jQuery("#nazione_cantiere"));
+				_this.popolaRegioni(jQuery("#regione_cantiere"));
+				
+				jQuery("#regione_cantiere option").each(function(){
+					if(jQuery(this).text() == datoRubrica.results[0].regione_cantiere){
+						jQuery(this).prop("selected",true);
+						return;
+					}
+				});
+				
+				_this.popolaProvince(jQuery("#regione_cantiere option:selected").val(),jQuery("#provincia_cantiere"));
+				jQuery("#provincia_cantiere").removeAttr("disabled");
+				jQuery("#provincia_cantiere option").each(function(){
+					if(jQuery(this).text() == datoRubrica.results[0].provincia_cantiere){
+						jQuery(this).prop("selected",true);
+						return;
+					}
+				});
+				
+				_this.popolaComuni(jQuery("#provincia_cantiere option:selected").val(),jQuery("#comune_cantiere"));
+				jQuery("#comune_cantiere option").each(function(){
+					if(jQuery(this).text() == datoRubrica.results[0].comune_cantiere){
+						jQuery(this).prop("selected",true);
+						return;
+					}
+				});
+				jQuery("#comune_cantiere").removeAttr("disabled");
+				
+				jQuery("#regione").bind("change",function(){
+					var regione = jQuery(this).val();
+					jQuery("#provincia").html("<option value=\"null\">Seleziona la provincia</option>");
+					jQuery("#provincia").removeAttr("disabled");
+					jQuery("#comune").html("<option value=\"null\">Seleziona il comune</option>");
+					jQuery("#comune").addClass("selectDisabled");
+					jQuery("#comune").attr("disabled","disabled");
+					_this.popolaProvince(regione,jQuery("#provincia"));
+				});
+				
+				jQuery("#provincia").bind("change",function(){
+					var provincia = jQuery(this).val();
+					jQuery("#comune").removeClass("selectDisabled");
+					jQuery("#comune").removeAttr("disabled");
+					jQuery("#comune").html("<option value=\"null\">Seleziona il comune</option>");
+					_this.popolaComuni(provincia,jQuery("#comune"));
+				});
+				
+				
+				jQuery("#regione_cantiere").bind("change",function(){
+					var regione = jQuery(this).val();
+					jQuery("#provincia_cantiere").html("<option value=\"null\">Seleziona la provincia</option>");
+					jQuery("#provincia_cantiere").removeAttr("disabled");
+					jQuery("#comune_cantiere").html("<option value=\"null\">Seleziona il comune</option>");
+					jQuery("#comune_cantiere").addClass("selectDisabled");
+					jQuery("#comune_cantiere").attr("disabled","disabled");
+					_this.popolaProvince(regione,jQuery("#provincia_cantiere"));
+				});
+				
+				jQuery("#provincia_cantiere").bind("change",function(){
+					var provincia = jQuery(this).val();
+					jQuery("#comune_cantiere").removeClass("selectDisabled");
+					jQuery("#comune_cantiere").removeAttr("disabled");
+					jQuery("#comune_cantiere").html("<option value=\"null\">Seleziona il comune</option>");
+					_this.popolaComuni(provincia,jQuery("#comune_cantiere"));
+				});
+				
+				jQuery("#aliquota_iva").on("keypress",function(e){
+					return jQuery.onlynumbers(e);
+				});
+				
+				
+				
+				jQuery("#cap").on("keypress",function(e){
+					return jQuery.onlynumbers(e);
+				});
+				
+				jQuery("#cap_cantiere").on("keypress",function(e){
+					return jQuery.onlynumbers(e);
+				});
+				
+				jQuery("#telefono").on("keypress",function(e){
+					return jQuery.onlynumbers(e);
+				});
+				
+				jQuery("#fax").on("keypress",function(e){
+					return jQuery.onlynumbers(e);
+				});
+				
+				jQuery("#cellulare").on("keypress",function(e){
+					return jQuery.onlynumbers(e);
+				});
+				
+				jQuery("#salva_utente").bind("click", function(){
+					_this.content.loader.init(function(){_this.modificaUtente(jQuery("#data_inserimento").val());});
+				});
+				
+				jQuery(".indietro").bind("click", function(){
+					jQuery("#Rubrica").trigger("click"); 
+			 	});
+				
+				
+				_this.content.loader.remove();
+				
+			}
+			
+			var email = "";
+			if(jQuery.getCookie("utente").ruolo != "ROLE_ADMIN")
+				email = jQuery.getCookie("utente").email;
+			
+			
+			jQuery.postJSON("Rubrica", "getRubrica","private", {"account":email,"data_inserimento":data}, false, callBackVoceRubrica);
+			
+		});
+	}
+	
+	_this.eliminaRubrica = function(rubrica){
+	
+	
+		//console.log(rubrica);
+		//return;
+	
+		//rubrica.email = jQuery.getCookie("utente").email;
+	
+		function callBackRubrica(dato){
+			//console.log("Dato");
+			//console.log(dato);
+			if(!dato.success){
+				alert(dato.errorMessage);	
+				return;
+			}
+			
+			if(dato.results[0] == 0){
+				jQuery("#tabellaRubrica").html("<h4 align=\"center\">Nessuna voce nella rubrica</h4>");
+			}
+			
+			
+		}
+	
+		jQuery.postJSON("Rubrica","removeFromRubrica", "private", rubrica, false, callBackRubrica);
+		_this.content.loader.remove();
+	}
+	
+	
+	_this.inserisciRubrica = function(){
+		
+		_this.elem.html("");
+		
+		jQuery.get(P_FORM_RUBRICA, function(datoForm){
+			_this.elem.html("<input type='button' class='indietro' value='torna alla rubrica' />");
+		  _this.elem.append(datoForm);
+	  
+	  
+		  _this.popolaNazioni(jQuery("#nazione"));
+		  _this.popolaRegioni(jQuery("#regione"));
+		  
+		  _this.popolaNazioni(jQuery("#nazione_cantiere"));
+		  _this.popolaRegioni(jQuery("#regione_cantiere"));
+		  
+		  jQuery("#regione").bind("change",function(){
+			  var regione = jQuery(this).val();
+			  jQuery("#provincia").html("<option value=\"null\">Seleziona la provincia</option>");
+			  jQuery("#provincia").removeAttr("disabled");
+			  jQuery("#comune").html("<option value=\"null\">Seleziona il comune</option>");
+			  jQuery("#comune").addClass("selectDisabled");
+			  jQuery("#comune").attr("disabled","disabled");
+			  _this.popolaProvince(regione,jQuery("#provincia"));
+		  });
+		  
+		  jQuery("#provincia").bind("change",function(){
+			  var provincia = jQuery(this).val();
+			  jQuery("#comune").removeClass("selectDisabled");
+			  jQuery("#comune").removeAttr("disabled");
+			  jQuery("#comune").html("<option value=\"null\">Seleziona il comune</option>");
+			  _this.popolaComuni(provincia,jQuery("#comune"));
+		  });
+		  
+		  
+		  jQuery("#regione_cantiere").bind("change",function(){
+			  var regione = jQuery(this).val();
+			  jQuery("#provincia_cantiere").html("<option value=\"null\">Seleziona la provincia</option>");
+			  jQuery("#provincia_cantiere").removeAttr("disabled");
+			  jQuery("#comune_cantiere").html("<option value=\"null\">Seleziona il comune</option>");
+			  jQuery("#comune_cantiere").addClass("selectDisabled");
+			  jQuery("#comune_cantiere").attr("disabled","disabled");
+			  _this.popolaProvince(regione,jQuery("#provincia_cantiere"));
+		  });
+		  
+		  jQuery("#provincia_cantiere").bind("change",function(){
+			  var provincia = jQuery(this).val();
+			  jQuery("#comune_cantiere").removeClass("selectDisabled");
+			  jQuery("#comune_cantiere").removeAttr("disabled");
+			  jQuery("#comune_cantiere").html("<option value=\"null\">Seleziona il comune</option>");
+			  _this.popolaComuni(provincia,jQuery("#comune_cantiere"));
+		  });
+		  
+		  jQuery("#aliquota_iva").on("keypress",function(e){
+			  return jQuery.onlynumbers(e);
+		  });
+		  
+		  
+		  jQuery("#cap").on("keypress",function(e){
+			  return jQuery.onlynumbers(e);
+		  });
+		  
+		  jQuery("#cap_cantiere").on("keypress",function(e){
+			  return jQuery.onlynumbers(e);
+		  });
+		  
+		  jQuery("#telefono").on("keypress",function(e){
+			  return jQuery.onlynumbers(e);
+		  });
+		  
+		  jQuery("#cellulare").on("keypress",function(e){
+			  return jQuery.onlynumbers(e);
+		  });
+		  
+		  jQuery("#fax").on("keypress",function(e){
+			  return jQuery.onlynumbers(e);
+		  });
+		  
+		  jQuery("#salva_utente").bind("click", function(){
+			  _this.content.loader.init(function(){_this.salvaUtente();});
+		  });
+		  
+		  jQuery(".indietro").bind("click", function(){
+			 jQuery("#Rubrica").trigger("click"); 
+		  });
+		  
+		  _this.content.loader.remove();
+		  
+	  });
+	}
+	
+	
+	
+	
+	
+	
+	
+	_this.salvaUtente = function(){
+		
+		var request = {};
+		
+		 	
+		 
+		var data_creazione = new Date().getTime();
+		request = _this.checkDatiInseriti(data_creazione);
+	 	if(!request){
+			_this.content.loader.remove();
+			return;		
+		}
+		
+		
+		/*function callBackCheckRubrica(datoCheck){
+			//console.log(datoCheck);
+		}
+	 
+	 	jQuery.postJSON("RegistrazioneUtente","checkRubrica", "public", request.rubrica, false, callBackCheckRubrica);
+	 	*/
+	 
+	 	
+	 
+	 	function callBackIndirizzo(datoIndirizzo){
+			
+			//console.log(datoIndirizzo);
+			
+			delete request.sede.id_indirizzo;
+			delete request.cantiere.id_indirizzo;
+			
+			if(!datoIndirizzo.success){
+				alert("Errore di inserimento indirizzo");
+				return;	
+			}
+			
+			request.rubrica.indirizzo = datoIndirizzo.results[0].id;
+			
+			function callBackIndirizzoCantiere(datoIndirizzoCantiere){
+				
+				if(!datoIndirizzoCantiere.success){
+					alert("Errore di inserimento indirizzo di cantiere");
+					return;	
+				}
+				
+				request.rubrica.indirizzo_cantiere = datoIndirizzoCantiere.results[0].id;
+				
+				//console.log("REQUEST!");
+				//console.log(request);
+				
+				
+				function callBackRubrica(datoRubrica){
+					//console.log(datoRubrica);	
+					
+					if(!datoRubrica.success){
+						alert(datoRubrica.messageError);
+						return;	
+					}
+					
+					jQuery("#Rubrica").trigger("click");
+					//_this.elem.html("<h4 align='center'>Inserimento avvenuto con successo</h4>");
+					
+					_this.content.loader.remove();
+				}
+				
+				jQuery.postJSON("Rubrica","registerRubrica", "public", request.rubrica, false, callBackRubrica);
+			}
+			
+			jQuery.postJSON("RegistrazioneUtente","registerIndirizzo", "public", request.cantiere, false, callBackIndirizzoCantiere);
+		}
+	 
+	 	jQuery.postJSON("RegistrazioneUtente","registerIndirizzo", "public", request.sede, false, callBackIndirizzo);
+	}
+	
+	
+	
+	_this.modificaUtente = function(data_creazione){
+		
+		var request = {};
+		
+		request = _this.checkDatiInseriti(data_creazione);
+	 	if(!request){
+			_this.content.loader.remove();
+			return;	
+		}
+			
+		
+	 
+	 	function callBackIndirizzo(datoIndirizzo){
+			
+			if(!datoIndirizzo.success){
+				alert("Errore di imodifica indirizzo");
+				return;	
+			}
+			
+			
+			function callBackIndirizzoCantiere(datoIndirizzoCantiere){
+				
+				if(!datoIndirizzoCantiere.success){
+					alert("Errore di modifica indirizzo di cantiere");
+					return;	
+				}
+				
+				
+				function callBackRubrica(datoRubrica){
+					//_this.elem.html("<h4 align='center'>Modifica avvenuta con successo</h4>");
+					
+					jQuery("#Rubrica").trigger("click");
+					//_this.content.loader.remove();
+				}
+				
+				jQuery.postJSON("Rubrica","modifyRubrica", "public", request.rubrica, false, callBackRubrica);
+			}
+			
+			jQuery.postJSON("RegistrazioneUtente","modifyIndirizzo", "public", request.cantiere, false, callBackIndirizzoCantiere);
+		}
+	 
+	 	jQuery.postJSON("RegistrazioneUtente","modifyIndirizzo", "public", request.sede, false, callBackIndirizzo);
+	}
+	
+	
+	_this.popolaNazioni = function(elemSelect){
+		
+		function callBackNazioni(dato){
+			//console.log("Nazioni:");
+			//console.log(dato);
+			//jQuery("#regione").html("<option ");
+			for(var i = 0;i < dato.length;i++){
+				var selected = "";
+				//console.log(dato[i].id +  " == IT");
+				if(dato[i].id == "IT")
+					selected = "selected";
+				var tmp = "<option value='"+dato[i].id+"' "+selected+">"+dato[i].nome+"</option>";
+				elemSelect.append(tmp);
+			}
+		}
+		
+		jQuery.postJSON("RegistrazioneUtente", "getNazioni","public", {}, false, callBackNazioni);
+	}
+	
+	_this.popolaRegioni = function(elemSelect){
+			
+		function callBackRegione(dato){
+			
+			//console.log(dato);
+			//jQuery("#regione").html("<option ");
+			for(var i = 0;i < dato.length;i++){	
+				var tmp = "<option value='"+dato[i].id+"'>"+dato[i].nome+"</option>";
+				elemSelect.append(tmp);
+			}
+		}
+		
+		jQuery.postJSON("RegistrazioneUtente", "getRegioni","public", {}, false, callBackRegione);
+			
+	}
+	
+	_this.popolaProvince = function(id_regione, elemSelect){
+		
+		function callBackProvince(dato){
+			//console.log(dato);
+			//jQuery("#provincia").html("");
+			for(var i = 0;i < dato.length;i++){
+				var tmp = "<option value='"+dato[i].id+"'>"+dato[i].nome+"</option>";
+				elemSelect.append(tmp);
+			}
+		}
+		
+		jQuery.postJSON("RegistrazioneUtente", "getProvince","public", {"regione":id_regione}, false, callBackProvince);
+	}
+	
+	_this.popolaComuni = function(id_provincia,elemSelect){
+		
+		function callBackComuni(dato){
+			//console.log(dato);
+			//jQuery("#comune").html("");
+			for(var i = 0;i < dato.length;i++){
+				var tmp = "<option value='"+dato[i].id+"'>"+dato[i].nome+"</option>";
+				elemSelect.append(tmp);
+			}
+		}
+		
+		jQuery.postJSON("RegistrazioneUtente", "getComuni","public", {"provincia":id_provincia}, false, callBackComuni);
+	}
+	
+	
+	
+	_this.checkDatiInseriti = function(data_creazione){
+		
+		
+		 var request = {
+			"rubrica":{},
+			"sede": {},
+			"cantiere":{}
+		 };
+		
+		 request.rubrica.data_inserimento = data_creazione;
+		 request.rubrica.ragione_sociale = jQuery("#ragione_sociale").val();
+		 request.rubrica.partita_iva = jQuery("#partita_iva").val();
+		 request.rubrica.codice_fiscale = jQuery("#codice_fiscale").val();
+		 request.rubrica.responsabile = jQuery("#responsabile").val();
+		 request.rubrica.email = jQuery("#email").val();
+		 request.rubrica.partita_iva = jQuery("#partita_iva").val();
+		 request.rubrica.cellulare = jQuery("#cellulare").val();
+		 request.rubrica.telefono = jQuery("#telefono").val();
+		 request.rubrica.attivita = jQuery("#attivita").val();
+		 request.rubrica.banca = jQuery("#banca").val();
+		 request.rubrica.iban = jQuery("#iban").val();
+		 request.rubrica.fax = jQuery("#fax").val();
+		 request.rubrica.agente = jQuery("#agente").val();
+		 request.rubrica.capo_area = jQuery("#capo_area").val();
+		 request.rubrica.partita_iva = jQuery("#partita_iva").val();
+		 request.rubrica.denominazione_cantiere = jQuery("#denominazione_cantiere").val();
+		 request.rubrica.referente_cantiere = jQuery("#referente_cantiere").val();
+		 request.rubrica.cellulare_referente_cantiere = jQuery("#cellulare_referente_cantiere").val();
+		 request.rubrica.email_referente_cantiere = jQuery("#email_referente_cantiere").val();
+		 request.rubrica.aliquota_iva = jQuery("#aliquota_iva").val();
+		 request.rubrica.partita_iva = jQuery("#partita_iva").val();
+		 request.rubrica.modalita_pagamento = jQuery("#tipologia_pagamento option:selected").val();
+		 request.rubrica.account = jQuery.getCookie("utente").email;
+		 
+		 request.sede.nazione = jQuery("#nazione option:selected").val();
+		 request.sede.regione = jQuery("#regione option:selected").val();
+		 request.sede.provincia = jQuery("#provincia option:selected").val();
+		 request.sede.comune = jQuery("#comune option:selected").val();
+		 request.sede.indirizzo = jQuery("#indirizzo").val();
+		 request.sede.civico = jQuery("#civico").val();
+		 request.sede.cap = jQuery("#cap").val();
+		 request.sede.id_indirizzo = jQuery("#id_indirizzo").val();
+		 
+		 request.cantiere.nazione = jQuery("#nazione_cantiere option:selected").val();
+		 request.cantiere.regione = jQuery("#regione_cantiere option:selected").val();
+		 request.cantiere.provincia = jQuery("#provincia_cantiere option:selected").val();
+		 request.cantiere.comune = jQuery("#comune_cantiere option:selected").val();
+		 request.cantiere.indirizzo = jQuery("#indirizzo_cantiere").val();
+		 request.cantiere.civico = jQuery("#civico_cantiere").val();
+		 request.cantiere.cap = jQuery("#cap_cantiere").val();
+		 request.cantiere.id_indirizzo = jQuery("#id_indirizzo_cantiere").val();
+	 
+	 
+	 	//console.log(request);
+	 
+	 
+	 	var response = "";
+		if(!jQuery.validaValore(request.sede.regione)){
+			alert("La regione non è stata specificata");
+			return false;	
+		}
+		
+		if(!jQuery.validaValore(request.sede.provincia)){
+			alert("La provincia non è stata specificata");
+			return false;	
+		}
+		
+		if(!jQuery.validaValore(request.sede.comune)){
+			alert("Il comune non è stato specificato");
+			return false;	
+		}
+		
+		if(!jQuery.validaValore(request.sede.indirizzo)){
+			alert("Non è stato specificato l'indirizzo");
+			return false;	
+		}
+		
+		if(!jQuery.validaValore(request.sede.civico)){
+			alert("Non è stato specificato il numero civico");
+			return false;	
+		}
+		
+		if(!jQuery.validaValore(request.sede.cap)){
+			alert("Non è stato specificato il cap");
+			return false;	
+		}
+		
+		
+		
+		if(!jQuery.validaValore(request.rubrica.partita_iva) && !jQuery.validaValore(request.rubrica.codice_fiscale)){
+			alert("Devi specificare almeno un valore tra partita iva e codice fiscale");
+			return false;	
+		}
+		
+		
+		if(jQuery.validaValore(request.rubrica.partita_iva)){
+			var tmpResult = jQuery.checkPartitaIva(request.rubrica.partita_iva);
+			if(!tmpResult.result){
+				alert(tmpResult.message);
+				return false;	
+			}
+		}
+		
+		if(jQuery.validaValore(request.rubrica.codice_fiscale)){
+			var tmpResult = jQuery.checkCodiceFiscale(request.rubrica.codice_fiscale);
+			if(!tmpResult.result){
+				alert(tmpResult.message);
+				return false;	
+			}
+		}
+		
+		if(!jQuery.validaValore(request.rubrica.responsabile)){
+			alert("Non hai inserito il responsabile ufficio acquisti");
+			return false;	
+		}
+	 	
+		response = jQuery.email(request.rubrica.email);
+		if(!response.result){
+			alert("Email non valida");	
+			return false;	
+		}
+		
+		if(!jQuery.validaValore(request.rubrica.telefono)){
+			alert("Non hai inserito il telefono");
+			return false;	
+		}
+		
+		if(!jQuery.validaValore(request.rubrica.fax)){
+			alert("Non hai inserito il fax");
+			return false;	
+		}
+		
+		if(!jQuery.validaValore(request.rubrica.cellulare)){
+			alert("Non hai inserito il cellulare");
+			return false;	
+		}
+		
+		if(!jQuery.validaValore(request.rubrica.attivita)){
+			alert("Non hai inserito l'attività");	
+			return false;	
+		}
+
+		
+		if(!jQuery.validaValore(request.cantiere.regione)){
+			alert("Non hai inserito la regione del cantiere");	
+			return false;	
+		}
+		
+		response2 = jQuery.email(request.rubrica.email_referente_cantiere);
+		if(request.rubrica.email_referente_cantiere != "")
+			if(!response2.result){
+				alert("Email referente non valida");	
+				return false;	
+			}
+		
+		if(!jQuery.validaValore(request.cantiere.provincia)){
+			alert("Non hai inserito la provincia del cantiere");	
+			return false;	
+		}
+		
+		if(!jQuery.validaValore(request.cantiere.comune)){
+			alert("Non hai inserito il comune del cantiere");	
+			return false;	
+		}
+		
+		if(!jQuery.validaValore(request.cantiere.indirizzo)){
+			alert("Non è stato specificato l'indirizzo del cantiere");
+			return false;	
+		}
+		
+		if(!jQuery.validaValore(request.cantiere.civico)){
+			alert("Non è stato specificato il numero civico del cantiere");
+			return false;	
+		}
+		
+		if(!jQuery.validaValore(request.cantiere.cap)){
+			alert("Non è stato specificato il cap del cantiere");
+			return false;	
+		}
+		
+		if(!jQuery.validaValore(request.rubrica.aliquota_iva)){
+			alert("Non è stata inserita l'aliquota iva");
+			return false;	
+		}	
+		
+		if(!jQuery.validaValore(request.rubrica.modalita_pagamento)){
+			alert("Non è stato selezionato nessuna modalità di pagamento");
+			return false;	
+		}	
+		
+		return request;
+		
+	}
+	
+	
+	_this.cancellaSelezionati = function(){
+		var result = confirm("Sei sicuro di voler eliminare tutti le voci della rubrica selezionate?");
+		if(result){
+			_this.content.loader.init(function(){
+				jQuery(".checkbox_rubrica").each(function(){
+					if(jQuery(this).is(":checked")){
+							
+							
+						var rubrica = {
+							"email": jQuery.getCookie("utente").email,
+							"ruolo": jQuery.getCookie("utente").ruolo,
+							"data_inserimento": jQuery(this).attr("data"),
+							"indirizzo": jQuery(this).attr("indirizzo"),
+							"indirizzo_cantiere": jQuery(this).attr("indirizzo_cantiere")
+						}	
+							
+							//console.log("Qui la rubrica!");
+						//console.log(rubrica);	
+							
+						function callBackRubrica(dato){
+							//console.log("Dato");
+							//console.log(dato);
+							if(!dato.success){
+								alert(dato.errorMessage);	
+								return;
+							}
+							
+							if(dato.results[0] == 0){
+								jQuery("#tabellaRubrica").html("<h4 align=\"center\">Nessuna voce nella rubrica</h4>");
+							}
+							
+
+						}
+					
+						jQuery.postJSON("Rubrica","removeFromRubrica", "private", rubrica, false, callBackRubrica);
+						
+						jQuery("."+jQuery(this).parent().attr("class")).remove();
+						
+					}
+				});
+				_this.content.loader.remove();
+			});
+		}else _this.content.loader.remove();
+	}
+	
+}

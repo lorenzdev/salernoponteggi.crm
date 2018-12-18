@@ -1,0 +1,194 @@
+<html>
+<head>
+<style>
+#form_registrazione{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+}
+
+#form_registrazione h3{
+	color:#002F60;
+	font-weight:bold;
+	font-size:16px;
+	background-color:#f2f2f2;
+	padding:5px;
+}
+
+#form_registrazione input{
+	border:1px solid #ccc;
+	margin:5px 0px;
+	width:250px;
+}
+
+#form_registrazione textarea{
+	border:1px solid #ccc;
+	margin:5px 0px;
+	width:250px;
+}
+
+#form_registrazione select{
+	border:1px solid #ccc;
+	margin:5px 0px;
+	width:250px;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="../css/registrazione.css">
+</head>
+<body>
+<div id='form_registrazione' style="padding-top:20px;">
+<h3>Modifica i propri dati</h3><br><br>
+
+
+<!-- tipologia utente -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Tipologia Utente:</div>
+<div style='float:left;'>
+<select id="tipo_utente" disabled="disabled">
+<option value="null">Seleziona la tipologia</option>
+<option value="Distributore">Distributore</option>
+<option value="Rivenditore">Rivenditore</option>
+<option value="Impresa edile">Impresa edile</option>
+<option value="Privato">Privato</option>
+<option value="Agente commercio">Agente di commercio</option>
+<option value="Procacciatore affari">Procacciatore di affari</option>
+</select> *
+</div>
+</div><br><br>
+
+<!-- nome -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Nome:</div><div style='float:left;'>
+<input type='text' id="nome"  /> *</div>
+</div><br><br>
+
+<!-- cognome -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Cognome:</div><div style='float:left;'>
+<input type='text' id="cognome" /> *</div>
+</div><br><br>
+
+<!-- sesso -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Sesso:</div>
+<div style='float:left;'>
+<select id="sesso">
+<option value="null">Selezione il sesso</option>
+<option value="M">M</option>
+<option value="F">F</option>
+</select></div>
+</div><br><br>
+
+<!-- ragione sociale -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Ragione sociale:</div><div style='float:left;'>
+<input type='text' id="ragione_sociale" /></div>
+</div><br><br>
+
+<!-- note -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Descrizione attività:</div><div style='float:left;'>
+<textarea id="mansioni" rows="4" cols="16" placeholder="Rivendita serramenti in alluminio, Impresa edile, etc."></textarea>*</div>
+</div><br><br><br><br>
+
+<!-- codice fiscale -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Codice fiscale:</div><div style='float:left;'>
+<input type='text' id="codice_fiscale" /> <span class="iva_cf">**</span></div>
+</div><br><br>
+
+
+<!-- partita iva -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Partita iva:</div><div style='float:left;'>
+<input type='text' id="partita_iva" /> <span class="iva_cf">**</span></div>
+</div><br><br>
+<!-- website -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Website:</div><div style='float:left;'>
+<input type='text' id="website" /></div>
+</div><br><br />
+<!-- cellulare -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Cellulare:</div><div style='float:left;'>
+<input type='text' id="cellulare" /> *</div>
+</div><br><br>
+<!-- telefono -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Telefono:</div><div style='float:left;'>
+<input type='text' id="telefono" /> *</div>
+</div><br><br>
+<!-- fax -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Fax:</div><div style='float:left;'>
+<input type='text' id="fax" /></div>
+</div><br><br><br>
+
+<div style='clear:both;'></div>
+<!-- Indirizzo di residenza -->
+<!-- Nazione -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Nazione: </div><div style='float:left;'>
+<select id="nazione" disabled>
+<option value="null">Seleziona la nazione</option>
+</select></div>
+</div><br><br>
+<!-- Regione -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Regione: </div><div style='float:left;'>
+<select id="regione">
+<option value="null">Seleziona la regione</option>
+</select> *</div>
+</div><br><br>
+<!-- Provincia -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Provincia: </div><div style='float:left;'>
+<select id="provincia" disabled="disabled">
+<option value="null">Seleziona la provincia</option>
+</select> *</div>
+</div><br><br>
+<!-- Comune-->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Comune: </div><div style='float:left;'>
+<select id="comune" disabled="disabled">
+<option value="null">Seleziona il comune</option>
+</select> *</div>
+</div><br><br>
+<!-- indirizzo -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>indirizzo:</div><div style='float:left;'>
+<input type='text' id="indirizzo" /> *</div>
+</div><br><br>
+<!-- civico -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Civico:</div><div style='float:left;'>
+<input type='text' id="civico" /> *</div>
+</div><br><br>
+<!-- cap -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Cap:</div><div style='float:left;'>
+<input type='text' id="cap" maxlength="5"/> *</div>
+</div><br><br>
+
+<!-- email -->
+<!--<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Email:</div><div style='float:left;' id="email">
+</div><br><br />-->
+<br><br>
+<!-- password -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Password:</div><div style='float:left;'>
+<input type='password' id="password" maxlength="9"/></div>
+</div><br><br>
+
+<!-- ripeti password -->
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Ripeti password:</div><div style='float:left;'>
+<input type='password' id="ripeti_password" maxlength="9"/></div>
+</div><br><br>
+
+<div style='clear:both;'>
+<div style='float:left;width:130px;text-align:right;padding-right:10px;height:30px;line-height:30px;'></div>
+<div style='float:left;'><input type="button" value="MODIFICA" id="modifica"  style="width:auto;"/>
+</div><br><br><br /><br />
+<div>I campi contrassegnati da (*) sono obbligatori<br />Per i campi contrassegnati da (**) è obbligatorio l'inserimento di almeno un dato</div>
+</div>

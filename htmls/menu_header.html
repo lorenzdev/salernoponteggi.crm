@@ -1,0 +1,125 @@
+<div style="background-color: #FFF;
+    max-width: 1200px;
+    margin: 0 auto;">
+<header>
+    <div class="header_top">
+        <div class="container">
+            <div class="pull-left">
+                <a data-toggle="collapse" data-target="#menu"><img src="img/logo.png" alt="" width="230" height="60" style="margin-top: 20px;"></a>
+            </div>
+            <div class="pull-right">
+                <div class="text-right boxbenvenuto">
+                    <h5 id="Benvenuto">Benvenuto</h5>
+                    <h6 id="nome_utente">Lorenzo Vitale</h6>
+                    <a id="esci" class="btn btn-primary active" role="button"><span class="loading"></span>  Esci</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="menucustom">
+      <div class="container">
+      <nav class="collapse navbar-collapse" id="menu">
+        <ul class="nav navbar-nav">
+        <li class="active"><a id="Home" href="#"><i class="icon-home hidden-lg hidden-md"></i> Home</a></li>
+        <li><a class="ROLE_ADMIN ROLE_ASSISTANT Profilo"><i class="icon-profilo hidden-lg hidden-md"></i> Profilo</a></li>
+        <li class="dropdown" id="menu_prodotti">
+          <a class="inactive menu ROLE_ADMIN ROLE_ASSISTANT" id="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="linkactive"><i class="icon-prodotti hidden-lg hidden-md"></i> Prodotti <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a class="inactive menu ROLE_ADMIN ROLE_ASSISTANT FormPonteggioElettrico"><i class="icon-sezionali hidden-lg hidden-md"></i>Ponteggi Elettrici</a></li>
+            <li><a class="inactive menu ROLE_ADMIN ROLE_ASSISTANT FormPonteggioSospeso"><i class="icon-basculanti hidden-lg hidden-md"></i>Ponteggi Sospesi</a></li>
+            <li><a class="inactive menu ROLE_ADMIN ROLE_ASSISTANT FormAscensore"><i class="icon-tagliafuoco hidden-lg hidden-md"></i>Ascensori da Cantiere</a></li>
+            <li><a class="inactive menu ROLE_ADMIN ROLE_ASSISTANT FormMontacarico"><i class="icon-multiuso hidden-lg hidden-md"></i>Montacarico</a></li>
+
+
+          </ul>
+        </li>
+        <li><a class="inactive menu ROLE_ADMIN ROLE_ASSISTANT Carrello"><i class="icon-carrello hidden-lg hidden-md"></i> Carrello</a></li>
+        <li><a class="inactive menu ROLE_ADMIN ROLE_ASSISTANT GestionePreventivi"><i class="icon-preventivi hidden-lg hidden-md"></i> Preventivi</a></li>
+        <li><a class="inactive menu ROLE_ADMIN ROLE_ASSISTANT Clienti"><i class="icon-rubrica hidden-lg hidden-md"></i> Rubrica</a></li>
+        <li><a class="inactive menu ROLE_ADMIN GestioneUtenti"><i class="icon-utenti hidden-lg hidden-md"></i> Utenti</a></li>
+      </ul>
+      </nav>
+      </div>
+    </div>
+
+<div class="line"></div>
+<div class="container" id="ERROR_LOG"></div>
+
+   <div class="container" id="Body">
+    <!--<div class="row">
+        <div class="col-xs-6 col-md-4 col-lg-3">
+          <a class="thumbnail ROLE_ADMIN ROLE_ASSISTANT Profilo">
+            <img src="img/profilo.png" alt="img/profilo.png">
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-4 col-lg-3">
+          <a class="thumbnail ROLE_ADMIN ROLE_ASSISTANT" data-toggle="collapse" data-target="#prodotti">
+            <img src="img/prodotti.png" alt="img/prodotti.png">
+          </a>
+        </div>
+        <div class="collapse" id="prodotti">
+          <div class="col-xs-6 col-md-4 col-lg-3">
+            <a class="thumbnail ROLE_ADMIN ROLE_ASSISTANT thumbnail_prodotti FormPonteggioElettrico">
+              <img src="img/sezionali.png" alt="img/sezionali.png">
+            </a>
+          </div>
+
+          <div class="col-xs-6 col-md-4 col-lg-3">
+            <a class="thumbnail ROLE_ADMIN ROLE_ASSISTANT thumbnail_prodotti FormPonteggioSospeso">
+              <img src="img/basculanti.png" alt="img/basculanti.png">
+            </a>
+          </div>
+
+
+          <div class="col-xs-6 col-md-4 col-lg-3">
+            <a class="thumbnail ROLE_ADMIN ROLE_ASSISTANT thumbnail_prodotti" data-toggle="collapse" data-target="#porte">
+              <img src="img/porte.png" alt="img/porte.png">
+            </a>
+          </div>
+
+          <div class="collapse" id="porte">
+            <div class="col-xs-6 col-md-4 col-lg-3">
+              <a class="thumbnail ROLE_ADMIN ROLE_ASSISTANT thumbnail_porte FormAscensore">
+                <img src="img/tagliafuoco.png" alt="img/tagliafuoco.png">
+              </a>
+            </div>
+
+          <div class="col-xs-6 col-md-4 col-lg-3">
+              <a class="thumbnail ROLE_ADMIN ROLE_ASSISTANT thumbnail_porte FormMontacarico">
+                <img src="img/multiuso.png" alt="img/multiuso.png">
+              </a>
+          </div>
+          </div>
+
+        </div>
+        <div class="col-xs-6 col-md-4 col-lg-3">
+          <a class="thumbnail ROLE_ADMIN ROLE_ASSISTANT Carrello">
+            <img src="img/carrello.png" alt="img/carrello.png">
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-4 col-lg-3">
+          <a class="thumbnail ROLE_ADMIN ROLE_ASSISTANT GestionePreventivi">
+            <img src="img/preventivi.png" alt="img/preventivi.png">
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-4 col-lg-3">
+          <a class="thumbnail ROLE_ADMIN ROLE_ASSISTANT Clienti">
+            <img src="img/rubrica.png" alt="img/rubrica.png">
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-4 col-lg-3">
+          <a class="thumbnail ROLE_ADMIN GestioneUtenti">
+            <img src="img/utenti.png" alt="img/utenti.png">
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+     <p class="testo_blu" style="font-size:11px;text-align:center;padding:5px;"><b>Salerno Ponteggi srl</b> - Pontecagnano Faiano (SA)  - Tel. +39 089 382657 - <a href='mailto:info@salernoponteggi.com'>info@salernoponteggi.com</a> - P.Iva/C.F. 05711920651  &nbsp;
+                <span style="white-space:nowrap;">Powered by: <a  style="position: relative;top: -2px;" href="http://www.lorenzovitale.it" target="_blank"><img src="images/logo_digitalsolutions.png" /></a></span>
+            </p><br />-->
+
+</div>

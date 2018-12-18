@@ -1,0 +1,376 @@
+
+
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/registrazione.css">
+
+</head>
+<body style="background:url(images/CERRATO_intro-3.jpg);background-size: 1920px 1280px;background-repeat: no-repeat;">
+<div id='form_registrazione' style="padding-top:20px;">
+<h3>Iscrizione alla piattaforma di preventivazione online</h3>
+
+<div>
+<b>Sei un Agente o un Cliente?</b><br>
+Iscrivendoti come Agente o come Cliente, il tuo account sarà sottoposto a verifica prima di essere attivato. Riceverai una mail di conferma all'indirizzo fornito.
+</div>
+<br>
+<fieldset>
+
+<legend><input type="checkbox" id="check_agente" checked> Dati Agente</legend>
+<br>
+<div id="content_agente" style="overflow:hidden;">
+
+<!-- agente -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Nome:</div>
+<div style='float:left;'>
+<input type='text' id="nome_agente" class="agente"/> *</div>
+</div><br><br>
+
+<!-- agente -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Cognome:</div>
+<div style='float:left;'>
+<input type='text' id="cognome_agente" class="agente"/> *</div>
+</div><br><br>
+
+<!-- Sesso -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Sesso: </div>
+<div style='float:left;'>
+<select id="sesso_agente" class="agente"  style="width: 38px;">
+<option value="M">M</option>
+<option value="F">F</option>
+</select></div>
+</div><br><br>
+
+<!-- agente -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Telefono:</div>
+<div style='float:left;'>
+<input type='text' id="telefono_agente" class="agente"/></div>
+</div><br><br>
+
+<!-- agente -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Cellulare:</div>
+<div style='float:left;'>
+<input type='text' id="cellulare_agente" class="agente"/></div>
+</div><br><br>
+
+<!-- Mansioni -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Mansioni:</div>
+<div style='float:left;'>
+<textarea id="mansioni_agente" style="height:120px;" class="agente"></textarea></div>
+</div><br><br />
+
+<!-- partita iva -->
+<div style='clear:both;' class="field_container">
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Partita iva:</div>
+<div style='float:left;'>
+<input type='text' id="partita_iva_agente" class="agente"/></div>
+</div><br><br>
+
+
+<!-- codice_fiscale -->
+<div style='clear:both;' class="field_container">
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Codice fiscale:</div>
+<div style='float:left;'>
+<input type='text' id="codice_fiscale_agente"  class="agente"/></div>
+</div><br><br>
+
+<!-- Regione -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Regione: </div><div style='float:left;'>
+<select id="regione_agente" class="regione" class="agente">
+<option value="null">Seleziona la regione</option>
+</select></div>
+</div><br><br>
+
+<!-- Provincia -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Provincia: </div><div style='float:left;'>
+<select id="provincia_agente" class="provincia" disabled="disabled" class="agente">
+<option value="null">Seleziona la provincia</option>
+</select></div>
+</div><br><br>
+
+
+<!-- email agente -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Email:</div>
+<div style='float:left;'>
+<input type='text' id="username"  class="agente"/> *</div>
+</div><br><br />
+
+<!-- passowrd -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Password:</div>
+<div style='float:left;'>
+<input type='password' id="password" maxlength="20" class="agente"/> *</div>
+</div><br><br>
+
+<!-- passowrd -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Conferma password:</div>
+<div style='float:left;'>
+<input type='password' id="conferma_password" maxlength="20" class="agente"/></div>
+</div><br><br>
+
+
+<!-- condizioni e trattamento dati personali -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'></div>
+<div style='float:left;'>
+<input type='checkbox' id="check_condizioni_agente" class="agente" maxlength="20"/> Accetto le <a href="trattamento_dati_personali">Condizioni</a> e confermo di aver letto la <a href="trattamento_dati_personali">Normativa sul trattamento dei dati</a></div>
+</div><br><br>
+
+</fieldset>
+
+<span id="errori_compilazione_agente" style="color:#F00"></span>
+
+</div>
+
+<fieldset>
+
+<legend><input type="checkbox" id="check_cliente"> Dati Cliente</legend>
+
+<br>
+<div id="content_cliente" style="overflow:hidden;height:0px;">
+
+<!-- ragione sociale -->
+<div style='clear:both;' class="field_container">
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Ragione sociale:</div>
+<div style='float:left;'>
+<input type='text' id="ragione_sociale" class="cliente"/> *</div>
+</div><br><br>
+
+<!-- indirizzo -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>indirizzo via:</div><div style='float:left;'>
+<input type='text' id="indirizzo" class="cliente"/> *</div>
+</div><br><br>
+
+
+<!-- civico -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Civico:</div><div style='float:left;'>
+<input type='text' id="civico" class="cliente" style="width: 55px;"/> *</div>
+</div><br><br>
+
+
+<!-- cap -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Cap:</div><div style='float:left;'>
+<input type='text' id="cap" style="width: 55px;" maxlength="5" class="cliente"/> *</div>
+</div><br><br>
+
+<!-- Nazione -->
+<!--<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Nazione: </div><div style='float:left;'>
+<select id="nazione" disabled>
+<option value="null">Seleziona la nazione</option>
+</select></div>
+</div><br><br>
+-->
+
+<!-- Regione -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Regione: </div><div style='float:left;'>
+<select id="regione" class="regione" class="cliente">
+<option value="">Seleziona la regione</option>
+</select> *</div>
+</div><br><br>
+
+<!-- Provincia -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Provincia: </div><div style='float:left;'>
+<select id="provincia" class="provincia" class="cliente">
+<option value="">Seleziona la provincia</option>
+</select> *</div>
+</div><br><br>
+
+<!-- Comune-->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Comune: </div><div style='float:left;'>
+<select id="comune" disabled="disabled" class="comune" class="cliente">
+<option value="">Seleziona il comune</option>
+</select> *</div>
+</div><br><br>
+
+<!-- Comune-->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Fraz.: </div><div style='float:left;'>
+<div style='float:left;'>
+<input type='text' id="citta" /></div>
+</div><br><br>
+
+<!-- partita iva -->
+<div style='clear:both;' class="field_container">
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Partita iva:</div>
+<div style='float:left;'>
+<input type='text' id="partita_iva"  class="cliente"/> **</div>
+</div><br><br>
+
+
+<!-- codice_fiscale -->
+<div style='clear:both;' class="field_container">
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Codice fiscale:</div>
+<div style='float:left;'>
+<input type='text' id="codice_fiscale"  class="cliente"/> **</div>
+</div><br><br>
+
+<!-- telefono ufficio -->
+<div style='clear:both;' class="field_container">
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Telefono ufficio:</div>
+<div style='float:left;'>
+<input type='text' id="telefono"  class="cliente"/></div>
+</div><br><br>
+
+<!-- fax ufficio -->
+<div style='clear:both;' class="field_container">
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Fax ufficio:</div>
+<div style='float:left;'>
+<input type='text' id="fax"  class="cliente"/></div>
+</div><br><br>
+
+<!-- email -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Email:</div>
+<div style='float:left;'>
+<input type='text' id="email"  class="cliente"/> *</div>
+</div><br><br />
+
+<!-- cellulare -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Cellulare:</div>
+<div style='float:left;'>
+<input type='text' id="cellulare"  class="cliente"/></div>
+</div><br><br>
+
+<!-- cellulare -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Sito web:</div>
+<div style='float:left;'>
+<input type='text' id="website"  class="cliente"/></div>
+</div><br><br>
+
+<!-- Attività cliente -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Attività cliente:</div>
+<div style='float:left;'>
+<input type='text' id="attivita_cliente"  class="cliente"/></div>
+</div><br><br>
+
+<!-- Banca -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Banca:</div>
+<div style='float:left;'>
+<input type='text' id="banca"  class="cliente"/></div>
+</div><br><br>
+
+<!-- IBAN -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>IBAN:</div>
+<div style='float:left;'>
+<input type='text' id="iban"  class="cliente"/></div>
+</div><br><br>
+
+
+
+
+<!-- capo area -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Capo area:</div>
+<div style='float:left;'>
+<input type='text' id="capo_area"  class="cliente"/></div>
+</div><br><br>
+
+<!-- email agente -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Email capo area:</div>
+<div style='float:left;'>
+<input type='text' id="email_capo_area"  class="cliente"/></div>
+</div><br><br />
+
+<!-- sconto richiesto -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Sconto richiesto:</div>
+<div style='float:left;'>
+<input type='text' id="sconto_richiesto" style="width:40px;" maxlength="2" value="0" class="cliente"/></div>
+</div><br><br>
+
+<!-- aliquota iva -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Aliquota IVA richiesta:</div>
+<div style='float:left;'>
+<input type='text' id="aliquota_iva_richiesta" style="width:40px;" maxlength="2" value="22" class="cliente"/></div>
+</div><br><br>
+
+
+<!-- modalità invio preventivo -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Modalità invio preventivo: </div>
+<div style='float:left;'>
+<select id="modalita_invio_preventivo" class="cliente">
+<option value="solo_agente">Solo all' Agente</option>
+<option value="solo_cliente">Solo al Cliente</option>
+<option value="solo_capo_area">Solo al Capo area</option>
+<option value="tutti">Tutti</option>
+</select></div>
+</div><br><br>
+
+<!-- modalità di pagamento-->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'>Modalità di pagamento: </div>
+<div style='float:left;'>
+<select id="modalita_pagamento" class="cliente">
+<option value="null">Seleziona il tipo pagamento</option>
+<option value="5">NR. 1 R.B. 60 GG. F.M.</option>
+<option value="11">NR. 1 R.B. A 90 GG. F.M.</option>
+<option value="13">NR. 2 R. B. 30-60 GG. FM</option>
+<option value="16">ALLA CONSEGNA CON VS. TITOLO</option>
+<option value="32">30%+IVA ACC, RESTO TITOLO SCARI</option>
+<option value="35">CON VS. ASS. AD AVVISO MERCE PRO</option>
+<option value="64">BONIFICO BANCARIO A 60gg</option>
+<option value="68">BONIFICO A 30gg</option>
+</select></div>
+</div><br><br>
+
+
+<!-- condizioni e trattamento dati personali -->
+<div style='clear:both;'>
+<div style='float:left;width:150px;text-align:right;    padding: 7px;'></div>
+<div style='float:left;'>
+<input type='checkbox' id="check_condizioni_cliente" class="agente" maxlength="20"/> Accetto e confermo di aver letto la <a href="trattamento_dati_personali">Normativa sul trattamento dei dati</a></div>
+</div><br><br>
+
+<div style='clear:both;'></div>
+<!-- Indirizzo di residenza -->
+<br><br>
+
+</div>
+
+</fieldset>
+
+<br>
+
+<span id="errori_compilazione_cliente" style="color:#F00"></span>
+
+
+<div>
+<b>Perchè iscrivermi come Agente?</b>
+La piattaforma di preventivazione online di Cerrato SpA consente agli Agenti iscritti di creare e gestire preventivi in maniera più veloce ed efficiente miglirando la comunicazione con l'area commerciale e la soddisfazione del Cliente.<br><br>
+<b>Perchè iscrivermi come Cliente?</b>
+I Clienti iscritti alla piattaforma di preventivazione online di Cerrato SpA potranno ricevere preventivi in maniera rapida consultandoli in formato pdf elettronico inviati per mezzo email nel momento esatto della loro creazione.<br>
+</div>
+
+<span id="esito" style="color:#F00"></span>
+
+<center><button id="salva_utente" style="width:auto;cursor:pointer;">Salva</button></center>
+<br><br><br /><br />
+<div style="font-size:11px;color:#666;">I campi contrassegnati da (*) sono obbligatori<br />Per i campi contrassegnati da (**) è obbligatorio l'inserimento di almeno un dato</div>
+</div>
+</body>
+</html>

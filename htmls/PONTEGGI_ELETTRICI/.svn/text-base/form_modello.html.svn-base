@@ -1,0 +1,15 @@
+<h3>Scegli il modello</h3>
+<span id='checkRepeatModello'></span>
+<div id='ElencoModelli'></div>
+<br><br>
+<h4>Scelta molle</h4>
+<input type="radio"  name="molle" class="molle" value="molle anteriori" /> Con molle anteriori<br />
+<input type="radio"  name="molle" class="molle" value="molle posteriori" /> Con molle posteriori<br /><br />
+<div id='ElencoSottoModelli'></div>
+<br><br>
+<div id='warning' style="margin:10px 0px;"></div>
+<div style="text-align:center;">
+<input type="button" value="CONTINUA" id="continua" style="height:40px;width:150px;" disabled="disabled"/>&nbsp;&nbsp;
+<input type="button" value="INDIETRO" id="indietro" style="height:40px;width:150px;"/>
+</div>
+<br><br><br><br>

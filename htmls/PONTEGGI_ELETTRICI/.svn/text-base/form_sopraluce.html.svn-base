@@ -1,0 +1,12 @@
+<h3>Scegli il sopraluce</h3>
+<span id='checkRepeatSopraluce'></span><br />
+<div id="sopraluce">
+</div>
+<br><br><br><br>
+<div style="text-align:center;">
+<input type="button" value="AVANTI" id="continua" style="height:40px;width:150px;" disabled="disabled"/>&nbsp;&nbsp;
+<input type="button" value="INDIETRO" id="indietro" style="height:40px;width:150px;"/>&nbsp;&nbsp;
+<input type="button" value="SALTA" id="salta" style="height:40px;width:150px;"/>
+</div>
+<br><br><br><br>
+

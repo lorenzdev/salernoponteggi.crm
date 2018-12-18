@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Salerno ponteggi srl</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/checkbox.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/jquery.idealforms.css">
+	<link href="css/tip-twitter/tip-twitter.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="js/colortip/colortip-1.0-jquery.css" type="text/css" media="all" />
+  </head>
+  <body>
+    <div class="container">
+    <!-- LOGO -->
+    	<div class="row" style=" max-width: 840px;
+    margin: 0 auto;
+    background-color: #FFF;
+    padding: 0px 30px 30px 30px;">
+
+      <div class="row pagination-centered">
+          <img src="img/logo.png" alt="" width="180" height="50" style="margin-top: 20px;"/>
+      </div>
+<!-- modulo registrazione agente-->
+        <div id="Content">
+
+            <div class="col-md-12">
+                <a href="index.html"><button type="button" class="btn btn-primary">effettua il login</button></a>
+                <h4>Iscrizione alla piattaforma di preventivazione online</h4>
+                <p class="text-justify small"><b> Sei un Agente o un Cliente?</b><br>Iscrivendoti, il tuo account sarà sottoposto a verifica prima di essere attivato. Riceverai una mail di conferma all'indirizzo email fornito.</p>
+
+                <div class="form-check">
+
+					<div id="content_account" style="display:block;">
+                      <label for="nome">Nome*</label>
+                      <input type="text" class="form-control" id="nome_agente"><br>
+                      <label for="cognome">Cognome*</label>
+                      <input type="text" class="form-control" id="cognome_agente"><br>
+                      <label for="email">Email*</label>
+                      <input type="input" class="form-control" id="username"><br>
+                      <label for="email2">Ripeti email</label>
+                      <input type="input" class="form-control" id="conferma_username"><br>
+                      <label for="password">Password*</label>
+                      <input type="password" class="form-control" id="password"><br>
+                      <label for="password2">Conferma password*</label>
+                      <input type="password" class="form-control" id="conferma_password"><br>
+                    </div>
+
+
+                    <div class="checkbox checkbox-primary" style="margin:20px 0px 20px 0px;">
+                      <input id="check_agente" type="checkbox">
+                      <label for="check_agente">Iscriviti come Agente</label>
+                    </div>
+
+                    <div class="checkbox checkbox-primary" style="margin:10px 0px 20px 0px;">
+                      <input id="check_cliente" type="checkbox">
+                      <label for="check_cliente">Iscriviti come Cliente</label>
+                    </div>
+                    <br>
+
+                    <!--<p class="text-justify small"><b>Perchè iscrivermi come Agente?</b> La piattaforma di preventivazione online di Cerrato SpA consente agli Agenti iscritti di creare e gestire preventivi in maniera più veloce ed efficiente migliorando la comunicazione con l'area commerciale e la soddisfazione del Cliente.</p>
+                    <p class="text-justify small"><b>Perchè iscrivermi come Cliente?</b> I Clienti iscritti alla piattaforma di preventivazione online di Cerrato SpA potranno ricevere preventivi in maniera rapida consultandoli in formato pdf elettronico inviati per mezzo email nel momento esatto della loro creazione.</p>
+-->
+
+                  <br>
+
+
+                    <div id="content_agente" style="display:none;">
+
+                      <label for="sesso">Sesso</label>
+                      <select class="form-control" id="sesso_agente">
+                        <option>M</option>
+                        <option>F</option>
+                      </select><br>
+                      <label for="telefono">Telefono</label>
+                      <input type="text" class="form-control" id="telefono_agente"><br>
+                      <label for="cellulare">Cellulare</label>
+                      <input type="text" class="form-control" id="cellulare_agente"><br>
+                      <label for="mansioni">Mansioni</label>
+                      <textarea class="form-control" id="mansioni_agente" rows="3"></textarea><br>
+                      <label for="partitaiva">Partita iva</label>
+                      <input type="text" class="form-control" id="partita_iva_agente"><br>
+                      <label for="codicefiscale">Codice Fiscale</label>
+                      <input type="text" class="form-control" id="codice_fiscale_agente"><br>
+                      <label for="regione">Regione</label>
+                      <select class="form-control regione" id="regione_agente">
+                        <option value="null">Seleziona la regione</option>
+                      </select><br>
+                      <label for="provincia">Provincia</label>
+                      <select class="form-control" id="provincia_agente"  disabled>
+                        <option value="null">Seleziona la provincia</option>
+                      </select><br>
+                    </div>
+
+
+                <div id="content_cliente" style="display:none;">
+
+                      <label for="ragionesociale2">Ragione sociale*</label>
+                      <input type="text" class="form-control" id="ragione_sociale"><br>
+                      <label for="indirizzo2">Indirizzo*</label>
+                      <input type="text" class="form-control" id="indirizzo"><br>
+                      <label for="civico">Civico*</label>
+                      <input type="text" class="form-control" id="civico"><br>
+                        <label for="civico">Cap*</label>
+                      <input type="text" class="form-control" id="cap" maxlength="5"><br>
+                      <label for="regione2">Regione*</label>
+                      <select class="form-control regione" id="regione">
+                        <option value="null">Seleziona la regione</option>
+                      </select><br>
+                      <label for="provincia2">Provincia*</label>
+                      <select class="form-control provincia" id="provincia" disabled>
+                        <option value="null">Seleziona la provincia</option>
+                      </select><br>
+                      <label for="comune2">Comune*</label>
+                      <select class="form-control comune" id="comune" disabled>
+                        <option value="null">Seleziona il comune</option>
+                      </select><br>
+                      <label for="fraz2">Fraz.</label>
+                      <input type="text" class="form-control" id="citta"><br>
+                      <label for="partitaiva2">Partita iva</label>
+                      <input type="text" class="form-control" id="partita_iva"><br>
+                      <label for="codicefiscale2">Codice Fiscale</label>
+                      <input type="text" class="form-control" id="codice_fiscale"><br>
+
+                      <div class="row">
+                      <div class="col-md-2">
+                      	<label for="prefisso_tel">Prefisso tel.</label>
+                      	<select class="form-control" id="prefisso_telefono" style="display:inline-block;">
+                            <option value="+39" selected>+39</option>
+                            <option value="+41">+41</option>
+                        </select>
+                      </div>
+                      <div class="col-md-10">
+                      <label for="telefonoufficio2">Telefono ufficio*</label>
+                      <input type="text" class="form-control" id="telefono">
+                      </div>
+                      </div><br>
+
+                      <div class="row">
+                      <div class="col-md-2">
+                      	<label for="prefisso_tel">Prefisso fax</label>
+                      	<select class="form-control" id="prefisso_fax" style="display:inline-block;">
+                            <option value="+39" selected>+39</option>
+                            <option value="+41">+41</option>
+                        </select>
+                      </div>
+                      <div class="col-md-10">
+                       	<label for="faxoufficio2">Fax ufficio</label>
+                      	<input type="text" class="form-control" id="fax"><br>
+                      </div>
+                      </div><br>
+
+
+
+
+
+                      <div class="row">
+                      <div class="col-md-2">
+                      	<label for="prefisso_tel">Prefisso cell.</label>
+                      	<select class="form-control" id="prefisso_cellulare" style="display:inline-block;">
+                            <option value="+39" selected>+39</option>
+                            <option value="+41">+41</option>
+                        </select>
+                      </div>
+                      <div class="col-md-10">
+                       	 <label for="cellulare2">Cellulare</label>
+                      	 <input type="text" class="form-control" id="cellulare"><br>
+                      </div>
+                      </div>
+
+
+                      <label for="email2">Email*</label>
+                      <input type="email" class="form-control" id="email"><br>
+
+                      <label for="sitoweb2">Sito web</label>
+                      <input type="text" class="form-control" id="sitoweb"><br>
+                      <label for="attivitacliente2">Attività cliente*</label>
+                      <input type="text" class="form-control" id="attivita_cliente"><br>
+                      <label for="banca2">Banca</label>
+                      <input type="text" class="form-control" id="banca"><br>
+                        <label for="iban2">IBAN</label>
+                      <input type="text" class="form-control" id="iban"><br>
+                        <label for="capoarea2">Capo area</label>
+                      <input type="text" class="form-control" id="capo_area"><br>
+                        <label for="emailcapoarea2">Email capo area</label>
+                      <input type="email" class="form-control" id="email_capo_area"><br>
+                        <label for="sconto2">Sconto richiesto*</label>
+                      <input type="text" maxlength="2" class="form-control" id="sconto_richiesto" placeholder="0"><br>
+                        <label for="aliquota2">Aliquota IVA richiesta</label>
+                      <input type="text" maxlength="2" class="form-control" id="aliquota_iva_richiesta" placeholder="22"><br>
+                      <label for="modalitainvio2">Modalità invio preventivo</label>
+                      <select class="form-control" id="modalita_invio_preventivo">
+                        <option>Solo all'agente</option>
+                        <option>Solo al Cliente</option>
+                        <option>Solo al Capo area</option>
+                        <option>Tutti</option>
+                      </select><br>
+
+                      <div class="row">
+                      <div class="col-md-6">
+                      <label for="pagamento">Modalità di pagamento</label>
+                      <select class="form-control" id="modalita_pagamento">
+                        <option>Seleziona il tipo pagamento</option>
+                        <option>NR. 1 R.B. 60 GG. F.M.</option>
+                        <option>NR. 1 R.B. A 90 GG. F.M.</option>
+                        <option>NR. 2 R. B. 30-60 GG. FM</option>
+                        <option>ALLA CONSEGNA CON VS. TITOLO</option>
+                        <option>30%+IVA ACC, RESTO TITOLO SCARI</option>
+                        <option>CON VS. ASS. AD AVVISO MERCE PRO</option>
+                        <option>BONIFICO BANCARIO A 60gg</option>
+                        <option>BONIFICO A 30gg</option>
+                      </select>
+                      </div>
+
+
+                      <div class="col-md-6">
+                      <label for="pagamento2">Atro tipo di pagamento</label>
+                      <input class="form-control" type="text" value="" id="altro_pagamento"/>
+                      </div>
+                      </div><br>
+
+                   </div>
+
+
+
+
+
+                    <span id="esito"></span>
+                    <div class="line2"></div>
+
+                     <div class="checkbox checkbox-primary" style="margin:20px 0px 20px 0px;">
+                      <input id="check_condizioni" type="checkbox">
+                      <label for="check_condizioni"><small>Accetto le <a href="#">Condizioni</a> e confermo di aver letto la <a href="#">Normativa sul trattamento dei dati</a></small></label>
+                    </div>
+
+                    <div style="font-size:9px;">* I campi contrassegnati da asterisco sono obbligatori</div>
+
+                    <div class="form-group">
+                      <div class="pagination-centered customtopbutton">
+                        <button type="button" class="btn btn-primary active btn-lg" id="salva_utente"><span class="loading"></span> Completa iscrizione</button><br><br>
+                      </div>
+                    </div>
+
+
+
+                   </div>
+
+
+
+                   </div>
+
+
+
+
+                 </div>
+
+                 <hr>
+                  <p class="testo_blu" style="font-size:11px;text-align:center;padding:5px;"><b>Salerno Ponteggi srl</b> - Pontecagnano Faiano (SA)  - Tel. +39 089 382657 - <a href='mailto:info@cerratospa.com'>info@salernoponteggi.com</a> - P.Iva/C.F. 05711920651  &nbsp;
+                <span style="white-space:nowrap;">Powered by: <a  style="position: relative;top: -2px;" href="http://www.lorenzovitale.it" target="_blank"><img src="images/logo_digitalsolutions.png" /></a></span>
+            </p>
+
+            </div>
+
+    <!-- footer -->
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script language="javascript" src="js/jquery.cookie.js" type="text/javascript"></script>
+    <script language="javascript" src="js/functions.js" type="text/javascript"></script>
+    <script language="javascript" src="js/Utente/RegistrazioneUtente.js" type="text/javascript"></script>
+
+    <script language="javascript" src="js/PATH.js" type="text/javascript"></script>
+    <script language="javascript" src="js/Loader.js" type="text/javascript"></script>
+    <script language="javascript" src="js/jquery.blockUI.js" type="text/javascript"></script>
+    <script language="javascript" src="js/jquery.mousewheel.js" type="text/javascript"></script>
+    <script language="javascript" src="js/jquery.jPrintArea.js" type="text/javascript"></script>
+    <script language="javascript" src="js/jquery.baloon.js" type="text/javascript"></script>
+    <!--<script type="text/javascript" src="js/d3.js"></script>-->
+    <script src="js/switch.console.IE.js"></script>
+    <script type="text/javascript" src="js/colortip/colortip-1.0-jquery.js"></script>
+    <script type="text/javascript" src="js/jquery.poshytip.min.js"></script>
+    <script>
+
+    jQuery(document).ready(function(){
+
+        var registrazioneUtente = new RegistrazioneUtente();
+        registrazioneUtente.init($("#Content"));
+
+	   	//SFONDO IN BACKGROUND
+		//$("body").css({"background":"url(images/CERRATO_intro-"+(Math.floor(Math.random()*10)+1)+".jpg)"});
+		//$("body").css({"background-size": "1920px 1280px"});
+		//$("body").css({"background-repeat": "no-repeat"});
+
+     });
+
+
+    </script>
+  </body>
+</html>

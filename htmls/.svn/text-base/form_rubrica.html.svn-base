@@ -1,0 +1,293 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css/registrazione.css">
+<style>
+#form_rubrica{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+}
+
+#form_rubrica h3{
+	color:#002F60;
+	font-weight:bold;
+	font-size:16px;
+	background-color:#f2f2f2;
+	padding:5px;
+}
+
+#form_rubrica input{
+	border:1px solid #ccc;
+	margin:5px 0px;
+	width:250px;
+}
+
+#form_rubrica textarea{
+	border:1px solid #ccc;
+	margin:5px 0px;
+	width:250px;
+}
+
+#form_rubrica select{
+	border:1px solid #ccc;
+	margin:5px 0px;
+	width:250px;
+}
+</style>
+</head>
+<body>
+<div id='form_rubrica'>
+<h3>Inserimento nuova voce nella rubrica</h3>
+
+<!-- ragione sociale -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Ragione sociale:</div><div style='float:left;'>
+<input type='hidden' id="data_inserimento" value="" />
+<input type='text' id="ragione_sociale" /></div>
+</div><br><br>
+
+<div style='clear:both;'></div>
+<!-- Indirizzo di residenza -->
+<!-- Nazione -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Nazione: </div><div style='float:left;'>
+<input type="hidden" value="" id="id_indirizzo"/>
+<select id="nazione">
+<option value="null">Seleziona la nazione</option>
+</select></div>
+</div><br><br>
+
+<!-- Regione -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Regione: </div><div style='float:left;'>
+<select id="regione">
+<option value="null">Seleziona la regione</option>
+</select> *</div>
+</div><br><br>
+
+<!-- Provincia -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Provincia: </div><div style='float:left;'>
+<select id="provincia" disabled="disabled">
+<option value="null">Seleziona la provincia</option>
+</select> *</div>
+</div><br><br>
+
+<!-- Comune-->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Comune: </div><div style='float:left;'>
+<select id="comune" disabled="disabled">
+<option value="null">Seleziona il comune</option>
+</select> *</div>
+</div><br><br>
+
+<!-- indirizzo -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>indirizzo:</div><div style='float:left;'>
+<input type='text' id="indirizzo" /> *</div>
+</div><br><br>
+
+<!-- civico -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Civico:</div><div style='float:left;'>
+<input type='text' id="civico" /> *</div>
+</div><br><br>
+
+<!-- cap -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Cap:</div><div style='float:left;'>
+<input type='text' id="cap" maxlength="5"/> *</div>
+</div><br><br>
+
+<!-- partita iva -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Partita iva:</div><div style='float:left;'>
+<input type='text' id="partita_iva" /> <span class="iva_cf">**</span></div>
+</div><br><br>
+
+<!-- codice fiscale -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Codice fiscale:</div><div style='float:left;'>
+<input type='text' id="codice_fiscale" /> <span class="iva_cf">**</span></div>
+</div><br><br>
+
+<!-- Responsabile -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Responsabile uff. acquisti:</div><div style='float:left;'>
+<input type='text' id="responsabile" /> *</div>
+</div><br><br>
+
+<!-- email -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Email:</div><div style='float:left;'>
+<input type='text' id="email" /> *</div>
+</div><br><br />
+
+<!-- telefono -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Telefono:</div><div style='float:left;'>
+<input type='text' id="telefono" /> *</div>
+</div><br><br>
+
+<!-- fax-->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Fax:</div><div style='float:left;'>
+<input type='text' id="fax" /> *</div>
+</div><br><br>
+
+<!-- cellulare -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Cellulare:</div><div style='float:left;'>
+<input type='text' id="cellulare" /> *</div>
+</div><br><br>
+
+<!-- attività -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Attività cliente:</div><div style='float:left;'>
+<textarea id="attivita" rows="4" cols="16"></textarea>*</div>
+</div><br><br>
+
+<!-- banca -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Banca:</div><div style='float:left;'>
+<input type='text' id="banca" /></div>
+</div><br><br>
+
+<!-- iban -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Iban:</div><div style='float:left;'>
+<input type='text' id="iban" /></div>
+</div><br><br>
+
+<!-- agente -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Agente:</div><div style='float:left;'>
+<input type='text' id="agente" /></div>
+</div><br><br>
+
+<!-- regione -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Regione:</div><div style='float:left;'>
+<input type='text' id="regione_agente" /></div>
+</div><br><br>
+
+<!-- provincia -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Provincia:</div><div style='float:left;'>
+<input type='text' id="provincia_agente" /></div>
+</div><br><br>
+
+<!-- capo area -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Capo area:</div><div style='float:left;'>
+<input type='text' id="capo_area" /></div>
+</div><br><br>
+
+<!-- Indirizzo del cantiere -->
+
+<!-- denominazione -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Denominazione cantiere:</div><div style='float:left;'>
+<input type='text' id="denominazione_cantiere" /></div>
+</div><br><br>
+
+<!-- Nazione -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Nazione cantiere: </div><div style='float:left;'>
+<input type="hidden" value="" id="id_indirizzo_cantiere"/>
+<select id="nazione_cantiere">
+<option value="null">Seleziona la nazione</option>
+</select></div>
+</div><br><br>
+
+<!-- Regione -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Regione cantiere: </div><div style='float:left;'>
+<select id="regione_cantiere">
+<option value="null">Seleziona la regione</option>
+</select> *</div>
+</div><br><br>
+
+<!-- Provincia -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Provincia cantiere: </div><div style='float:left;'>
+<select id="provincia_cantiere" disabled="disabled">
+<option value="null">Seleziona la provincia</option>
+</select> *</div>
+</div><br><br>
+
+<!-- Comune-->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Comune cantiere: </div><div style='float:left;'>
+<select id="comune_cantiere" disabled="disabled">
+<option value="null">Seleziona il comune</option>
+</select> *</div>
+</div><br><br>
+
+<!-- indirizzo -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>indirizzo cantiere:</div><div style='float:left;'>
+<input type='text' id="indirizzo_cantiere" /> *</div>
+</div><br><br>
+
+<!-- civico -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Civico cantiere:</div><div style='float:left;'>
+<input type='text' id="civico_cantiere" /> *</div>
+</div><br><br>
+
+<!-- cap -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Cap cantiere:</div><div style='float:left;'>
+<input type='text' id="cap_cantiere" maxlength="5"/> *</div>
+</div><br><br>
+
+<!-- referente cantiere -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Referente cantiere (GEOM./ING.):</div><div style='float:left;'>
+<input type='text' id="referente_cantiere" /></div>
+</div><br><br>
+
+<!-- email referente cantiere -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Email referente cantiere:</div><div style='float:left;'>
+<input type='text' id="email_referente_cantiere" /></div>
+</div><br><br>
+
+<!-- cellulare referente cantiere -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Cellulare referente cantiere:</div><div style='float:left;'>
+<input type='text' id="cellulare_referente_cantiere" /></div>
+</div><br><br>
+
+<!-- sconto richiesto -->
+<!--<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Sconto richiesto:</div><div style='float:left;'>
+<input type='text' id="sconto" maxlength="2"/></div>
+</div><br><br>-->
+
+<!-- aliquota iva richiesta -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Aliquota iva richiesta:</div><div style='float:left;'>
+<input type='text' id="aliquota_iva" maxlength="2"/> *</div>
+</div><br><br>
+
+<!-- modalità di pagamento -->
+<div style='clear:both;'>
+<div style='float:left;width:250px;text-align:right;padding-right:10px;height:30px;line-height:30px;height:30px;line-height:30px;'>Tipologia pagamento:</div>
+<div style='float:left;'>
+<select id="tipologia_pagamento">
+<option value="null">Seleziona il tipo di pagamento</option>
+<option value="bonifico">Bonifico</option>
+<option value="contrassegno">Contrassegno</option>
+<option value="paypal">Paypal(carta di credito)</option>
+<option value="rateale">Rateale</option>
+</select> *
+</div>
+</div><br><br>
+<br>
+
+<div style='clear:both;text-align:right;width:510px;'><input type="button" value="SALVA" id="salva_utente" /></div><br /><br />
+<div>I campi contrassegnati da (*) sono obbligatori<br />Per i campi contrassegnati da (**) è obbligatorio l'inserimento di almeno un dato</div>
+</div>
+</body>
+</html>

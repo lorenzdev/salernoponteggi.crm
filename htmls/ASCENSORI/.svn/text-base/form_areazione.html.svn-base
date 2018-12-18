@@ -1,0 +1,13 @@
+<h3>Scegli il tipo di areazione</h3>
+<span id='checkRepeatAreazione'></span>
+<input type="radio" name="areazione" class="areazione" value="Cieca"/> Cieca<br>
+<input type="radio" name="areazione" class="areazione" value="Foro in alto e in basso"/> Foro in alto e in basso<br />
+<input type="checkbox" name="areazione" class="griglia1" value="Griglia superiore"/> Griglia superiore<br />
+<input type="checkbox" name="areazione" class="griglia2" value="Griglia inferiore"/> Griglia inferiore<br />
+<br><br><div id="warning"></div>
+<br><br><br><br>
+<div style="text-align:center;">
+<input type="button" value="AVANTI" id="continua" style="height:40px;width:150px;" disabled="disabled"/>&nbsp;&nbsp;
+<input type="button" value="INDIETRO" id="indietro" style="height:40px;width:150px;"/>
+</div>
+<br><br><br><br>

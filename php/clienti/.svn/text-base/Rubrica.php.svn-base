@@ -1,0 +1,303 @@
+<?php
+
+class Rubrica{
+
+	private $connect;
+	
+	public function init(){
+		$this->connect = new ConnectionDB();
+	}
+	
+	public function getRubrica($post){
+		$this->connect->connetti();
+		$where = "";
+		if($post["account"]){
+			$where = "WHERE account='".$post["account"]."'";
+		}
+		
+		
+		if($post["data_inserimento"])
+			if(!$where)
+				$where .= " WHERE data_inserimento='".$post["data_inserimento"]."'"; 
+				else
+				$where .= " AND data_inserimento='".$post["data_inserimento"]."'"; 
+		
+		
+		
+		
+		$result = $this->connect->myQuery("SELECT 
+					rubrica.data_inserimento as data_inserimento, 
+					rubrica.ragione_sociale as ragione_sociale,
+					rubrica.partita_iva as partita_iva,
+					rubrica.codice_fiscale as codice_fiscale,
+					rubrica.attivita as attivita,
+					rubrica.telefono as telefono,
+					rubrica.fax as fax,
+					rubrica.email as email,
+					rubrica.responsabile as responsabile,
+					rubrica.banca as banca,
+					rubrica.iban as iban,
+					rubrica.agente as agente,
+					rubrica.regione as regione_agente,
+					rubrica.provincia as provincia_agente,
+					rubrica.capo_area as capo_area,
+					rubrica.denominazione_cantiere as denominazione_cantiere,
+					rubrica.referente_cantiere as referente_cantiere,
+					rubrica.email_referente as email_referente,
+					rubrica.cellulare as cellulare,
+					rubrica.aliquota_iva as aliquota_iva,
+					rubrica.modalita_pagamento as modalita_pagamento,
+					rubrica.account as inserito_da,
+					Nazione_cantiere.nome as nazione_cantiere, Nazione.nome as nazione, 
+					Regione_cantiere.nome as regione_cantiere, Regione.nome as regione,
+					Provincia_cantiere.nome as provincia_cantiere, Provincia.nome as provincia,
+					Comune_cantiere.nome as comune_cantiere, Comune.nome as comune,
+					Indirizzo.id as id_indirizzo,
+					Indirizzo.indirizzo as indirizzo,
+					Indirizzo.civico as civico,
+					Indirizzo.cap as cap,
+					Indirizzo_cantiere.id as id_indirizzo_cantiere,
+					Indirizzo_cantiere.indirizzo as indirizzo_cantiere,
+					Indirizzo_cantiere.civico as civico_cantiere,
+					Indirizzo_cantiere.cap as cap_cantiere
+					FROM rubrica 
+					INNER JOIN indirizzi as Indirizzo ON Indirizzo.id = rubrica.indirizzo 
+					INNER JOIN indirizzi as Indirizzo_cantiere ON Indirizzo_cantiere.id = rubrica.indirizzo_cantiere
+					INNER JOIN nazioni as Nazione ON Indirizzo.nazione = Nazione.id
+					INNER JOIN regioni as Regione ON Indirizzo.regione = Regione.id
+					INNER JOIN province as Provincia ON Indirizzo.provincia = Provincia.id
+					INNER JOIN comuni as Comune ON Indirizzo.comune = Comune.id
+					INNER JOIN nazioni as Nazione_cantiere ON Indirizzo_cantiere.nazione = Nazione_cantiere.id
+					INNER JOIN regioni as Regione_cantiere ON Indirizzo_cantiere.regione = Regione_cantiere.id
+					INNER JOIN province as Provincia_cantiere ON Indirizzo_cantiere.provincia = Provincia_cantiere.id
+					INNER JOIN comuni as Comune_cantiere ON Indirizzo_cantiere.comune = Comune_cantiere.id ".$where." ORDER BY rubrica.data_inserimento DESC");
+					
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore generico";
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$cont = 0;
+			while($rowValori = mysql_fetch_array($result)){
+				$objJSON["results"][$cont]["data_inserimento"] = $rowValori["data_inserimento"];
+				$objJSON["results"][$cont]["ragione_sociale"] = $rowValori["ragione_sociale"];
+				$objJSON["results"][$cont]["attivita"] = $rowValori["attivita"];
+				$objJSON["results"][$cont]["partita_iva"] = $rowValori["partita_iva"];
+				$objJSON["results"][$cont]["codice_fiscale"] = $rowValori["codice_fiscale"];
+				$objJSON["results"][$cont]['telefono'] = $rowValori['telefono'];
+				$objJSON["results"][$cont]['fax'] = $rowValori['fax'];
+				$objJSON["results"][$cont]['email'] = $rowValori['email'];
+				$objJSON["results"][$cont]['responsabile'] = $rowValori['responsabile'];
+				$objJSON["results"][$cont]['cellulare_responsabile'] = $rowValori['cellulare_responsabile'];
+				$objJSON["results"][$cont]['banca'] = $rowValori['banca'];
+				$objJSON["results"][$cont]['iban'] = $rowValori['iban'];
+				$objJSON["results"][$cont]['agente'] = $rowValori['agente'];
+				$objJSON["results"][$cont]['provincia_agente'] = $rowValori['provincia_agente'];
+				$objJSON["results"][$cont]['regione_agente'] = $rowValori['regione_agente'];
+				$objJSON["results"][$cont]['provincia'] = $rowValori['provincia'];
+				$objJSON["results"][$cont]['capo_area'] = $rowValori['capo_area'];
+				$objJSON["results"][$cont]['denominazione_cantiere'] = $rowValori['denominazione_cantiere'];
+				$objJSON["results"][$cont]['referente_cantiere'] = $rowValori['referente_cantiere'];
+				$objJSON["results"][$cont]['email_referente'] = $rowValori['email_referente'];
+				$objJSON["results"][$cont]['cellulare'] = $rowValori['cellulare'];
+				$objJSON["results"][$cont]['aliquota_iva'] = $rowValori['aliquota_iva'];
+				$objJSON["results"][$cont]['modalita_pagamento'] = $rowValori['modalita_pagamento'];
+				$objJSON["results"][$cont]['nazione_cantiere'] = $rowValori['nazione_cantiere'];
+				$objJSON["results"][$cont]['regione_cantiere'] = $rowValori['regione_cantiere'];
+				$objJSON["results"][$cont]['provincia_cantiere'] = $rowValori['provincia_cantiere'];	
+				$objJSON["results"][$cont]['comune_cantiere'] = $rowValori['comune_cantiere'];
+				$objJSON["results"][$cont]['indirizzo_cantiere'] = $rowValori['indirizzo_cantiere'];
+				$objJSON["results"][$cont]['civico_cantiere'] = $rowValori['civico_cantiere'];
+				$objJSON["results"][$cont]['cap_cantiere'] = $rowValori['cap_cantiere'];
+				$objJSON["results"][$cont]['id_indirizzo'] = $rowValori['id_indirizzo'];
+				$objJSON["results"][$cont]['id_indirizzo_cantiere'] = $rowValori['id_indirizzo_cantiere'];
+				$objJSON["results"][$cont]['nazione'] = $rowValori['nazione'];
+				$objJSON["results"][$cont]['regione'] = $rowValori['regione'];
+				$objJSON["results"][$cont]['provincia'] = $rowValori['provincia'];	
+				$objJSON["results"][$cont]['comune'] = $rowValori['comune'];
+				$objJSON["results"][$cont]['indirizzo'] = $rowValori['indirizzo'];
+				$objJSON["results"][$cont]['civico'] = $rowValori['civico'];
+				$objJSON["results"][$cont]['cap'] = $rowValori['cap'];
+				$objJSON["results"][$cont]['inserito_da'] = $rowValori['inserito_da'];
+				$cont++;
+			}
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function getClienteDaRubrica($post){
+		
+		
+	}
+	
+	public function registerRubrica($post){
+	
+	
+		$this->connect->connetti();
+		$this->connect->myQuery("INSERT INTO rubrica 
+			
+			(	data_inserimento,
+				ragione_sociale,
+				attivita,
+				partita_iva,
+				codice_fiscale,
+				telefono,
+				fax,
+				email,
+				responsabile,
+				cellulare,
+				banca,
+				iban,
+				agente,
+				provincia,
+				regione,
+				capo_area,
+				denominazione_cantiere,
+				referente_cantiere,
+				email_referente,
+				cellulare_referente,
+				aliquota_iva,
+				modalita_pagamento,
+				indirizzo,
+				indirizzo_cantiere,
+				account
+				)VALUES(
+				'".$post["data_inserimento"]."',
+				'".$post["ragione_sociale"]."',
+				'".$post["attivita"]."',
+				'".$post["partita_iva"]."',
+				'".$post["codice_fiscale"]."',
+				'".$post["telefono"]."',
+				'".$post["fax"]."',
+				'".$post["email"]."',
+				'".$post["responsabile"]."',
+				'".$post["cellulare"]."',
+				'".$post["banca"]."',
+				'".$post["iban"]."',
+				'".$post["agente"]."',
+				'".$post["provincia"]."',
+				'".$post["regione"]."',
+				'".$post["capo_area"]."',
+				'".$post["denominazione_cantiere"]."',
+				'".$post["referente_cantiere"]."',
+				'".$post["email_referente_cantiere"]."',
+				'".$post["cellulare_referente_cantiere"]."',
+				'".$post["aliquota_iva"]."',
+				'".$post["modalita_pagamento"]."',
+				'".$post["indirizzo"]."',
+				'".$post["indirizzo_cantiere"]."',
+				'".$post["account"]."'
+				)");	
+		
+		$objJSON = array();
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore generico ".mysql_error();
+		}else{
+			$objJSON["success"] = true;
+		}
+		
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function modifyRubrica($post){
+		
+		//var_dump("UPDATE indirizzi SET regione='".$post['regione']."',nazione='".$post['nazione']."',provincia='".$post['provincia']."',comune='".$post['comune']."',indirizzo='".$post['indirizzo']."',civico='".$post['civico']."',cap='".$post['cap']."' WHERE id='".$post["id_indirizzo"]."'");
+		
+
+		
+		$this->connect->connetti();
+		$this->connect->myQuery("UPDATE rubrica 
+			
+			SET	data_inserimento='".$post["data_inserimento"]."',
+				ragione_sociale='".$post["ragione_sociale"]."',
+				attivita='".$post["attivita"]."',
+				partita_iva='".$post["partita_iva"]."',
+				codice_fiscale='".$post["codice_fiscale"]."',
+				telefono='".$post["telefono"]."',
+				fax='".$post["fax"]."',
+				email='".$post["email"]."',
+				responsabile='".$post["responsabile"]."',
+				cellulare='".$post["cellulare"]."',
+				banca='".$post["banca"]."',
+				iban='".$post["iban"]."',
+				agente='".$post["agente"]."',
+				provincia='".$post["provincia"]."',
+				regione='".$post["regione"]."',
+				capo_area='".$post["capo_area"]."',
+				denominazione_cantiere='".$post["denominazione_cantiere"]."',
+				referente_cantiere='".$post["referente_cantiere"]."',
+				email_referente='".$post["email_referente_cantiere"]."',
+				cellulare_referente='".$post["cellulare_referente_cantiere"]."',
+				aliquota_iva=".$post["aliquota_iva"].",
+				modalita_pagamento='".$post["modalita_pagamento"]."',
+				account='".$post["account"]."'
+			WHERE 	data_inserimento='".$post["data_inserimento"]."'
+				
+		");	
+		
+		$objJSON = array();
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore generico";
+		}else{
+			$objJSON["success"] = true;
+		}
+		
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function removeFromRubrica($post){
+		$this->connect->connetti();
+		$this->connect->myQuery("DELETE FROM indirizzi WHERE id='".$post["indirizzo"]."' OR id='".$post["indirizzo_cantiere"]."'");
+		$this->connect->myQuery("DELETE FROM rubrica WHERE data_inserimento='".$post["data_inserimento"]."'");
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = mysql_error();
+			return json_encode($objJSON);
+		}
+		
+		
+		if($post["ruolo"] == "ROLE_ADMIN")
+			$query = "SELECT data_inserimento FROM rubrica";
+			else
+			$query = "SELECT data_inserimento FROM rubrica WHERE account='".$post["email"]."'";
+		
+		$result = $this->connect->myQuery($query);
+		
+		$rowValori = mysql_num_rows($result);
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = mysql_error();
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"][0] = $rowValori;
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function checkRubrica($post){
+		$this->connect->connetti();
+		$result = $this->connect->myQuery("SELECT data_inserimento FROM rubrica WHERE account='".$post["account"]."'");	
+		$objJSON = array();
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore generico";
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$rowValori = mysql_num_rows($result);
+			$objJSON["results"][0] = $rowValori;
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+}
+
+?>

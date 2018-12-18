@@ -1,0 +1,1055 @@
+<?php
+
+
+class RegistrazioneUtente{
+
+	private $connect;
+	private $mailAdmin = "info@cerratospa.com";
+	//private $mailAdmin = "l.vitale@live.it";
+	private $link_login = "http://www.cerratospa.com/areariservata/";
+	private $SMTPAuth = true;     // turn on SMTP authentication      
+	private $SMTPSecure = "ssl";  
+	private $Host='smtp.gmail.com';  
+	private $Port = '465';  
+	private $SMTPKeepAlive = true; 
+	private $SMTPDebug = 1;
+	private $Username = "lorenzo.dev@gmail.com";  // SMTP username
+	private $Password = "neonato2000";
+	
+	public function init(){
+		$this->connect = new ConnectionDB();
+	}
+	
+	
+	public function checkSession($post){
+		$this->connect->connetti();
+		$token = $post['token'];
+		$account = $post['account'];
+		
+		
+		$result = $this->connect->myQuery("SELECT token FROM sessioni WHERE account='".$account."' AND token='".$token."'");
+		$objJSON = array();
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Sessione scaduta";
+		}else{
+			$rowNum = mysql_num_rows($result);
+			if($rowNum != 1){
+				$objJSON["success"] = false;
+				$objJSON["messageError"] = "Sessione scaduta";
+			}else{
+				$objJSON["success"] = true;
+			}
+			
+			if(!$objJSON["success"]){
+				//var_dump("DELETE FROM sessioni WHERE account='".$account."'");
+				$this->connect->myQuery("DELETE FROM sessioni WHERE account='".$account."'");
+			}
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function login($post){
+		
+		$this->connect->connetti();
+		
+		define("SALT","yuppydoo");
+		
+		$password_criptata = md5(SALT.$post["password"]);
+		
+		//var_dump("SELECT account.email AS email, account.tipo AS tipo, account.stato as stato,user.nome as nome, user.cognome as cognome,ruoli.etichetta FROM account,user,ruoli WHERE account.email='".$post["username"]."' AND password='".$password_criptata."' AND ruoli.id = account.ruolo AND account.email = user.account");
+		
+		$result = $this->connect->myQuery("SELECT account.email AS email, user.tipo AS tipo, account.stato as stato,user.nome as nome, user.cognome as cognome,user.sesso as sesso,ruoli.etichetta as ruolo FROM account,user,ruoli WHERE account.email='".$post["username"]."' AND password='".$password_criptata."' AND ruoli.id = account.ruolo AND account.email = user.account");
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore generico";
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$rowNum = mysql_num_rows($result);
+			if($rowNum > 0){
+				$rowValori = mysql_fetch_array($result);
+				
+				$objJSON["results"]["email"] = $rowValori["email"];
+				$objJSON["results"]["tipo"] = $rowValori["tipo"];
+				$objJSON["results"]["stato"] = $rowValori["stato"];
+				$objJSON["results"]["nome"] = $rowValori["nome"];
+				$objJSON["results"]["cognome"] = $rowValori["cognome"];
+				$objJSON["results"]["ruolo"] = $rowValori["ruolo"];
+				$objJSON["results"]["sesso"] = $rowValori["sesso"];	
+				$objJSON["results"]["ruolo"] = $rowValori["ruolo"];
+			}
+			
+			$token = $post['token'];
+			$account = $post["username"];
+			
+			//var_dump("INSERT INTO sessioni (token,account) VALUES( '".$token."', '".$account."')");
+			
+			$query = "INSERT IGNORE INTO sessioni (token,account) VALUES( '".$token."', '".$account."')";
+			
+			$this->connect->myQuery($query);
+			
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function logout($post){
+		
+		$this->connect->connetti();
+		
+		$this->connect->myQuery("DELETE FROM sessioni WHERE account='".$post["email"]."'");
+		$objJSON = array();
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore.";
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["messageError"] = "Sessione scaduta";
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function getUtenteByAccount($post){
+		
+		
+		$this->connect->connetti();
+		
+		$query = "SELECT 
+			user.nome as nome, 
+			user.cognome as cognome,
+			user.sesso as sesso,
+			user.fax as fax,
+			user.ragione_sociale as ragione_sociale,
+			user.codice_fiscale as codice_fiscale,
+			user.partita_iva as partita_iva,
+			user.telefono as telefono,
+			user.cellulare as cellulare,
+			user.mansioni as mansioni,
+			user.website as website,
+			regioni.nome as regione,
+			province.nome as provincia,
+			comuni.nome as comune,
+			nazioni.nome as nazione,
+			indirizzi.id as id_indirizzo,
+			indirizzi.indirizzo as indirizzo,
+			indirizzi.civico as civico,
+			indirizzi.cap as cap,
+			account.email AS email, 
+			account.ruolo AS ruolo,
+			account.stato as stato,
+			user.codice_preventivazione as codice_preventivazione,
+			user.tipo AS tipo, 
+			ruoli.etichetta as etichetta_ruolo 
+			FROM account,user,ruoli, indirizzi,regioni,comuni,province,nazioni 
+			WHERE ruoli.id = account.ruolo 
+			AND account.email = user.account 
+			AND user.indirizzo = indirizzi.id
+			AND indirizzi.regione = regioni.id
+			AND indirizzi.provincia = province.id
+			AND indirizzi.comune = comuni.id
+			AND indirizzi.nazione = nazioni.id
+			AND account.email='".$post["account"]."'";
+		
+		//var_dump($query);
+		
+		$result = $this->connect->myQuery($query);
+		
+		
+		
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore generico";
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			while($rowValori = mysql_fetch_array($result)){
+				$objJSON["results"]["nome"] = $rowValori["nome"];
+				$objJSON["results"]["cognome"] = $rowValori["cognome"];
+				$objJSON["results"]["mansioni"] = $rowValori["mansioni"];
+				$objJSON["results"]["email"] = $rowValori["email"];
+				$objJSON["results"]["telefono"] = $rowValori["telefono"];
+				$objJSON["results"]["cellulare"] = $rowValori["cellulare"];
+				$objJSON["results"]["website"] = $rowValori["website"];
+				$objJSON["results"]["fax"] = $rowValori["fax"];
+				$objJSON["results"]["tipo"] = $rowValori["tipo"];
+				$objJSON["results"]["stato"] = $rowValori["stato"];
+				$objJSON["results"]["etichetta_ruolo"] = $rowValori["etichetta_ruolo"];
+				$objJSON["results"]["codice_preventivazione"] = $rowValori["codice_preventivazione"];
+				$objJSON["results"]["ruolo"] = $rowValori["ruolo"];
+				$objJSON["results"]["sesso"] = $rowValori["sesso"];
+				$objJSON["results"]["codice_fiscale"] = $rowValori["codice_fiscale"];
+				$objJSON["results"]["ragione_sociale"] = $rowValori["ragione_sociale"];
+				$objJSON["results"]["partita_iva"] = $rowValori["partita_iva"];
+				$objJSON["results"]["nazione"] = $rowValori["nazione"];
+				$objJSON["results"]["regione"] = $rowValori["regione"];
+				$objJSON["results"]["provincia"] = $rowValori["provincia"];
+				$objJSON["results"]["comune"] = $rowValori["comune"];
+				$objJSON["results"]["id_indirizzo"] = $rowValori["id_indirizzo"];
+				$objJSON["results"]["indirizzo"] = $rowValori["indirizzo"];
+				$objJSON["results"]["civico"] = $rowValori["civico"];
+				$objJSON["results"]["cap"] = $rowValori["cap"];
+
+				/*if($rowValori["stato"] == 0)
+					$objJSON["results"]["stato"] = "non attivo";
+					else
+					$objJSON["results"]["stato"] = "attivo";
+			*/
+			}
+			
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function modifyAccount($post){
+		$this->connect->connetti();
+		$pass = "";
+		if($post["password"]){
+			define("SALT","yuppydoo");
+			$pass = ",password='".md5(SALT.$post["password"])."'";	
+		}
+		
+		
+		$query = "UPDATE account SET stato='".$post["stato"]."',ruolo='".$post["ruolo"]."'".$pass." WHERE email='".$post["account"]."'";
+		
+		
+		$this->connect->myQuery($query);
+		$result = $this->connect->myQuery("SELECT account.email as email,account.password as password, ruoli.etichetta as ruolo FROM account,ruoli WHERE email='".$post["account"]."' AND account.ruolo = ruoli.id");
+		$mailMessage = "";
+		
+		$objJSON = array();
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["errorMessage"] = mysql_error();
+		}else{
+			$objJSON["success"] = true;
+			$rowNum = mysql_num_rows($result);
+			if($rowNum > 0){
+				$rowValori = mysql_fetch_array($result);
+				$objJSON["results"]["email"] = $rowValori["email"];
+				$objJSON["results"]["ruolo"] = $rowValori["ruolo"];
+				$objJSON["results"]["password"] = $rowValori["password"];
+				
+			}
+		}
+		
+		
+		//var_dump(eval($post["inviaMail"]));
+		
+		if($post["author"] == "ADMIN" && $post["inviaMail"] == "true"){
+			
+
+			
+			if($post["stato"] == 0){
+					$objJSON["results"]["stato"] = "non attivo";
+					$mailMessage = "<html><body>Siamo spiacenti, il suo account &egrave; stato momentaneamente bloccato.<br>Pu&ograve; contattare l'amministrazione di Cerrato Spa per maggiori chiarimenti e per il ripristino dei servizi.<br><br><br></body></html>";
+				}else{
+					$objJSON["results"]["stato"] = "attivo";
+					$mailMessage = "<html><body>Il suo account &egrave; stato accettato e validato dall'amministrazione di Cerrato Spa.<br>Pu&ograve; ora accedere ai servizi riservati agli utenti iscritti effettuando l'accesso al seguente link: ".$this->link_login." o collegandosi al sito web <a href='http://www.cerratospa.com'>Cerrato Spa</a> nell'area riservata<br><br></body></html>";
+			}
+		
+			//var_dump($objJSON["results"]["email"]);
+		
+			// INVIO LA MAIL ALL'AMINISTRATORE DI RICHIESTA REGISTRAZIONE
+			$mail = new PHPMailer();
+			$mail->IsHTML(true);
+			$mail->IsSMTP();
+			$mail->SMTPAuth = $this->SMTPAuth;     // turn on SMTP authentication      
+			$mail->SMTPSecure = $this->SMTPSecure;  
+			$mail->Host = $this->Host;  
+			$mail->Port = $this->Port;  
+			$mail->SMTPKeepAlive = $this->SMTPKeepAlive; 
+			$mail->SMTPDebug = $this->SMTPDebug;
+			$mail->Username = $this->Username;  // SMTP username
+			$mail->Password = $this->Password;
+			$mail->AddReplyTo($objJSON["results"]["email"]); 
+			$mail->FromName = "Cerrato Spa";
+			$mail->Subject = "Modifica account";
+			$mail->Body = $mailMessage;
+			$mail->AddAddress($objJSON["results"]["email"]);
+			$mail->Send();
+			$mail->SmtpClose();
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function getAllUtenti(){
+		
+		$this->connect->connetti();
+		$result = $this->connect->myQuery("SELECT account.email AS email, user.tipo AS tipo,account.data_creazione AS data_creazione, account.stato as stato,user.nome as nome,user.telefono as telefono,user.cellulare as cellulare, user.cognome as cognome,ruoli.etichetta as ruolo FROM account,user,ruoli WHERE ruoli.id = account.ruolo AND account.email = user.account");
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore generico";
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$rowNum = mysql_num_rows($result);
+			$cont = 0;
+			if($rowNum > 0){
+				while($rowValori = mysql_fetch_array($result)){
+					$temp = array();
+					$temp["email"] = $rowValori["email"];
+					$temp["tipo"] = $rowValori["tipo"];
+					$temp["data_creazione"] = $rowValori["data_creazione"];
+					$temp["stato"] = $rowValori["stato"];
+					$temp["telefono"] = $rowValori["telefono"];
+					$temp["cellulare"] = $rowValori["cellulare"];
+					$temp["nome"] = $rowValori["nome"];
+					$temp["cognome"] = $rowValori["cognome"];
+					$temp["ruolo"] = $rowValori["ruolo"];
+						
+					if($rowValori["stato"] == 0)
+						$temp["stato"] = "non attivo";
+						else
+						$temp["stato"] = "attivo";
+						
+					$objJSON["results"][$cont] = $temp;
+					$cont++;
+				}
+			}
+			
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function removeUtente($post){
+		$this->connect->connetti();
+		$account = $post['account'];
+		
+		//var_dump($account);
+		
+		$this->connect->myQuery("DELETE FROM account WHERE email='".$account."'");
+		$result = $this->connect->myQuery("SELECT * FROM account");
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore generico";
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$rowNum = mysql_num_rows($result);
+			$objJSON["results"]["numeroAccount"] = $rowNum;
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function registerAccount($post){
+		
+		
+		define("SALT","yuppydoo");
+		
+		$password_criptata = md5(SALT.$post["password"]);
+		
+		//var_dump($post["data_creazione"]);
+		
+		//var_dump("INSERT INTO account (email,data_creazione,password,tipo,stato,ruolo)VALUES('".$post['email']."','".$post["data_creazione"]."','".$password_criptata."','".$post['tipo']."','".$post['stato']."','".$post['ruolo']."')");
+		$this->connect->connetti();
+		$this->connect->myQuery("INSERT INTO account (email,data_creazione,password,stato,ruolo)VALUES('".$post['email']."','".$post["data_creazione"]."','".$password_criptata."','".$post['stato']."','".$post['ruolo']."')");
+		
+		$result = $this->connect->myQuery("SELECT account.email AS email, account.password AS password, account.stato AS stato, ruoli.etichetta AS ruolo FROM account,ruoli WHERE account.email='".$post['email']."' AND ruoli.id = account.ruolo");
+		
+		
+		
+		$mail = new PHPMailer();
+		$mail->IsHTML(true);
+		
+		// Telling the class to use SMTP
+		$mail->IsSMTP();
+		$mail->IsHTML(true);
+		$mail->SMTPAuth = $this->SMTPAuth;     // turn on SMTP authentication      
+		$mail->SMTPSecure = $this->SMTPSecure;  
+		$mail->Host = $this->Host;  
+		$mail->Port = $this->Port;  
+		$mail->SMTPKeepAlive = $this->SMTPKeepAlive; 
+		$mail->SMTPDebug = $this->SMTPDebug;
+		$mail->Username = $this->Username;  // SMTP username
+		$mail->Password = $this->Password;
+		$mail->AddReplyTo($post['email']); 
+		$mail->FromName = "Carrato Spa";
+		$mail->Subject = "Creazione nuovo account";
+		$mail->Body = "<html><body>&Egrave; stato creato un nuovo account per l'utente:<br><br>username: <b>".$post['email']."</b><br>password: <b>".$post['password']."</b><br><br>Verr&agrave; analizzata la richiesta da un nostro operatore che provveder&aacute; all'attivazione. Ricever&aacute; nell'arco delle 48 ore una mail di conferma per l'abilitazione all'accesso dei servizi offerti.<br>Attenzione, conservare con attenzione questa mail per non perdere i dati di accesso.<br><br></body></html>";
+		$mail->AddAddress($post['email']);
+			
+		//var_dump("Ma che cazz? ".$mail->Send());
+		$mail->Send();
+		$mail->SmtpClose();
+		
+		
+		/*$from = "info@cerratospa.com";
+		$fromName = "Carrato Spa";
+		$subject = "Creazione nuovo account";
+		$body = "<html><body>&Egrave; stato creato un nuovo account per l'utente:<br><br>username: <b>".$post['email']."</b><br>password: <b>".$post['password']."</b><br><br>Verr&agrave; analizzata la richiesta da un nostro operatore che provveder&aacute; all'attivazione. Ricever&aacute; nell'arco delle 48 ore una mail di conferma per l'abilitazione all'accesso dei servizi offerti.<br>Attenzione, conservare con attenzione questa mail per non perdere i dati di accesso.<br><br></body></html>";
+		$indirizzoMail = $post['email'];
+		
+		mail($indirizzoMail, $subject, $body, "Content-type: text/html; charset=iso-8859-1");
+		*/
+		
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = mysql_errno() . ": " . mysql_error();
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$cont = 0;
+			while($rowValori = mysql_fetch_array($result)){
+				$tmp = array();
+				$tmp["email"] = $rowValori["email"];
+				$tmp["password"] = $rowValori["password"];
+				$tmp["stato"] = $rowValori["stato"];
+				
+				if($rowValori["stato"] == 0)
+					$tmp["stato"] = "non attivo";
+					else
+					$tmp["stato"] = "attivo";
+				
+				$tmp["ruolo"] = $rowValori["ruolo"];
+				$objJSON["results"][$cont] = $tmp;
+				$cont++;
+			}
+		}
+		
+		
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function rigeneraPassword($post){
+		
+		
+		define("SALT","yuppydoo");
+		
+		$password_criptata = md5(SALT.$post["password"]);
+		
+		//var_dump($post["data_creazione"]);
+		
+		//var_dump("INSERT INTO account (email,data_creazione,password,tipo,stato,ruolo)VALUES('".$post['email']."','".$post["data_creazione"]."','".$password_criptata."','".$post['tipo']."','".$post['stato']."','".$post['ruolo']."')");
+		
+		$this->connect->connetti();
+		$this->connect->myQuery("UPDATE account SET password = '".$password_criptata."' WHERE email='".$post['account']."'");
+		var_dump("SELECT account.email AS email, account.password AS password, account.stato AS stato, ruoli.etichetta AS ruolo FROM account,ruoli WHERE account.email='".$post['account']."' AND ruoli.id = account.ruolo");
+		
+		
+		$result = $this->connect->myQuery("SELECT account.email AS email, account.password AS password, account.stato AS stato, ruoli.etichetta AS ruolo FROM account,ruoli WHERE account.email='".$post['account']."' AND ruoli.id = account.ruolo");
+		
+		
+		$mail = new PHPMailer();
+		$mail->IsHTML(true);
+		$mail->IsSMTP();
+		$mail->SMTPAuth = $this->SMTPAuth;     // turn on SMTP authentication      
+		$mail->SMTPSecure = $this->SMTPSecure;  
+		$mail->Host = $this->Host;  
+		$mail->Port = $this->Port;  
+		$mail->SMTPKeepAlive = $this->SMTPKeepAlive; 
+		$mail->SMTPDebug = $this->SMTPDebug;
+		$mail->Username = $this->Username;  // SMTP username
+		$mail->Password = $this->Password;
+		$mail->AddReplyTo($post['account']); 
+		$mail->FromName = "Carrato Spa";
+		$mail->Subject = "Modifica password";
+		$mail->Body = "<html><body>Una nuova password &egrave; stata rigenerata per il suo account.<br>Di seguito i nuovi dati di accesso:<br>username: <b>".$post['account']."</b><br>password: <b>".$post['password']."</b><br><br>Si prega, per una questioni di sicurezza, di accedere alla proprio area per modificare la password a proprio piacimento.<br><br>Cordiali saluti</body></html>";
+		$mail->AddAddress($post['account']);
+			
+		$mail->Send();
+		$mail->SmtpClose();
+		
+		/*$from = "info@cerratospa.com";
+		$fromName = "Carrato Spa";
+		$subject = "Creazione nuovo account";
+		$body = "<html><body>&Egrave; stato creato un nuovo account per l'utente:<br><br>username: <b>".$post['email']."</b><br>password: <b>".$post['password']."</b><br><br>Verr&agrave; analizzata la richiesta da un nostro operatore che provveder&aacute; all'attivazione. Ricever&aacute; nell'arco delle 48 ore una mail di conferma per l'abilitazione all'accesso dei servizi offerti.<br>Attenzione, conservare con attenzione questa mail per non perdere i dati di accesso.<br><br></body></html>";
+		$indirizzoMail = $post['email'];
+		
+		mail($indirizzoMail, $subject, $body, "Content-type: text/html; charset=iso-8859-1");
+		*/
+		
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = mysql_errno() . ": " . mysql_error();
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$cont = 0;
+			while($rowValori = mysql_fetch_array($result)){
+				$tmp = array();
+				$tmp["email"] = $rowValori["email"];
+				$tmp["password"] = $rowValori["password"];
+				$tmp["stato"] = $rowValori["stato"];
+				
+				if($rowValori["stato"] == 0)
+					$tmp["stato"] = "non attivo";
+					else
+					$tmp["stato"] = "attivo";
+				
+				$tmp["ruolo"] = $rowValori["ruolo"];
+				$objJSON["results"][$cont] = $tmp;
+				$cont++;
+			}
+		}
+		
+		
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	/*public function modifyAccount($post){
+		
+		
+		define("SALT","yuppydoo");
+		
+		$password_criptata = md5(SALT.$post["password"]);
+		
+		$this->connect->myQuery("UPDATE account (email,data_creazione,password,stato,ruolo)VALUES('".$post['email']."','".$post["data_creazione"]."','".$password_criptata."','".$post['stato']."','".$post['ruolo']."')");
+		
+		$result = $this->connect->myQuery("SELECT account.email AS email, account.password AS password, user.tipo AS tipo, account.stato AS stato, ruoli.etichetta AS ruolo FROM account,ruoli WHERE account.email='".$post['email']."' AND ruoli.id = account.ruolo");
+		
+		
+		
+		$mail = new PHPMailer();
+		$mail->IsHTML(true);
+		
+		// Telling the class to use SMTP
+		$mail->IsSMTP();
+		$mail->IsHTML(true);
+		$mail->SMTPAuth = $this->SMTPAuth;     // turn on SMTP authentication      
+		$mail->SMTPSecure = $this->SMTPSecure;  
+		$mail->Host = $this->Host;  
+		$mail->Port = $this->Port;  
+		$mail->SMTPKeepAlive = $this->SMTPKeepAlive; 
+		$mail->SMTPDebug = $this->SMTPDebug;
+		$mail->Username = $this->Username;  // SMTP username
+		$mail->Password = $this->Password;
+		$mail->AddReplyTo($post['email']); 
+		$mail->FromName = "Carrato Spa";
+		$mail->Subject = "Creazione nuovo account";
+		$mail->Body = "<html><body>&Egrave; stato creato un nuovo account per l'utente:<br><br>username: <b>".$post['email']."</b><br>password: <b>".$post['password']."</b><br><br>Verr&agrave; analizzata la richiesta da un nostro operatore che provveder&aacute; all'attivazione. Ricever&aacute; nell'arco delle 48 ore una mail di conferma per l'abilitazione all'accesso dei servizi offerti.<br>Attenzione, conservare con attenzione questa mail per non perdere i dati di accesso.<br><br></body></html>";
+		$mail->AddAddress($post['email']);
+			
+		//var_dump("Ma che cazz? ".$mail->Send());
+		$mail->Send();
+		$mail->SmtpClose();
+		
+		
+		//$from = "info@cerratospa.com";
+		//$fromName = "Carrato Spa";
+		//$subject = "Creazione nuovo account";
+		//$body = "<html><body>&Egrave; stato creato un nuovo account per l'utente:<br><br>username: <b>".$post['email']."</b><br>password: <b>".$post['password']."</b><br><br>Verr&agrave; analizzata la richiesta da un nostro operatore che provveder&aacute; all'attivazione. Ricever&aacute; nell'arco delle 48 ore una mail di conferma per l'abilitazione all'accesso dei servizi offerti.<br>Attenzione, conservare con attenzione questa mail per non perdere i dati di accesso.<br><br></body></html>";
+		//$indirizzoMail = $post['email'];
+		
+		//mail($indirizzoMail, $subject, $body, "Content-type: text/html; charset=iso-8859-1");
+		
+		
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = mysql_errno() . ": " . mysql_error();
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$cont = 0;
+			while($rowValori = mysql_fetch_array($result)){
+				$tmp = array();
+				$tmp["email"] = $rowValori["email"];
+				$tmp["password"] = $rowValori["password"];
+				$tmp["stato"] = $rowValori["stato"];
+				
+				if($rowValori["stato"] == 0)
+					$tmp["stato"] = "non attivo";
+					else
+					$tmp["stato"] = "attivo";
+				
+				$tmp["ruolo"] = $rowValori["ruolo"];
+				$objJSON["results"][$cont] = $tmp;
+				$cont++;
+			}
+		}
+		
+		
+		
+		return json_encode($objJSON);
+	}*/
+	
+	public function registerUser($post){
+		
+		$this->connect->connetti();
+		
+		$query = "INSERT INTO user (nome,cognome,sesso,ragione_sociale,mansioni,tipo,partita_iva,codice_fiscale,telefono,cellulare,fax,indirizzo,website,account)VALUES('".$post["nome"]."','".$post["cognome"]."','".$post["sesso"]."','".$post["ragione_sociale"]."','".$post["mansioni"]."','".$post["tipo"]."','".$post["partita_iva"]."','".$post["codice_fiscale"]."','".$post["telefono"]."','".$post["cellulare"]."','".$post["fax"]."','".$post["indirizzo"]."','".$post["website"]."','".$post["account"]."')";
+		
+		//var_dump($query);
+		
+		$this->connect->myQuery($query);
+		
+		$result = $this->connect->myQuery("SELECT * FROM user WHERE account='".$post["account"]."'");
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = mysql_errno() . ": " . mysql_error();
+			return json_encode($objJSON);	
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$cont = 0;
+			while($rowValori = mysql_fetch_array($result)){
+				$tmp = array();
+				$tmp["nome"] = $rowValori["nome"];
+				$tmp["cognome"] = $rowValori["cognome"];
+				$tmp["sesso"] = $rowValori["sesso"];
+				$tmp["ragione_sociale"] = $rowValori["ragione_sociale"];
+				$tmp["partita_iva"] = $rowValori["partita_iva"];
+				$tmp["codice_fiscale"] = $rowValori["codice_fiscale"];
+				$tmp["indirizzo"] = $rowValori["indirizzo"];
+				$tmp["account"] = $rowValori["account"];
+				$tmp["website"] = $rowValori["website"];
+				$tmp["telefono"] = $rowValori["telefono"];
+				
+				if($rowValori["stato"] == 0)
+					$tmp["stato"] = "non attivo";
+					else
+					$tmp["stato"] = "attivo";
+				
+				$objJSON["results"][$cont] = $tmp;
+				$cont++;
+			}
+		}
+		
+		// Telling the class to use SMTP
+		$mail = new PHPMailer();
+		$mail->IsHTML(true);
+		$mail->IsSMTP();
+		$mail->SMTPAuth = $this->SMTPAuth;     // turn on SMTP authentication      
+		$mail->SMTPSecure = $this->SMTPSecure;  
+		$mail->Host = $this->Host;  
+		$mail->Port = $this->Port;  
+		$mail->SMTPKeepAlive = $this->SMTPKeepAlive; 
+		$mail->SMTPDebug = $this->SMTPDebug;
+		$mail->Username = $this->Username;  // SMTP username
+		$mail->Password = $this->Password;
+		$mail->AddReplyTo($this->mailAdmin); 
+		$mail->FromName = "Carrato Spa";
+		$mail->Subject = "Invio richiesta di registrazione";
+		$mail->Body = "<html><body>&Egrave; stata effettuata una richiesta di registrazione sui Vostri sistemi da parte di <b>".$tmp["nome"]." ".$tmp["cognome"]."</b> per l'accesso ai servizi di preventivazione online.<br> Puoi consultare i dati inseriti dall'utente per confermare la validit&agrave; dell'account creato direttamente dal pannellino di amministrazione cliccando al seguente link.<br><a href=\"http://www.cerratospa.com/areariservata/\">area riservata Cerrato Spa</a><br><br><br><br></body></html>";
+		$mail->AddAddress($this->mailAdmin);
+			
+		//var_dump("Ma che cazz? ".$mail->Send());
+		$mail->Send();
+		$mail->SmtpClose();
+		
+		$this->connect->disconnetti();
+		return json_encode($objJSON);	
+	}
+	
+	public function modifyUser($post){
+		
+		$this->connect->connetti();
+		
+		//var_dump("UPDATE user SET nome='".$post["nome"]."',cognome='".$post["cognome"]."',sesso='".$post["sesso"]."',ragione_sociale='".$post["ragione_sociale"]."',mansioni='".$post["mansioni"]."',tipo='".$post["tipo"]."',partita_iva='".$post["partita_iva"]."',codice_fiscale='".$post["codice_fiscale"]."',telefono='".$post["telefono"]."',cellulare='".$post["cellulare"]."',fax='".$post["fax"]."',website='".$post["website"]."',account='".$post["account"]."' WHERE account='".$post["account"]."'");
+		
+		$set = "";
+		if($post["nome"])
+			$set .= "nome='".$post["nome"]."', ";
+			
+		if($post["cognome"])
+			$set .= "cognome='".$post["cognome"]."',";
+			
+		if($post["sesso"])
+			$set .= "sesso='".$post["sesso"]."',";
+			
+		$set .= "ragione_sociale='".$post["ragione_sociale"]."',";
+			
+		if($post["mansioni"])
+			$set .= "mansioni='".$post["mansioni"]."',";
+			
+		if(!$post["author"])
+		$set .= "partita_iva='".$post["partita_iva"]."',";
+			
+		if(!$post["author"])
+		$set .= "codice_fiscale='".$post["codice_fiscale"]."',";
+			
+		if($post["telefono"])
+			$set .= "telefono='".$post["telefono"]."',";
+			
+		if($post["cellulare"])
+			$set .= "cellulare='".$post["cellulare"]."',";
+			
+		if($post["indirizzo"])
+			$set .= "indirizzo='".$post["id_indirizzo"]."',";
+			
+		if(!$post["author"])
+		$set .= "fax='".$post["fax"]."',";
+			
+		if(!$post["author"])
+		$set .= "website='".$post["website"]."',";
+			
+		if($post["account"])
+			$set .= "account='".$post["account"]."',";
+			
+		if($post["codice_preventivazione"])
+			$set .= "codice_preventivazione='".$post["codice_preventivazione"]."',";
+			
+			
+		if($post["tipo"])
+			$set .= "tipo='".$post["tipo"]."',";
+		
+		
+		$set = substr($set,0,$set.length-1);
+		
+		//var_dump("UPDATE user SET ".$set." WHERE account='".$post["account"]."'");
+		
+		$this->connect->myQuery("UPDATE user SET ".$set." WHERE account='".$post["account"]."'");
+		
+		$result = $this->connect->myQuery("SELECT * FROM user WHERE account='".$post["account"]."'");
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = mysql_errno() . ": " . mysql_error();
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$cont = 0;
+			while($rowValori = mysql_fetch_array($result)){
+				$tmp = array();
+				$tmp["nome"] = $rowValori["nome"];
+				$tmp["cognome"] = $rowValori["cognome"];
+				$tmp["sesso"] = $rowValori["sesso"];
+				$tmp["ragione_sociale"] = $rowValori["ragione_sociale"];
+				$tmp["mansioni"] = $rowValori["mansioni"];
+				$tmp["partita_iva"] = $rowValori["partita_iva"];
+				$tmp["codice_fiscale"] = $rowValori["codice_fiscale"];
+				$tmp["indirizzo"] = $rowValori["indirizzo"];
+				$tmp["account"] = $rowValori["account"];
+				$tmp["website"] = $rowValori["website"];
+				$tmp["telefono"] = $rowValori["telefono"];
+				$tmp["cellulare"] = $rowValori["cellulare"];
+				
+				if($rowValori["stato"] == 0)
+					$tmp["stato"] = "non attivo";
+					else
+					$tmp["stato"] = "attivo";
+				
+				$objJSON["results"][$cont] = $tmp;
+				$cont++;
+			}
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);	
+	}
+	
+	
+	public function registerIndirizzo($post){
+		$this->connect->connetti();
+		$query = "INSERT INTO indirizzi (regione,nazione,provincia,comune,indirizzo,civico,cap)VALUES('".$post['regione']."','".$post['nazione']."','".$post['provincia']."','".$post['comune']."','".$post['indirizzo']."','".$post['civico']."','".$post['cap']."')";
+		$result_insert = $this->connect->myQuery($query);
+		
+		
+		
+		$id = mysql_insert_id();
+		
+		$result = $this->connect->myQuery("SELECT * FROM indirizzi WHERE id='".$id."'");
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = mysql_errno() . ": " . mysql_error();
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$cont = 0;
+			while($rowValori = mysql_fetch_array($result)){
+				$tmp = array();
+				$tmp["id"] = $id;
+				$tmp["nazione"] = $rowValori["nazione"];
+				$tmp["regione"] = $rowValori["regione"];
+				$tmp["provincia"] = $rowValori["provincia"];
+				$tmp["comune"] = $rowValori["comune"];
+				$tmp["civico"] = $rowValori["civico"];
+				$tmp["cap"] = $rowValori["cap"];
+				$objJSON["results"][$cont] = $tmp;
+				$cont++;
+			}
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function modifyIndirizzo($post){	
+		$this->connect->connetti();
+		$result_insert = $this->connect->myQuery("UPDATE indirizzi SET regione='".$post['regione']."',nazione='".$post['nazione']."',provincia='".$post['provincia']."',comune='".$post['comune']."',indirizzo='".$post['indirizzo']."',civico='".$post['civico']."',cap='".$post['cap']."' WHERE id='".$post["id_indirizzo"]."'");
+		
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = mysql_errno() . ": " . mysql_error();
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+		}
+		
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function getRegioni(){
+		$this->connect->connetti();
+		$result = $this->connect->myQuery("SELECT * FROM regioni ORDER BY nome");
+		$objJSON =  array();
+		$cont = 0;
+		while($row = mysql_fetch_array($result)){
+			$objJSON[$cont]['id'] = $row['id'];
+			$objJSON[$cont]['nome'] = $row['nome'];
+			$objJSON[$cont]['provincia'] = $row['provincia'];
+			$cont++;
+		}
+		//$out = array_values($objJSON);
+		//var_dump(json_encode($objJSON));
+		//$this->connect->disconnetti();
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+		//return $json;
+	}
+	
+	public function getProvince($post){
+		$this->connect->connetti();
+		//var_dump("SELECT * FROM provincia WHERE id_regione='".$post['regione']."'");
+	
+		$result = $this->connect->myQuery("SELECT * FROM province WHERE id_regione='".$post['regione']."' ORDER BY nome");
+		$objJSON =  array();
+		$cont = 0;
+		while($row = mysql_fetch_array($result)){
+			$objJSON[$cont]['id'] = $row['id'];
+			$objJSON[$cont]['nome'] = $row['nome'];
+			$cont++;
+		}
+		//$out = array_values($objJSON);
+		//var_dump(json_encode($objJSON));
+		//$this->connect->disconnetti();
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+		//return $json;
+	}
+	
+	public function getComuni($post){
+	
+		//var_dump("SELECT * FROM comuni WHERE id_provincia='".$post['provincia']."'");
+		$this->connect->connetti();
+		$result = $this->connect->myQuery("SELECT * FROM comuni WHERE id_provincia='".$post['provincia']."' ORDER BY nome");
+		$objJSON =  array();
+		$cont = 0;
+		while($row = mysql_fetch_array($result)){
+			$objJSON[$cont]['id'] = $row['id'];
+			$objJSON[$cont]['nome'] = $row['nome'];
+			$cont++;
+		}
+		//$out = array_values($objJSON);
+		//var_dump(json_encode($objJSON));
+		//$this->connect->disconnetti();
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+		//return $json;
+	}
+	
+	public function getNazioni(){
+	
+		//var_dump("SELECT * FROM comuni WHERE id_provincia='".$post['provincia']."'");
+		$this->connect->connetti();
+		$result = $this->connect->myQuery("SELECT * FROM nazioni ORDER BY nome");
+		$objJSON =  array();
+		$cont = 0;
+		while($row = mysql_fetch_array($result)){
+			$objJSON[$cont]['id'] = $row['id'];
+			$objJSON[$cont]['nome'] = $row['nome'];
+			$cont++;
+		}
+		//$out = array_values($objJSON);
+		//var_dump(json_encode($objJSON));
+		//$this->connect->disconnetti();
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+		//return $json;
+	}
+	
+	
+	public function checkPartitaIva($post){
+		$this->connect->connetti();
+		$result = $this->connect->myQuery("SELECT * FROM user WHERE partita_iva='".$post['partita_iva']."' AND account<>'".$post["email"]."'");
+		$objJSON =  array();
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = mysql_error();
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$cont = 0;
+			while($rowValori = mysql_fetch_array($result)){
+				$tmp = array();
+				$tmp["nome"] = $rowValori["nome"];
+				$tmp["cognome"] = $rowValori["cognome"];
+				$tmp["partita_iva"] = $rowValori["partita_iva"];
+				$objJSON["results"][$cont] = $tmp;
+				$cont++;
+			}
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function checkEmail($post){
+		$this->connect->connetti();
+		$result = $this->connect->myQuery("SELECT * FROM account WHERE email='".$post['email']."'");
+		$objJSON =  array();
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = mysql_error();
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$cont = 0;
+			while($rowValori = mysql_fetch_array($result)){
+				$objJSON["results"][$cont] = $rowValori["email"];
+				$cont++;
+			}
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function checkCodicePreventivazione($post){
+		$this->connect->connetti();
+		//var_dump("SELECT * FROM user WHERE account <> '".$post['account']."' AND codice_preventivazione='".$post["codice_preventivazione"]."' AND tipo='".$post["tipologiaUtente"]."'");
+		
+		$result = $this->connect->myQuery("SELECT * FROM user WHERE account <> '".$post['account']."' AND codice_preventivazione='".$post["codice_preventivazione"]."' AND tipo='".$post["tipologiaUtente"]."'");
+		
+		$objJSON =  array();
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = mysql_error();
+		}else{
+			$objJSON["success"] = true;
+			$cont = mysql_num_rows($result);
+			$objJSON["results"]["num"] = $cont;
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function checkCodiceFiscale($post){
+		
+		//var_dump("SELECT * FROM user WHERE codice_fiscale='".$post['codice_fiscale']."' AND account<>".$post["email"]."'");
+		$this->connect->connetti();
+		$result = $this->connect->myQuery("SELECT * FROM user WHERE codice_fiscale='".$post['codice_fiscale']."' AND account<>'".$post["email"]."'");
+		$objJSON =  array();
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = mysql_error();
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$cont = 0;
+			while($rowValori = mysql_fetch_array($result )){
+				$tmp = array();
+				$tmp["nome"] = $rowValori["nome"];
+				$tmp["cognome"] = $rowValori["cognome"];
+				$tmp["codice_fiscale"] = $rowValori["codice_fiscale"];
+				$objJSON["results"][$cont] = $tmp;
+				$cont++;
+			}
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	
+	public function generaPasswordCriptata($post){
+		
+		define("SALT","yuppydoo");
+		
+		$password_criptata = md5(SALT.$post["password"]);
+		$objJSON =  array();
+		$objJSON["password"] = $password_criptata;
+		
+		return json_encode($objJSON);
+	}
+	
+	private function random_string($length) {
+		$string = "";
+
+		// genera una stringa casuale che ha lunghezza
+		// uguale al multiplo di 32 successivo a $length
+		for ($i = 0; $i <= ($length/32); $i++)
+			$string .= md5(time()+rand(0,99));
+	
+		// indice di partenza limite
+		$max_start_index = (32*$i)-$length;
+	
+		// seleziona la stringa, utilizzando come indice iniziale
+		// un valore tra 0 e $max_start_point
+		$random_string = substr($string, rand(0, $max_start_index), $length);
+	
+		return $random_string;
+	}
+	
+	public function recuperaPassword($post){
+		
+		$password = $this->random_string(10);
+		define("SALT","yuppydoo");
+		
+		$password_criptata = md5(SALT.$password);
+		
+		$this->connect->connetti();
+		$query1 = "UPDATE account SET password = '".$password_criptata."' WHERE email = '".$post["email"]."'";
+		//var_dump($query);
+		
+		$result1 = $this->connect->myQuery($query1);
+		$cont = mysql_affected_rows();
+		
+		
+		$objJSON =  array();
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = mysql_error();
+		}else{
+			$objJSON["success"] = true;
+			
+			if($cont > 0){
+				$objJSON["results"] = true;
+				$mail = new PHPMailer();
+				$mail->IsHTML(true);
+				$mail->IsSMTP();
+				$mail->SMTPAuth = $this->SMTPAuth;     // turn on SMTP authentication      
+				$mail->SMTPSecure = $this->SMTPSecure;  
+				$mail->Host = $this->Host;  
+				$mail->Port = $this->Port;  
+				$mail->SMTPKeepAlive = $this->SMTPKeepAlive; 
+				$mail->SMTPDebug = $this->SMTPDebug;
+				$mail->Username = $this->Username;  // SMTP username
+				$mail->Password = $this->Password;
+				$mail->AddReplyTo($post["email"]); 
+				$mail->FromName = "Cerrato Spa";
+				$mail->Subject = "Richiesta recupero password";
+				
+				$mailMessage = "<html><body>Abbiamo ricevuto la richiesta di ripristino password.<br>La nuova password &egrave; <b>".$password."</b><br>Per motivi di sicurezza la preghiamo di accedere all'area riservata e modificare, nella sezione profilo, la password appena generata con una sua personale.<br>La ringraziamo per la sua disponibilit&agrave;.</body></html>";
+				
+				$mail->Body = $mailMessage;
+				$mail->AddAddress($post["email"]);
+				$mail->Send();
+				$mail->SmtpClose();
+			
+			}else
+				$objJSON["results"] = false;
+		}
+		
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+}
+
+
+?>

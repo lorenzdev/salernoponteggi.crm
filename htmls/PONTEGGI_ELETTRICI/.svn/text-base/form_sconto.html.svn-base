@@ -1,0 +1,15 @@
+<h3>Inserisci lo sconto</h3>
+<span id='checkRepeatSconto'></span><br />
+<div id="elenco_fasce_vernici">
+Sconto in %: <input type="text" id="sconto" value="0" maxlength="2" />
+</div>
+<br><br>
+<div id="warning" style="margin:10px 0px;"></div>
+<br><br>
+<div style="text-align:center;">
+<!--<input type="button" value="RIEPILOGO" id="riepilogo" style="height:100px;width:200px;padding:20px;" disabled="disabled"/>&nbsp;&nbsp;-->
+<input type="button" value="AVANTI" id="continua" style="height:40px;width:150px;" />&nbsp;&nbsp;
+<input type="button" value="INDIETRO" id="indietro" style="height:40px;width:150px;"/>
+<!--<input type="button" value="SALTA" id="salta" style="height:40px;width:150px;"/>-->
+</div>
+<br><br><br><br>

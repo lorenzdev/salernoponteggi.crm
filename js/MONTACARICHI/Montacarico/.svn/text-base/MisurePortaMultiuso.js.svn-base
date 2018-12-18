@@ -1,0 +1,413 @@
+var MisurePortaMultiuso = function(content){
+	
+	var _this = this;
+	_this.elem;
+	_this.HportaFissa;
+	_this.HsopraluceFissa = 300;
+	_this.content = content;
+	
+	_this.misureForo = {
+		"width": 0,
+		"height":0	
+	}
+	
+	_this.minL = 200;
+	_this.maxL = 2000;
+	_this.minH = 500;
+	_this.maxH = 3000;
+	
+	
+	_this.initialize = function(){
+		jQuery("#LportaInput").val("");
+		jQuery("#HportaInput").val("");
+		
+		jQuery("#Hporta option").each(function(){
+			if(jQuery(this).val() == "null")
+				jQuery(this).prop("selected", true);
+		});
+		
+		jQuery("#Lporta option").each(function(){
+			if(jQuery(this).val() == "null")
+				jQuery(this).prop("selected", true);
+		});
+		
+		jQuery("#riferimento").val("");
+		
+		jQuery("#Hpiu").attr("disabled","disabled");
+		jQuery("#Hmeno").attr("disabled","disabled");
+		jQuery("#Lpiu").attr("disabled","disabled");
+		jQuery("#Lmeno").attr("disabled","disabled");
+		
+		jQuery("#warning").html("");
+		jQuery("#continua").attr("disabled","disabled");
+	
+	}
+	
+	_this.init = function(elem){
+		_this.elem = elem;
+		
+		jQuery.get(P_FORM_MISURE_PORTA_MULTIUSO, function(dataHtml){
+			_this.elem.html(dataHtml);
+			
+			
+			var selezione = jQuery.getCookie("selezione");
+			
+			// PRIMA SELEZIONE MISURE DELLA PORTA
+			jQuery("#Lporta").change(function(){
+				var L = jQuery("#Lporta option:selected").val();
+				if(!jQuery.validaValore(L)){
+					//jQuery("#LportaInput").prop("disabled", true);
+					jQuery("#LportaInput").val("");
+					_this.activeL(false);
+					jQuery("#continua").prop("disabled",true);
+					
+					
+					
+				}else{
+					jQuery("#LportaInput").val(L);
+					_this.activeL(true);
+					jQuery("#continua").prop("disabled",false);
+					//jQuery("#LportaInput").prop("disabled", false);
+					_this.verificaMagazzino();
+				}
+				
+				
+			});
+			
+			jQuery("#Hporta").change(function(){
+				
+				var H = jQuery("#Hporta option:selected").val();
+				if(!jQuery.validaValore(H)){
+					//jQuery("#HportaInput").prop("disabled", true);
+					jQuery("#HportaInput").val("");
+					_this.activeH(false);
+					jQuery("#continua").prop("disabled",true);
+					
+					
+				
+				}else{
+					jQuery("#HportaInput").val(H);
+					_this.activeH(true);
+					jQuery("#continua").prop("disabled",false);
+					//jQuery("#HportaInput").prop("disabled", false);
+					_this.verificaMagazzino();
+				
+				}
+				
+				
+			});
+			
+			
+			if(selezione.modifica.boo || selezione.indietro){
+				_this.autoCompila();
+			}
+			
+			
+			function cambiaMisurePorta(boo){
+				
+				if(boo){
+					jQuery("#Lforo").attr("disabled","disabled");
+					jQuery("#Hforo").attr("disabled","disabled");
+					jQuery(".up_tipo_posa").attr("disabled","disabled");
+					jQuery(".sx_tipo_posa").attr("disabled","disabled");
+					jQuery(".dx_tipo_posa").attr("disabled","disabled");
+					jQuery("#up_valore_tipo_posa").attr("disabled","disabled");
+					jQuery("#sx_valore_tipo_posa").attr("disabled","disabled");
+					jQuery("#dx_valore_tipo_posa").attr("disabled","disabled");
+					jQuery(".sopraluce").attr("disabled","disabled");
+					jQuery("#Hsopraluce").attr("disabled","disabled");
+					
+					
+					jQuery("#Hmeno").removeAttr("disabled");
+					jQuery("#Lmeno").removeAttr("disabled");
+					
+					jQuery("#cambiaMisurePorta").attr("value","Reimposta i valori iniziali");
+				}else{
+					_this.compilaMisurePorta();
+					jQuery("#cambiaMisurePorta").attr("value","Cambia le msure della porta");
+					
+					jQuery(".up_tipo_posa").removeAttr("disabled");
+					jQuery(".sx_tipo_posa").removeAttr("disabled");
+					jQuery(".dx_tipo_posa").removeAttr("disabled");
+					jQuery(".sopraluce").removeAttr("disabled");
+					if(jQuery(".sopraluce:checked").attr("value") == "si")
+						jQuery("#Hsopraluce").removeAttr("disabled");
+					
+					
+					if(jQuery(".up_tipo_posa:checked").attr("value") == "up_1")
+						jQuery("#up_valore_tipo_posa").removeAttr("disabled");
+					
+					if(jQuery(".sx_tipo_posa:checked").attr("value") == "sx_1")
+						jQuery("#sx_valore_tipo_posa").removeAttr("disabled");
+						
+					if(jQuery(".dx_tipo_posa:checked").attr("value") == "dx_1")
+						jQuery("#dx_valore_tipo_posa").removeAttr("disabled");
+					
+					jQuery("#Hpiu").attr("disabled","disabled");
+					jQuery("#Hmeno").attr("disabled","disabled");
+					
+					jQuery("#Lpiu").attr("disabled","disabled");
+					jQuery("#Lmeno").attr("disabled","disabled");
+					
+				}
+			}
+			
+			//BOTTONE CHE CONSENTE DI CAMBIARE LE MISURE DELLA PORTA
+			jQuery("#cambiaMisurePorta").bind("click",function(){
+				if(jQuery(this).attr("value") == "Reimposta i valori iniziali")
+					cambiaMisurePorta(false);
+					else
+					cambiaMisurePorta(true);
+			});
+			
+			jQuery("#Lpiu").bind("click",function(){
+				
+				jQuery("#Lmeno").prop("disabled",false);
+				var Lporta = parseInt(jQuery("#LportaInput").val());
+				
+				Lporta += 10;
+				jQuery("#LportaInput").val(Lporta);
+				
+				if(_this.maxL > Lporta){
+					jQuery("#Lpiu").removeAttr("disabled");
+				
+				}else jQuery(this).attr("disabled","disabled");
+				
+				_this.checkMisurePorta();
+				
+				
+			});
+			
+			jQuery("#Lmeno").bind("click",function(){
+				
+				jQuery("#Lpiu").prop("disabled",false);
+				var Lporta = parseInt(jQuery("#LportaInput").val());
+				
+				Lporta -= 10;
+				jQuery("#LportaInput").val(Lporta);
+				
+				if(_this.minL < Lporta){
+					jQuery("#Lmeno").removeAttr("disabled");
+				
+				}else jQuery(this).attr("disabled","disabled");
+				_this.checkMisurePorta();
+			});
+			
+			jQuery("#Hpiu").bind("click",function(){
+				
+				jQuery("#Hmeno").prop("disabled",true);
+				var Hporta = parseInt(jQuery("#HportaInput").val());
+				
+				Hporta += 10;
+				jQuery("#HportaInput").val(Hporta);
+				
+				if(_this.maxH > Hporta){
+					jQuery("#Hmeno").removeAttr("disabled");
+				
+				}else jQuery(this).attr("disabled","disabled");
+				_this.checkMisurePorta();
+			});
+			
+			jQuery("#Hmeno").bind("click",function(){
+				
+				jQuery("#Hpiu").prop("disabled",false);
+				var Hporta = parseInt(jQuery("#HportaInput").val());
+				
+				Hporta -= 10;
+				jQuery("#HportaInput").val(Hporta);
+				
+				if(_this.minH < Hporta){
+					jQuery("#Hmeno").removeAttr("disabled");
+				
+				}else jQuery(this).attr("disabled","disabled");
+				_this.checkMisurePorta();
+			});
+			
+			// BOTTONE COMPLETE
+			jQuery("#continua").bind("click", function(){
+				//console.log(_this.content.main);
+				
+				
+				if(!jQuery.validaValore(jQuery("#riferimento").val())){
+					alert("Non hai inserito il riferimento");
+					return;
+				}
+				
+				
+				_this.content.main.loader.init(function(){_this.complete();});
+			});
+			
+			//BOTTONE RESETTA
+			jQuery("#resetta").bind("click", function(){
+				_this.initialize();
+			});
+			
+			_this.content.main.loader.remove();	
+			
+		});
+	}
+	
+	
+	
+	_this.activeH = function(boo){
+		if(boo){
+			jQuery("#Hpiu").prop("disabled",false);
+			jQuery("#Hmeno").prop("disabled",false);
+		}else{
+			jQuery("#Hpiu").prop("disabled",true);
+			jQuery("#Hmeno").prop("disabled",true);
+		}
+	}
+	
+	_this.activeL = function(boo){
+	
+		if(boo){
+			jQuery("#Lpiu").prop("disabled",false);
+			jQuery("#Lmeno").prop("disabled",false);
+			
+		}else{
+			jQuery("#Lpiu").prop("disabled",true);
+			jQuery("#Lmeno").prop("disabled",true);
+		}
+	}
+	
+	
+	_this.checkMisurePorta = function(){
+	
+		var L = jQuery("#LportaInput").val();	
+		var H = jQuery("#HportaInput").val();
+		_this.verificaValidita(L,H);
+		
+	}
+	
+	_this.verificaValidita = function(L,H){
+		
+		
+		
+		if(jQuery.validaValore(L)){
+			switch(parseInt(L)){
+				case 700: jQuery("#warning").html("");break;
+				case 800: jQuery("#warning").html("");break;
+				case 900: jQuery("#warning").html("");break;
+				case 1000: jQuery("#warning").html("");break;
+				case 1100: jQuery("#warning").html("");break;
+				case 1200: jQuery("#warning").html("");break;
+				case 1300: jQuery("#warning").html("");break;
+				case 1350: jQuery("#warning").html("");break;
+				default: jQuery("#warning").html("<img src='images/warning.png' /> Le dimensioni scelte per la porta non rientrano nelle misure standard. Verrà fornito un preventivo a progetto personalizzato.<br>"); return false;
+			}
+		}
+		
+		
+		if(jQuery.validaValore(H)){
+			switch(parseInt(H)){
+				
+				case 2050: jQuery("#warning").html("");break;
+				case 2150: jQuery("#warning").html("");break;
+				default: jQuery("#warning").html("<img src='images/warning.png' /> Le dimensioni scelte per la porta non rientrano nelle misure standard. Verrà fornito un preventivo a progetto personalizzato.<br>"); return false;
+			}
+		}	
+	
+	
+		_this.verificaMagazzino();
+		
+		return true;
+	}
+	
+	
+	
+	_this.complete = function(){
+		
+		var param = {
+			"width":parseInt(jQuery("#LportaInput").val()),
+			"height":parseInt(jQuery("#HportaInput").val())	
+		}
+		
+		
+		var cookieSelezione = jQuery.getCookie("selezione");
+		cookieSelezione.riferimento = jQuery("#riferimento").val();
+		
+		var id = new Date().getTime();
+		
+		if(!cookieSelezione.modifica.boo)
+			cookieSelezione.id = id;
+		
+		cookieSelezione.tipologia = "PortaMultiuso";
+		cookieSelezione.validita = _this.verificaValidita(param.width,param.height);
+		cookieSelezione.porta.L = param.width;	
+		cookieSelezione.porta.H = param.height;
+		
+		//console.log("Ecco il cookie!");
+		//console.log(cookieSelezione);
+		
+		jQuery.registerCookie("selezione", cookieSelezione);
+		
+		_this.content.nextStep();
+	
+	}
+	
+	_this.verificaMagazzino = function(){
+		
+		
+		var H = jQuery("#Hporta option:selected").val();
+		var L = jQuery("#Lporta option:selected").val();
+		
+		var Lmagazzino = false;
+		var Hmagazzino = false;
+		
+		if(jQuery.validaValore(H) && jQuery.validaValore(L)){
+			
+			
+		
+			switch(parseInt(L)){
+				case 800: Lmagazzino=true;break;
+				case 900: Lmagazzino=true;break;
+				case 1000: Lmagazzino=true;break;
+				default: Lmagazzino=false;break;
+			}
+			
+			
+			switch(parseInt(H)){
+				case 2050: Hmagazzino=true;break;
+				case 2150: Hmagazzino=true;break;
+				default: Hmagazzino=false;break;
+			}
+		}
+		
+		
+		if(Lmagazzino && Hmagazzino)
+			 jQuery("#warning").html("<img src='images/warning.png' /> Disponibili a magazzino. Previa verifica disponibilità<br>");
+		else
+		 	jQuery("#warning").html("");
+	}
+	
+	
+	_this.autoCompila = function(){
+	
+		var selezione = jQuery.getCookie("selezione");
+	
+		jQuery("#riferimento").val(selezione.riferimento);
+		jQuery("#HportaInput").val(selezione.porta.H);
+		jQuery("#LportaInput").val(selezione.porta.L);
+		
+		jQuery("#Lporta option").each(function(){
+			console.log(jQuery(this).val()+" "+selezione.porta.L);
+			if(jQuery(this).val() == selezione.porta.L)
+				jQuery(this).prop("selected", true);
+		});
+		
+		jQuery("#Hporta option").each(function(){
+			if(jQuery(this).val() == selezione.porta.H)
+				jQuery(this).prop("selected", true);
+		});
+	
+		_this.verificaValidita(selezione.porta.L,selezione.porta.H);
+		_this.activeL(true);
+		_this.activeH(true);
+		_this.verificaMagazzino();
+	
+		jQuery("#continua").prop("disabled",false);	
+		
+	}
+
+}

@@ -1,0 +1,38 @@
+<h3>Riferimento: <input type="text" id="riferimento" /></h3>
+
+<hr />
+Seleziona il numero di ante per la porta tagliafuoco: <select id="ante">
+<option value="1">1 anta</option>
+<option value="2">2 ante</option>
+</select>
+<hr />
+L: <select type="text" value="" id="Lporta" style="height:40px;">
+        <option value="null">Seleziona la larghezza</option>
+        <option value="800">800 mm</option>
+        <option value="900">900 mm</option>
+        <option value="1000">1000 mm</option>
+        <option value="1100">1100 mm</option>
+        <option value="1200">1200 mm</option>
+        <option value="1300">1300 mm</option>
+        <option value="1350">1350 mm</option>
+	</select><br /><br />
+H: <select type="text" value="" id="Hporta" style="height:40px;">
+        <option value="null">Seleziona l'altezza</option>
+        <option value="2050">2050 mm</option>
+        <option value="2150">2150 mm</option>
+  	</select><br /><br />
+<!--<hr />
+<h3>Modifica le misure della porta**</h3>-->
+L: <input type="text" value="" id="LportaInput" disabled="disabled" maxlength="4" style="height:25px;"/> (mm)&nbsp;&nbsp;<input type="button" value="+" id="Lpiu" disabled="disabled"/>&nbsp;<input type="button" value="-" id="Lmeno" disabled="disabled"/><br /><br />
+H: <input type="text" value="" id="HportaInput" disabled="disabled" maxlength="4" style="height:25px;"/> (mm)&nbsp;&nbsp;<input type="button" value="+" id="Hpiu" disabled="disabled"/>&nbsp;<input type="button" value="-" id="Hmeno" disabled="disabled"/><br />
+<hr />
+<div id="warning"></div><br /><br />
+
+<div style="text-align:center;">
+<input type="button" value="AVANTI" id="continua" style="height:40px;width:150px;" disabled="disabled"/>&nbsp;&nbsp;
+<input type="button" value="RESETTA" id="resetta" style="height:40px;width:150px;"/>
+</div>
+<br><br><br><br>
+* Il sistema calcolerà una tolleranza di 10 mm per lato<br />
+<!--** I valori calcolati per le misure della porta si approssimano per difetto alla seconda cifra decimale secondo la sequenza standardizzata(00, 30,50,80)-->
+<br><br>

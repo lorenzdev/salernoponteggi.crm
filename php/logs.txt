@@ -1,0 +1,1041 @@
+
+03/01/2018: Error: Uncaught TypeError: Cannot read property 'ciao' of undefined, Script: http://localhost/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js  Line: 151
+03/01/2018, 08:01:42: Error: Uncaught TypeError: Cannot read property 'ciao' of undefined, Script: http://localhost/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js  Line: 151
+03/01/2018, 08:01:36: Error: Uncaught TypeError: Cannot read property 'ciao' of undefined, Script: http://localhost/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js  Line: 151
+03/01/2018, 08:01:27: Error: Uncaught TypeError: Cannot read property 'ciao' of undefined, Script: http://localhost/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js  Line: 151
+04/01/2018, 04:01:47: Error: Uncaught TypeError: Cannot read property 'ruolo' of null, Script: http://localhost/js/Menu.js  Line: 109
+04/01/2018, 04:01:26: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/js/Preventivi/Preventivi.js  Line: 796
+04/01/2018, 05:01:29: Error: Uncaught TypeError: Cannot read property 'ciao' of undefined, Script: http://localhost/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js  Line: 151
+04/01/2018, 06:01:01: Error: Uncaught TypeError: Cannot read property 'rows' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+04/01/2018, 06:01:13: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/Carrello/Carrello.js  Line: 606
+04/01/2018, 06:01:46: Error: Uncaught TypeError: Cannot read property 'html' of undefined, Script: http://localhost/js/Carrello/Carrello.js  Line: 9
+04/01/2018, 06:01:21: Error: , Script:   Line: 
+04/01/2018, 06:01:22: Error: Uncaught TypeError: Illegal invocation, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+04/01/2018, 07:01:18: Error: Uncaught TypeError: _this.salvaPreventivo is not a function, Script: http://localhost/  Line: 331
+04/01/2018, 07:01:08: Error: Uncaught TypeError: _this.content.salvaPreventivo is not a function, Script: http://localhost/  Line: 331
+04/01/2018, 07:01:58: Error: Uncaught TypeError: _this.content.salvaPreventivo is not a function, Script: http://localhost/  Line: 331
+04/01/2018, 07:01:57: Error: Uncaught TypeError: _this.calcolaCostiVerniciatura is not a function, Script: http://localhost/js/Menu.js  Line: 364
+04/01/2018, 07:01:11: Error: Uncaught TypeError: Cannot read property 'success' of null, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+04/01/2018, 07:01:26: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 429
+04/01/2018, 07:01:06: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 429
+04/01/2018, 07:01:27: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 429
+04/01/2018, 07:01:34: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 429
+04/01/2018, 07:01:53: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 432
+04/01/2018, 07:01:23: Error: Uncaught SyntaxError: Unexpected token u in JSON at position 0, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+04/01/2018, 07:01:52: Error: Uncaught ReferenceError: totale is not defined, Script: http://localhost/js/Menu.js  Line: 353
+04/01/2018, 07:01:56: Error: Uncaught ReferenceError: totale is not defined, Script: http://localhost/js/Menu.js  Line: 353
+04/01/2018, 07:01:09: Error: Uncaught ReferenceError: totale is not defined, Script: http://localhost/js/Menu.js  Line: 353
+04/01/2018, 07:01:52: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 07:01:20: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 07:01:43: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 07:01:16: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 07:01:03: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 07:01:47: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 08:01:28: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 08:01:21: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 08:01:08: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 08:01:31: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 08:01:28: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 08:01:47: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 08:01:14: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 08:01:58: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 08:01:35: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 08:01:59: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 08:01:21: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 08:01:04: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 08:01:37: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 08:01:32: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 08:01:53: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+04/01/2018, 08:01:30: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+05/01/2018, 08:01:57: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+05/01/2018, 08:01:34: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+05/01/2018, 08:01:36: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+05/01/2018, 09:01:50: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+05/01/2018, 09:01:30: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Menu.js  Line: 457
+05/01/2018, 10:01:23: Error: Uncaught TypeError: Cannot read property 'ruolo' of null, Script: http://localhost/js/Menu.js  Line: 109
+05/01/2018, 10:01:33: Error: Uncaught ReferenceError: sconto is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+05/01/2018, 01:01:30: Error: Uncaught TypeError: Cannot read property 'tipologia' of undefined, Script: http://localhost/  Line: 535
+05/01/2018, 01:01:02: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+05/01/2018, 01:01:12: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+05/01/2018, 01:01:00: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+05/01/2018, 02:01:13: Error: Uncaught ReferenceError: tot is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+05/01/2018, 02:01:32: Error: Uncaught SyntaxError: Unexpected token ., Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+05/01/2018, 02:01:29: Error: Uncaught ReferenceError: registerCookie is not defined, Script: http://localhost/  Line: 290
+05/01/2018, 03:01:32: Error: Uncaught ReferenceError: cookieSelezione is not defined, Script: http://localhost/  Line: 443
+05/01/2018, 04:01:51: Error: Uncaught TypeError: Cannot set property 'quantita' of undefined, Script: http://localhost/  Line: 578
+05/01/2018, 05:01:37: Error: Uncaught TypeError: Cannot set property 'selezione' of undefined, Script: http://localhost/  Line: 277
+05/01/2018, 05:01:51: Error: Uncaught TypeError: Cannot read property 'prodotto' of undefined, Script: http://localhost/  Line: 421
+05/01/2018, 05:01:20: Error: Uncaught TypeError: Cannot read property 'costo_totale' of undefined, Script: http://localhost/  Line: 394
+05/01/2018, 05:01:32: Error: Uncaught TypeError: Cannot read property 'costo_totale' of undefined, Script: http://localhost/  Line: 394
+05/01/2018, 05:01:29: Error: Uncaught ReferenceError: totaleProdotto is not defined, Script: http://localhost/  Line: 397
+05/01/2018, 06:01:34: Error: Uncaught SyntaxError: Unexpected token :, Script: http://localhost/  Line: 1
+05/01/2018, 06:01:09: Error: Uncaught TypeError: Cannot set property 'sconto' of undefined, Script: http://localhost/  Line: 1
+05/01/2018, 06:01:37: Error: Uncaught TypeError: Cannot read property 'quantita' of undefined, Script: http://localhost/  Line: 125
+05/01/2018, 06:01:24: Error: Uncaught TypeError: Cannot read property 'L' of undefined, Script: http://localhost/  Line: 66
+05/01/2018, 07:01:07: Error: Uncaught TypeError: Cannot read property 'L' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+05/01/2018, 08:01:23: Error: Uncaught TypeError: Cannot read property 'ruolo' of null, Script: http://localhost/js/Menu.js  Line: 109
+05/01/2018, 09:01:07: Error: Uncaught TypeError: obj.viewRiepilogo is not a function, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+05/01/2018, 09:01:38: Error: Uncaught TypeError: obj.viewRiepilogo is not a function, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+05/01/2018, 09:01:08: Error: Uncaught ReferenceError: cookieSelezione is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+05/01/2018, 09:01:36: Error: Uncaught ReferenceError: cookieSelezione is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+05/01/2018, 09:01:11: Error: Uncaught TypeError: Cannot read property 'L' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+05/01/2018, 09:01:00: Error: Uncaught TypeError: Cannot read property 'grigliaSuperiore' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+05/01/2018, 09:01:44: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/js/Preventivi/Preventivi.js  Line: 787
+05/01/2018, 09:01:29: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/js/Preventivi/Preventivi.js  Line: 787
+05/01/2018, 09:01:21: Error: Uncaught ReferenceError: totale_prodotto is not defined, Script: http://localhost/  Line: 193
+05/01/2018, 09:01:45: Error: Uncaught ReferenceError: prezoTotale is not defined, Script: http://localhost/  Line: 402
+05/01/2018, 10:01:29: Error: Uncaught TypeError: obj.viewRiepilogo is not a function, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+05/01/2018, 10:01:32: Error: Uncaught TypeError: _this.obj.aggiornaRiepilogo is not a function, Script: http://localhost/  Line: 323
+06/01/2018, 08:01:42: Error: Uncaught TypeError: Cannot read property 'L' of undefined, Script: http://localhost/  Line: 144
+06/01/2018, 08:01:28: Error: Uncaught ReferenceError: quantita is not defined, Script: http://localhost/  Line: 207
+06/01/2018, 08:01:50: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost/  Line: 338
+06/01/2018, 08:01:18: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/  Line: 387
+06/01/2018, 08:01:40: Error: Uncaught TypeError: Cannot read property 'costo' of undefined, Script: http://localhost/  Line: 460
+06/01/2018, 08:01:48: Error: Uncaught ReferenceError: tmpQuantita is not defined, Script: http://localhost/  Line: 501
+06/01/2018, 09:01:27: Error: Uncaught ReferenceError: totV is not defined, Script: http://localhost/  Line: 517
+06/01/2018, 09:01:46: Error: Uncaught ReferenceError: totaleProdotto is not defined, Script: http://localhost/  Line: 794
+06/01/2018, 09:01:07: Error: Uncaught TypeError: _this.obj.getPrezzoScontato is not a function, Script: http://localhost/  Line: 29
+06/01/2018, 10:01:51: Error: Uncaught TypeError: Cannot set property 'riferimento' of null, Script: http://localhost/  Line: 831
+06/01/2018, 10:01:59: Error: Uncaught TypeError: Cannot read property 'ruolo' of null, Script: http://localhost/js/Menu.js  Line: 109
+06/01/2018, 10:01:50: Error: Uncaught TypeError: obj.viewRiepilogo is not a function, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 10:01:29: Error: Uncaught ReferenceError: isAccessori is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 11:01:11: Error: Uncaught TypeError: Cannot read property 'substring' of undefined, Script: http://localhost/  Line: 258
+06/01/2018, 11:01:31: Error: Uncaught TypeError: Cannot set property 'quantitaUnitaria' of undefined, Script: http://localhost/  Line: 270
+06/01/2018, 12:01:21: Error: Uncaught TypeError: Cannot read property 'prodotto' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 12:01:02: Error: Uncaught TypeError: Cannot read property 'prodotto' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 12:01:25: Error: Uncaught TypeError: Cannot read property 'prodotto' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 01:01:21: Error: Uncaught TypeError: Cannot read property 'quantita' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 01:01:42: Error: Uncaught TypeError: Cannot read property 'quantita' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 02:01:38: Error: Uncaught TypeError: location.refresh is not a function, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 02:01:13: Error: Uncaught TypeError: location.refresh is not a function, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 02:01:58: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 04:01:07: Error: Uncaught TypeError: Cannot read property 'dx' of undefined, Script: http://localhost/  Line: 248
+06/01/2018, 04:01:04: Error: Uncaught ReferenceError: cookie is not defined, Script: http://localhost/  Line: 643
+06/01/2018, 04:01:06: Error: Uncaught TypeError: Cannot read property 'totale_non_scontato' of undefined, Script: http://localhost/  Line: 656
+06/01/2018, 04:01:04: Error: Uncaught ReferenceError: totaleProdotto is not defined, Script: http://localhost/  Line: 704
+06/01/2018, 04:01:18: Error: Uncaught TypeError: Cannot read property 'totale_non_scontato' of undefined, Script: http://localhost/  Line: 731
+06/01/2018, 04:01:04: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+06/01/2018, 05:01:58: Error: Uncaught TypeError: Cannot read property 'totale_non_scontato' of undefined, Script: http://localhost/  Line: 746
+06/01/2018, 06:01:41: Error: Uncaught TypeError: Cannot read property 'sconto' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 06:01:21: Error: Uncaught TypeError: Cannot read property 'sconto' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 06:01:42: Error: Uncaught TypeError: Cannot read property 'sconto' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 06:01:22: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 06:01:37: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 06:01:02: Error: Uncaught TypeError: Cannot read property 'dx' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 06:01:14: Error: Uncaught TypeError: Cannot read property 'dx' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 06:01:32: Error: Uncaught TypeError: Cannot read property 'dx' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 06:01:01: Error: Uncaught TypeError: Cannot use 'in' operator to search for '0' in 5, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 06:01:15: Error: Uncaught TypeError: Cannot use 'in' operator to search for '0' in 5, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 06:01:52: Error: Uncaught TypeError: Cannot use 'in' operator to search for '0' in 2, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 07:01:45: Error: Uncaught ReferenceError: dato is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 07:01:11: Error: Uncaught TypeError: Cannot read property 'substring' of undefined, Script: http://localhost/  Line: 262
+06/01/2018, 07:01:21: Error: Uncaught TypeError: Cannot read property 'substring' of undefined, Script: http://localhost/  Line: 262
+06/01/2018, 07:01:23: Error: Uncaught TypeError: Cannot read property 'substring' of undefined, Script: http://localhost/  Line: 262
+06/01/2018, 07:01:24: Error: Uncaught TypeError: Cannot read property 'substring' of undefined, Script: http://localhost/  Line: 262
+06/01/2018, 07:01:26: Error: Uncaught TypeError: Cannot read property 'substring' of undefined, Script: http://localhost/  Line: 262
+06/01/2018, 07:01:47: Error: Uncaught TypeError: Cannot read property 'substring' of undefined, Script: http://localhost/  Line: 253
+06/01/2018, 07:01:49: Error: Uncaught TypeError: Cannot read property 'substring' of undefined, Script: http://localhost/  Line: 253
+06/01/2018, 07:01:05: Error: Uncaught SyntaxError: Unexpected token (, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 07:01:35: Error: Uncaught SyntaxError: Unexpected token (, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 07:01:31: Error: Uncaught ReferenceError: datoPassaggioPedonale is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 07:01:58: Error: Uncaught ReferenceError: none is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 08:01:20: Error: Uncaught TypeError: Cannot read property 'ruolo' of null, Script: http://localhost/js/Menu.js  Line: 109
+06/01/2018, 08:01:50: Error: Uncaught TypeError: Cannot read property 'L' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 08:01:09: Error: Uncaught TypeError: Cannot read property 'L' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 08:01:37: Error: Uncaught TypeError: Cannot read property 'L' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 08:01:00: Error: Uncaught TypeError: Cannot read property 'L' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 08:01:32: Error: Uncaught TypeError: Cannot read property 'L' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 08:01:03: Error: Uncaught TypeError: Cannot read property 'L' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 08:01:22: Error: Uncaught TypeError: Cannot read property 'L' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 10:01:39: Error: Uncaught ReferenceError: cookieSelezione is not defined, Script: http://localhost/  Line: 391
+06/01/2018, 10:01:44: Error: Uncaught TypeError: Cannot read property 'prodotto' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 10:01:27: Error: Uncaught TypeError: Cannot read property 'prodotto' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 10:01:19: Error: Uncaught TypeError: Cannot read property 'L' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 10:01:05: Error: Uncaught TypeError: Cannot read property 'accessori' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 10:01:27: Error: Uncaught TypeError: Cannot read property 'accessori' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 10:01:22: Error: Uncaught ReferenceError: riepilogo is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 10:01:59: Error: Uncaught TypeError: Cannot read property 'tipologia' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 10:01:35: Error: Uncaught TypeError: Cannot read property 'accessori' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 10:01:45: Error: Uncaught TypeError: Cannot read property 'accessori' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 10:01:41: Error: Uncaught ReferenceError: siAccessori is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 10:01:28: Error: Uncaught TypeError: Cannot read property 'L' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 10:01:57: Error: Uncaught TypeError: Cannot read property 'L' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 10:01:31: Error: Uncaught TypeError: Cannot read property 'tipologia' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+06/01/2018, 10:01:34: Error: Uncaught TypeError: jsonDescrizione.totale.format is not a function, Script: http://localhost/js/Carrello/Carrello.js  Line: 121
+06/01/2018, 10:01:45: Error: Uncaught TypeError: jsonDescrizione.totale.format is not a function, Script: http://localhost/js/Carrello/Carrello.js  Line: 121
+07/01/2018, 08:01:55: Error: Uncaught ReferenceError: cookieSelezione is not defined, Script: http://localhost/  Line: 357
+07/01/2018, 08:01:17: Error: Uncaught ReferenceError: cookieSelezione is not defined, Script: http://localhost/  Line: 341
+07/01/2018, 08:01:54: Error: Uncaught TypeError: _this.obj.aggiornaRiepilogo is not a function, Script: http://localhost/  Line: 334
+07/01/2018, 08:01:52: Error: Uncaught ReferenceError: cookieSelezione is not defined, Script: http://localhost/  Line: 356
+07/01/2018, 08:01:48: Error: Uncaught SyntaxError: Unexpected end of JSON input, Script: http://localhost/  Line: 1
+07/01/2018, 08:01:31: Error: Uncaught SyntaxError: Unexpected end of JSON input, Script: http://localhost/  Line: 1
+07/01/2018, 08:01:43: Error: Uncaught SyntaxError: Unexpected end of JSON input, Script: http://localhost/  Line: 1
+07/01/2018, 08:01:54: Error: Uncaught TypeError: Cannot read property 'success' of null, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+07/01/2018, 08:01:01: Error: Uncaught ReferenceError: articoli is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 391
+07/01/2018, 08:01:25: Error: Uncaught ReferenceError: articoli is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 391
+07/01/2018, 09:01:10: Error: Uncaught TypeError: Cannot read property 'quantita' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+07/01/2018, 09:01:02: Error: Uncaught TypeError: Cannot read property 'quantita' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+07/01/2018, 04:01:41: Error: Uncaught ReferenceError: tipo is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+07/01/2018, 04:01:52: Error: Uncaught ReferenceError: tipo is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+07/01/2018, 04:01:06: Error: Uncaught TypeError: Cannot read property 'sopraluce' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+07/01/2018, 04:01:45: Error: Uncaught TypeError: Cannot read property 'sopraluce' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+07/01/2018, 04:01:53: Error: Uncaught TypeError: Cannot read property 'sopraluce' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+07/01/2018, 04:01:02: Error: Uncaught TypeError: Cannot read property 'sopraluce' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+08/01/2018, 09:01:25: Error: Uncaught ReferenceError: tmp is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+08/01/2018, 10:01:20: Error: Uncaught ReferenceError: codice_approvazione is not defined, Script: http://localhost/js/Utente/GestioneUtenti.js  Line: 430
+08/01/2018, 10:01:37: Error: Uncaught ReferenceError: codicePreventivazione is not defined, Script: http://localhost/js/Utente/GestioneUtenti.js  Line: 386
+09/01/2018, 08:01:44: Error: Uncaught ReferenceError: datoUtenti is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 50
+09/01/2018, 08:01:22: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/Carrello/Carrello.js  Line: 50
+09/01/2018, 08:01:39: Error: Uncaught TypeError: Cannot read property '0' of undefined, Script: http://localhost/js/Carrello/Carrello.js  Line: 51
+09/01/2018, 08:01:56: Error: Uncaught TypeError: Cannot read property 'tipologia' of undefined, Script: http://localhost/js/Carrello/Carrello.js  Line: 58
+09/01/2018, 09:01:35: Error: Uncaught TypeError: _this.obj.aggiornaRiepilogo is not a function, Script: http://localhost/  Line: 417
+09/01/2018, 09:01:20: Error: Uncaught ReferenceError: artcoli_selezionati is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 303
+09/01/2018, 09:01:29: Error: Uncaught TypeError: _this.obj.aggiornaRiepilogo is not a function, Script: http://localhost/  Line: 417
+09/01/2018, 10:01:18: Error: Uncaught ReferenceError: i is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+09/01/2018, 06:01:29: Error: Uncaught TypeError: Cannot read property 'results' of null, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+09/01/2018, 06:01:53: Error: Uncaught TypeError: Cannot read property 'id_cliente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+09/01/2018, 06:01:55: Error: Uncaught TypeError: elem.addClass is not a function, Script: http://localhost/js/Menu.js  Line: 206
+09/01/2018, 06:01:49: Error: Uncaught TypeError: elem.addClass is not a function, Script: http://localhost/js/Menu.js  Line: 206
+09/01/2018, 06:01:35: Error: Uncaught TypeError: elem.addClass is not a function, Script: http://localhost/js/Menu.js  Line: 206
+09/01/2018, 06:01:27: Error: Uncaught TypeError: Cannot read property 'remove' of undefined, Script: http://localhost/js/Clienti/Clienti.js  Line: 845
+09/01/2018, 06:01:25: Error: Uncaught TypeError: Cannot read property 'remove' of undefined, Script: http://localhost/js/Clienti/Clienti.js  Line: 846
+09/01/2018, 07:01:33: Error: Uncaught TypeError: _this.loadSezione is not a function, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+09/01/2018, 07:01:19: Error: Uncaught TypeError: _this.loadSezione is not a function, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+09/01/2018, 07:01:35: Error: Uncaught TypeError: Cannot read property 'success' of null, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+09/01/2018, 07:01:14: Error: Uncaught TypeError: Cannot read property 'codice_cliente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+09/01/2018, 09:01:09: Error: Uncaught TypeError: _this.obj.aggiornaRiepilogo is not a function, Script: http://localhost/  Line: 417
+09/01/2018, 09:01:27: Error: Uncaught TypeError: Cannot read property 'totale_non_scontato' of undefined, Script: http://localhost/  Line: 671
+09/01/2018, 09:01:59: Error: Uncaught TypeError: Cannot read property 'totale_non_scontato' of undefined, Script: http://localhost/  Line: 671
+11/01/2018, 06:01:24: Error: Uncaught SyntaxError: Unexpected token o in JSON at position 1, Script: http://localhost/  Line: 1
+11/01/2018, 06:01:43: Error: Uncaught SyntaxError: Unexpected token o in JSON at position 1, Script: http://localhost/  Line: 1
+11/01/2018, 06:01:31: Error: Uncaught SyntaxError: Unexpected token o in JSON at position 1, Script: http://localhost/  Line: 1
+11/01/2018, 07:01:51: Error: Uncaught TypeError: _this.obj.aggiornaRiepilogo is not a function, Script: http://localhost/  Line: 419
+12/01/2018, 08:01:09: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+12/01/2018, 08:01:42: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+12/01/2018, 09:01:22: Error: Uncaught TypeError: Cannot read property 'format' of undefined, Script: http://localhost/  Line: 477
+12/01/2018, 09:01:07: Error: Uncaught TypeError: Cannot read property 'apertura' of undefined, Script: http://localhost/  Line: 17
+12/01/2018, 09:01:53: Error: Uncaught TypeError: Cannot read property 'apertura' of undefined, Script: http://localhost/  Line: 17
+12/01/2018, 09:01:41: Error: Uncaught TypeError: Cannot set property 'lastPortaCantina' of undefined, Script: http://localhost/js/PORTE_CANTINA/FormPortaCantina.js  Line: 52
+12/01/2018, 09:01:40: Error: Uncaught TypeError: Cannot read property 'grigliaSuperiore' of null, Script: http://localhost/  Line: 130
+12/01/2018, 09:01:16: Error: Uncaught TypeError: undefined is not a constructor, Script: http://localhost/  Line: 1
+13/01/2018, 05:01:23: Error: Uncaught TypeError: undefined is not a constructor, Script: http://localhost/  Line: 1
+13/01/2018, 05:01:12: Error: Uncaught ReferenceError: sconto is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+13/01/2018, 05:01:51: Error: Uncaught TypeError: Cannot read property 'sconto' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+13/01/2018, 05:01:37: Error: Uncaught TypeError: Cannot read property 'grigliaSuperiore' of null, Script: http://localhost/  Line: 130
+13/01/2018, 05:01:04: Error: Uncaught TypeError: Cannot read property 'grigliaSuperiore' of null, Script: http://localhost/  Line: 127
+13/01/2018, 05:01:33: Error: Uncaught TypeError: Cannot read property 'grigliaSuperiore' of null, Script: http://localhost/  Line: 129
+13/01/2018, 05:01:34: Error: Uncaught TypeError: Cannot read property 'grigliaSuperiore' of null, Script: http://localhost/  Line: 129
+13/01/2018, 07:01:20: Error: Uncaught TypeError: Cannot read property 'tipologia' of undefined, Script: http://localhost/  Line: 19
+13/01/2018, 10:01:14: Error: Uncaught TypeError: Cannot set property 'lastSelezione' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+13/01/2018, 10:01:14: Error: Uncaught TypeError: Cannot read property 'boo' of undefined, Script: http://localhost/  Line: 401
+13/01/2018, 10:01:36: Error: Uncaught TypeError: Cannot read property 'boo' of undefined, Script: http://localhost/  Line: 72
+14/01/2018, 09:01:13: Error: Uncaught TypeError: Cannot read property 'tipologia' of undefined, Script: http://localhost/  Line: 17
+14/01/2018, 09:01:31: Error: Uncaught ReferenceError: cookieSelezione is not defined, Script: http://localhost/  Line: 201
+14/01/2018, 09:01:18: Error: Uncaught TypeError: Cannot read property 'ante' of undefined, Script: http://localhost/  Line: 384
+14/01/2018, 09:01:34: Error: Uncaught ReferenceError: selezione is not defined, Script: http://localhost/  Line: 229
+14/01/2018, 09:01:30: Error: Uncaught TypeError: Cannot read property 'ante' of undefined, Script: http://localhost/  Line: 18
+14/01/2018, 09:01:04: Error: Uncaught ReferenceError: selezione is not defined, Script: http://localhost/  Line: 230
+14/01/2018, 09:01:59: Error: Uncaught TypeError: Cannot read property 'accessori' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 09:01:17: Error: Uncaught TypeError: Cannot read property 'prodotto' of undefined, Script: http://localhost/  Line: 24
+14/01/2018, 09:01:42: Error: Uncaught TypeError: Cannot read property 'modifica' of undefined, Script: http://localhost/  Line: 302
+14/01/2018, 09:01:08: Error: Uncaught TypeError: Cannot read property 'main' of undefined, Script: http://localhost/  Line: 302
+14/01/2018, 09:01:08: Error: Uncaught TypeError: Cannot read property 'lastSelezione' of undefined, Script: http://localhost/  Line: 302
+14/01/2018, 09:01:27: Error: Uncaught TypeError: Cannot read property 'modifica' of undefined, Script: http://localhost/  Line: 302
+14/01/2018, 10:01:39: Error: Uncaught TypeError: Cannot read property 'riferimento' of undefined, Script: http://localhost/  Line: 600
+14/01/2018, 10:01:24: Error: Uncaught TypeError: Cannot read property 'riferimento' of undefined, Script: http://localhost/  Line: 600
+14/01/2018, 10:01:22: Error: Uncaught TypeError: Cannot read property 'prodotto' of undefined, Script: http://localhost/  Line: 38
+14/01/2018, 10:01:04: Error: Uncaught TypeError: Cannot read property 'famiglia' of undefined, Script: http://localhost/  Line: 18
+14/01/2018, 10:01:14: Error: Uncaught ReferenceError: selezione is not defined, Script: http://localhost/  Line: 13
+14/01/2018, 10:01:36: Error: Uncaught ReferenceError: selezione is not defined, Script: http://localhost/  Line: 65
+14/01/2018, 10:01:22: Error: Uncaught TypeError: location.refresh is not a function, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 10:01:28: Error: Uncaught TypeError: location.refresh is not a function, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 11:01:01: Error: Uncaught TypeError: Cannot read property 'porta' of undefined, Script: http://localhost/  Line: 271
+14/01/2018, 11:01:26: Error: Uncaught TypeError: Cannot read property 'ingombro' of undefined, Script: http://localhost/  Line: 22
+14/01/2018, 11:01:48: Error: Uncaught TypeError: Cannot read property 'ingombro' of undefined, Script: http://localhost/  Line: 22
+14/01/2018, 11:01:05: Error: Uncaught TypeError: Cannot read property 'accessori' of undefined, Script: http://localhost/  Line: 21
+14/01/2018, 11:01:01: Error: Uncaught ReferenceError: Bascluante is not defined, Script: http://localhost/  Line: 1
+14/01/2018, 11:01:29: Error: Uncaught ReferenceError: Bascluante is not defined, Script: http://localhost/  Line: 1
+14/01/2018, 11:01:43: Error: Uncaught TypeError: Cannot read property 'modifica' of undefined, Script: http://localhost/  Line: 575
+14/01/2018, 11:01:26: Error: Uncaught ReferenceError: selezione is not defined, Script: http://localhost/  Line: 56
+14/01/2018, 11:01:40: Error: Uncaught TypeError: Cannot read property 'lastSelezione' of undefined, Script: http://localhost/  Line: 573
+14/01/2018, 11:01:03: Error: Uncaught TypeError: Cannot read property 'format' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 11:01:24: Error: Uncaught TypeError: Cannot read property 'format' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 11:01:42: Error: Uncaught TypeError: Cannot read property 'format' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 11:01:09: Error: Uncaught TypeError: Cannot read property 'dx' of null, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 12:01:32: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 12:01:54: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 12:01:09: Error: Uncaught TypeError: Cannot read property 'undefined' of undefined, Script: http://localhost/  Line: 706
+14/01/2018, 12:01:41: Error: Uncaught TypeError: Cannot read property 'undefined' of undefined, Script: http://localhost/  Line: 706
+14/01/2018, 12:01:27: Error: Uncaught TypeError: Cannot read property 'up' of undefined, Script: http://localhost/  Line: 1007
+14/01/2018, 12:01:37: Error: Uncaught TypeError: Cannot read property 'split' of null, Script: http://localhost/  Line: 286
+14/01/2018, 12:01:06: Error: Uncaught ReferenceError: selezione is not defined, Script: http://localhost/  Line: 95
+14/01/2018, 04:01:49: Error: Uncaught ReferenceError: Riepilogo is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 04:01:27: Error: Uncaught TypeError: Cannot read property 'lastSelezione' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 04:01:22: Error: Uncaught TypeError: Cannot read property 'lastSelezione' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 04:01:56: Error: Uncaught TypeError: Cannot read property 'main' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 04:01:42: Error: Uncaught TypeError: Cannot read property 'lastSelezione' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 04:01:03: Error: Uncaught TypeError: Cannot read property 'lastSelezione' of undefined, Script: http://localhost/js/Riepilogo/Riepilogo.js  Line: 14
+14/01/2018, 04:01:07: Error: Uncaught TypeError: Cannot read property 'lastSelezione' of undefined, Script: http://localhost/js/Riepilogo/Riepilogo.js  Line: 14
+14/01/2018, 04:01:34: Error: Uncaught TypeError: Cannot read property 'loader' of undefined, Script: http://localhost/js/Riepilogo/Riepilogo.js  Line: 101
+14/01/2018, 04:01:56: Error: Uncaught TypeError: _this.loadSezione is not a function, Script: http://localhost/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js  Line: 163
+14/01/2018, 04:01:18: Error: Uncaught TypeError: Cannot read property 'loadSezione' of undefined, Script: http://localhost/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js  Line: 163
+14/01/2018, 04:01:43: Error: Script error., Script:   Line: 0
+14/01/2018, 04:01:27: Error: Script error., Script:   Line: 0
+14/01/2018, 04:01:26: Error: Script error., Script:   Line: 0
+14/01/2018, 04:01:26: Error: Script error., Script:   Line: 0
+14/01/2018, 05:01:17: Error: Uncaught TypeError: Cannot read property 'completeAllSteps' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 05:01:15: Error: Uncaught ReferenceError: PonteggioSospeso is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 05:01:50: Error: Uncaught ReferenceError: PonteggioSospeso is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 05:01:25: Error: Uncaught ReferenceError: PonteggioSospeso is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 05:01:45: Error: Uncaught ReferenceError: PonteggioSospeso is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 05:01:34: Error: Uncaught TypeError: undefined is not a constructor, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+14/01/2018, 05:01:59: Error: Uncaught ReferenceError: Sconto is not defined, Script: http://localhost/  Line: 1
+14/01/2018, 05:01:38: Error: Uncaught TypeError: Cannot read property 'costo' of undefined, Script: http://localhost/  Line: 196
+14/01/2018, 05:01:58: Error: Uncaught TypeError: Cannot read property 'currentStep' of undefined, Script: http://localhost/js/PONTEGGI_ELETTRICI/FormPonteggioElettrico.js  Line: 207
+14/01/2018, 05:01:46: Error: Uncaught TypeError: Cannot read property 'modifica' of undefined, Script: http://localhost/  Line: 565
+14/01/2018, 05:01:51: Error: Uncaught TypeError: Cannot read property 'lastSelezione' of undefined, Script: http://localhost/  Line: 565
+14/01/2018, 06:01:30: Error: Uncaught TypeError: Cannot read property 'costo' of undefined, Script: http://localhost/  Line: 195
+14/01/2018, 06:01:33: Error: Uncaught TypeError: Cannot set property 'totale_non_scontato' of undefined, Script: http://localhost/  Line: 201
+15/01/2018, 02:01:58: Error: Uncaught TypeError: Cannot read property 'ruolo' of null, Script: http://localhost/js/Menu.js  Line: 102
+15/01/2018, 03:01:32: Error: Uncaught TypeError: Cannot read property 'modifica' of null, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+17/01/2018, 07:01:54: Error: Uncaught TypeError: Cannot read property 'riferimento' of undefined, Script: http://localhost/index.html  Line: 454
+17/01/2018, 08:01:00: Error: Uncaught TypeError: location.refresh is not a function, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+17/01/2018, 08:01:13: Error: Uncaught TypeError: location.refresh is not a function, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+17/01/2018, 08:01:06: Error: Uncaught TypeError: location.refresh is not a function, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+17/01/2018, 08:01:07: Error: Uncaught TypeError: location.refresh is not a function, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+17/01/2018, 08:01:43: Error: Uncaught TypeError: location.refresh is not a function, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+17/01/2018, 08:01:59: Error: Uncaught ReferenceError: prezzo_definitivo is not defined, Script: http://localhost/js/Riepilogo/Riepilogo.js  Line: 430
+17/01/2018, 11:01:39: Error: Uncaught TypeError: Cannot read property 'lastSelezione' of undefined, Script: http://localhost/js/Carrello/Carrello.js  Line: 152
+17/01/2018, 01:01:08: Error: Uncaught TypeError: Cannot read property 'H' of undefined, Script: http://localhost/  Line: 964
+17/01/2018, 02:01:39: Error: Uncaught TypeError: Cannot read property 'addClass' of undefined, Script: http://localhost/js/Menu.js  Line: 200
+17/01/2018, 02:01:13: Error: Uncaught TypeError: Cannot read property 'addClass' of undefined, Script: http://localhost/js/Menu.js  Line: 200
+25/01/2018, 10:01:16: Error: Uncaught TypeError: Cannot set property 'classe' of undefined, Script: http://localhost/js/functions.js  Line: 43
+25/01/2018, 10:01:08: Error: Uncaught TypeError: Cannot read property 'aa' of undefined, Script: http://localhost/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=20  Line: 63
+25/01/2018, 10:01:06: Error: Uncaught TypeError: Cannot read property 'aa' of undefined, Script: http://localhost/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=20  Line: 63
+25/01/2018, 10:01:50: Error: Uncaught TypeError: Cannot read property 'aa' of undefined, Script: http://localhost/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=20  Line: 63
+25/01/2018, 10:01:59: Error: Uncaught TypeError: Cannot read property 'aa' of undefined, Script: http://localhost/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=20  Line: 63
+25/01/2018, 10:01:13: Error: Uncaught TypeError: Cannot read property 'aa' of undefined, Script: http://localhost/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=20  Line: 63
+25/01/2018, 10:01:25: Error: Uncaught TypeError: Cannot read property 'aa' of undefined, Script: http://localhost/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=20  Line: 63
+25/01/2018, 10:01:30: Error: Uncaught TypeError: Cannot read property 'aa' of undefined, Script: http://localhost/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=20  Line: 63
+25/01/2018, 10:01:51: Error: Uncaught TypeError: Cannot read property 'aa' of undefined, Script: http://localhost/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=20  Line: 63
+25/01/2018, 10:01:12: Error: Uncaught TypeError: Cannot read property 'aa' of undefined, Script: http://localhost/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=20  Line: 63
+25/01/2018, 10:01:27: Error: Uncaught TypeError: Cannot read property 'aa' of undefined, Script: http://localhost/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=20  Line: 63
+25/01/2018, 11:01:21: Error: Uncaught ReferenceError: idImmagini is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+25/01/2018, 11:01:53: Error: Uncaught TypeError: _this.content.loadSezioni is not a function, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+25/01/2018, 12:01:58: Error: Uncaught ReferenceError: accounts is not defined, Script: http://localhost/js/Utente/GestioneUtenti.js  Line: 192
+25/01/2018, 12:01:45: Error: Uncaught TypeError: Cannot read property 'success' of null, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+25/01/2018, 12:01:33: Error: Uncaught TypeError: _this.content.loadSezioni is not a function, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+25/01/2018, 12:01:14: Error: Uncaught TypeError: Cannot read property 'loadSezioni' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+25/01/2018, 12:01:59: Error: Uncaught ReferenceError: Utenti is not defined, Script: http://localhost/  Line: 1
+01/05/2018, 12:05:39: Error: Uncaught TypeError: Home is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:41: Error: Uncaught TypeError: Home is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:28: Error: Uncaught TypeError: Home is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:30: Error: Uncaught TypeError: Home is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:42: Error: Uncaught TypeError: Home is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:44: Error: Uncaught TypeError: Home is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:56: Error: Uncaught TypeError: Home is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:25: Error: Uncaught ReferenceError: Home1 is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:27: Error: Uncaught ReferenceError: Home1 is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:55: Error: Uncaught ReferenceError: Home1 is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:57: Error: Uncaught ReferenceError: Home1 is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:04: Error: Uncaught ReferenceError: Home1 is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:06: Error: Uncaught ReferenceError: Home1 is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:56: Error: Uncaught TypeError: Home1 is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:58: Error: Uncaught TypeError: Home1 is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:06: Error: Uncaught TypeError: Home1 is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:12: Error: Uncaught TypeError: Home1 is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:14: Error: Uncaught TypeError: Home1 is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:35: Error: Uncaught TypeError: Home is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:57: Error: Uncaught TypeError: Home is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:27: Error: Uncaught TypeError: Home is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:53: Error: Uncaught TypeError: Home is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:59: Error: Uncaught TypeError: Home is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+01/05/2018, 12:05:21: Error: Script error., Script:   Line: 0
+01/05/2018, 12:05:30: Error: Uncaught TypeError: Home is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+03/05/2018, 08:05:06: Error: Uncaught TypeError: Home is not a constructor, Script: http://localhost/cerrato_new/  Line: 1
+03/05/2018, 08:05:08: Error: Uncaught TypeError: Home is not a constructor, Script: http://localhost/cerrato_new/  Line: 1
+03/05/2018, 08:05:07: Error: Script error., Script:   Line: 0
+03/05/2018, 08:05:09: Error: Script error., Script:   Line: 0
+03/05/2018, 08:05:15: Error: Script error., Script:   Line: 0
+03/05/2018, 08:05:31: Error: Script error., Script:   Line: 0
+03/05/2018, 08:05:35: Error: Script error., Script:   Line: 0
+03/05/2018, 08:05:45: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+03/05/2018, 08:05:44: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+03/05/2018, 09:05:13: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+04/05/2018, 04:05:51: Error: Uncaught TypeError: jQuery(...).addAttr is not a function, Script: http://localhost/cerrato_new/index.html  Line: 464
+04/05/2018, 04:05:57: Error: Uncaught TypeError: jQuery(...).addAttr is not a function, Script: http://localhost/cerrato_new/index.html  Line: 464
+04/05/2018, 04:05:59: Error: Uncaught TypeError: jQuery(...).addAttr is not a function, Script: http://localhost/cerrato_new/index.html  Line: 464
+04/05/2018, 05:05:23: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 83
+04/05/2018, 05:05:19: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 97
+04/05/2018, 05:05:43: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 97
+04/05/2018, 05:05:01: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 97
+04/05/2018, 05:05:32: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 97
+04/05/2018, 05:05:44: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 97
+04/05/2018, 05:05:54: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 97
+04/05/2018, 05:05:03: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 97
+04/05/2018, 05:05:13: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 97
+04/05/2018, 05:05:24: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 97
+04/05/2018, 05:05:41: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 96
+04/05/2018, 05:05:05: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 96
+04/05/2018, 05:05:57: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 5
+04/05/2018, 06:05:27: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 5
+04/05/2018, 06:05:07: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 96
+04/05/2018, 06:05:45: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 5
+04/05/2018, 06:05:53: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 96
+04/05/2018, 06:05:24: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 96
+04/05/2018, 06:05:59: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 96
+04/05/2018, 06:05:26: Error: Uncaught TypeError: _this.elem.find(...).idealforms is not a function, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 96
+04/05/2018, 06:05:50: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 96
+04/05/2018, 06:05:17: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 4
+04/05/2018, 06:05:20: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 4
+04/05/2018, 06:05:15: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 4
+04/05/2018, 06:05:14: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 4
+04/05/2018, 06:05:08: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 4
+04/05/2018, 06:05:08: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 4
+04/05/2018, 06:05:16: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 4
+04/05/2018, 06:05:46: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 4
+04/05/2018, 06:05:51: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 4
+04/05/2018, 06:05:16: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 5
+04/05/2018, 06:05:35: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 4
+04/05/2018, 06:05:32: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 4
+04/05/2018, 06:05:28: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 3
+04/05/2018, 06:05:28: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 3
+04/05/2018, 06:05:42: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 3
+04/05/2018, 06:05:15: Error: Uncaught TypeError: $(...).idealforms is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 3
+04/05/2018, 10:05:49: Error: Uncaught SyntaxError: Unexpected token ;, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+04/05/2018, 10:05:41: Error: Script error., Script:   Line: 0
+04/05/2018, 10:05:01: Error: Uncaught SyntaxError: Unexpected token ), Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+05/05/2018, 03:05:14: Error: Uncaught ReferenceError: dato is not defined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+05/05/2018, 06:05:56: Error: Uncaught ReferenceError: Basculante is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+05/05/2018, 07:05:43: Error: Uncaught ReferenceError: Basculante is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+05/05/2018, 07:05:21: Error: Uncaught ReferenceError: Basculante is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+05/05/2018, 07:05:21: Error: Uncaught ReferenceError: Basculante is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+05/05/2018, 07:05:19: Error: Uncaught TypeError: FormPonteggioSospeso is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+05/05/2018, 07:05:13: Error: Uncaught TypeError: FormPonteggioSospeso is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+05/05/2018, 07:05:18: Error: Uncaught TypeError: FormPonteggioSospeso is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+05/05/2018, 07:05:24: Error: Uncaught TypeError: FormPonteggioSospeso is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+05/05/2018, 07:05:12: Error: Uncaught TypeError: FormPonteggioSospeso is not a constructor, Script: http://localhost/cerrato_new/index.html#  Line: 1
+05/05/2018, 07:05:16: Error: Uncaught TypeError: Cannot read property 'substring' of undefined, Script: http://localhost/cerrato_new/index.html#  Line: 285
+05/05/2018, 07:05:37: Error: Uncaught TypeError: Cannot read property 'substring' of undefined, Script: http://localhost/cerrato_new/index.html#  Line: 285
+05/05/2018, 07:05:55: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+07/05/2018, 02:05:45: Error: Uncaught TypeError: $(...).va is not a function, Script: http://localhost/cerrato_new/index.html  Line: 58
+07/05/2018, 02:05:48: Error: Uncaught TypeError: $(...).va is not a function, Script: http://localhost/cerrato_new/index.html  Line: 58
+07/05/2018, 02:05:52: Error: Uncaught TypeError: $(...).va is not a function, Script: http://localhost/cerrato_new/index.html  Line: 58
+07/05/2018, 02:05:54: Error: Uncaught TypeError: $(...).va is not a function, Script: http://localhost/cerrato_new/index.html  Line: 58
+07/05/2018, 07:05:37: Error: Uncaught ReferenceError: html is not defined, Script: http://localhost/cerrato_new/js/ASCENSORI/FormAscensore.js?R=21  Line: 79
+07/05/2018, 08:05:08: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+07/05/2018, 08:05:46: Error: Uncaught TypeError: _this.loadSezione is not a function, Script: http://localhost/cerrato_new/js/HOME/Home.js?R=22  Line: 47
+07/05/2018, 08:05:47: Error: Uncaught TypeError: _this.loadSezione is not a function, Script: http://localhost/cerrato_new/js/HOME/Home.js?R=22  Line: 47
+07/05/2018, 08:05:47: Error: Uncaught TypeError: _this.loadSezione is not a function, Script: http://localhost/cerrato_new/js/HOME/Home.js?R=22  Line: 52
+07/05/2018, 08:05:48: Error: Uncaught TypeError: _this.loadSezione is not a function, Script: http://localhost/cerrato_new/js/HOME/Home.js?R=22  Line: 52
+07/05/2018, 08:05:48: Error: Uncaught TypeError: _this.loadSezione is not a function, Script: http://localhost/cerrato_new/js/HOME/Home.js?R=22  Line: 52
+07/05/2018, 08:05:25: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+08/05/2018, 12:05:27: Error: Uncaught ReferenceError: datoPassaggioPedonale is not defined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+08/05/2018, 12:05:09: Error: Uncaught ReferenceError: datoPassaggioPedonale is not defined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+09/05/2018, 07:05:44: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:19: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:45: Error: Uncaught TypeError: $(...).livequery is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:25: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 106
+09/05/2018, 07:05:55: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:55: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:59: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/  Line: 708
+09/05/2018, 07:05:17: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:41: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:07: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:59: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:27: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:31: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/  Line: 707
+09/05/2018, 07:05:55: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:58: Error: Uncaught TypeError: $(...).livequery is not a function, Script: http://localhost/cerrato_new/  Line: 707
+09/05/2018, 07:05:52: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:40: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:13: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:24: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:22: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:28: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:45: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:37: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:52: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:18: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:53: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:12: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:25: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 07:05:30: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 08:05:41: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 08:05:13: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 01:05:18: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 01:05:53: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 01:05:35: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 01:05:10: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 01:05:37: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 01:05:50: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 01:05:37: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 01:05:54: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+09/05/2018, 01:05:17: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+10/05/2018, 06:05:04: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+10/05/2018, 06:05:25: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+10/05/2018, 06:05:25: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+10/05/2018, 06:05:27: Error: Uncaught ReferenceError: Invalid left-hand side expression in postfix operation, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+10/05/2018, 06:05:30: Error: Uncaught ReferenceError: Invalid left-hand side expression in postfix operation, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+10/05/2018, 06:05:09: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js  Line: 105
+10/05/2018, 06:05:36: Error: Uncaught ReferenceError: Invalid left-hand side expression in postfix operation, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+10/05/2018, 07:05:26: Error: Uncaught ReferenceError: Invalid left-hand side expression in postfix operation, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 3
+10/05/2018, 07:05:56: Error: Uncaught ReferenceError: asdasdasd is not defined, Script: http://localhost/cerrato_new/js/PONTEGGI_SOSPESI/FormPonteggioSospeso.js?R=21  Line: 31
+10/05/2018, 07:05:08: Error: Uncaught ReferenceError: asdasdasd is not defined, Script: http://localhost/cerrato_new/#  Line: 12
+10/05/2018, 07:05:06: Error: Uncaught ReferenceError: asdasdasd is not defined, Script: http://localhost/cerrato_new/#  Line: 12
+10/05/2018, 07:05:45: Error: Uncaught ReferenceError: asdasasd is not defined, Script: http://localhost/cerrato_new/#  Line: 11
+10/05/2018, 07:05:15: Error: Uncaught ReferenceError: asdasasd is not defined, Script: http://localhost/cerrato_new/#  Line: 11
+10/05/2018, 07:05:16: Error: Script error., Script:   Line: 0
+10/05/2018, 07:05:48: Error: Uncaught ReferenceError: asdasasd is not defined, Script: http://localhost/cerrato_new/#  Line: 11
+10/05/2018, 07:05:41: Error: Uncaught ReferenceError: asdasasd is not defined, Script: http://localhost/cerrato_new/#  Line: 11
+10/05/2018, 07:05:48: Error: Uncaught ReferenceError: asdasasd is not defined, Script: http://localhost/cerrato_new/#  Line: 11
+10/05/2018, 05:05:40: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+11/05/2018, 11:05:54: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+11/05/2018, 11:05:11: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+11/05/2018, 12:05:29: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+11/05/2018, 12:05:59: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+11/05/2018, 12:05:14: Error: Uncaught ReferenceError: P_TABELLA_PREVENTIVI_UTENTE is not defined, Script: http://localhost/cerrato_new/js/Preventivi/Preventivi.js  Line: 39
+11/05/2018, 12:05:35: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+11/05/2018, 12:05:41: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+11/05/2018, 12:05:20: Error: Uncaught ReferenceError: validita is not defined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+11/05/2018, 12:05:59: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+11/05/2018, 12:05:47: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+11/05/2018, 12:05:05: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+11/05/2018, 12:05:27: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+11/05/2018, 12:05:37: Error: Uncaught TypeError: $(...).datepicker is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+11/05/2018, 04:05:59: Error: Uncaught TypeError: Cannot read property 'parent' of undefined, Script: http://localhost/cerrato_new/js/Menu.js  Line: 233
+11/05/2018, 04:05:22: Error: Uncaught TypeError: Cannot read property 'parent' of undefined, Script: http://localhost/cerrato_new/js/Menu.js  Line: 233
+11/05/2018, 04:05:20: Error: Uncaught TypeError: Cannot read property 'parent' of undefined, Script: http://localhost/cerrato_new/js/Menu.js  Line: 233
+11/05/2018, 04:05:59: Error: Uncaught TypeError: Cannot read property 'parent' of undefined, Script: http://localhost/cerrato_new/js/Menu.js  Line: 233
+11/05/2018, 04:05:34: Error: Uncaught TypeError: Cannot read property 'parent' of undefined, Script: http://localhost/cerrato_new/js/Menu.js  Line: 233
+11/05/2018, 04:05:00: Error: Uncaught TypeError: Cannot read property 'parent' of undefined, Script: http://localhost/cerrato_new/js/Menu.js  Line: 233
+11/05/2018, 04:05:18: Error: Uncaught TypeError: Cannot read property 'parent' of undefined, Script: http://localhost/cerrato_new/js/Menu.js  Line: 233
+11/05/2018, 05:05:16: Error: Uncaught TypeError: Cannot read property '0' of undefined, Script: http://localhost/cerrato_new/js/Preventivi/Preventivi.js  Line: 1007
+11/05/2018, 05:05:53: Error: Uncaught TypeError: Cannot read property '0' of undefined, Script: http://localhost/cerrato_new/js/Preventivi/Preventivi.js  Line: 1007
+11/05/2018, 05:05:01: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/cerrato_new/js/Preventivi/Preventivi.js  Line: 1007
+11/05/2018, 05:05:53: Error: Uncaught TypeError: Cannot read property 'toLowerCase' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 3
+11/05/2018, 06:05:00: Error: Uncaught ReferenceError: preventivo is not defined, Script: http://localhost/cerrato_new/js/Preventivi/Preventivi.js  Line: 774
+11/05/2018, 06:05:05: Error: Uncaught ReferenceError: preventivo is not defined, Script: http://localhost/cerrato_new/js/Preventivi/Preventivi.js  Line: 775
+11/05/2018, 06:05:28: Error: Uncaught TypeError: Cannot set property 'servizi' of undefined, Script: http://localhost/cerrato_new/js/Preventivi/Preventivi.js  Line: 944
+11/05/2018, 06:05:14: Error: Uncaught TypeError: Cannot set property 'servizi' of undefined, Script: http://localhost/cerrato_new/js/Preventivi/Preventivi.js  Line: 950
+11/05/2018, 06:05:46: Error: Uncaught TypeError: Cannot set property 'servizi' of undefined, Script: http://localhost/cerrato_new/js/Preventivi/Preventivi.js  Line: 952
+11/05/2018, 06:05:19: Error: Uncaught TypeError: Cannot set property 'servizi' of undefined, Script: http://localhost/cerrato_new/js/Preventivi/Preventivi.js  Line: 956
+15/05/2018, 05:05:59: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/cerrato_new/js/Menu.js?r=10  Line: 122
+16/05/2018, 09:05:51: Error: Uncaught TypeError: Cannot read property 'tipologia' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+16/05/2018, 09:05:57: Error: Uncaught TypeError: Cannot read property 'tipologia' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+16/05/2018, 02:05:38: Error: Uncaught TypeError: Cannot set property 'classe' of undefined, Script: http://localhost/cerrato_new/js/functions.js  Line: 44
+06/08/2018, 11:08:17: Error: Uncaught TypeError: Cannot read property 'tipologia' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+06/08/2018, 11:08:47: Error: Uncaught TypeError: Cannot read property 'tipologia' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+06/08/2018, 11:08:57: Error: Uncaught TypeError: Cannot read property 'tipologia' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+06/08/2018, 11:08:28: Error: Uncaught ReferenceError: fileInferiori is not defined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+06/08/2018, 11:08:45: Error: Uncaught ReferenceError: fileInferiori is not defined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+06/08/2018, 11:08:03: Error: Uncaught ReferenceError: fileInferiori is not defined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+06/08/2018, 11:08:05: Error: Uncaught ReferenceError: fileInferiori is not defined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+06/08/2018, 11:08:40: Error: Uncaught ReferenceError: fileInferiori is not defined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+06/08/2018, 03:08:41: Error: Uncaught TypeError: Cannot read property 'tipologia' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+06/08/2018, 04:08:51: Error: Uncaught ReferenceError: fileInferiori is not defined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+06/08/2018, 04:08:33: Error: Uncaught ReferenceError: fileInferiori is not defined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+06/08/2018, 04:08:12: Error: Uncaught TypeError: Cannot read property 'tipologia' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+06/08/2018, 05:08:06: Error: Uncaught TypeError: Cannot read property 'tipologia' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+06/08/2018, 05:08:43: Error: Uncaught TypeError: Cannot read property 'tipologia' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+06/08/2018, 05:08:04: Error: Uncaught TypeError: Cannot read property 'tipologia' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+07/08/2018, 05:08:06: Error: Uncaught ReferenceError: famiglia is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 993
+30/08/2018, 04:08:17: Error: Uncaught TypeError: Cannot read property 'id_cliente' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+30/08/2018, 05:08:03: Error: Uncaught ReferenceError: Clienti is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+30/08/2018, 05:08:19: Error: Uncaught ReferenceError: Clienti is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+31/08/2018, 09:08:54: Error: Uncaught ReferenceError: _soglia is not defined, Script: http://localhost/cerrato_new/  Line: 1087
+31/08/2018, 09:08:50: Error: Script error., Script:   Line: 0
+31/08/2018, 09:08:09: Error: Script error., Script:   Line: 0
+07/09/2018, 07:09:54: Error: Uncaught TypeError: Cannot read property 'height' of undefined, Script: http://localhost/cerrato_new/  Line: 163
+07/09/2018, 07:09:09: Error: Uncaught TypeError: Cannot read property 'height' of undefined, Script: http://localhost/cerrato_new/#  Line: 163
+11/09/2018, 12:09:17: Error: Uncaught ReferenceError: year3 is not defined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+11/09/2018, 12:09:58: Error: Uncaught ReferenceError: year is not defined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+11/09/2018, 12:09:26: Error: Uncaught ReferenceError: year is not defined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+13/09/2018, 08:09:27: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+13/09/2018, 09:09:54: Error: Script error., Script:   Line: 0
+13/09/2018, 10:09:16: Error: Uncaught TypeError: Cannot read property 'costo' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+13/09/2018, 10:09:50: Error: Uncaught TypeError: Cannot read property 'costo' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+13/09/2018, 11:09:02: Error: Uncaught TypeError: Cannot read property 'split' of undefined, Script: http://localhost/cerrato_new/#  Line: 349
+13/09/2018, 12:09:40: Error: Uncaught TypeError: Cannot read property 'veletta' of undefined, Script: http://localhost/cerrato_new/#  Line: 211
+14/09/2018, 04:09:20: Error: Uncaught TypeError: Cannot read property 'codice' of null, Script: http://localhost/cerrato_new/#  Line: 23
+14/09/2018, 04:09:09: Error: Uncaught TypeError: Cannot read property 'codice' of null, Script: http://localhost/cerrato_new/#  Line: 23
+25/09/2018, 06:09:24: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost/cerrato_new/index.html#  Line: 91
+25/09/2018, 07:09:44: Error: Uncaught ReferenceError: a is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+25/09/2018, 07:09:44: Error: Uncaught ReferenceError: aa is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+25/09/2018, 07:09:44: Error: Uncaught ReferenceError: aaa is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+25/09/2018, 07:09:58: Error: Uncaught ReferenceError: s is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+25/09/2018, 07:09:19: Error: Uncaught SyntaxError: Unexpected identifier, Script: http://localhost/cerrato_new/index.html#  Line: 1
+25/09/2018, 07:09:19: Error: Uncaught SyntaxError: Unexpected identifier, Script: http://localhost/cerrato_new/index.html#  Line: 1
+25/09/2018, 07:09:41: Error: Uncaught ReferenceError: a is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+25/09/2018, 07:09:42: Error: Uncaught ReferenceError: aa is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+25/09/2018, 07:09:43: Error: Uncaught ReferenceError: aaa is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+25/09/2018, 07:09:43: Error: Uncaught ReferenceError: aaa is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+02/10/2018, 12:10:20: Error: Uncaught ReferenceError: Sopraluce is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+02/10/2018, 12:10:45: Error: Uncaught ReferenceError: Sopraluce is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 1
+02/10/2018, 12:10:46: Error: Uncaught TypeError: Cannot read property 'main' of undefined, Script: http://localhost/cerrato_new/index.html#  Line: 189
+02/10/2018, 02:10:33: Error: Uncaught ReferenceError: modello is not defined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+02/10/2018, 02:10:14: Error: Uncaught TypeError: _this.verificaAProgetto is not a function, Script: http://localhost/cerrato_new/index.html#  Line: 557
+03/10/2018, 08:10:14: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+03/10/2018, 08:10:12: Error: Uncaught ReferenceError: control is not defined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+03/10/2018, 08:10:23: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+03/10/2018, 10:10:16: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+03/10/2018, 10:10:42: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+03/10/2018, 11:10:51: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+03/10/2018, 11:10:28: Error: Uncaught ReferenceError: i is not defined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+03/10/2018, 11:10:44: Error: Uncaught ReferenceError: i is not defined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+03/10/2018, 12:10:26: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+03/10/2018, 06:10:02: Error: Uncaught TypeError: _this.content is not a function, Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+03/10/2018, 07:10:47: Error: Uncaught TypeError: Cannot read property 'accessori' of undefined, Script: http://localhost/cerrato_new/#  Line: 189
+04/10/2018, 08:10:13: Error: Uncaught ReferenceError: sopraluce is not defined, Script: http://localhost/cerrato_new/#  Line: 274
+04/10/2018, 08:10:39: Error: Uncaught ReferenceError: sopraluce is not defined, Script: http://localhost/cerrato_new/#  Line: 301
+04/10/2018, 12:10:48: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost/cerrato_new/index.html  Line: 336
+04/10/2018, 01:10:17: Error: Uncaught ReferenceError: passaggioPedonale is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 343
+04/10/2018, 01:10:56: Error: Uncaught TypeError: Cannot read property 'costo' of undefined, Script: http://localhost/cerrato_new/index.html#  Line: 550
+04/10/2018, 01:10:06: Error: Uncaught ReferenceError: griglie is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 176
+09/10/2018, 10:10:28: Error: Uncaught Error: Syntax error, unrecognized expression: unsupported pseudo: option, Script: http://localhost:8888/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+09/10/2018, 11:10:11: Error: Uncaught ReferenceError: totale is not defined, Script: http://localhost:8888/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+09/10/2018, 04:10:23: Error: Uncaught TypeError: Cannot read property 'dx' of null, Script: http://localhost/cerrato_new/index.html#  Line: 1038
+09/10/2018, 04:10:07: Error: Uncaught SyntaxError: Unexpected token ., Script: http://localhost/cerrato_new/js/jquery-1.9.1.min.js  Line: 5
+09/10/2018, 05:10:51: Error: Uncaught ReferenceError: sezione is not defined, Script: http://localhost/cerrato_new/index.html#  Line: 863
+09/10/2018, 05:10:10: Error: Uncaught TypeError: Cannot read property 'sconto' of undefined, Script: http://localhost/cerrato_new/index.html#  Line: 987
+16/10/2018, 12:10:42: Error: Uncaught SyntaxError: Unexpected token }, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+16/10/2018, 12:10:09: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+16/10/2018, 01:10:18: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+16/10/2018, 12:10:43: Error: Script error., Script:   Line: 0
+16/10/2018, 12:10:52: Error: Uncaught SyntaxError: Unexpected token (, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+16/10/2018, 12:10:55: Error: Uncaught SyntaxError: Unexpected token (, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+16/10/2018, 02:10:47: Error: Uncaught SyntaxError: Unexpected token ), Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+16/10/2018, 07:10:28: Error: Uncaught SyntaxError: Unexpected token {, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+16/10/2018, 07:10:52: Error: Uncaught SyntaxError: Unexpected token {, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+16/10/2018, 07:10:31: Error: Uncaught SyntaxError: Unexpected token {, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+16/10/2018, 07:10:27: Error: Uncaught SyntaxError: Unexpected token {, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+16/10/2018, 07:10:49: Error: Uncaught SyntaxError: Unexpected token ., Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+16/10/2018, 07:10:43: Error: Uncaught SyntaxError: Unexpected token ., Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+16/10/2018, 07:10:09: Error: Script error., Script:   Line: 0
+16/10/2018, 07:10:05: Error: Script error., Script:   Line: 0
+17/10/2018, 02:10:38: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+17/10/2018, 02:10:29: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+17/10/2018, 02:10:13: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+17/10/2018, 02:10:57: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+17/10/2018, 07:10:00: Error: Uncaught ReferenceError: Invalid left-hand side in assignment, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+17/10/2018, 07:10:36: Error: Uncaught SyntaxError: Unexpected token }, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+18/10/2018, 05:10:27: Error: Script error., Script:   Line: 0
+18/10/2018, 05:10:12: Error: Uncaught RangeError: Maximum call stack size exceeded, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 4
+18/10/2018, 05:10:18: Error: Uncaught RangeError: Maximum call stack size exceeded, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 4
+18/10/2018, 05:10:22: Error: Uncaught RangeError: Maximum call stack size exceeded, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 4
+18/10/2018, 05:10:34: Error: Script error., Script:   Line: 0
+18/10/2018, 05:10:12: Error: Script error., Script:   Line: 0
+18/10/2018, 05:10:39: Error: Script error., Script:   Line: 0
+18/10/2018, 05:10:44: Error: Uncaught RangeError: Maximum call stack size exceeded, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 4
+18/10/2018, 05:10:53: Error: Uncaught RangeError: Maximum call stack size exceeded, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 4
+18/10/2018, 06:10:30: Error: Uncaught SyntaxError: Unexpected token ), Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+18/10/2018, 06:10:12: Error: Script error., Script:   Line: 0
+19/10/2018, 08:10:30: Error: Uncaught SyntaxError: Unexpected token ), Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+19/10/2018, 09:10:14: Error: Script error., Script:   Line: 0
+19/10/2018, 09:10:23: Error: Script error., Script:   Line: 0
+19/10/2018, 09:10:41: Error: Script error., Script:   Line: 0
+19/10/2018, 09:10:43: Error: Script error., Script:   Line: 0
+19/10/2018, 09:10:55: Error: Script error., Script:   Line: 0
+19/10/2018, 09:10:49: Error: Script error., Script:   Line: 0
+19/10/2018, 09:10:40: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+19/10/2018, 09:10:46: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+19/10/2018, 09:10:09: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/10/2018, 07:10:18: Error: Uncaught SyntaxError: Unexpected token <<, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+22/10/2018, 12:10:52: Error: Script error., Script:   Line: 0
+22/10/2018, 12:10:32: Error: Script error., Script:   Line: 0
+22/10/2018, 12:10:39: Error: Script error., Script:   Line: 0
+22/10/2018, 12:10:52: Error: Uncaught ReferenceError: FormPonteggioSospeso is not defined, Script: http://localhost/#  Line: 1
+22/10/2018, 12:10:24: Error: Script error., Script:   Line: 0
+23/10/2018, 01:10:03: Error: Uncaught ReferenceError: callBackCarrello is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 208
+23/10/2018, 01:10:30: Error: Script error., Script:   Line: 0
+23/10/2018, 01:10:40: Error: Uncaught ReferenceError: param is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 219
+23/10/2018, 01:10:59: Error: Uncaught ReferenceError: param is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 219
+23/10/2018, 02:10:00: Error: Uncaught ReferenceError: _$ is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 203
+23/10/2018, 02:10:47: Error: Script error., Script:   Line: 0
+23/10/2018, 02:10:36: Error: Script error., Script:   Line: 0
+23/10/2018, 02:10:42: Error: Script error., Script:   Line: 0
+23/10/2018, 03:10:51: Error: Script error., Script:   Line: 0
+23/10/2018, 03:10:13: Error: Script error., Script:   Line: 0
+23/10/2018, 03:10:06: Error: Script error., Script:   Line: 0
+23/10/2018, 03:10:39: Error: Script error., Script:   Line: 0
+23/10/2018, 03:10:07: Error: Script error., Script:   Line: 0
+23/10/2018, 03:10:22: Error: Uncaught ReferenceError: pageVal is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 236
+23/10/2018, 03:10:17: Error: Uncaught ReferenceError: pageVal is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 236
+23/10/2018, 03:10:35: Error: Uncaught ReferenceError: pageVal is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 236
+23/10/2018, 03:10:35: Error: Uncaught ReferenceError: pageVal is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 236
+23/10/2018, 03:10:47: Error: Uncaught ReferenceError: pageVal is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 236
+23/10/2018, 03:10:01: Error: Uncaught ReferenceError: pageVal is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 236
+23/10/2018, 03:10:34: Error: Uncaught ReferenceError: pageVal is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 239
+23/10/2018, 03:10:38: Error: Uncaught ReferenceError: pageVal is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 239
+23/10/2018, 03:10:50: Error: Uncaught ReferenceError: pageVal is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 239
+23/10/2018, 03:10:21: Error: Uncaught ReferenceError: pageVal is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 239
+23/10/2018, 03:10:14: Error: Uncaught ReferenceError: pageVal is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 239
+24/10/2018, 05:10:20: Error: Script error., Script:   Line: 0
+24/10/2018, 05:10:02: Error: Uncaught ReferenceError: intval is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 53
+24/10/2018, 05:10:01: Error: Script error., Script:   Line: 0
+24/10/2018, 05:10:14: Error: Script error., Script:   Line: 0
+24/10/2018, 06:10:50: Error: Script error., Script:   Line: 0
+24/10/2018, 06:10:05: Error: Script error., Script:   Line: 0
+24/10/2018, 06:10:42: Error: Script error., Script:   Line: 0
+24/10/2018, 06:10:17: Error: Script error., Script:   Line: 0
+24/10/2018, 06:10:06: Error: Script error., Script:   Line: 0
+24/10/2018, 06:10:08: Error: Script error., Script:   Line: 0
+24/10/2018, 06:10:32: Error: Script error., Script:   Line: 0
+24/10/2018, 06:10:27: Error: Script error., Script:   Line: 0
+24/10/2018, 06:10:05: Error: Script error., Script:   Line: 0
+24/10/2018, 06:10:41: Error: Uncaught ReferenceError: toLimitInit is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 270
+25/10/2018, 01:10:36: Error: Uncaught ReferenceError: Invalid left-hand side in assignment, Script: http://localhost/js/Carrello/Carrello.js  Line: 309
+25/10/2018, 01:10:21: Error: Script error., Script:   Line: 0
+25/10/2018, 01:10:29: Error: Uncaught TypeError: $(...).off(...).live is not a function, Script: http://localhost/js/Carrello/Carrello.js  Line: 415
+25/10/2018, 02:10:24: Error: Uncaught TypeError: $(...).off(...).live is not a function, Script: http://localhost/js/Carrello/Carrello.js  Line: 394
+25/10/2018, 02:10:35: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/js/Carrello/Carrello.js  Line: 394
+25/10/2018, 02:10:11: Error: Uncaught TypeError: $(...).live is not a function, Script: http://localhost/js/Carrello/Carrello.js  Line: 394
+25/10/2018, 11:10:19: Error: Uncaught ReferenceError: qwe is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 25
+26/10/2018, 10:10:30: Error: Uncaught ReferenceError: param is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 823
+26/10/2018, 11:10:17: Error: Uncaught ReferenceError: param is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 823
+26/10/2018, 11:10:12: Error: Uncaught TypeError: _this.initCarrello is not a function, Script: http://localhost/js/Carrello/Carrello.js  Line: 63
+26/10/2018, 11:10:00: Error: Script error., Script:   Line: 0
+26/10/2018, 11:10:01: Error: Script error., Script:   Line: 0
+26/10/2018, 11:10:20: Error: Uncaught TypeError: _this.initCarrello is not a function, Script: http://localhost/js/Carrello/Carrello.js  Line: 63
+26/10/2018, 12:10:37: Error: Uncaught ReferenceError: fromLimitInit is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 396
+26/10/2018, 12:10:04: Error: Uncaught ReferenceError: fromLimitInit is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 396
+26/10/2018, 06:10:02: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/Carrello/Carrello.js  Line: 349
+26/10/2018, 06:10:50: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/Carrello/Carrello.js  Line: 350
+26/10/2018, 06:10:31: Error: Script error., Script:   Line: 0
+26/10/2018, 06:10:34: Error: Uncaught TypeError: Cannot read property 'toLowerCase' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+26/10/2018, 06:10:11: Error: Script error., Script:   Line: 0
+26/10/2018, 07:10:31: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/Carrello/Carrello.js  Line: 382
+26/10/2018, 07:10:30: Error: Script error., Script:   Line: 0
+26/10/2018, 07:10:52: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/Carrello/Carrello.js  Line: 382
+27/10/2018, 07:10:15: Error: Uncaught ReferenceError: resultsForPage is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 324
+27/10/2018, 07:10:05: Error: Uncaught ReferenceError: resultsForPage is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 386
+27/10/2018, 11:10:29: Error: Script error., Script:   Line: 0
+27/10/2018, 11:10:55: Error: Uncaught ReferenceError: disable is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 69
+27/10/2018, 11:10:02: Error: Uncaught ReferenceError: disable is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 69
+27/10/2018, 11:10:03: Error: Uncaught ReferenceError: disable is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 69
+27/10/2018, 11:10:43: Error: Uncaught ReferenceError: yes is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 69
+27/10/2018, 11:10:44: Error: Uncaught ReferenceError: yes is not defined, Script: http://localhost/js/Carrello/Carrello.js  Line: 69
+27/10/2018, 03:10:54: Error: Uncaught TypeError: _this.initCarrello is not a function, Script: http://localhost/js/Utente/GestioneUtenti.js  Line: 25
+28/10/2018, 02:10:15: Error: Script error., Script:   Line: 0
+28/10/2018, 02:10:07: Error: Script error., Script:   Line: 0
+28/10/2018, 02:10:05: Error: Script error., Script:   Line: 0
+07/11/2018, 09:11:32: Error: Uncaught ReferenceError: Modello is not defined, Script: http://localhost/#  Line: 1
+07/11/2018, 09:11:09: Error: Script error., Script:   Line: 0
+07/11/2018, 09:11:21: Error: Script error., Script:   Line: 0
+07/11/2018, 09:11:37: Error: Script error., Script:   Line: 0
+07/11/2018, 10:11:32: Error: Script error., Script:   Line: 0
+07/11/2018, 10:11:41: Error: Script error., Script:   Line: 0
+07/11/2018, 11:11:22: Error: Script error., Script:   Line: 0
+07/11/2018, 11:11:43: Error: Script error., Script:   Line: 0
+08/11/2018, 04:11:24: Error: Script error., Script:   Line: 0
+08/11/2018, 04:11:16: Error: Script error., Script:   Line: 0
+08/11/2018, 04:11:04: Error: Script error., Script:   Line: 0
+08/11/2018, 04:11:28: Error: Script error., Script:   Line: 0
+08/11/2018, 04:11:01: Error: Script error., Script:   Line: 0
+08/11/2018, 04:11:46: Error: Script error., Script:   Line: 0
+08/11/2018, 04:11:50: Error: Script error., Script:   Line: 0
+08/11/2018, 04:11:25: Error: Script error., Script:   Line: 0
+08/11/2018, 04:11:48: Error: Script error., Script:   Line: 0
+08/11/2018, 04:11:31: Error: Script error., Script:   Line: 0
+08/11/2018, 04:11:48: Error: Script error., Script:   Line: 0
+08/11/2018, 04:11:02: Error: Script error., Script:   Line: 0
+08/11/2018, 04:11:27: Error: Script error., Script:   Line: 0
+08/11/2018, 04:11:30: Error: Script error., Script:   Line: 0
+08/11/2018, 04:11:10: Error: Script error., Script:   Line: 0
+08/11/2018, 04:11:07: Error: Script error., Script:   Line: 0
+08/11/2018, 05:11:37: Error: Script error., Script:   Line: 0
+08/11/2018, 05:11:40: Error: Uncaught TypeError: _this.nextStep is not a function, Script: http://localhost/js/PONTEGGI_ELETTRICI/FormPonteggioElettrico.js?R=21  Line: 20
+08/11/2018, 05:11:45: Error: Script error., Script:   Line: 0
+08/11/2018, 05:11:49: Error: Uncaught TypeError: _this.nextStep is not a function, Script: http://localhost/js/PONTEGGI_ELETTRICI/FormPonteggioElettrico.js?R=21  Line: 20
+08/11/2018, 05:11:15: Error: Script error., Script:   Line: 0
+08/11/2018, 05:11:13: Error: Script error., Script:   Line: 0
+08/11/2018, 05:11:25: Error: Script error., Script:   Line: 0
+08/11/2018, 05:11:49: Error: Script error., Script:   Line: 0
+08/11/2018, 05:11:35: Error: Script error., Script:   Line: 0
+08/11/2018, 05:11:42: Error: Uncaught TypeError: Cannot read property 'undefined' of undefined, Script: http://localhost/js/PONTEGGI_ELETTRICI/FormPonteggioElettrico.js?R=21  Line: 20
+08/11/2018, 05:11:14: Error: Script error., Script:   Line: 0
+08/11/2018, 05:11:19: Error: Uncaught SyntaxError: Unexpected token ), Script: http://localhost/  Line: 1
+08/11/2018, 05:11:29: Error: Script error., Script:   Line: 0
+08/11/2018, 05:11:32: Error: Script error., Script:   Line: 0
+08/11/2018, 06:11:15: Error: Script error., Script:   Line: 0
+08/11/2018, 06:11:18: Error: Script error., Script:   Line: 0
+08/11/2018, 06:11:02: Error: Script error., Script:   Line: 0
+08/11/2018, 06:11:33: Error: Script error., Script:   Line: 0
+08/11/2018, 06:11:45: Error: Script error., Script:   Line: 0
+08/11/2018, 06:11:34: Error: Script error., Script:   Line: 0
+08/11/2018, 06:11:39: Error: Script error., Script:   Line: 0
+08/11/2018, 06:11:48: Error: Script error., Script:   Line: 0
+08/11/2018, 06:11:38: Error: Script error., Script:   Line: 0
+08/11/2018, 06:11:59: Error: Script error., Script:   Line: 0
+08/11/2018, 06:11:30: Error: Script error., Script:   Line: 0
+08/11/2018, 06:11:30: Error: Script error., Script:   Line: 0
+08/11/2018, 06:11:21: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:54: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+08/11/2018, 07:11:56: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+08/11/2018, 07:11:33: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+08/11/2018, 07:11:15: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:07: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+08/11/2018, 07:11:46: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+08/11/2018, 07:11:01: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:52: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+08/11/2018, 07:11:31: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:38: Error: Uncaught SyntaxError: Unexpected token ), Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+08/11/2018, 07:11:55: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:49: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:30: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:17: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:42: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:49: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:37: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:59: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:17: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:56: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:27: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:41: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:48: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:29: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:42: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:34: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:05: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:09: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:09: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:50: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:08: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:25: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:59: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:54: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:09: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:10: Error: Script error., Script:   Line: 0
+08/11/2018, 07:11:43: Error: Script error., Script:   Line: 0
+08/11/2018, 08:11:44: Error: Script error., Script:   Line: 0
+08/11/2018, 08:11:56: Error: Script error., Script:   Line: 0
+08/11/2018, 10:11:15: Error: Script error., Script:   Line: 0
+08/11/2018, 10:11:51: Error: Script error., Script:   Line: 0
+08/11/2018, 10:11:20: Error: Script error., Script:   Line: 0
+08/11/2018, 10:11:47: Error: Script error., Script:   Line: 0
+08/11/2018, 11:11:08: Error: Script error., Script:   Line: 0
+08/11/2018, 11:11:57: Error: Script error., Script:   Line: 0
+08/11/2018, 11:11:44: Error: Script error., Script:   Line: 0
+08/11/2018, 11:11:35: Error: Script error., Script:   Line: 0
+09/11/2018, 12:11:33: Error: Script error., Script:   Line: 0
+09/11/2018, 12:11:31: Error: Script error., Script:   Line: 0
+09/11/2018, 01:11:30: Error: Script error., Script:   Line: 0
+11/11/2018, 04:11:52: Error: Script error., Script:   Line: 0
+11/11/2018, 04:11:06: Error: Script error., Script:   Line: 0
+11/11/2018, 04:11:47: Error: Script error., Script:   Line: 0
+19/11/2018, 11:11:41: Error: Uncaught SyntaxError: Unexpected token {, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+19/11/2018, 11:11:25: Error: Uncaught SyntaxError: Unexpected token {, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+19/11/2018, 11:11:04: Error: Uncaught SyntaxError: Unexpected token {, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+19/11/2018, 11:11:06: Error: Uncaught SyntaxError: Unexpected token {, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+19/11/2018, 11:11:15: Error: Uncaught SyntaxError: Unexpected token {, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+19/11/2018, 11:11:48: Error: Uncaught SyntaxError: Unexpected token {, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+19/11/2018, 11:11:22: Error: Uncaught SyntaxError: Unexpected token {, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+19/11/2018, 11:11:26: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+19/11/2018, 11:11:24: Error: Script error., Script:   Line: 0
+19/11/2018, 11:11:48: Error: Script error., Script:   Line: 0
+19/11/2018, 11:11:40: Error: Uncaught SyntaxError: Unexpected token ., Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+19/11/2018, 11:11:49: Error: Script error., Script:   Line: 0
+19/11/2018, 11:11:23: Error: Uncaught SyntaxError: Unexpected token ;, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 12:11:04: Error: Uncaught ReferenceError: condole is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 03:11:51: Error: Uncaught TypeError: Cannot read property 'descrizione' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 03:11:21: Error: Uncaught TypeError: Cannot read property 'descrizione' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 03:11:59: Error: Uncaught TypeError: Cannot read property '10.5' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 03:11:12: Error: Uncaught TypeError: Cannot read property '10.50' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 03:11:38: Error: Uncaught TypeError: Cannot read property '10.50' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 03:11:18: Error: Uncaught SyntaxError: Unexpected token o in JSON at position 1, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 03:11:01: Error: Uncaught SyntaxError: Unexpected token o in JSON at position 1, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 03:11:33: Error: Uncaught SyntaxError: Unexpected token ], Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 03:11:08: Error: Uncaught TypeError: Cannot read property '0' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 03:11:47: Error: Uncaught TypeError: Cannot read property 'name' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 03:11:51: Error: Uncaught SyntaxError: Unexpected token ), Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 03:11:24: Error: Uncaught TypeError: Cannot read property '10.50' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 03:11:49: Error: Uncaught SyntaxError: Unexpected token o in JSON at position 1, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 03:11:08: Error: Uncaught SyntaxError: Unexpected token o in JSON at position 1, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 03:11:19: Error: Uncaught SyntaxError: Unexpected token [, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 03:11:31: Error: Uncaught TypeError: Cannot convert undefined or null to object, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 03:11:52: Error: Uncaught SyntaxError: Unexpected token ], Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 03:11:18: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 03:11:33: Error: Uncaught SyntaxError: Unexpected token o in JSON at position 1, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 04:11:29: Error: Uncaught ReferenceError: descrizione is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 04:11:07: Error: Uncaught ReferenceError: descrizione is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 04:11:43: Error: Uncaught ReferenceError: descrizione is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 04:11:08: Error: Uncaught SyntaxError: Unexpected token ., Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 04:11:38: Error: Uncaught SyntaxError: Unexpected token ., Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 04:11:02: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 04:11:58: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 04:11:44: Error: Uncaught TypeError: Cannot read property '10.50' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 04:11:43: Error: Uncaught TypeError: Cannot read property 'descrizione' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 04:11:46: Error: Uncaught TypeError: Cannot read property 'descrizione' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 05:11:04: Error: Uncaught SyntaxError: Invalid or unexpected token, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 05:11:26: Error: Uncaught TypeError: Cannot read property '0' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 05:11:38: Error: Uncaught SyntaxError: Unexpected token ], Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 05:11:09: Error: Uncaught TypeError: Cannot read property 'descrizione' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 05:11:50: Error: Uncaught TypeError: Cannot read property 'descrizione' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 05:11:10: Error: Uncaught TypeError: Cannot read property 'descrizione' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 05:11:17: Error: Uncaught TypeError: Cannot read property 'descrizione' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 05:11:21: Error: Uncaught TypeError: Cannot read property 'descrizione' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 05:11:45: Error: Uncaught TypeError: Cannot read property 'descrizione' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 07:11:34: Error: Uncaught TypeError: Cannot read property 'traliccio' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 07:11:14: Error: Uncaught TypeError: Cannot read property 'traliccio' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 07:11:28: Error: Uncaught TypeError: Cannot read property 'traliccio' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 07:11:01: Error: Uncaught TypeError: Cannot read property 'traliccio' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 07:11:50: Error: Uncaught SyntaxError: Unexpected token [, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 07:11:28: Error: Uncaught ReferenceError: traliccio is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 07:11:32: Error: Uncaught SyntaxError: Unexpected string, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 07:11:43: Error: Uncaught SyntaxError: Unexpected token [, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 07:11:06: Error: Uncaught ReferenceError: traliccio is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 07:11:51: Error: Uncaught SyntaxError: Unexpected token [, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 08:11:09: Error: Uncaught SyntaxError: Invalid or unexpected token, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 08:11:06: Error: Uncaught SyntaxError: Invalid or unexpected token, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 08:11:25: Error: Uncaught SyntaxError: Invalid or unexpected token, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 08:11:34: Error: Uncaught SyntaxError: Unexpected token &, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 08:11:39: Error: Uncaught SyntaxError: Invalid or unexpected token, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 08:11:30: Error: Uncaught SyntaxError: Invalid or unexpected token, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 08:11:13: Error: Uncaught SyntaxError: Invalid or unexpected token, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 08:11:11: Error: Uncaught ReferenceError: string is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 08:11:02: Error: Script error., Script:   Line: 0
+20/11/2018, 08:11:05: Error: Script error., Script:   Line: 0
+20/11/2018, 08:11:50: Error: Script error., Script:   Line: 0
+20/11/2018, 08:11:05: Error: Uncaught ReferenceError: str is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 08:11:15: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:37: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:34: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:12: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:28: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:54: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:05: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:33: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:57: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:13: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:13: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:09: Error: Uncaught SyntaxError: Unexpected identifier, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 09:11:12: Error: Uncaught SyntaxError: Unexpected identifier, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+20/11/2018, 09:11:58: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:21: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:53: Error: Uncaught TypeError: Cannot read property 'prezzo' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:46: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:59: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:25: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:10: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:46: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:47: Error: Uncaught TypeError: Cannot read property 'substring' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:25: Error: Uncaught TypeError: Cannot read property 'substring' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:43: Error: Uncaught TypeError: Cannot read property 'substring' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:23: Error: Uncaught TypeError: Cannot read property 'substring' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:58: Error: Uncaught ReferenceError: component is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:16: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:39: Error: Uncaught TypeError: Cannot read property 'substring' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:58: Error: Uncaught TypeError: Cannot read property 'substring' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+20/11/2018, 09:11:12: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+21/11/2018, 08:11:18: Error: Uncaught TypeError: Cannot read property 'descrizione' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+21/11/2018, 09:11:43: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+21/11/2018, 09:11:50: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+21/11/2018, 09:11:19: Error: Uncaught TypeError: Cannot read property 'componente' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+21/11/2018, 10:11:06: Error: Uncaught SyntaxError: Unexpected identifier, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 10:11:12: Error: Uncaught SyntaxError: Unexpected identifier, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 03:11:22: Error: Uncaught SyntaxError: Unexpected token ;, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 03:11:01: Error: Uncaught SyntaxError: Unexpected token ;, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 03:11:38: Error: Script error., Script:   Line: 0
+21/11/2018, 03:11:31: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 03:11:16: Error: Uncaught SyntaxError: Unexpected token ;, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 04:11:57: Error: Script error., Script:   Line: 0
+21/11/2018, 04:11:37: Error: Script error., Script:   Line: 0
+21/11/2018, 04:11:14: Error: Script error., Script:   Line: 0
+21/11/2018, 08:11:31: Error: Uncaught SyntaxError: Unexpected identifier, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+21/11/2018, 08:11:46: Error: Uncaught SyntaxError: Unexpected identifier, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 08:11:17: Error: Uncaught SyntaxError: Invalid or unexpected token, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 08:11:55: Error: Uncaught SyntaxError: Invalid or unexpected token, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 08:11:31: Error: Uncaught SyntaxError: Unexpected identifier, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 08:11:48: Error: Uncaught SyntaxError: Unexpected identifier, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 08:11:06: Error: Uncaught SyntaxError: Unexpected identifier, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 08:11:20: Error: Uncaught SyntaxError: Unexpected identifier, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 08:11:30: Error: Uncaught SyntaxError: Unexpected identifier, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 08:11:20: Error: Uncaught SyntaxError: Unexpected identifier, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 09:11:34: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 09:11:48: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 09:11:26: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 09:11:38: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 09:11:48: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 09:11:01: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 09:11:46: Error: Uncaught ReferenceError: prezzo is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+21/11/2018, 09:11:04: Error: Uncaught ReferenceError: prezzo is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+21/11/2018, 09:11:07: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+21/11/2018, 09:11:29: Error: Script error., Script:   Line: 0
+21/11/2018, 09:11:17: Error: Uncaught SyntaxError: missing ) after argument list, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+22/11/2018, 04:11:35: Error: Uncaught ReferenceError: tmp is not defined, Script: http://localhost/  Line: 197
+22/11/2018, 04:11:33: Error: Script error., Script:   Line: 0
+22/11/2018, 04:11:45: Error: Script error., Script:   Line: 0
+22/11/2018, 04:11:45: Error: Script error., Script:   Line: 0
+22/11/2018, 04:11:47: Error: Script error., Script:   Line: 0
+22/11/2018, 04:11:56: Error: Script error., Script:   Line: 0
+22/11/2018, 05:11:45: Error: Uncaught SyntaxError: Unexpected token ;, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+22/11/2018, 05:11:06: Error: Uncaught SyntaxError: Unexpected identifier, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+22/11/2018, 05:11:46: Error: Uncaught SyntaxError: Unexpected identifier, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+22/11/2018, 05:11:54: Error: Uncaught SyntaxError: Unexpected identifier, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+22/11/2018, 05:11:02: Error: Uncaught SyntaxError: Unexpected identifier, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+22/11/2018, 06:11:40: Error: Uncaught SyntaxError: Unexpected token =, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+22/11/2018, 06:11:16: Error: Uncaught SyntaxError: Unexpected token =, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+22/11/2018, 06:11:25: Error: Uncaught SyntaxError: Unexpected token =, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+22/11/2018, 06:11:26: Error: Uncaught SyntaxError: Unexpected token =, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+22/11/2018, 06:11:10: Error: Uncaught SyntaxError: Unexpected token =, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+22/11/2018, 06:11:22: Error: Uncaught SyntaxError: Unexpected token =, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+22/11/2018, 06:11:33: Error: Uncaught TypeError: Cannot set property 'totale' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+22/11/2018, 11:11:42: Error: Uncaught SyntaxError: Invalid or unexpected token, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+22/11/2018, 11:11:23: Error: Script error., Script:   Line: 0
+22/11/2018, 11:11:59: Error: Uncaught TypeError: Cannot set property 'classe' of undefined, Script: http://localhost/js/functions.js  Line: 44
+22/11/2018, 11:11:37: Error: Uncaught SyntaxError: Unexpected token ;, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+23/11/2018, 12:11:06: Error: Script error., Script:   Line: 0
+23/11/2018, 12:11:42: Error: Script error., Script:   Line: 0
+26/11/2018, 11:11:44: Error: Uncaught ReferenceError: parseFLoat is not defined, Script: http://localhost/  Line: 111
+26/11/2018, 11:11:44: Error: Uncaught ReferenceError: parseFLoat is not defined, Script: http://localhost/  Line: 111
+26/11/2018, 06:11:23: Error: Uncaught SyntaxError: Unexpected token ,, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+26/11/2018, 07:11:42: Error: Script error., Script:   Line: 0
+26/11/2018, 07:11:21: Error: Uncaught SyntaxError: Unexpected token ;, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+26/11/2018, 07:11:04: Error: Uncaught SyntaxError: Unexpected token ;, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+26/11/2018, 07:11:05: Error: Uncaught SyntaxError: Unexpected token (, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+26/11/2018, 07:11:14: Error: Uncaught SyntaxError: Unexpected token (, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+26/11/2018, 07:11:32: Error: Uncaught SyntaxError: Unexpected token (, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 3
+26/11/2018, 07:11:16: Error: Script error., Script:   Line: 0
+29/11/2018, 10:11:40: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost:8888/js/Carrello/Carrello.js  Line: 451
+29/11/2018, 10:11:35: Error: Script error., Script:   Line: 0
+29/11/2018, 10:11:12: Error: Script error., Script:   Line: 0
+29/11/2018, 11:11:41: Error: Uncaught ReferenceError: select is not defined, Script: http://localhost:8888/  Line: 92
+29/11/2018, 11:11:17: Error: Script error., Script:   Line: 0
+30/11/2018, 02:11:22: Error: Uncaught TypeError: Cannot read property 'format' of undefined, Script: http://localhost/  Line: 1017
+30/11/2018, 02:11:47: Error: Uncaught TypeError: Cannot read property 'format' of undefined, Script: http://localhost/  Line: 1017
+30/11/2018, 04:11:58: Error: Uncaught TypeError: Cannot read property 'codice' of undefined, Script: http://localhost/js/Carrello/Carrello.js  Line: 451
+30/11/2018, 06:11:04: Error: Uncaught TypeError: Cannot read property 'descrizione' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+30/11/2018, 06:11:37: Error: Script error., Script:   Line: 0
+30/11/2018, 07:11:09: Error: Script error., Script:   Line: 0
+30/11/2018, 07:11:39: Error: Script error., Script:   Line: 0
+30/11/2018, 07:11:39: Error: Script error., Script:   Line: 0
+30/11/2018, 08:11:17: Error: Script error., Script:   Line: 0
+30/11/2018, 09:11:17: Error: Script error., Script:   Line: 0
+30/11/2018, 09:11:17: Error: Script error., Script:   Line: 0
+30/11/2018, 09:11:11: Error: Script error., Script:   Line: 0
+30/11/2018, 09:11:07: Error: Script error., Script:   Line: 0
+30/11/2018, 10:11:30: Error: Uncaught TypeError: Cannot set property 'boo' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+01/12/2018, 03:12:22: Error: Uncaught TypeError: Cannot read property 'modello' of undefined, Script: http://localhost/js/Carrello/Carrello.js  Line: 450
+02/12/2018, 09:12:37: Error: Uncaught TypeError: Cannot read property 'modello' of undefined, Script: http://localhost/js/Carrello/Carrello.js  Line: 450
+02/12/2018, 09:12:20: Error: Uncaught TypeError: Cannot read property 'modello' of undefined, Script: http://localhost/js/Carrello/Carrello.js  Line: 450
+02/12/2018, 09:12:25: Error: Uncaught TypeError: Cannot read property 'modello' of undefined, Script: http://localhost/js/Carrello/Carrello.js  Line: 450
+02/12/2018, 05:12:37: Error: Script error., Script:   Line: 0
+02/12/2018, 05:12:25: Error: Uncaught TypeError: elem.parent is not a function, Script: http://localhost/js/Menu.js?r=10  Line: 240
+02/12/2018, 05:12:47: Error: Uncaught TypeError: elem.parent is not a function, Script: http://localhost/js/Menu.js?r=10  Line: 240
+02/12/2018, 06:12:50: Error: Uncaught TypeError: elem.parent is not a function, Script: http://localhost/js/Menu.js?r=10  Line: 240
+02/12/2018, 06:12:34: Error: Uncaught TypeError: elem.parent is not a function, Script: http://localhost/js/Menu.js?r=10  Line: 241
+02/12/2018, 06:12:45: Error: Uncaught TypeError: elem.parent is not a function, Script: http://localhost/js/Menu.js?r=10  Line: 241
+04/12/2018, 10:12:30: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/  Line: 313
+04/12/2018, 10:12:35: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+04/12/2018, 12:12:31: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+04/12/2018, 12:12:06: Error: Uncaught TypeError: undefined is not a constructor, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+04/12/2018, 12:12:02: Error: Uncaught ReferenceError: Ascensore is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+04/12/2018, 12:12:53: Error: Uncaught ReferenceError: Ascensore is not defined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+04/12/2018, 12:12:00: Error: Uncaught TypeError: Cannot read property 'quantita' of undefined, Script: http://localhost/  Line: 871
+04/12/2018, 12:12:30: Error: Uncaught TypeError: Cannot read property 'quantita' of undefined, Script: http://localhost/  Line: 873
+04/12/2018, 12:12:37: Error: Uncaught TypeError: Cannot read property 'quantita' of undefined, Script: http://localhost/  Line: 873
+04/12/2018, 12:12:20: Error: Uncaught ReferenceError: totale_scontato is not defined, Script: http://localhost/  Line: 902
+04/12/2018, 01:12:34: Error: Uncaught TypeError: Cannot convert undefined or null to object, Script: http://localhost/js/Preventivi/Preventivi.js  Line: 532
+04/12/2018, 01:12:08: Error: Uncaught TypeError: Cannot convert undefined or null to object, Script: http://localhost/js/Preventivi/Preventivi.js  Line: 532
+04/12/2018, 03:12:54: Error: Uncaught TypeError: Cannot read property 'length' of null, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+04/12/2018, 03:12:23: Error: Uncaught TypeError: Cannot read property 'length' of null, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5

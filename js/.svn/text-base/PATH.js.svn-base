@@ -1,0 +1,72 @@
+var P_MISURE_BASCULANTE = "htmls/BASCULANTI/misure_basculante.html";
+var P_MISURE_PORTA_CANTINA = "htmls/PORTE_CANTINA/misure_porte_cantina.html";
+var P_MISURE_PORTA_MULTIUSO = "htmls/PORTE_MULTIUSO/misure_porte_multiuso.html";
+var P_MISURE_PORTA_TAGLIAFUOCO = "htmls/PORTE_TAGLIAFUOCO/misure_porte_tagliafuoco.html";
+var P_MISURE_SEZIONALI = "htmls/SEZIONALI/misure_sezionali.html";
+var P_MENU = "htmls/Menu.html";
+
+var P_FORM_FOROMURO = "htmls/BASCULANTI/form_foro_muro.html";
+var P_FORM_INGOMBRO = "htmls/BASCULANTI/form_ingombro.html";
+var P_FORM_DEBORDATURA = "htmls/BASCULANTI/form_debordatura.html";
+var P_FORM_VERSIONE = "htmls/BASCULANTI/form_versione.html";
+var P_FORM_SISTEMA_CHIUSURA = "htmls/BASCULANTI/form_sistema_chiusura.html";
+var P_FORM_SISTEMA_RIFINITURA = "htmls/BASCULANTI/form_sistema_rifinitura.html";
+var P_FORM_SOPRALUCE = "htmls/BASCULANTI/form_sopraluce.html";
+var P_FORM_PASSAGGIO_PEDONALE = "htmls/BASCULANTI/form_passaggio_pedonale.html";
+var P_FORM_MOTORIZZAZIONE = "htmls/BASCULANTI/form_motorizzazione.html";
+var P_FORM_PREDISPOSIZIONE = "htmls/BASCULANTI/form_predisposizione_motorizzazione.html";
+var P_FORM_SCONTO = "htmls/BASCULANTI/form_sconto.html";
+var P_FORM_VERNICIATURA = "htmls/BASCULANTI/form_verniciatura.html";
+
+var P_FORM_FOROMURO_SEZIONALI = "htmls/SEZIONALI/form_foro_muro.html";
+var P_FORM_STRUTTURA_SEZIONALI = "htmls/SEZIONALI/form_struttura.html";
+var P_FORM_MODELLO_SEZIONALI = "htmls/SEZIONALI/form_modello.html";
+var P_FORM_MOLLE_SEZIONALI = "htmls/SEZIONALI/form_molle.html";
+var P_FORM_OBLO_SEZIONALI = "htmls/SEZIONALI/form_oblo.html";
+var P_FORM_GRIGLIE_SEZIONALI = "htmls/SEZIONALI/form_griglie.html";
+var P_FORM_PASSAGGIO_PEDONALE_SEZIONALI = "htmls/SEZIONALI/form_passaggio_pedonale.html";
+var P_FORM_SISTEMA_CHIUSURA_SEZIONALI = "htmls/SEZIONALI/form_sistema_chiusura.html";
+var P_FORM_MOTORIZZAZIONE_SEZIONALI = "htmls/SEZIONALI/form_motorizzazione.html";
+var P_FORM_SCONTO_SEZIONALI = "htmls/SEZIONALI/form_sconto.html";
+
+var P_FORM_SISTEMA_CHIUSURA_SEZIONALI = "htmls/SEZIONALI/form_sistema_chiusura.html";
+var P_FORM_SISTEMA_RIFINITURA_SEZIONALI = "htmls/SEZIONALI/form_sistema_rifinitura.html";
+var P_FORM_SOPRALUCE_SEZIONALI = "htmls/SEZIONALI/form_sopraluce.html";
+var P_FORM_PASSAGGIO_PEDONALE_SEZIONALI = "htmls/SEZIONALI/form_passaggio_pedonale.html";
+var P_FORM_MOTORIZZAZIONE_SEZIONALI = "htmls/SEZIONALI/form_motorizzazione.html";
+var P_FORM_PREDISPOSIZIONE_SEZIONALI = "htmls/SEZIONALI/form_predisposizione_motorizzazione.html";
+var P_FORM_SCONTO_SEZIONALI = "htmls/SEZIONALI/form_sconto.html";
+var P_FORM_VERNICIATURA_SEZIONALI = "htmls/SEZIONALI/form_verniciatura.html";
+
+
+var P_FORM_SCONTO_PORTA_CANTINA = "htmls/PORTE_CANTINA/form_sconto.html";
+var P_FORM_APERTURA = "htmls/PORTE_CANTINA/form_apertura.html";
+var P_FORM_AREAZIONE = "htmls/PORTE_CANTINA/form_areazione.html";
+var P_FORM_PORTE_CANTINA_SOPRALUCE = "htmls/PORTE_CANTINA/form_sopraluce.html";
+var P_FORM_PORTE_SOPRALUCE_MULTIUSO = "htmls/PORTE_MULTIUSO/form_sopraluce.html";
+var P_FORM_MISURE_PORTA_CANTINA = "htmls/PORTE_CANTINA/form_misure_porta_cantina.html";
+
+var P_FORM_AREAZIONE_MULTIUSO = "htmls/PORTE_MULTIUSO/form_areazione.html";
+
+var P_FORM_SCONTO_PORTA_MULTIUSO = "htmls/PORTE_MULTIUSO/form_sconto.html";
+var P_FORM_SCONTO_PORTA_TAGLIAFUOCO = "htmls/PORTE_TAGLIAFUOCO/form_sconto.html";
+var P_FORM_SISTEMA_CHIUSURA_MULTIUSO = "htmls/PORTE_MULTIUSO/form_sistema_chiusura.html";
+
+var P_FORM_SISTEMA_CHIUSURA_TAGLIAFUOCO = "htmls/PORTE_TAGLIAFUOCO/form_sistema_chiusura.html";
+
+var P_FORM_APERTURA_MULTIUSO = "htmls/PORTE_MULTIUSO/form_apertura.html";
+var P_FORM_AREAZIONE_MULTIUSO = "htmls/PORTE_MULTIUSO/form_areazione.html";
+var P_FORM_PORTE_MULTIUSO_SOPRALUCE = "htmls/PORTE_MULTIUSO/form_sopraluce.html";
+var P_FORM_MISURE_PORTA_MULTIUSO = "htmls/PORTE_MULTIUSO/form_misure_porta_multiuso.html";
+var P_FORM_MISURE_PORTA_TAGLIAFUOCO = "htmls/PORTE_TAGLIAFUOCO/form_misure_porta_tagliafuoco.html";
+var P_FORM_PORTA_TAGLIAFUOCO_OBLO = "htmls/PORTE_TAGLIAFUOCO/form_oblo.html";
+
+var P_FORM_VERNICIATURA_MULTIUSO = "htmls/PORTE_MULTIUSO/form_verniciatura.html";
+var P_FORM_VERNICIATURA_PORTA_TAGLIAFUOCO = "htmls/PORTE_TAGLIAFUOCO/form_verniciatura.html";
+
+var P_FORM_REGISTRAZIONE = "htmls/registrazione.html";
+var P_FORM_RUBRICA = "htmls/form_rubrica.html";
+var P_FORM_MODIFICA_UTENTE = "htmls/form_modifica_utente.html";
+var P_LOADING = "htmls/loading.html";
+
+var P_MENU_PRODOTTI = "htmls/menu_prodotti.html";

@@ -1,0 +1,89 @@
+var Loader = function(){
+	
+	var _this = this;
+
+	_this.init = function(func){
+		
+		/*jQuery("body").bind("wheel",function(){
+				_this.setPosition();
+			});
+		
+		
+		jQuery.get(P_LOADING, function(dataHtml){
+			
+		
+			jQuery("body").append(dataHtml);
+			
+			
+			_this.setPosition();
+			
+			jQuery("#Loader").fadeIn();
+			
+			setTimeout(function(){func();},700);
+			
+		});*/
+		
+		if(jQuery(".blockUI").length <= 0){
+		
+			jQuery.blockUI({ css: { 
+				border: 'none', 
+				padding: '15px',
+				left: (jQuery(window).width() - 200) /2 + 'px', 
+				width: '200px',
+				fontFamily: "Arial",
+				backgroundColor: '#001d3b', 
+				'-webkit-border-radius': '10px', 
+				'-moz-border-radius': '10px', 
+				opacity: 1,
+				color: '#fff',
+				fontSize: "18px",
+			}, message: "Attendere..."}); 
+		
+		}
+		
+		setTimeout(function(){func();},500);
+		
+	}
+	
+	_this.remove = function(){
+		
+		jQuery.unblockUI();
+		
+		/*jQuery("#Loader").fadeOut(function(){
+				jQuery(this).remove();
+		});
+		*/
+	}
+	
+	
+	/*_this.setPosition = function(){
+		var screenW = (document.body.clientWidth - jQuery("#boxLoader").innerWidth())/2;
+		var screenH = (document.body.clientHeight - jQuery("#boxLoader").innerHeight())/2;
+		
+		jQuery("#bgLoader").css({width:$(window).width()+"px"});
+		jQuery("#bgLoader").css({height:($(window).height()+jQuery(document).scrollTop())+"px"});
+			
+		jQuery("#boxLoader").css({
+		  position: "absolute",
+		  top: jQuery(document).scrollTop() + ($(window).height()-$('#boxLoader').height())/2,
+		  left: ($(window).width()-$('#boxLoader').width())/2
+		});
+
+	}*/
+	
+	_this.setPosition = function(){
+		var screenW = (window.innerHeight - jQuery("#boxLoader").innerWidth())/2;
+		var screenH = (window.innerWidth - jQuery("#boxLoader").innerHeight())/2;
+		
+		jQuery("#bgLoader").css({width:window.innerWidth+"px"});
+		jQuery("#bgLoader").css({height:(window.innerHeight+jQuery(document).scrollTop())+"px"});
+			
+		jQuery("#boxLoader").css({
+		  position: "absolute",
+		  top: jQuery(document).scrollTop() + (window.innerHeight-$('#boxLoader').height())/2,
+		  left: (window.innerWidth-$('#boxLoader').width())/2
+		});
+
+	}
+	
+}

@@ -1,0 +1,579 @@
+<?php
+
+
+
+class Preventivi{
+
+	private $connect;
+	
+	public function init(){
+		$this->connect = new ConnectionDB();
+	}
+	
+	public function getAllPreventivi($post){
+		$this->connect->connetti();
+		$ruolo = $post["ruolo"];
+		$where = "";
+		if($ruolo != "ROLE_SUPERADMIN" && $ruolo != "ROLE_ADMIN")
+			$where = " AND preventivi.account='".$post["email"]."'"; 
+		
+		//var_dump("SELECT preventivi.data as data,preventivi.descrizione as descrizione,preventivi.totale as totale,preventivi.approvazione as approvazione, user.nome as nome, user.cognome as cognome FROM preventivi,user WHERE preventivi.account=user.account ".$where);
+		
+		$result = $this->connect->myQuery(
+		"SELECT preventivi.codice as codice,
+				preventivi.data as data,
+				preventivi.descrizione as descrizione,
+				preventivi.totale as totale,
+				preventivi.totaleScontato as totaleScontato,
+				preventivi.approvazione as approvazione, 
+				preventivi.letto as letto, 
+				user.nome as nome, 
+				user.cognome as cognome, 
+				preventivi.account as email 
+		FROM 	preventivi,user 
+		WHERE 	preventivi.account=user.account ".$where." ORDER BY preventivi.data");
+		
+		$objJSON =  array();
+		$objJSON["results"] = array();
+		$objJSON["success"] = true;
+		$cont = 0;
+		while($row = mysql_fetch_array($result)){
+			$objJSON["results"][$cont]['data'] = $row['data'];
+			$objJSON["results"][$cont]['codice'] = $row['codice'];
+			$objJSON["results"][$cont]['totale'] = $row['totale'];
+			$objJSON["results"][$cont]['totaleScontato'] = $row['totaleScontato'];
+			$objJSON["results"][$cont]['approvazione'] = $row['approvazione'];
+			$objJSON["results"][$cont]['letto'] = $row['letto'];
+			$objJSON["results"][$cont]['nome'] = $row['nome'];
+			$objJSON["results"][$cont]['cognome'] = $row['cognome'];
+			$objJSON["results"][$cont]['email'] = $row['email'];
+			$cont++;
+		}
+		
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["errorMessage"] = "Errore nella selezione di tutti i preventivi. Contattare l'amministratore del sistema per la risoluzione del problema.\n".mysql_errno()." ".mysql_error();	
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function getPreventivo($post){
+		
+		
+		$this->connect->connetti();
+		
+		$query = "
+			SELECT 	preventivi.codice as codice, 
+					preventivi.data as data, 
+					preventivi.totale as totalePreventivo, 
+					preventivi.totaleScontato as totalePreventivoScontato, 
+					preventivi.approvazione as approvazione, 
+					user.nome as nome ,
+					user.cognome as cognome,
+					user.account as email,
+					carrello.id as idCarrello,
+					carrello.descrizione as descrizione,
+					carrello.quantita as quantita,
+					carrello.tipologia as tipologia,
+					carrello.totale as totale,
+					account.codice_preventivazione as codice_preventivazione,
+					user.tipo as tipo,
+					preventivi.letto as letto
+			FROM 	preventivi,carrello,user,account
+			WHERE 	carrello.preventivo = preventivi.data
+			AND		user.account = preventivi.account
+			AND 	user.account = account.email
+			AND preventivi.data='".$post['data']."' ORDER BY carrello.riferimento";
+			
+		$result = $this->connect->myQuery($query);
+			
+			//var_dump($query);
+			/*$result = $this->connect->myQuery("SELECT 	preventivi.data as codice, 
+					preventivi.totale as totale, 
+					preventivi.approvazione as approvazione, 
+					user.nome as nome ,
+					user.cognome as cognome,
+					user.account as email,
+					carrello.descrizione as descrizione,
+					carrello.quantita as quantita,
+					carrello.tipologia as tipologia,
+			GROUP_CONCAT(immagini.immagine SEPARATOR '[ENDOFFILE]') as immagini
+			FROM 	preventivi,carrello,user,immagini 
+			WHERE 	carrello.preventivo = preventivi.data 
+			AND		user.account = preventivi.account
+			AND 	preventivi.data='".$post["data"]."'
+			AND		immagini.carrello = carrello.id GROUP BY(carrello.id)");
+			*/
+			
+			
+		$objJSON =  array();
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["errorMessage"] = "Errore nella selezione del preventivo preventivo. Contattare l'amministratore del sistema per la risoluzione del problema.\n".mysql_errno()." ".mysql_error();
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$rowValori = mysql_fetch_array($result);
+			if($rowValori){
+				$objJSON["results"]["nome"] = $rowValori["nome"];
+				$objJSON["results"]["cognome"] = $rowValori["cognome"];
+				$objJSON["results"]['codice_preventivazione'] = $rowValori['codice_preventivazione'];
+				$objJSON["results"]['tipo'] = $rowValori['tipo'];
+				$objJSON["results"]["email"] = $rowValori["email"];
+				$objJSON["results"]["data"] = $rowValori["data"];
+				$objJSON["results"]["codice"] = $rowValori["codice"];
+				$objJSON["results"]["totale"] = $rowValori["totalePreventivo"];
+				$objJSON["results"]["totaleScontato"] = $rowValori["totalePreventivoScontato"];
+				$objJSON["results"]['approvazione'] = $rowValori['approvazione'];
+				$objJSON["results"]['letto'] = $rowValori['letto'];
+				$objJSON["results"]["carrello"] = array();
+				$cont = 0;
+				do{
+					$objJSON["results"]["carrello"][$cont]["descrizione"] = $rowValori["descrizione"];
+					$objJSON["results"]["carrello"][$cont]["quantita"] = $rowValori["quantita"];
+					$objJSON["results"]["carrello"][$cont]["totale"] = $rowValori["totale"];
+					$objJSON["results"]["carrello"][$cont]["tipologia"] = $rowValori["tipologia"];
+					
+					//var_dump("SELECT * FROM immagini WHERE carrello='".$rowValori["idCarrello"]."'");
+					
+					/*$result2 = $this->connect->myQuery("SELECT * FROM immagini WHERE carrello='".$rowValori["idCarrello"]."'");
+					$objJSON["results"]["carrello"][$cont]["immagini"] = array();
+					$cont2 = 0;
+					while($rowValoriImmagine = mysql_fetch_array($result2)){
+						$objJSON["results"]["carrello"][$cont]["immagini"][$cont2] =  $rowValoriImmagine["immagine"];
+						$cont2++;
+					}*/
+					
+					
+					
+					//$immagini = split("[ENDOFFILE]", $rowValori["immagini"]);
+					//for($i = 0;$i < count($immagini);$i++){
+						//$objJSON["results"]["carrello"][$cont]["immagini"][$i] = $immagini[$i];	
+					//}
+					$cont++;
+				}while($rowValori = mysql_fetch_array($result));
+			}
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function addPreventivo($post){
+		$this->connect->connetti();
+		$data = $post['data'];
+		$descrizione = $post['descrizione'];
+		$totale = $post['totale'];
+		$totaleScontato = $post['totaleScontato'];
+		$approvazione = $post['approvazione'];
+		$account = $post['account'];
+		
+		$result = $this -> connect->myQuery("SELECT MAX(codice) as max_codice FROM preventivi WHERE account='".$account."'");
+		$numPrev = mysql_fetch_array($result);
+		$numPrev = $numPrev["max_codice"]+1;
+		
+		
+		$query = "INSERT INTO preventivi (codice,data,descrizione,totale,totaleScontato,account,approvazione,letto) VALUES('".$numPrev."', ".$post['data'].",'".$post['descrizione']."',".$totale.",".$totaleScontato.",'".$account."',".$post['approvazione'].",".$post['letto'].")";
+		
+		//var_dump($query);
+		
+		$this->connect->myQuery($query);
+		$objJSON =  array();
+		$objJSON['success'] = true;
+		$objJSON["results"] = $post['data'];
+		if(mysql_errno()){
+			$objJSON['success'] = false;
+			$objJSON["errorMessage"] = "Errore nella creazione del preventivo. Contattare l'amministratore del sistema per la risoluzione del problema.\n".mysql_errno()." ".mysql_error();	
+			
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function removePreventivo($post){
+		$this->connect->connetti();
+		$data = $post['data'];
+		$gestioneImmagini = new GestioneImmagini();
+		//deleteImageCarrello
+		
+		
+		$result = $this->connect->myQuery("SELECT descrizione FROM carrello WHERE preventivo='".$post['data']."'");
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore nella cancellazione delle immagini legate al preventivo. Contattare l'amministratore del sistema per la risoluzione del problema.\n".mysql_errno()." ".mysql_error();
+			return json_encode($objJSON);
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			while($rows = mysql_fetch_array($result)){
+				$descrizione = json_decode($rows["descrizione"]);
+				$gestioneImmagini->deleteFolderImageCarrello($descrizione->{"id"});
+			}
+		}
+		
+		
+		
+		$this->connect->myQuery("DELETE FROM preventivi WHERE data=".$post['data']);
+		$result = $this->connect->myQuery("SELECT data FROM preventivi WHERE account='".$post["account"]."'");
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore nella rimozione del preventivo. Contattare l'amministratore del sistema per la risoluzione del problema.\n".mysql_errno()." ".mysql_error();
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$rowNum = mysql_num_rows($result);
+			$objJSON["results"]["numeroPreventivi"] = $rowNum;
+		}
+		
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	
+	public function addCarrello($post){
+	
+		$this->connect->connetti();
+		$codice = $post["codice"];
+		$descrizione = $post["descrizione"];
+		$preventivo = $post["preventivo"];
+		$totale = $post["totale"];
+		$totaleScontato = $post["totaleScontato"];
+		$quantita = $post["quantita"];
+		$tipologia = $post["tipologia"];
+		$riferimento = $post["riferimento"];
+		
+		
+		//var_dump("INSERT INTO carrello (id,preventivo,descrizione,tipologia,quantita)VALUES('".$codice."','".$preventivo."','".$descrizione."','".$quantita."','".$tipologia."')");
+	
+		//var_dump("INSERT INTO carrello (id,preventivo,descrizione,tipologia,totale,quantita)VALUES('".$codice."','".$preventivo."','".$descrizione."','".$tipologia."',".$quantita.",".$totale.")");
+	
+		//var_dump("INSERT INTO carrello (id,preventivo,descrizione,tipologia,totale,quantita)VALUES('".$codice."','".$preventivo."','".$descrizione."','".$tipologia."','".$totale."',".$quantita.")");
+	
+		//var_dump("INSERT INTO carrello (id,preventivo,descrizione,tipologia,totale,quantita)VALUES('".$codice."','".$preventivo."','".$descrizione."','".$tipologia."','".$totale."',".$quantita.")");
+	
+		$query = "INSERT INTO carrello (id,preventivo,descrizione,tipologia,totale,totaleScontato,quantita,riferimento)VALUES('".$codice."','".$preventivo."','".$descrizione."','".$tipologia."','".$totale."','".$totaleScontato."',".$quantita.",'".$riferimento."')";
+	
+		$this->connect->myQuery($query);
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore di inserimento del prodotto nel carrello. Contattare l'amministratore del sistema per la risoluzione del problema.\n".mysql_errno()." ".mysql_error();
+			$this->connect->disconnetti();
+			return json_encode($objJSON);
+		}
+		
+		
+		$result = $this->connect->myQuery("SELECT * FROM carrello WHERE id='".$codice."'");
+		
+		$objJSON = array();
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore di inserimento del prodotto nel carrello. Contattare l'amministratore del sistema per la risoluzione del problema.\n".mysql_errno()." ".mysql_error();
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$rowValori = mysql_fetch_array($result);
+			if($rowValori > 0){
+				
+				$objJSON["results"]["codice"] = $rowValori["id"];
+				$objJSON["results"]["preventivo"] = $rowValori["preventivo"];
+				$objJSON["results"]["descrizione"] = $rowValori["descrizione"];
+				$objJSON["results"]["tipologia"] = $rowValori["tipologia"];
+				$objJSON["results"]["quantita"] = $rowValori["quantita"];
+			}
+		}
+		
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+		
+	}
+	
+	
+	
+	public function addProdottoToCarrello($post){
+		$this->connect->connetti();
+		$id = $post["id"];
+		$descrizione = $post["descrizione"];
+		$autore = $post["account"];
+		$totale = $post["totale"];
+		$totaleScontato = $post["totaleScontato"];
+		$quantita = $post["quantita"];
+		$riferimento = $post["riferimento"];
+		$prezzo_definitivo = $post["prezzo_definitivo"];
+		
+		$query = "INSERT INTO cookie_carrello (id,descrizione,totale,totaleScontato,quantita,account,riferimento,prezzo_definitivo)VALUES('".$id."','".$descrizione."',".$totale.",".$totaleScontato.",".$quantita.",'".$autore."','".$riferimento."','".$prezzo_definitivo."')";
+		
+		
+		//var_dump($query);
+		
+		$this->connect->myQuery($query);
+		
+		//$result = $this->connect->myQuery("SELECT * FROM carrello WHERE id='".$codice."'");
+		
+		$objJSON = array();
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore di inserimento del prodotto nel carrello. Contattare l'amministratore del sistema per la risoluzione del problema.\n".mysql_errno()." ".mysql_error();
+		}else{
+			$objJSON["success"] = true;
+		}
+		
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function modifyProdottoToCarrello($post){
+	
+		$this->connect->connetti();
+		$descrizione = $post["descrizione"];
+		$autore = $post["account"];
+		$totale = $post["totale"];
+		$totaleScontato = $post["totaleScontato"];
+		$quantita = $post["quantita"];
+		$riferimento = $post["riferimento"];
+		$id_prodotto = $post["id_prodotto"];
+		
+		
+		//var_dump("UPDATE cookie_carrello SET descrizione='".$descrizione."',totale=".$totale.",quantita=".$quantita.",account='".$autore."',riferimento'".$riferimento."' WHERE id='".$id_prodotto."'");
+		
+		$this->connect->myQuery("UPDATE cookie_carrello SET descrizione='".$descrizione."',totale=".$totale.",totaleScontato=".$totaleScontato.",quantita=".$quantita.",account='".$autore."',riferimento='".$riferimento."', prezzo_definitivo='".$post["prezzo_definitivo"]."' WHERE id='".$id_prodotto."'");
+		
+		//$result = $this->connect->myQuery("SELECT * FROM carrello WHERE id='".$codice."'");
+		
+		$objJSON = array();
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore nella modifica del prodotto. Contattare l'amministratore del sistema per la risoluzione del problema.\n".mysql_errno()." ".mysql_error();
+		}else{
+			$objJSON["success"] = true;
+		}
+		
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	
+	
+	public function ripristinaCarrello($post){
+		
+		$this->connect->connetti();
+		/*var_dump("
+			SELECT 	descrizione,quantita,totale,riferimento
+			FROM 	carrello 
+			WHERE 	preventivo = '".$post['data']."'");*/
+		
+		
+		$result = $this->connect->myQuery("
+			SELECT 	descrizione,quantita,totale,totaleScontato,riferimento
+			FROM 	carrello 
+			WHERE 	preventivo = '".$post['data']."'");
+			
+			/*var_dump("
+			SELECT 	descrizione,quantita,totale,riferimento
+			FROM 	carrello 
+			WHERE 	preventivo = '".$post['data']."'");
+			*/
+			
+			$objJSON = array();
+		
+			if(mysql_errno()){
+				$objJSON["success"] = false;
+				$objJSON["errorMessage"] = "Errore di ripristino del preventivo. Contattare l'amministratore del sistema per la risoluzione del problema.\n".mysql_errno()." ".mysql_error();
+			}else{
+				$objJSON["success"] = true;
+				$objJSON["results"] = array();
+				$cont = 0;
+				while($rowValori = mysql_fetch_array($result)){
+					
+					$data = date("ymdhis") + $cont;
+					
+					
+					$descrizione = json_decode($rowValori["descrizione"]);
+					
+					$idCopiaImmagine = $descrizione->{"id"};
+					
+					$gestioneImmagine = new GestioneImmagini();
+					
+					$newId = date("Ymdhis") + $cont;
+					$descrizione->{"id"} = $newId;
+					
+					$gestioneImmagine->copiaImmagine($idCopiaImmagine,$newId);
+					
+					$query = "
+						INSERT INTO cookie_carrello 
+						(id,descrizione,totale,totaleScontato,quantita,account,riferimento)
+						VALUES
+						('".$data."','".json_encode($descrizione)."',".floatval($rowValori["totale"]).",".floatval($rowValori["totaleScontato"]).",".intval($rowValori["quantita"]).",'".$post["autore"]."','".$rowValori["riferimento"]."')
+					";
+				//	var_dump($query);
+					$this->connect->myQuery($query);
+					
+					$cont++;
+					
+					//var_dump(mysql_errno());
+					
+					if(mysql_errno()){
+						$objJSON["success"] = false;
+						$objJSON["errorMessage"] = "Errore di ripristino del preventivo. Contattare l'amministratore del sistema per la risoluzione del problema.\n".mysql_errno()." ".mysql_error();
+						return json_encode($objJSON);
+					}
+					
+				
+				}
+			}
+			
+			//$this->connect->myQuery("
+			//DELETE 	FROM 	preventivi
+			//WHERE 	codice = '".$post['codice']."'");
+			
+			
+			$this->connect->disconnetti();
+			return json_encode($objJSON);
+		
+	}
+	
+	public function getAllFromCarrello($post){
+		
+		
+		$this->connect->connetti();
+		
+		$result = $this->connect->myQuery("SELECT * FROM cookie_carrello WHERE account='".$post["account"]."' ORDER BY riferimento");
+		$objJSON = array();
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore generico";
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$cont = 0;
+			while($rowValori = mysql_fetch_array($result)){
+				$objJSON["results"][$cont]["id"] = $rowValori["id"];
+				$objJSON["results"][$cont]["descrizione"] = $rowValori["descrizione"];
+				$objJSON["results"][$cont]["autore"] = $rowValori["account"];
+				$objJSON["results"][$cont]["totale"] = floatval($rowValori["totale"]);
+				$objJSON["results"][$cont]["totaleScontato"] = floatval($rowValori["totaleScontato"]);
+				$objJSON["results"][$cont]["quantita"] = intval($rowValori["quantita"]);
+				$objJSON["results"][$cont]["riferimento"] = $rowValori["riferimento"];
+				$objJSON["results"][$cont]["prezzo_definitivo"] = $rowValori["prezzo_definitivo"];
+				$cont++;
+			}
+		}
+		
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function getNumCarrello($post){
+		
+		
+		$this->connect->connetti();
+		
+		$result = $this->connect->myQuery("SELECT COUNT(*) as num_carrello FROM cookie_carrello WHERE account='".$post["account"]."'");
+		$objJSON = array();
+		
+		
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore generico";
+		}else{
+			$objJSON["success"] = true;
+			$rowValori = mysql_fetch_array($result);
+			$objJSON["results"] = $rowValori["num_carrello"];
+		}
+		
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function getProdottoFromCarrello($post){
+		
+		$this->connect->connetti();
+		$result = $this->connect->myQuery("SELECT * FROM cookie_carrello WHERE id='".$post["id"]."'");
+		$objJSON = array();
+		
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore generico";
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$rowValori = mysql_fetch_array($result);
+			$objJSON["results"]["id"] = $rowValori["id"];
+			$objJSON["results"]["descrizione"] = $rowValori["descrizione"];
+			$objJSON["results"]["autore"] = $rowValori["account"];
+			$objJSON["results"]["totale"] = floatval($rowValori["totale"]);
+			$objJSON["results"]["quantita"] = intval($rowValori["quantita"]);
+			$objJSON["results"]["riferimento"] = $rowValori["riferimento"];
+			$objJSON["results"]["prezzo_definitivo"] = $rowValori["prezzo_definitivo"];
+		}
+		
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function deleteProdottoFromCarrello($post){
+		
+		$this->connect->connetti();
+		$this->connect->myQuery("DELETE FROM cookie_carrello WHERE id='".$post["id"]."'");
+		
+		
+		//var_dump("SELECT COUNT(*) FROM cookie_carrello");
+		$result = $this->connect->myQuery("SELECT * FROM cookie_carrello WHERE account='".$post["account"]."'");
+		
+		$objJSON = array();
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore generico";
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"]["rows"] = mysql_num_rows($result);
+		}
+		
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+	
+	public function svuotaCarrello($post){
+		$this->connect->connetti();
+		$this->connect->myQuery("DELETE FROM cookie_carrello WHERE account='".$post["account"]."'");
+		
+		$objJSON = array();
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore generico";
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+		
+	}
+	
+	public function getPreventiviNonLetti($post){
+		$this->connect->connetti();
+		$this->connect->myQuery("UPDATE preventivi SET letto='1' WHERE letto = '0'");
+		$numero = mysql_affected_rows();
+		$objJSON = array();
+		if(mysql_errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Errore generico";
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = $numero;
+		}
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+		
+	}
+}
+
+
+?>

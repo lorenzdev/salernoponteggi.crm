@@ -1,0 +1,17 @@
+<h3>Scegli il tipo di chiusura</h3>
+<span id='checkRepeatSistemaChiusura'></span>
+<input type="radio" name="chiusura" class="chiusura" codice="PR/CP" tipologia="" descrizione="Cilindro patent"/> Cilindro patent<br>
+<input type="radio" name="chiusura" class="chiusura" codice="PR/CY" tipologia="" descrizione="Cilindro yale"/> Cilindro yale<br>
+<input type="radio" name="chiusura" class="chiusura" value="exus" id="exus"/> Maniglione EXUS (a leva)<br />
+&nbsp;&nbsp;<input type="checkbox" name="exus" class="exus" codice="PR/EX" tipologia="APP" disabled /> Applicato<br />
+&nbsp;&nbsp;<input type="checkbox" name="exus" class="exus" codice="PR/EX" tipologia="IMB" disabled /> In imballo<br /><br /><br />
+<input type="radio" name="chiusura" class="chiusura" value="slash" id="slash"/> Maniglione SLASH (a leva)<br />
+&nbsp;&nbsp;<input type="checkbox" name="slash" class="slash" codice="PR/SL" tipologia="APP" disabled/> Applicato<br />
+&nbsp;&nbsp;<input type="checkbox" name="slash" class="slash" codice="PR/SL" tipologia="IMB" disabled/> In imballo<br />
+<br><br>
+<div id="warning"></div>
+<br><br>
+<div style="text-align:center;">
+<input type="button" value="AVANTI" id="continua" style="height:40px;width:150px;" disabled="disabled"/>&nbsp;&nbsp;
+<input type="button" value="INDIETRO" id="indietro" style="height:40px;width:150px;"/></div>
+<br><br><br><br>

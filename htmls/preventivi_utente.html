@@ -1,0 +1,68 @@
+<!-- tabella -->
+<h2>Preventivi</h2>
+<br>
+<div>
+	<div style="width:220px;float:left;margin-right:10px;">
+ 		<div class="form-inline">
+		   	<input class="form-control" id="field_search" type="text" placeholder="Inserisci una parola..." aria-label="Search" style="width:216px;">
+		 </div>
+	</div>
+	  	<button id="btn_search" class="btn btn-primary" style="float:left;margin-left:-40px;margin-right:10px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+	  	<div class="dropdown bootstrap-select resforpage" style="float:left;width: 68px;margin-right: 10px;">
+	  	<select class="selectpicker resforpage" data-style="btn-info">
+		 	<option value="5">5</option>
+		 	<option value="10" selected>10</option>
+		 	<option value="20">20</option>
+		 	<option value="100">100</option>
+		</select>
+	</div>
+
+	 <div style="display: inline-block;margin: 0px;">
+		 <nav aria-label="" style="display: inline-block;/* margin: -7px 0px 0px 0px; */margin: 0px;padding: 0px;">
+		 <ul class="pagination" id="pagul" style="margin: 0px;">
+			<li class="page-item active"><a class="page-link disable" fromlimit="0" tolimit="10" href="#">1</a></li>
+		 </ul>
+		 </nav>
+	  </div>
+
+	  <div id="loading_preventivi" style="float:right;margin-top:5px;"></div>
+</div>
+<div class="row" style="margin:10px 0px 10px 0px" id="num_results"></div>
+<div class="method">
+	<span id="Rows_preventivi"></span>
+</div>
+<!-- fine cancellazione -->
+
+<!--pagination-->
+   <!-- <div class="row spazio pagination-centeredù">
+      <div class="pagination-centered">
+        <nav aria-label="Page navigation">
+          <ul class="pagination pagination-sm">
+          <li>
+          <a href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+          </a>
+          </li>
+          <li class="active"><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+          <li>
+          <a href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+          </a>
+          </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+-->
+    <!--fine pagination-->
+
+<br><br>
+<div style="text-align:center;">
+<button id="cancella_selezionati" class="btn btn-primary" disabled align='center'>Cancella selezionati</button>&nbsp;
+<!--<button stato="1" id="seleziona_prodotti" class="btn btn-primary" align='center'>Seleziona tutti</button>&nbsp;-->
+<button class="btn btn-primary" type="button" stato="1" id="seleziona_tutti" align="center">Seleziona tutti</button></div>
+<br><br>

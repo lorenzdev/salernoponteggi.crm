@@ -1,0 +1,884 @@
+var MisureSezionali = function(content){
+	
+	var _this = this;
+	_this.elem;
+	_this.HportaFissa;
+	_this.content = content;
+	_this.validita = true;
+	
+	_this.misureForo = {
+		"width": 0,
+		"height":0	
+	}
+	
+	_this.posa = {
+		"up": null,
+		"dx": null,
+		"sx":null	
+	}
+	
+	_this.struttura = {
+	 "up": 0,
+	 "dx":0,
+	 "sx":0	
+	}
+	
+	
+	_this.initialize = function(){
+		
+		jQuery("#repeatSistemaRifinitura").prop("checked",false);
+		jQuery("#Lforo").unbind("click");
+		jQuery("#Hforo").unbind("click");
+		
+		jQuery("#Lforo").val("");
+		jQuery("#Hforo").val("");
+		jQuery("#Lforo").removeAttr("disabled");
+		jQuery("#Hforo").removeAttr("disabled");
+		jQuery("#Lporta").val("");
+		jQuery("#Hporta").val("");
+		
+				
+		_this.misureForo = {
+			"width": 0,
+			"height":0	
+		}
+				
+		_this.posa = {
+			"up": 0,
+			"dx": 0,
+			"sx":0	
+		}
+				
+		jQuery(".up_tipo_posa").each(function(){
+			jQuery(this).removeAttr("checked");
+		});
+		jQuery("#up_valore_tipo_posa").val(0);
+		//jQuery("#up_valore_tipo_posa").attr("disabled","disabled");
+		jQuery(".up_tipo_posa").attr("disabled","disabled");
+			
+		jQuery(".sx_tipo_posa").each(function(){
+			jQuery(this).removeAttr("checked");
+		});
+		jQuery("#sx_valore_tipo_posa").val(0);
+		//jQuery("#sx_valore_tipo_posa").attr("disabled","disabled");
+		jQuery(".sx_tipo_posa").attr("disabled","disabled");
+				
+		jQuery(".dx_tipo_posa").each(function(){
+			jQuery(this).removeAttr("checked");
+		});
+		jQuery("#dx_valore_tipo_posa").val(0);
+		//jQuery("#dx_valore_tipo_posa").attr("disabled","disabled");
+		jQuery(".dx_tipo_posa").attr("disabled","disabled");
+		
+		
+		
+		jQuery("#cambiaMisurePorta").val("Cambia le misure della porta");
+		jQuery("#Hpiu").attr("disabled","disabled");
+		jQuery("#Hmeno").attr("disabled","disabled");
+		jQuery("#Lpiu").attr("disabled","disabled");
+		jQuery("#Lmeno").attr("disabled","disabled");
+		
+		jQuery("#warning").html("");
+		jQuery("#continua").attr("disabled","disabled");
+	
+	}
+	
+	_this.init = function(elem){
+		_this.elem = elem;
+		
+		jQuery.get(P_FORM_FOROMURO_SEZIONALI, function(dataHtml){
+			_this.elem.html(dataHtml);
+			
+			
+			var selezione = jQuery.getCookie("selezione");
+			
+			// PRIMA SELEZIONE MISURE FORO MURO
+			console.log("Selezione iniziale");
+			console.log(selezione);
+			
+			
+			jQuery("#Lforo").on("keyup", function(){
+				if(jQuery(this).val()==""){
+					jQuery(this).val(0);
+				}
+				_this.misureForo.width = jQuery(this).val();
+				jQuery(this).val(_this.misureForo.width);
+				_this.checkForoMuro();
+				_this.compilaMisurePorta();
+				if(jQuery(this).val()==0) jQuery(this).select();
+			});
+			
+			jQuery("#Lforo").on("keypress", function(e){
+				 return jQuery.onlynumbers(e);
+			});
+			
+			jQuery("#Hforo").on("keyup", function(){
+				if(jQuery(this).val()==""){
+					jQuery(this).val(0);
+				}
+				_this.misureForo.height = jQuery(this).val();
+				jQuery(this).val(_this.misureForo.height);
+				_this.checkForoMuro();
+				_this.compilaMisurePorta();
+				if(jQuery(this).val()==0) jQuery(this).select();
+			});
+			
+			jQuery("#Hforo").on("keypress", function(e){
+				 return jQuery.onlynumbers(e);
+			});
+			
+			
+			
+			// SECONDA SELEZIONE IN LUCE OLTRE LUCE
+			if(selezione.ingombro.sx != null && selezione.ingombro.dx != null && selezione.ingombro.up != null){
+				var repeat = "<input type='checkbox' id=\"repeatSistemaRifinitura\" value='si' disabled/>";
+					repeat += "Compila con i valori in memoria";
+				jQuery("#checkRepeatTipoPosa").html(repeat);	
+				jQuery("#repeatSistemaRifinitura").bind("click",function(){
+						
+						if(jQuery(this).is(":checked")){
+							
+							var up = selezione.ingombro.up;
+							var sx = selezione.ingombro.sx;
+							var dx = selezione.ingombro.dx;
+							
+							// UP
+							if(up != 0){
+								jQuery("#up_valore_tipo_posa").val(up);
+								jQuery("#up_valore_tipo_posa").attr("disabled","disabled");
+								_this.posa.up = up;
+								jQuery(".up_tipo_posa").each(function(){
+									if(jQuery(this).attr("value") == "up_1")
+										jQuery(this).prop("checked","checked");
+										else
+										jQuery(this).removeAttr("checked");
+								});
+								jQuery(".up_tipo_posa").attr("disabled","disabled");
+							}else{
+								jQuery("#up_valore_tipo_posa").val(0);
+								jQuery("#up_valore_tipo_posa").attr("disabled","disabled");
+								_this.posa.up = 0;
+								jQuery(".up_tipo_posa").removeAttr("disabled");
+								jQuery(".up_tipo_posa").attr("disabled","disabled");
+								jQuery(".up_tipo_posa").each(function(){
+									if(jQuery(this).attr("value") == "up_0")
+										jQuery(this).prop("checked","checked");
+										else
+										jQuery(this).removeAttr("checked");
+								});
+							}
+							
+							// SX
+							if(sx != 0){
+								jQuery("#sx_valore_tipo_posa").val(sx);
+								jQuery("#sx_valore_tipo_posa").attr("disabled","disabled");
+								_this.posa.sx = sx;
+								jQuery(".sx_tipo_posa").each(function(){
+									if(jQuery(this).attr("value") == "sx_1")
+										jQuery(this).prop("checked","checked");
+										else
+										jQuery(this).removeAttr("checked");
+								});
+								jQuery(".sx_tipo_posa").attr("disabled","disabled");
+							}else{
+								jQuery("#sx_valore_tipo_posa").val(0);
+								jQuery("#sx_valore_tipo_posa").attr("disabled","disabled");
+								_this.posa.sx = 0;
+								jQuery(".sx_tipo_posa").removeAttr("disabled");
+								jQuery(".sx_tipo_posa").attr("disabled","disabled");
+								jQuery(".sx_tipo_posa").each(function(){
+									if(jQuery(this).attr("value") == "sx_0")
+										jQuery(this).prop("checked","checked");
+										else
+										jQuery(this).removeAttr("checked");
+								});
+							}
+							
+							// DX
+							if(dx != 0){
+								jQuery("#dx_valore_tipo_posa").val(dx);
+								jQuery("#dx_valore_tipo_posa").attr("disabled","disabled");
+								_this.posa.dx = dx;
+								jQuery(".dx_tipo_posa").each(function(){
+									if(jQuery(this).attr("value") == "dx_1")
+										jQuery(this).prop("checked","checked");
+										else
+										jQuery(this).removeAttr("checked");
+								});
+								jQuery(".dx_tipo_posa").attr("disabled","disabled");
+							}else{
+								jQuery("#dx_valore_tipo_posa").val(0);
+								jQuery("#dx_valore_tipo_posa").attr("disabled","disabled");
+								_this.posa.dx = 0;
+								jQuery(".dx_tipo_posa").removeAttr("disabled");
+								jQuery(".dx_tipo_posa").attr("disabled","disabled");
+								jQuery(".dx_tipo_posa").each(function(){
+									if(jQuery(this).attr("value") == "dx_0")
+										jQuery(this).prop("checked","checked");
+										else
+										jQuery(this).removeAttr("checked");
+								});
+							}
+							
+						}else{
+							jQuery("#up_valore_tipo_posa").val(0);
+							jQuery("#up_valore_tipo_posa").prop("disabled",false);
+							jQuery(".up_tipo_posa").removeAttr("disabled");
+							jQuery(".up_tipo_posa").removeAttr("checked");
+							_this.posa.up = 0;
+							
+							jQuery("#sx_valore_tipo_posa").val(0);
+							jQuery("#sx_valore_tipo_posa").prop("disabled",false);
+							jQuery(".sx_tipo_posa").removeAttr("disabled");
+							jQuery(".sx_tipo_posa").removeAttr("checked");
+							_this.posa.sx = 0;
+							
+							jQuery("#dx_valore_tipo_posa").val(0);
+							jQuery("#dx_valore_tipo_posa").prop("disabled",false);
+							jQuery(".dx_tipo_posa").removeAttr("disabled");
+							jQuery(".dx_tipo_posa").removeAttr("checked");
+							_this.posa.dx = 0;
+							
+						}
+						
+						
+						_this.checkTipoPosa();
+						_this.compilaMisurePorta();
+				});
+			}
+			
+			
+			
+			/*if(selezione.repeat){
+				jQuery("#boxTipoPosa").html("");
+				
+				if(selezione.accessori.sistemaRifinitura.repeat){
+					jQuery("#boxTipoPosa").append("<h3>Scegli il tipo posa</h3>");
+					
+					var label1 = "";
+					if(selezione.ingombro.up != null)
+						label1 = "Lato superiore oltre luce di " + selezione.ingombro.up + "(mm)<br>";	
+						else
+						label1 = "Lato superiore in luce<br>";
+					if(selezione.ingombro.sx != null)
+						label1 += "Lato sinistro oltre luce di " + selezione.ingombro.sx + "(mm)<br>";	
+						else
+						label1 += "Lato sinistro in luce<br>";
+					if(selezione.ingombro.dx != null)
+						label1 += "Lato destro oltre luce di " + selezione.ingombro.dx + "(mm)<br>";	
+						else
+						label1 += "Lato destro in luce<br>";
+					jQuery("#boxTipoPosa").append("<input type='radio' id='sistemaRifinituraOld' class='sistemaRifinitura'/>"+label1);
+					jQuery("#boxTipoPosa").append("<input type='radio' id='sistemaRifinituraNew' class='sistemaRifinitura'/> Imposta un nuovo tipo posa");
+					
+				}
+			}*/
+			
+			
+			
+			
+			jQuery("#up_valore_tipo_posa").bind("click",function(){
+				jQuery(".up_tipo_posa").prop("checked", false);
+				jQuery(".up_tipo_posa").each(function(){
+					if(jQuery(this).val() == "up_1"){
+						if(Number(jQuery("#up_valore_tipo_posa").val()) == 0)
+							jQuery("#up_valore_tipo_posa").val(20);
+						jQuery(this).prop("checked",true);
+						return;	
+					}
+				});
+				_this.posa.up = parseInt(jQuery("#up_valore_tipo_posa").val());
+				_this.compilaMisurePorta();
+			});
+			
+			jQuery("#sx_valore_tipo_posa").bind("click",function(){
+				jQuery(".sx_tipo_posa").prop("checked", false);
+				jQuery(".sx_tipo_posa").each(function(){
+					if(jQuery(this).val() == "sx_1"){
+						
+						if(Number(jQuery("#sx_valore_tipo_posa").val()) == 0)
+							jQuery("#sx_valore_tipo_posa").val(20);
+							
+						jQuery(this).prop("checked",true);
+						return;	
+					}
+				});
+				_this.posa.sx = parseInt(jQuery("#sx_valore_tipo_posa").val());
+				_this.compilaMisurePorta();
+			});
+			
+			jQuery("#dx_valore_tipo_posa").bind("click",function(){
+				jQuery(".dx_tipo_posa").prop("checked", false);
+				jQuery(".dx_tipo_posa").each(function(){
+					if(jQuery(this).val() == "dx_1"){
+						if(Number(jQuery("#dx_valore_tipo_posa").val()) == 0)
+							jQuery("#dx_valore_tipo_posa").val(20);
+						jQuery(this).prop("checked",true);
+						return;	
+					}
+				});
+				_this.posa.dx = parseInt(jQuery("#dx_valore_tipo_posa").val());
+				_this.compilaMisurePorta();
+			});
+			
+			jQuery(".up_tipo_posa").bind("click",function(){
+				
+				_this.checkTipoPosa();
+				if(jQuery(this).attr("value") == "up_1"){
+					jQuery("#up_valore_tipo_posa").removeAttr("disabled");
+					jQuery("#up_valore_tipo_posa").val(20);
+				
+				}else{
+					jQuery("#up_valore_tipo_posa").val(0);
+					_this.struttura.up = 0;
+				}
+				_this.posa.up = parseInt(jQuery("#up_valore_tipo_posa").val());
+				_this.compilaMisurePorta();
+				
+			});
+			jQuery("#up_valore_tipo_posa").on("keypress",function(ee){
+				return jQuery.onlynumbers(ee);
+			});
+			jQuery("#up_valore_tipo_posa").on("keyup",function(){
+				/*if(isNaN(parseInt(jQuery(this).val())) || (parseInt(jQuery(this).val()) < 20 && parseInt(jQuery(this).val()) >= 0))
+					jQuery(this).val(20);
+				if(parseInt(jQuery(this).val()) > 100)
+					jQuery(this).val(100);*/
+				_this.posa.up = parseInt(jQuery(this).val());
+				_this.compilaMisurePorta();
+			});
+			
+			jQuery(".sx_tipo_posa").bind("click",function(){
+				_this.checkTipoPosa();
+				if(jQuery(this).attr("value") == "sx_1"){
+					jQuery("#sx_valore_tipo_posa").val(20);
+				}else{
+					jQuery("#sx_valore_tipo_posa").val(0);
+					_this.struttura.sx = 0;
+				}
+				_this.posa.sx = parseInt(jQuery("#sx_valore_tipo_posa").val());
+				_this.compilaMisurePorta();
+			});
+			jQuery("#sx_valore_tipo_posa").on("keypress",function(ee){
+				return jQuery.onlynumbers(ee);
+			});
+			jQuery("#sx_valore_tipo_posa").on("keyup",function(){
+				/*if(isNaN(parseInt(jQuery(this).val())) || (parseInt(jQuery(this).val()) < 20 && parseInt(jQuery(this).val()) >= 0))
+					jQuery(this).val(20);
+				if(parseInt(jQuery(this).val()) > 100)
+					jQuery(this).val(100);*/
+				_this.posa.sx = parseInt(jQuery(this).val());
+				_this.compilaMisurePorta();
+			});
+			
+			jQuery(".dx_tipo_posa").bind("click",function(){
+				_this.checkTipoPosa();
+				if(jQuery(this).attr("value") == "dx_1"){
+					jQuery("#dx_valore_tipo_posa").val(20);
+				}else{
+					jQuery("#dx_valore_tipo_posa").val(0);
+					_this.posa.dx = 0;
+					_this.struttura.dx = 0;
+				}
+				_this.posa.dx = parseInt(jQuery("#dx_valore_tipo_posa").val());
+				_this.compilaMisurePorta();
+			});
+			jQuery("#dx_valore_tipo_posa").on("keypress",function(ee){
+				return jQuery.onlynumbers(ee);
+			});
+			jQuery("#dx_valore_tipo_posa").on("keyup",function(){
+				_this.posa.dx = parseInt(jQuery(this).val());
+				_this.compilaMisurePorta();
+			});
+		
+			
+			
+			
+			////console.log("UUUUUUUUUUUUUUUUUUUUU!!!!!");
+			////console.log(selezione);
+			if(selezione.modifica.boo || selezione.indietro){
+				_this.autoCompila();
+			}
+			
+		
+			function cambiaMisurePorta(boo){
+				
+				if(boo){
+					jQuery("#Lforo").attr("disabled","disabled");
+					jQuery("#Hforo").attr("disabled","disabled");
+					jQuery(".up_tipo_posa").attr("disabled","disabled");
+					jQuery(".sx_tipo_posa").attr("disabled","disabled");
+					jQuery(".dx_tipo_posa").attr("disabled","disabled");
+					jQuery("#up_valore_tipo_posa").attr("disabled","disabled");
+					jQuery("#sx_valore_tipo_posa").attr("disabled","disabled");
+					jQuery("#dx_valore_tipo_posa").attr("disabled","disabled");
+					
+					jQuery("#Hmeno").removeAttr("disabled");
+					jQuery("#Lmeno").removeAttr("disabled");
+					
+					jQuery("#cambiaMisurePorta").attr("value","Reimposta i valori iniziali");
+				}else{
+					_this.compilaMisurePorta();
+					jQuery("#cambiaMisurePorta").attr("value","Cambia le msure della porta");
+					
+					jQuery(".up_tipo_posa").removeAttr("disabled");
+					jQuery(".sx_tipo_posa").removeAttr("disabled");
+					jQuery(".dx_tipo_posa").removeAttr("disabled");
+					
+					if(jQuery(".up_tipo_posa:checked").attr("value") == "up_1")
+						jQuery("#up_valore_tipo_posa").removeAttr("disabled");
+					
+					if(jQuery(".sx_tipo_posa:checked").attr("value") == "sx_1")
+						jQuery("#sx_valore_tipo_posa").removeAttr("disabled");
+						
+					if(jQuery(".dx_tipo_posa:checked").attr("value") == "dx_1")
+						jQuery("#dx_valore_tipo_posa").removeAttr("disabled");
+					
+					jQuery("#Hpiu").attr("disabled","disabled");
+					jQuery("#Hmeno").attr("disabled","disabled");
+					
+					jQuery("#Lpiu").attr("disabled","disabled");
+					jQuery("#Lmeno").attr("disabled","disabled");
+					
+				}
+			}
+			
+			//BOTTONE CHE CONSENTE DI CAMBIARE LE MISURE DELLA PORTA
+			jQuery("#cambiaMisurePorta").bind("click",function(){
+				if(jQuery(this).attr("value") == "Reimposta i valori iniziali")
+					cambiaMisurePorta(false);
+					else
+					cambiaMisurePorta(true);
+			});
+			
+			jQuery("#Lpiu").bind("click",function(){
+				
+				var widthMax = _this.approssimaL();
+				
+				var Lporta = parseInt(jQuery("#Lporta").val());
+				Lporta += 30;
+				if(Lporta%100 == 60 || Lporta%100 == 10)
+					Lporta=Lporta-10;
+				jQuery("#Lporta").val(Lporta);
+				
+				if(Lporta>=widthMax)
+					jQuery(this).attr("disabled","disabled");
+					
+				jQuery("#Lmeno").removeAttr("disabled");
+				
+				_this.verificaDimensioniPorta();
+				
+			});
+			
+			jQuery("#Lmeno").bind("click",function(){
+				var Lporta = parseInt(jQuery("#Lporta").val());
+				Lporta -= 30;
+				if(Lporta%100 == 70 || Lporta%100 == 20)
+					Lporta=Lporta+10;	
+					
+				jQuery("#Lporta").val(Lporta);
+				
+				jQuery("#Lpiu").removeAttr("disabled");
+				
+				if(Lporta <= 30){
+					jQuery(this).attr("disabled","disabled");
+					return;	
+				}
+				
+				_this.verificaDimensioniPorta();
+				
+			});
+			
+			jQuery("#Hpiu").bind("click",function(){
+				
+				var heightMax = _this.approssimaH();
+				
+				var Hporta = parseInt(jQuery("#Hporta").val());
+				Hporta += 30;
+				if(Hporta%100 == 60 || Hporta%100 == 10)
+					Hporta=Hporta-10;
+				jQuery("#Hporta").val(Hporta);
+				
+				if(Hporta>=heightMax)
+					jQuery(this).attr("disabled","disabled");
+					
+				jQuery("#Hmeno").removeAttr("disabled");
+				
+				_this.verificaDimensioniPorta();
+				
+			});
+			
+			jQuery("#Hmeno").bind("click",function(){
+				var Hporta = parseInt(jQuery("#Hporta").val());
+				Hporta -= 30;
+				if(Hporta%100 == 70 || Hporta%100 == 20)
+					Hporta=Hporta+10;	
+				jQuery("#Hporta").val(Hporta);
+				
+				jQuery("#Hpiu").removeAttr("disabled");
+				
+				if(Hporta <= 30){
+					jQuery(this).attr("disabled","disabled");
+					return;	
+				}
+				
+				_this.verificaDimensioniPorta();
+				
+			});
+			
+			// BOTTONO COMPLETE
+			jQuery("#continua").bind("click", function(){
+				////console.log(_this.content.main);
+				_this.content.main.loader.init(function(){_this.complete();});
+			});
+			
+			//BOTTONE RESETTA
+			jQuery("#resetta").bind("click", function(){
+				
+				_this.initialize();
+			});
+			
+			_this.content.main.loader.remove();	
+			
+		});
+	}
+	
+	_this.checkForoMuro = function(){
+		if(jQuery.validaValore(_this.misureForo.height) && 
+			jQuery.validaValore(_this.misureForo.width))
+			_this.activeTipoPosa(true);
+			else
+			_this.activeTipoPosa(false);
+		
+	}
+	
+	_this.checkTipoPosa = function(){
+		
+		if(!jQuery(".up_tipo_posa").is(":checked") ||
+			!jQuery(".sx_tipo_posa").is(":checked") ||
+				!jQuery(".dx_tipo_posa").is(":checked")){
+				jQuery("#continua").attr("disabled","disabled");		
+		}
+	}
+	
+	_this.activeTipoPosa = function(boo){
+		
+		if(!boo){
+			jQuery(".up_tipo_posa").attr("disabled","disabled");
+			jQuery(".dx_tipo_posa").attr("disabled","disabled");
+			jQuery(".sx_tipo_posa").attr("disabled","disabled");
+			jQuery("#up_valore_tipo_posa").attr("disabled","disabled");
+			jQuery("#sx_valore_tipo_posa").attr("disabled","disabled");
+			jQuery("#dx_valore_tipo_posa").attr("disabled","disabled");
+			jQuery("#repeatSistemaRifinitura").attr("disabled","disabled");
+		}else{
+			jQuery(".up_tipo_posa").removeAttr("disabled");
+			jQuery(".dx_tipo_posa").removeAttr("disabled");
+			jQuery(".sx_tipo_posa").removeAttr("disabled");
+			jQuery("#up_valore_tipo_posa").removeAttr("disabled");
+			jQuery("#sx_valore_tipo_posa").removeAttr("disabled");
+			jQuery("#dx_valore_tipo_posa").removeAttr("disabled");
+			jQuery("#repeatSistemaRifinitura").removeAttr("disabled");
+		}
+	}
+	
+	_this.checkCampi = function(){
+	
+		if(jQuery("#up_tipo_posa:checked").attr("value") == "si")
+		
+		return false;
+	}
+	
+	_this.complete = function(){
+		
+		if(!jQuery.validaValore(jQuery("#riferimento").val())){
+			_this.content.main.loader.remove();	
+			alert("Non hai specificato nessun valore per il campo riferimento");
+			return;
+		}
+		
+		
+		var param = {
+				"width":parseInt(jQuery("#Lporta").val()),
+				"height":parseInt(jQuery("#Hporta").val())	
+			}
+		
+		
+		var cookieSelezione = jQuery.getCookie("selezione");
+		cookieSelezione.riferimento = jQuery("#riferimento").val();
+		
+		var id = new Date().getTime();
+		
+		if(!cookieSelezione.modifica.boo)
+			cookieSelezione.id = id;
+		
+		cookieSelezione.tipologia = "Sezionale";
+		cookieSelezione.validita = _this.validita;
+		cookieSelezione.porta.L = parseInt(jQuery("#Lporta").val());	
+		cookieSelezione.porta.H = parseInt(jQuery("#Hporta").val());
+		
+		cookieSelezione.foroMuro.L =  parseInt(jQuery("#Lforo").val());
+		cookieSelezione.foroMuro.H =  parseInt(jQuery("#Hforo").val());
+		
+		cookieSelezione.ingombro.up = parseInt(_this.posa.up);
+		cookieSelezione.ingombro.dx = parseInt(_this.posa.dx);	
+		cookieSelezione.ingombro.sx = parseInt(_this.posa.sx);
+			
+		
+		console.log("Questa è la struttura");
+		console.log(_this.struttura);	
+		cookieSelezione.struttura = _this.struttura;
+		
+		cookieSelezione.validita = _this.validita;
+		jQuery.registerCookie("selezione", cookieSelezione);
+			
+		
+		_this.content.nextStep();
+		
+		
+	
+	}
+	
+	_this.compilaMisurePorta = function(){
+		
+		//console.log(_this.posa);
+		//console.log(_this.misureForo);
+		
+		_this.misureForo.width = jQuery("#Lforo").val();
+		_this.misureForo.height = jQuery("#Hforo").val();
+		
+		//_this.posa.dx = jQuery("#up_valore_tipo_posa").val();
+		
+		if(!jQuery(".up_tipo_posa").is(":checked")) return;
+		if(!jQuery(".sx_tipo_posa").is(":checked")) return;
+		if(!jQuery(".dx_tipo_posa").is(":checked")) return;
+		
+		
+		if(isNaN(parseInt(_this.misureForo.width)) || isNaN(parseInt(_this.misureForo.height)) || isNaN(parseInt(_this.posa.dx)) || isNaN(parseInt(_this.posa.sx))){
+			jQuery("#Lporta").val("");
+			jQuery("#continua").attr("disabled","disabled");
+			return;	
+		}
+		
+		var widthPorta = parseInt(_this.approssimaL()/10)*10;
+		var heightPorta = parseInt(_this.approssimaH()/10)*10;
+			
+		jQuery("#Lporta").val(widthPorta);
+		jQuery("#Hporta").val(heightPorta);
+			
+		jQuery("#continua").removeAttr("disabled");
+		
+		jQuery("#cambiaMisurePorta").removeAttr("disabled");
+		
+		_this.verificaDimensioniPorta();
+		
+		
+	}
+	
+	_this.approssimaL = function(){
+		
+		console.log("E qui!");
+	
+		var soglia =  200;
+		var widthPortaEffettiva = parseInt(_this.misureForo.width) + (parseInt(_this.posa.dx) + parseInt(_this.posa.sx));
+	
+			
+		//if(widthPortaEffettiva > parseInt(_this.misureForo.width))
+			//widthPortaEffettiva = parseInt(_this.misureForo.width);
+		
+			
+			_this.struttura.dx = soglia/2 - parseInt(_this.posa.dx);
+			if(_this.struttura.dx < 0)
+				_this.struttura.dx = 0	
+			
+			
+			_this.struttura.sx = soglia/2 - parseInt(_this.posa.sx);
+			if(_this.struttura.dx < 0)
+				_this.struttura.dx = 0;
+			
+			
+		widthPortaEffettiva = widthPortaEffettiva - 200;
+	
+		
+	
+		console.log("Altezza porta: " + widthPortaEffettiva);
+		console.log(_this.struttura);
+		
+		
+		
+		/*if(widthPortaEffettiva%100 >= 0 && widthPortaEffettiva%100 < 30)
+			widthPortaEffettiva = parseInt(Math.floor(widthPortaEffettiva/100)+"00");
+		
+		if(widthPortaEffettiva%100 >= 30 && widthPortaEffettiva%100 < 50)
+			widthPortaEffettiva = parseInt(Math.floor(widthPortaEffettiva/100) + "30");
+		
+		if(widthPortaEffettiva%100 >= 50 && widthPortaEffettiva%100 < 80){
+			widthPortaEffettiva = parseInt(Math.floor(widthPortaEffettiva/100) + "50");
+			//////console.log("entro qiua?");	
+		}
+		if(widthPortaEffettiva%100 >= 80)
+			widthPortaEffettiva = parseInt(Math.floor(widthPortaEffettiva/100) + "80");
+	*/
+		return widthPortaEffettiva;
+	}
+	
+	_this.approssimaH = function(){
+		var soglia =  160;
+		var heightPortaEffettiva = parseInt(_this.misureForo.height) + parseInt(_this.posa.up);
+	
+		if(heightPortaEffettiva <= 2660)
+			soglia = 160;
+			else
+			soglia = 200;
+			
+		heightPortaEffettiva = heightPortaEffettiva - soglia;	
+			
+		if(heightPortaEffettiva > parseInt(_this.misureForo.height))
+			heightPortaEffettiva = _this.misureForo.height;
+		
+			console.log("Entro qui!");
+			_this.struttura.up = soglia - parseInt(_this.posa.up);
+			if(_this.struttura.up <= 0)
+				_this.struttura.up = 0;
+			
+			
+		//heightPortaEffettiva = heightPortaEffettiva - _this.struttura.up;
+			
+		
+		console.log("Altezza porta: " + heightPortaEffettiva);
+		console.log(_this.struttura);
+		
+		/*if(heightPortaEffettiva%100 >= 0 && heightPortaEffettiva%100 < 30)
+			heightPortaEffettiva = parseInt(Math.floor(heightPortaEffettiva/100)+"00");
+		
+		if(heightPortaEffettiva%100 >= 30 && heightPortaEffettiva%100 < 50)
+			heightPortaEffettiva = parseInt(Math.floor(heightPortaEffettiva/100) + "30");
+		
+		if(heightPortaEffettiva%100 >= 50 && heightPortaEffettiva%100 < 80)
+			heightPortaEffettiva = parseInt(Math.floor(heightPortaEffettiva/100) + "50");
+		
+		if(heightPortaEffettiva%100 >= 80)
+			heightPortaEffettiva = parseInt(Math.floor(heightPortaEffettiva/100) + "80");	
+		*/
+		return heightPortaEffettiva;
+	}
+	
+	_this.verificaDimensioniPorta = function(){
+		var Lporta = parseInt(jQuery("#Lporta").val());
+		var Hporta = parseInt(jQuery("#Hporta").val());
+		
+		_this.misureForo.height = parseInt(jQuery("#Hforo").val());
+		_this.misureForo.width = parseInt(jQuery("#Lforo").val());
+		
+		jQuery("#warning").html("");
+		var check = true;
+		
+		
+		if(jQuery(".up_tipo_posa:checked").attr("value") == "up_1"){
+		if(_this.posa.up > 200 || _this.posa.up < 20){
+			jQuery("#warning").append("<img src='images/error.png' /> Non puoi scegliere un valore superiore a 200 mm o inferiore a 20 mm per il tipo posa superiore<br>");	
+			jQuery("#continua").attr("disabled","disabled");
+			check = false;
+			jQuery("#up_valore_tipo_posa").css({backgroundColor:"#F0E68C"});
+		}else  jQuery("#up_valore_tipo_posa").css({backgroundColor:"#fff"});
+	
+		}
+		
+		
+		if(jQuery(".sx_tipo_posa:checked").attr("value") == "sx_1"){
+		if(_this.posa.sx > 100 || _this.posa.sx < 20){
+			jQuery("#warning").append("<img src='images/error.png' /> Non puoi scegliere un valore superiore a 100 mm o inferiore a 20 mm per il tipo posa lato sinistro<br>");	
+			jQuery("#continua").attr("disabled","disabled");
+			check = false;
+			jQuery("#sx_valore_tipo_posa").css({backgroundColor:"#F0E68C"});
+		}else jQuery("#sx_valore_tipo_posa").css({backgroundColor:"#fff"});
+		}
+		
+		if(jQuery(".dx_tipo_posa:checked").attr("value") == "dx_1"){
+		if(_this.posa.dx > 100 || _this.posa.dx < 20){
+			jQuery("#warning").append("<img src='images/error.png' /> Non puoi scegliere un valore superiore a 100 mm o inferiore a 20 mm per il tipo posa laterale destro<br>");
+			jQuery("#continua").attr("disabled","disabled");
+			check = false;
+			jQuery("#dx_valore_tipo_posa").css({backgroundColor:"#F0E68C"});
+		}else jQuery("#dx_valore_tipo_posa").css({backgroundColor:"#fff"});
+		}
+		
+		
+		var Heffettiva = _this.approssimaH();
+		var Leffettiva = _this.approssimaL();
+		
+		if(Heffettiva > _this.misureForo.height || Leffettiva > _this.misureForo.width){
+			jQuery("#warning").append("<img src='images/error.png' /> Le misure della porta superano quelle del foro muro<br>");
+			jQuery("#continua").attr("disabled","disabled");
+			check = false;
+		}
+			
+		if(Hporta == 0 || Lporta == 0){
+			jQuery("#warning").append("<img src='images/error.png' /> Le misure della porta non possono essere nulle<br>");
+			jQuery("#continua").attr("disabled","disabled");
+			check = false;
+		}	
+		
+		
+		if(Hporta > 3000 || Lporta > 5000 || Hporta < 1750 || Lporta < 2000){
+			var warn = "<img src='images/warning.png' /> Attenzione! Verrà fornito un preventivo a progetto per dimensioni della porta con altezza non compresa tra 1750 mm e 3000 mm e larghezza non compresa tra 2000 mm e 5000 mm.<br><br>";
+			jQuery("#warning").append(warn);
+			console.log("NOOOOOOOOOOOOOO!!!!!");
+			_this.validita = false;
+		}else _this.validita = true;
+		
+		
+		if(_this.struttura.up>0){
+			jQuery("#warning").append("Il sistema ha calcolato uno spazio per la veletta pari a  " + _this.struttura.up + "mm sul lato superiore.<br>");
+		}
+		
+		if(_this.struttura.dx>0){
+			jQuery("#warning").append("Il sistema ha calcolato uno spazio per le spallette pari a " + _this.struttura.dx + "mm sul lato destro.<br>");
+		}
+		
+		if(_this.struttura.sx>0){
+			jQuery("#warning").append("Il sistema ha calcolato uno spazio per le spallette pari a " + _this.struttura.sx + "mm sul lato sinsitro.");
+		}
+		
+		
+		if(!check) return;
+		
+		
+		jQuery("#Lforo").bind("click", function(){
+			_this.initialize();
+		});
+		jQuery("#Hforo").bind("click", function(){
+			_this.initialize();
+		});
+		
+		jQuery("#Lforo").bind("click", function(){
+			_this.initialize();
+		});
+		jQuery("#Hforo").bind("click", function(){
+			_this.initialize();
+		});
+		
+		jQuery("#continua").removeAttr("disabled");
+		
+	}
+	
+	_this.autoCompila = function(){
+		
+		var selezione = jQuery.getCookie("selezione");
+		
+		_this.misureForo.height = selezione.foroMuro.H;
+		_this.misureForo.width = selezione.foroMuro.L;
+		
+		jQuery("#Lforo").val(selezione.foroMuro.L);
+		jQuery("#Hforo").val(selezione.foroMuro.H);	
+		_this.checkForoMuro();
+		jQuery("#repeatSistemaRifinitura").prop("disabled",false);
+		jQuery("#Lporta").val(selezione.porta.L);
+		jQuery("#Hporta").val(selezione.porta.H);	
+		
+		jQuery("#repeatSistemaRifinitura").trigger("click");
+		jQuery("#riferimento").val(selezione.riferimento);	
+		
+	}
+	
+}

@@ -1,0 +1,633 @@
+var Carrello = function(content){
+
+	var _this = this;
+	_this.content = content;
+	_this.elem;
+	
+	_this.init = function(elem){
+		_this.elem = elem;
+		_this.elem.html("");
+		
+		
+		var param = {
+			"account":	jQuery.getCookie("utente").email
+		}
+		
+			
+		var prodotti = null;
+		function callBackCarrello(dato){
+				
+				//console.log("Elenco prodotti:");
+				//console.log(dato);
+				
+				if(!dato.success){
+					alert("Errore inserimento in carrello");
+					return;	
+				}
+				
+				prodotti = dato.results;
+				_this.content.loader.remove();
+			}
+			
+			jQuery.postJSON("Preventivi", "getAllFromCarrello","private", param, false, callBackCarrello);
+		
+		
+		if(prodotti.length <= 0){
+			_this.elem.html("<h4 align='center'>Il carrello è vuoto</h4>");
+			return;	
+		}
+		
+	var tabella = "<div style='clear:both;width:100%;'>";
+		tabella += "<div style='float:left;text-align:center;width:5%;'>";
+		tabella += "	<ul id='checkbox_prodotti' style='list-style-type:none;margin:0;padding:0;'>";
+		tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>&nbsp;</b></li>";
+		tabella += 		"</ul>";
+		tabella += "</div>";
+		tabella += "<div style='float:left;text-align:center;width:9%;'>";
+		tabella += "	<ul id='riferimento' style='list-style-type:none;margin:0;padding:0;'>";
+		tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Riferimento</b></li>";
+		tabella += 		"</ul>";
+		tabella += "</div>";
+		tabella += "<div style='float:left;text-align:center;width:14%;'>";
+		tabella += "	<ul id='tipologia' style='list-style-type:none;margin:0;padding:0;'>";
+		tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Tipologia</b></li>";
+		tabella += 		"</ul>";
+		tabella += "</div>";
+		tabella += "<div style='float:left;text-align:center;width:14%;'>";
+		tabella += "	<ul id='codice' style='list-style-type:none;margin:0;padding:0;'>";
+		tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Codice prodotto</b></li>";
+		tabella += 		"</ul>";
+		tabella += "</div>";
+	
+		tabella += "<div style='float:left;text-align:center;width:14%;'><ul id='quantita' style='list-style-type:none;margin:0;padding:0;'><li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Quantità</b></li></ul></div>";
+		tabella += "<div style='float:left;text-align:center;width:14%;'><ul id='totale' style='list-style-type:none;margin:0;padding:0;'><li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Totale</b></li></ul></div>";
+		tabella += "<div style='float:left;text-align:center;width:14%;'><ul id='totale_scontato' style='list-style-type:none;margin:0;padding:0;'><li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Totale scontato</b></li></ul></div>";
+		tabella += "<div style='float:left;text-align:center;width:14%;'><ul id='azioni' style='list-style-type:none;margin:0;padding:0;'><li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Azioni</b></li></ul></div>";
+		tabella += "</div>";
+		_this.elem.append(tabella);
+		
+		
+		
+		for(var i = 0;i < prodotti.length;i++){
+			
+			console.log("Prodotti!!!!");
+			console.log(prodotti[i]);
+			
+			var prodotto = prodotti[i];
+			var jsonDescrizione = JSON.parse(prodotti[i].descrizione);
+			
+			
+			
+			var nome_tipologia = "";
+			switch(jsonDescrizione.tipologia){
+				
+				case 'Basculante': 			nome_tipologia = "Basculante";break;
+				case 'PortaCantina': 		nome_tipologia = "Porta cantina";break;
+				case 'PortaMultiuso': 		nome_tipologia = "Porta multiuso";break;
+				case 'PortaTagliafuoco': 	nome_tipologia = "Porta tagliafuoco";break;
+				case 'Sezionale': 			nome_tipologia = "Sezionale";break;
+				default: break;
+			}
+			
+			
+			var tipologia = "<li class='elem_"+i+"'>"+nome_tipologia+"</li>";
+			var codice = "/";
+			var riferimento = "<li class='elem_"+i+"'>"+prodotti[i].riferimento+"</li>";
+			
+			////console.log("Prodotti!!");
+			////console.log(jsonDescrizione);
+			if(jsonDescrizione.validita)
+				codice = jsonDescrizione.prodotto.codice;
+				
+			codice = "<li class='elem_"+i+"'>"+codice+"</li>";
+			
+			var quantitaProdotto = prodotto.quantita;
+			 
+			quantita = "<li class='elem_"+i+"'>"+quantitaProdotto+"</li>"; 
+			
+			var totale = "/";
+			////console.log(prodotto.id);
+			
+			if(jsonDescrizione.validita)
+				if(jsonDescrizione.totale != null && jsonDescrizione.totale != "/")
+					totale = jsonDescrizione.totale.format()+" €";
+				
+			var totaleScontato = "/";
+			////console.log(prodotto.id);
+			
+			////console.log("Totale scontato!!");
+			////console.log(prodotto);
+				
+			if(jsonDescrizione.validita)
+				if(jsonDescrizione.totaleScontato != null && jsonDescrizione.totaleScontato != "/"){
+					totaleScontato = jsonDescrizione.totaleScontato.format()+" €";
+				
+			}
+			
+			var checkBox = "<li class='elem_"+i+"'><input class='checkbox_prodotti' type='checkbox' codice='"+prodotto.id+"' /></li>";
+			
+			var variazione_prezzo = "";
+			if(Number(prodotto.prezzo_definitivo) == 0)
+				variazione_prezzo = "<img class='warning_variazione_prezzo' src='images/warning_small.png' />";
+			
+			var totale = "<li class='elem_"+i+"'>"+variazione_prezzo+" "+ totale+"</li>";
+			var totale_scontato = "<li class='elem_"+i+"'>"+variazione_prezzo+" "+totaleScontato+"</li>";
+			var azioni = "<li class='elem_"+i+"'><a codice='"+prodotto.id+"' id='elimina_"+i+"' style='cursor:pointer;color:#FF0000;'><img src='images/delete.png' width='16' height='16' border='0' title='elimina'></a>&nbsp;&nbsp;<a codice='"+prodotto.id+"' id='modifica_"+i+"' style='cursor:pointer;color:#FF0000;'><img src='images/edit.png' width='16' height='16' border='0' title='modifica'></a></li>";
+			
+			jQuery("#checkbox_prodotti").append(checkBox);
+			jQuery("#riferimento").append(riferimento);
+			jQuery("#tipologia").append(tipologia);
+			jQuery("#codice").append(codice);
+			jQuery("#quantita").append(quantita);
+			jQuery("#totale").append(totale);
+			jQuery("#totale_scontato").append(totale_scontato);
+			jQuery("#azioni").append(azioni);
+			
+			
+			jQuery(".warning_variazione_prezzo").balloon({
+				contents: "Il totale e il totale scontato finali del preventivo potrebbero<br>subire delle variazioni per via della verniciatura <br> e delle quantità scelte.",
+				css:{
+					fontFamily: "Arial",
+					fontSize: "12px",
+					opacity: 1,
+					lineHeight: "16px"
+				}
+			});
+			
+			var cookieCarrello = jQuery.getCookie("carrello");
+			
+			jQuery("#modifica_"+i).bind("click",function(){
+				
+				var id = jQuery(this).attr("codice");
+				var cookie = jQuery.getCookie("selezione");
+			
+				function callBackProdottoCarrello(dato){
+					////console.log("QUi il prodotto!!");
+					////console.log(dato);
+					
+					cookie = JSON.parse(dato.results.descrizione);
+					
+					if(!dato.success){
+						alert("Errore!");
+						return;
+					}	
+					
+					cookie.modifica.boo = true;
+					cookie.modifica.id = eval(id);
+					jQuery.registerCookie("selezione",cookie);
+					
+					//alert(cookie.tipologia)
+					switch(cookie.tipologia){
+					
+						case 'Basculante': 			jQuery("#FormBasculante").trigger("click");break;
+						case 'PortaCantina': 		jQuery("#FormPortaCantina").trigger("click");break;
+						case 'PortaMultiuso': 		jQuery("#FormPortaMultiuso").trigger("click");break;
+						case 'PortaTagliafuoco': 	jQuery("#FormPortaTagliafuoco").trigger("click");break;
+						case 'Sezionale': 			jQuery("#FormSezionale").trigger("click");break;
+						
+					}
+					
+					
+				}
+				
+				jQuery.postJSON("Preventivi", "getProdottoFromCarrello","private", {"id":id}, false, callBackProdottoCarrello);	
+				
+			});
+			
+			jQuery("#elimina_"+i).bind("click",function(){
+				
+				var id = jQuery(this).attr("codice");
+				var nome = jQuery(this).attr("id");
+				_this.content.loader.init(function(){_this.eliminaProdottoDaCarrello(id,nome);});
+			});
+		}
+		
+		
+		if(prodotti.length > 0){
+			_this.elem.append("<div style=\"text-align:center;\"><input style='margin-top:50px;' type=\"button\" value=\"CANCELLA SELEZIONATI\" id=\"cancella_selezionati\" disabled align='center'/>&nbsp;&nbsp;<input style='margin-top:50px;' type=\"button\" stato=\"1\" value=\"SELEZIONA TUTTI PRODOTTI\" id=\"seleziona_prodotti\" align='center'/>&nbsp;&nbsp;<input style='margin-top:50px;' type=\"button\" value=\"SALVA PREVENTIVO\" id=\"salva_preventivo\" align='center'/></div><br><br>");
+			
+			jQuery("#salva_preventivo").bind("click",function(){
+				_this.content.loader.init(function(){_this.salvaPreventivo();});
+			});	
+			
+			jQuery("#seleziona_prodotti").bind("click",function(){
+				
+				var stato = jQuery("#seleziona_prodotti").attr("stato");
+				if(stato == "1"){
+					jQuery("#seleziona_prodotti").attr("stato",0);
+					jQuery("#seleziona_prodotti").attr("value", "DESELEZIONA TUTTI I PRODOTTI");
+					jQuery("#cancella_selezionati").prop("disabled",false);
+					jQuery(".checkbox_prodotti").each(function(){
+						jQuery(this).prop("checked",true);
+					});
+				}else{
+					jQuery("#seleziona_prodotti").attr("stato",1);
+					jQuery("#seleziona_prodotti").attr("value", "SELEZIONA TUTTI I PRODOTTI");
+					jQuery("#cancella_selezionati").prop("disabled",true);
+					jQuery(".checkbox_prodotti").each(function(){
+						jQuery(this).prop("checked",false);
+					});	
+				}
+			});	
+			
+			jQuery("#cancella_selezionati").bind("click",function(){
+				_this.cancellaSelezionati();
+				
+			});	
+			
+			
+			jQuery(".checkbox_prodotti").bind("click",function(){
+				jQuery("#cancella_selezionati").prop("disabled",_this.isChecked())
+			});	
+			
+		}
+		
+	}
+	
+	_this.isChecked = function(){
+		var boo = true;
+				jQuery(".checkbox_prodotti").each(function(){
+					if(jQuery(this).is(":checked")){
+						boo = false;
+					}
+				});
+				
+		return boo;	
+	}
+	
+	_this.getNumeroProdotto = function(){
+		var cookieCarrello = jQuery.getCookie("carrello");
+		if(cookieCarrello == undefined) return 0;
+		return cookieCarrello.prodotti.length;	
+	}
+	
+	_this.svuotaCarrello = function(){
+		/*var cookieCarrello = jQuery.getCookie("carrello");
+		cookieCarrello.prodotti = new Array();
+		jQuery.registerCookie("carrello",cookieCarrello);
+		_this.content.aggiornaCarrello();*/
+		
+		
+		var param = {
+				"account": 	jQuery.getCookie("utente").email
+		}
+			
+		function callBackDeleteCarrello(datoCarrello){
+				////console.log("QUI");
+				////console.log(datoCarrello);
+				if(!datoCarrello.success){
+					alert("Errore eliminazione carrello");	
+					return;
+				}
+				
+				_this.content.loader.remove();
+		}
+			
+			
+		jQuery.postJSON("Preventivi", "svuotaCarrello","private",param, false, callBackDeleteCarrello);
+		
+		jQuery("#GestionePreventivi").trigger("click");
+		//_this.elem.html("<h3>Carrello</h3>");	
+		//_this.elem.html("<h4 align='center'>Operazione conclusa con successo<br>Il carrello è ora vuoto</h4>");
+	}
+	
+	_this.salvaPreventivo = function(){
+		var data_timestamp = new Date().getTime();
+		var data = data_timestamp;
+		
+		_this.elem.html("");	
+		
+		var totale = 0;
+		var totaleScontato = 0;
+		var isProgetto = false;
+		
+		var param = {
+				"account":	jQuery.getCookie("utente").email
+			}
+			
+		////console.log(param);		
+		var prodotti = null;
+		
+		function callBackCarrello(dato){
+				console.log("Tutti i prodotti nel carrello");
+				console.log(dato);
+				if(!dato.success){
+					alert("Errore inserimento in carrello");
+					return;	
+				}
+				
+				prodotti = dato.results;
+		}
+			
+		jQuery.postJSON("Preventivi", "getAllFromCarrello","private",param, false, callBackCarrello);
+
+		
+		
+		_this.calcolaCostiVerniciatura(prodotti);
+		////console.log("Dopo prodotti");
+		////console.log(prodotti);
+		
+		
+		
+		
+		for(var i = 0; i < prodotti.length;i++){
+			
+			if(!JSON.parse(prodotti[i].descrizione).validita)
+				isProgetto = true;
+		
+			totale += parseFloat(prodotti[i].totale);
+			totaleScontato += parseFloat(prodotti[i].totaleScontato);
+		}
+		
+		//alert(totale)
+		//alert(totaleScontato);
+		
+		var approvazione = 1;
+		
+		if(isProgetto){
+			approvazione = 	0;
+		}
+		
+		if(isNaN(totale))
+			totale = 0;
+		
+		var codicePreventivo = "";
+		var boo = false
+		function callBackPreventivo(dato){
+			console.log("callback preventivo");
+			console.log(dato);
+			
+			if(!dato.success){
+				alert("Errore inserimento preventivo!");
+				return;
+			}
+			
+			codicePreventivo = dato.results;
+			boo = true;
+			//_this.content.loader.remove();
+		}
+		
+		var param = {"data":data, "totale":totale,"totaleScontato":totaleScontato,"approvazione":approvazione,"account":jQuery.getCookie("utente").email,"letto":0};
+		
+		////console.log("ADD CARRELLO!");
+		////console.log(param);
+		
+		jQuery.postJSON("Preventivi", "addPreventivo", "private", param, false, callBackPreventivo);
+		
+		if(!boo)
+			return;
+		
+
+		for(var l = 0; l < prodotti.length;l++){
+			
+			////console.log("Questo è il prodotto!");
+			////console.log(prodotti[l]);
+			
+			
+			var param = {
+				"codice": prodotti[l].id,
+				"preventivo": codicePreventivo,
+				"quantita":prodotti[l].quantita,
+				"totale":prodotti[l].totale,
+				"totaleScontato":prodotti[l].totaleScontato,
+				"tipologia": 1,
+				"descrizione":prodotti[l].descrizione,
+				"riferimento":prodotti[l].riferimento
+			}
+			
+			function callBackPCarrello(datoCarrello){
+				console.log("QUI");
+				console.log(datoCarrello);
+				
+				if(!datoCarrello.success){
+					alert(datoCarrello.messageError);
+					return;	
+				}
+				
+			}
+			
+			
+			jQuery.postJSON("Preventivi", "addCarrello","private",param, false, callBackPCarrello);
+		}
+	
+	
+		_this.svuotaCarrello();	
+		_this.content.aggiornaCarrello();
+		_this.content.loader.remove();
+		
+	}
+	
+	
+	
+	_this.calcolaCostiVerniciatura = function(prodotti){
+		
+		_this.pal = [];
+		
+		function callBackPal(dato){
+			
+			if(!dato.success){
+				alert(dato.errorMessage);	
+				return;
+			}
+			
+			for(var i = 0;i < dato.results.length;i++)
+				_this.pal[i] = {"codice":dato.results[i].codice,"quantita":0,"prodotti":[]};	
+				
+			for(var i=0;i < prodotti.length;i++)
+				
+				
+				if(JSON.parse(prodotti[i].descrizione).tipologia == "Basculante")
+				for(var j=0;j < _this.pal.length;j++){
+					
+					////console.log("Sconti?");
+					////console.log(JSON.parse(prodotti[i].descrizione));
+					
+					var descrizione = JSON.parse(prodotti[i].descrizione);
+					var codiceVerniciatura = "";
+					if(descrizione.accessori.verniciatura.articolo != null){
+					 	codiceVerniciatura = descrizione.accessori.verniciatura.articolo.codice;
+					}else continue;
+					////console.log(_this.pal[j].codice+" "+codiceVerniciatura);
+					if(_this.pal[j].codice == codiceVerniciatura){
+						_this.pal[j].quantita += parseInt(prodotti[i].quantita);
+						_this.pal[j].prodotti.push(prodotti[i]);
+					}
+				}
+		}
+	
+		jQuery.postJSON("Verniciatura", "getPAL","private",{"fascia":"002"}, false, callBackPal);
+		
+		//console.log("I pal selezionati:");
+		//console.log(_this.pal);
+		
+		for(var j = 0;j < _this.pal.length;j++){
+			for(var i = 0;i < _this.pal[j].prodotti.length;i++){
+				
+				function callBackCostiVerniciatura(dato){
+									
+					if(!dato.success){
+						alert(dato.errorMessage)
+						return;	
+					}
+					
+					
+					
+					////console.log("Risultato ricerca:");
+					////console.log(dato);
+					var prezzo = Number(dato.results[0].costo);
+					var codice = dato.results[0].codice;
+					var descrizione = JSON.parse(_this.pal[j].prodotti[i].descrizione);
+					
+					////console.log("Descrizione prima");
+					////console.log(descrizione);
+					
+					var dimPortaH = parseInt(descrizione.porta.H);
+					var dimPortaL = parseInt(descrizione.porta.L);
+					var mq = (dimPortaH/1000)*(dimPortaL/1000); 
+					
+					if(mq < 6)
+						mq = 6;
+					
+					var totaleVerniciatura = prezzo*mq;
+					
+					for(var l=0;l<descrizione.accessori.verniciatura.vernici.length;l++){
+						////console.log(descrizione.accessori.verniciatura);
+						if(descrizione.accessori.verniciatura.vernici[l].tipo != "sopraluce" && descrizione.accessori.verniciatura.vernici[l].tipo != "coprifilo"){
+							descrizione.accessori.verniciatura.vernici[l].codice = codice;
+							descrizione.accessori.verniciatura.vernici[l].costo = prezzo;
+							descrizione.accessori.verniciatura.vernici[l].totale = totaleVerniciatura;
+						}
+					}
+					
+					console.log("Qui l'errore!");
+					var obj = eval("new "+descrizione.tipologia+"()");
+				
+					_this.pal[j].prodotti[i].totale = obj.ricalcolaTotale(descrizione);
+					_this.pal[j].prodotti[i].totaleScontato = obj.ricalcolaTotaleScontato(descrizione);
+					_this.pal[j].prodotti[i].descrizione = JSON.stringify(descrizione);
+					
+					
+				}
+				
+				//console.log("Prodotto: ");
+				//console.log(_this.pal[j].prodotti[i]);
+				
+				if(_this.pal[j].prodotti[i] != null){
+					var query = {"fascia":"002","Quantita":_this.pal[j].quantita};
+					
+					////console.log("La query");
+					////console.log(query);
+					
+					jQuery.postJSON("Verniciatura", "getVerniciaturaByCodice","private",query, false, callBackCostiVerniciatura);
+				}
+			}
+		}
+		
+	}
+	
+	
+	_this.cancellaSelezionati = function(){
+		
+		_this.content.loader.init(function(){
+				jQuery(".checkbox_prodotti").each(function(){
+					if(jQuery(this).is(":checked")){
+						var id = jQuery(this).attr("codice");
+						
+						var cookie = jQuery.getCookie("selezione");
+						if(jQuery.validaValore(cookie))
+							if(cookie.modifica && cookie.modifica.id == id){
+								cookie.modifica.boo = false;
+								jQuery.registerCookie("selezione", cookie);	
+							}
+						
+					
+						function callBackRemoveCarrello(dato){
+							////console.log("QUi elimino il prodotto dal carrello!!");
+							////console.log(dato);
+							if(!dato.success){
+								alert("Errore!");
+								return;
+							}	
+							
+							if(dato.results.rows <= 0){
+								_this.elem.html("<h4 align='center'>Il carrello è vuoto</h4>");
+								//return;
+							}
+							
+							_this.content.aggiornaCarrello();
+						}
+							
+						jQuery.postJSON("Preventivi", "deleteProdottoFromCarrello","private", {"id":id,"account":jQuery.getCookie("utente").email}, false, callBackRemoveCarrello);
+						
+						function callBackRemove(dato){
+							////console.log(dato);
+						}
+						
+						jQuery.postJSON("GestioneImmagini", "deleteImageCarrello","private", {"carrello":id}, false, callBackRemove);
+						
+						jQuery("."+jQuery(this).parent().attr("class")).remove();
+						
+					}
+				});
+				
+				_this.content.loader.remove();
+			});
+		}
+		
+		
+		
+		_this.eliminaProdottoDaCarrello = function(id,nome){
+			
+				var cookie = jQuery.getCookie("selezione");
+				if(jQuery.validaValore(cookie))
+					if(cookie.modifica.boo && cookie.modifica.id == id){
+						cookie.modifica.boo = false;
+						jQuery.registerCookie("selezione", cookie);	
+					}
+				
+				
+				function callBackRemoveCarrello(dato){
+					////console.log("QUi elimino il prodotto dal carrello!!");
+					////console.log(dato);
+					if(!dato.success){
+						alert(dato.messageError);
+						return;
+					}	
+					
+					
+					if(dato.results.rows <= 0){
+						_this.elem.html("<h4 align='center'>Il carrello è vuoto</h4>");
+						//return;
+					}
+					
+					_this.content.loader.remove();
+					
+				}
+				
+				
+				//alert(JSON.stringify(jQuery.getCookie("utente")));
+				
+				jQuery.postJSON("Preventivi", "deleteProdottoFromCarrello","private", {"id":id,"account":jQuery.getCookie("utente").email}, false, callBackRemoveCarrello);
+				
+				
+				
+				
+				
+				function callBackRemove(dato){
+					////console.log(dato);
+				}
+				
+				jQuery.postJSON("GestioneImmagini", "deleteImageCarrello","private", {"carrello":id}, false, callBackRemove);
+				
+				jQuery(".elem_"+nome.split("elimina_")[1]).remove();
+				
+				_this.content.aggiornaCarrello();
+				
+				/*_this.content.rimuoviProdotto();
+				if(_this.content.getNumProdotti() <= 0){
+					_this.elem.html("<h3>Carrello</h3>");	
+					_this.elem.append("<h4 align='center'>Il carrello è vuoto</h4>");
+				}*/	
+			
+		}
+}

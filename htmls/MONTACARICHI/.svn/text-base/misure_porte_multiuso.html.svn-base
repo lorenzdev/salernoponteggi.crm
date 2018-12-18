@@ -1,0 +1,10 @@
+<ul style="list-style-type:decimal">
+<li class="menu-selezione">Misure della porta multiuso</li>
+<li class="menu-selezione">Sistema chiusura</li>
+<li class="menu-selezione">Seleziona l'areazione</li>
+<li class="menu-selezione">Seleziona il sopraluce</li>
+<li class="menu-selezione">Seleziona la verniciatura</li>
+<li class="menu-selezione">Seleziona lo sconto</li>
+<li class="menu-selezione">Riepilogo</li>
+</ul><br><br>
+<div id="Content"></div>

@@ -1,0 +1,15 @@
+<h3>Scegli il passaggio pedonale</h3>
+<span id='checkRepeatPassaggioPedonale'></span>
+<div id="passaggio_pedonale">
+</div>
+<h4>Seleziona i maniglioni</h4>
+<div id="maniglioni">
+</div>
+<br><br>
+<div id="warning" style="margin:10px 0px;"></div>
+<div style="text-align:center;">
+<input type="button" value="AVANTI" id="continua" style="height:40px;width:150px;" disabled="disabled"/>&nbsp;&nbsp;
+<input type="button" value="INDIETRO" id="indietro" style="height:40px;width:150px;"/>&nbsp;&nbsp;
+<input type="button" value="SALTA" id="salta" style="height:40px;width:150px;"/>
+</div>
+<br><br><br><br>

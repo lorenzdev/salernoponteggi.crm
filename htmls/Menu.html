@@ -1,0 +1,121 @@
+<style>
+#menu{
+	font-size:12px;
+	background-color:#f2f2f2;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+#menu ul,li{
+	padding:0px;
+	margin:0px;
+	list-style-type:none;
+}
+
+#menu li{
+	background-color:#f2f2f2;
+	position:relative;
+	float:left;
+	height:35px;
+	line-height:35px;
+	text-align:center;
+	display:block;
+	border-right:1px solid #fff;
+	font-size:12px;
+}
+
+#menu ul ul{
+position: absolute;
+top:35x;
+visibility: hidden;
+}
+
+#menu ul ul ul li{
+left:150px;
+top:-36px;
+visibility: hidden;
+}
+
+#menu li li{
+	width:150px;
+	text-align:left;
+	background-color:#f2f2f2;
+	border-top:1px solid #fff;
+}
+
+#menu li li li{
+	width:170px;
+}
+
+#menu ul li:hover ul{
+visibility:visible;
+}
+
+#menu ul ul li:hover ul li
+{visibility: visible;}
+
+
+.inactive{
+backgorund:#CCC;
+}
+
+.inactive:hover{
+background:#002F60;
+cursor:pointer;
+color:#FFF;
+}
+
+.active{
+background:#002F60;
+color:#FFF;
+}
+
+.numero_notifica_carrello{
+display:none;
+float:right;
+background-color: #FF0000;
+margin-top: -5px;
+margin-left: 3px;
+padding-top:0px;
+font-family: "Arial";
+width:15px;
+height:20px;
+line-height:20px;
+text-align: center;
+font-size: 10px;
+-moz-border-radius: 2px;
+-webkit-border-radius: 2px;
+border-radius: 2px;
+-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+box-shadow: 0 1px 2px rgba(0,0,0,.2);
+/*text-shadow: 1px 1px 1px #999;*/
+filter: dropshadow(color=#999, offx=1, offy=1);
+color:#FFF;
+
+}
+
+</style>
+
+<div id="menu">
+	<ul>
+	<!--<li><div style="padding:0px 10px 0px 20px;" class="inactive menu ROLE_USER" id="Vetrina"><span style="position:absolute;left:5px;margin-right:5px;">&Xi;</span>VETRINA</div></li>-->
+	<li><div style="padding:0px 10px 0px 20px;" class="inactive menu ROLE_ADMIN ROLE_ASSISTANT" id="Profilo" ><span style="position:absolute;left:5px;margin-right:5px;">&Xi;</span>PROFILO</div></li>
+	<li><div style="padding:0px 10px 0px 20px;" class="inactive menu ROLE_ADMIN ROLE_ASSISTANT" id=""><span style="position:absolute;left:5px;margin-right:5px;">&Xi;</span>PRODOTTI</div>
+    	<ul>
+    	<li><div style="padding:0px 10px 0px 20px;" class="inactive menu ROLE_ADMIN ROLE_ASSISTANT" id="FormPonteggioSospeso">PONTEGGI_SOSPESI</div></li>
+        <li><div style="padding:0px 10px 0px 20px;" class="inactive menu ROLE_ADMIN ROLE_ASSISTANT">PORTE <span style="position:absolute;right:10px;">>></span></div>
+        	<ul>
+			<li><div style="padding:0px 10px 0px 20px;" class="inactive menu ROLE_ADMIN ROLE_ASSISTANT" id="FormMontacarico">MONTACARICHI</div></li>
+            	<li><div style="padding:0px 10px 0px 20px;" class="inactive menu ROLE_ADMIN ROLE_ASSISTANT" id="FormAscensore">ASCENSORI</div></li>
+           </ul>
+        </li>
+        <li><div style="padding:0px 10px 0px 20px;" class="inactive menu ROLE_ADMIN ROLE_ASSISTANT" id="FormPonteggioElettrico">PONTEGGI_ELETTRICI</div></li>
+        </ul>
+
+    </li>
+	<li><div style="padding:0px 10px 0px 20px;" class="inactive menu ROLE_ADMIN ROLE_ASSISTANT" id="Carrello"><span style="position:absolute;left:5px;margin-right:5px;">&Xi;</span>CARRELLO<div class="numero_notifica_carrello">10</div></div> </li>
+	<li><div style="padding:0px 10px 0px 20px;" class="inactive menu ROLE_ADMIN ROLE_ASSISTANT" id="GestionePreventivi"><span style="position:absolute;left:5px;margin-right:5px;">&Xi;</span>GESTIONE PREVENTIVI</div></li>
+	<li><div style="padding:0px 10px 0px 20px;" class="inactive menu ROLE_ADMIN" id="GestioneUtenti"><span style="position:absolute;left:5px;margin-right:5px;">&Xi;</span>GESTIONE UTENTI</div></li>
+	<li><div style="padding:0px 10px 0px 20px;" class="inactive menu ROLE_ADMIN ROLE_ASSISTANT" id="Clienti"><span style="position:absolute;left:5px;margin-right:5px;">&Xi;</span>RUBRICA</div></li>
+</ul>
+</div>

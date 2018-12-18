@@ -1,0 +1,25 @@
+<h3>Scegli l'oblò</h3>
+<span id='checkRepeatOblo'></span>
+<div id="contentOblo1" style="display:none;">
+<input type="checkbox" id="oblo_anta1" class="checkOblo"/> <b>Oblò anta principale</b><br><br>
+<input type="radio" name="oblo1" class="oblo1" value="circ" disabled/> Circolare: <br />Diametro:<input type="text" name="diametro1" id="diametro1" class="diametro1"  disabled maxlength="4"/> (mm) <br><br>
+<input type="radio" name="oblo1" class="oblo1" value="rect" disabled/> Rettangolare: <br />
+Altezza: <input type="text" name="altezza1" id="altezza1" class="rettangolo1" disabled maxlength="4"/> (mm)<br />
+Larghezza: <input type="text" name="larghezza1" id="larghezza1" class="rettangolo1" disabled maxlength="4"/> (mm)
+</div><br /><br />
+
+<div id="contentOblo2" style="display:none;">
+<input type="checkbox" id="oblo_anta2" class="checkOblo"/> <b>Oblò anta secondaria</b><br><br>
+<input type="radio" name="oblo2" class="oblo2" value="circ" disabled/> Circolare: <br />Diametro: <input type="text" name="diametro2" id="diametro2" class="diametro2"  disabled maxlength="4"/> (mm) <br><br>
+<input type="radio" name="oblo2" class="oblo2" value="rect" disabled/> Rettangolare: <br />
+Altezza: <input type="text" name="altezza2" id="altezza2" class="rettangolo2" disabled maxlength="4"/> (mm)<br />
+Larghezza: <input type="text" name="larghezza2" id="larghezza2" class="rettangolo2" disabled maxlength="4"/> (mm)
+</div><br /><br />
+<div id="warning"></div>
+<br><br>
+<div style="text-align:center;">
+<input type="button" value="AVANTI" id="continua" style="height:40px;width:150px;" disabled="disabled"/>&nbsp;&nbsp;
+<input type="button" value="INDIETRO" id="indietro" style="height:40px;width:150px;"/>&nbsp;&nbsp;
+<input type="button" value="SALTA" id="salta" style="height:40px;width:150px;"/>
+</div>
+<br><br><br><br>

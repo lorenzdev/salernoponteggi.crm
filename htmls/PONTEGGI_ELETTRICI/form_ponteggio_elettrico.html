@@ -1,0 +1,114 @@
+<div class="row margin-0 spazio">
+    <h4 class="title_h4">Riferimento</h4>
+    <div class="col-md-4">
+	  <br>
+       <input type="text" id="riferimento" class="form-control" required maxlength="3">
+    </div>
+</div>
+
+<div class="row margin-0 spazio">
+    <h4 class="title_h4">Modello</h4>
+    <h5>Inserisci il modello</h5>
+    <div class="col-md-12">
+	    <div class="row" id="tabellaModelli">
+ 		   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+ 			   <label>
+ 				   <input value="PT300T" type="radio" name="modelli" class="modelli" checked>
+ 				   		<a class="thumbnail box_color">
+ 							<img src="img/space.png" alt="">
+ 						</a>
+ 					<p class="pagination-centered"><b>PT300T</b></p>
+ 				</label>
+ 			</div>
+			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+				<label>
+				     <input value="PT300M" type="radio" name="modelli" class="modelli" >
+						  <a class="thumbnail box_color">
+							  <img src="img/space.png" alt="">
+						  </a>
+					  <p class="pagination-centered"><b>PT300M</b></p>
+				  </label>
+			  </div>
+    		</div>
+    </div>
+</div>
+
+<div class="row margin-0 spazio">
+	<div class="col-md-12">
+    		<h4 class="title_h4">Misure</h4>
+    		<h5>Inserisci la misura altezza lavoro</h5>
+		<select id="select_altezza" class="regione form-control" style="max-width: 100px;">
+		    <!-- <option value="10.50">10.50</option> -->
+		</select><br />
+    </div>
+    <div class="col-md-12">
+	    <br>
+	    	<h5>Scegli la tipologia</h5>
+	    	<div class="radio">
+		  	<input type="radio" id="radio_col1" name="colonne" class="colonne" value="1"/>
+            	<label for="radio_col1">Monocolonna</label>
+	   	</div>
+	   	<div class="radio">
+            	<input type="radio" id="radio_col2" name="colonne" class="colonne" value="2"/>
+            	<label for="radio_col2">Bicolonna</label>
+        	</div>
+    </div>
+    <div class="col-md-12 " id="contentMantovana" >
+    		<div class="checkbox checkbox-primary">
+            	<input type="checkbox" id="mantovana" class="checkMantovana">
+            	<label for="mantovana">Vuoi associare una mantovana?</label>
+        	</div>
+          <div id="altezza_mantovana" style="display:none;">
+		  	<input type="text" id="altezza_lavoro" class="form-control" value="0" style="width:100px;display:inline-block;" maxlength="3" required/>
+ 	   	   		&nbsp &nbsp altezza
+          </div>
+		<br>
+  	</div>
+	<div class="col-md-12" id="contentOptPe" >
+		<h4 class="title_h4">Optional</h4>
+	     <h5>Seleziona gli optional da abbinare al modello</h5>
+		<br>
+     	<div class="checkbox checkbox-primary">
+             	<input type="checkbox" id="opt_1" class="checkOptPe">
+             	<label for="opt_1">Test optional 1</label>
+         	</div>
+		<div class="checkbox checkbox-primary">
+             	<input type="checkbox" id="opt_2" class="checkOptPe">
+             	<label for="opt_2">Test optional 2</label>
+         	</div>
+		<div class="checkbox checkbox-primary">
+             	<input type="checkbox" id="opt_3" class="checkOptPe">
+             	<label for="opt_3">Test optional 3</label>
+         	</div>
+	</div>
+     <div class="col-md-12">
+		<h4 class="title_h4">Sconto e Quantità</h4>
+		<br>
+         	<input type="text" id="altezza_lavoro" class="form-control" value="0" style="width:100px;display:inline-block;" maxlength="3" required/>
+ 	   &nbsp &nbsp %
+	   	<br><br>
+	   	<input type="text" id="altezza_lavoro" class="form-control" value="0" style="width:100px;display:inline-block;" maxlength="3" required/>
+	  &nbsp &nbsp quantità
+	  	<br><br>
+     </div>
+	<div class="col-md-12">
+		<h4 class="title_h4">Riepilogo</h4>
+		<br>
+         	Totale: <b id="tot"></b>
+	   	<br><br>
+	   	Totale scontato: <b value="0" id="totScontato"></b>
+     </div>
+</div>
+<div class="line4"></div>
+<div id="boxStruttura"></div>
+<div id="warning"  style="margin:10px 0px;"></div>
+<div id="a_progetto"  style="margin:10px 0px;"></div>
+
+
+<br><br>
+<div style="text-align:center;">
+<button type="button" id="btnCarrello" class="btn btn-primary">Salva nel carrello</button>
+<button type="button"  id="btnPreventivo" class="btn btn-primary">Crea preventivo</button>
+</div>
+<br><br>
+<br><br>

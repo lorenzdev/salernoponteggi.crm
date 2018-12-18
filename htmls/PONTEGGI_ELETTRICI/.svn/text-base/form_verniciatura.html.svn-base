@@ -1,0 +1,90 @@
+<h3>Scegli la verniciatura</h3>
+<span id='checkRepeatVerniciatura'></span><br />
+<div id="elenco_fasce_vernici" style="width:300px;float:left;">
+<select name='fascia' id="fasce">
+<option value="null">Seleziona il codice pal</option>
+</select>
+</div>
+<div style="width:500px;float:left;height:240px;">
+  <table width="480" border="0" cellspacing="0" cellpadding="0" style="font-size:11px;font-family: Arial, Helvetica, sans-serif;">
+    <tr>
+      <td width="60" height="60" align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#fff;"></div>RAL9010</td>
+      <td width="60" align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#EAE6CA;"></div>RAL1013</td>
+      <td width="60" align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#D7D7D7;"></div>RAL7035</td>
+      <td width="60" align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#2F4538;"></div>RAL6005</td>
+      <td width="60" align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#403A3A;"></div>
+      RAL8019</td>
+      <td width="60" align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#E7EBDA;"></div>
+      RAL9002</td>
+      <td width="60" align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#F6F6F6;"></div>
+      RAL9016</td>
+      <td width="60" align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#FDF4E3;"></div>
+      RAL9001</td>
+    </tr>
+    <tr>
+      <td height="60" align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#0A0A0A;"></div>
+      RAL9005</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#D7D7D7;"></div>
+      RAL9018</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#0E294B;"></div>
+      RAL5010</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#E6D690;"></div>
+      RAL1015</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#C2B078;"></div>
+      RAL1001</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#9E9764;"></div>
+      RAL1019</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#A5A5A5;"></div>
+      RAL9006</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#82898F;"></div>
+      RAL7046</td>
+    </tr>
+    <tr>
+      <td height="60" align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#293133;"></div>
+      RAL7016</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#8A9597;"></div>
+      RAL7001</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#434B4D;"></div>
+      RAL7011</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#9DA1AA;"></div>
+      RAL7040</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#57A639;"></div>
+      RAL6018</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#20603D;"></div>
+      RAL6029</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#287233;"></div>
+      RAL6001</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#31372B;"></div>
+        RAL6009</td>
+    </tr>
+    <tr>
+      <td height="60" align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#308446;"></div>
+      RAL6024</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#2D572C;"></div>
+      RAL6002</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#45322E;"></div>
+      RAL8017</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#382C1E;"></div>
+      RAL8014</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#955F20;"></div>
+      RAL8001</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#6F4F28;"></div>
+      RAL8008</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#79553D;"></div>
+      RAL8024</td>
+      <td align="center" valign="top"><div style="width:30px;height:30px;border:1px solid #ccc;background-color:#4E3B31;"></div>
+        RAL8028</td>
+    </tr>
+  </table>
+</div>
+<div style="clear:both;"></div>
+<div id="infoVerniciatura"></div>
+<div style="clear:both;"></div>
+<br><br><br><br>
+<div style="text-align:center;">
+<!--<input type="button" value="RIEPILOGO" id="riepilogo" style="height:100px;width:200px;padding:20px;" disabled="disabled"/>&nbsp;&nbsp;-->
+<input type="button" value="AVANTI" id="continua" style="height:40px;width:150px;" disabled="disabled"/>&nbsp;&nbsp;
+<input type="button" value="INDIETRO" id="indietro" style="height:40px;width:150px;"/>&nbsp;&nbsp;
+<input type="button" value="SALTA" id="salta" style="height:40px;width:150px;"/>
+</div>
+<br><br><br><br>

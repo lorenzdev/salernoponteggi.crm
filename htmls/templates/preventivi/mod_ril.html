@@ -1,0 +1,362 @@
+<html>
+   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <style>
+	  
+	  	@page{
+                 /*  background-image: url("http://www.cerratospa.com/areariservata/images/template_mod_ril.jpg");
+               		background-repeat:no-repeat;
+					background-size:100% 100%;
+					*/
+			   }
+	  
+	  	.show{
+			
+		display:block;	
+		}
+		
+		.hide{
+			
+		display:none;	
+		}
+	  
+	  	.row{
+			float:left;
+			font-size:12px;
+			color:#000;
+			hyphens: auto;	
+		}
+		
+		.row div{
+			margin:0px 10px 0px 10px;
+		}
+		
+		.first_row{
+			width:170px;
+			text-align:left;
+		}
+		
+		.central_row1{
+			width:244px;
+			text-align:left;
+		}
+		
+		.central_row2{
+			width:50px;
+			text-align:center !important;
+		}
+		
+		.central_row3{
+			width:120px;
+			text-align:right !important;
+		}
+		
+		.central_row4{
+			width:55px;
+			text-align:center !important;	
+		}
+		
+		.last_row{
+			width:145px;
+			text-align:right !important;
+		}
+		
+		
+		@page{
+			margin-top: 4.23cm;
+			margin-bottom: 1cm;
+			header: html_myHeader1;
+			footer: html_myFooter1;
+		}
+		
+		@page contratto{
+			margin: 0mm;
+			header: _blank;
+			footer: _blank;
+		}
+		
+		p{
+			line-height:14px;	
+		}
+		
+
+		.label{
+			color:#03004d;
+			font-family: "helveticacd";
+			font-weight:bold;
+		}
+		
+		.name_column{
+			color:#FFF;
+			background-color:#03004d;
+			height:30px;
+			border-right:1px solid #FFF;
+			border-top:2px solid #FFF;
+			text-align:center;
+		}	
+		
+		.value_column{
+			color:#000;
+			height:30px;
+			border-right:1px solid #000;
+			border-bottom:1px solid #000;
+			text-align:center;
+		}
+		
+		.value_column:last{
+			color:#000;
+			height:30px;
+			border-right:none;
+			border-bottom:1px solid #000;
+			text-align:center;
+		}	
+		
+      </style>
+   </head>
+   <body style="font-size:14px;font-family: 'helveticacd';">
+		
+        <htmlpagefooter name="myFooter1">
+        	<div style="width:100%;height:33px;font-size:12px;color:#000;border-left:0.1mm solid #fff;margin-left:30px;">
+                <b>L<sub>FM</sub></b> Larghezza foro muro&nbsp;&nbsp;&nbsp;<b>H<sub>FM</sub></b> Altezza foro muro 
+                </div>
+        </htmlpagefooter>
+       
+        <htmlpageheader name="myHeader2"></htmlpageheader>
+        
+        <htmlpageheader name="myHeader1">
+     
+       	<div style="width:100%;padding-top:5px;clear:both;">
+            <div style="width:112px;float:left;height:60px;">
+            	<center><img src="http://www.cerratospa.com/areariservata/htmls/templates/preventivi/logo_cerrato.png"  style='margin:15px 15px 0px 15px;'/></center>
+          	</div>
+            <div style="width:1008px;height:45px;float:left;border-left:1px solid #03004d;">
+            	<div style="width:1008px;height:45px;clear:both;">
+                	 
+                    <div style="width:500px;height:45px;float:left;text-align:center;border-right:0.1mm solid #03004d;">
+                    	<div class="label" style='font-size:20px;margin-top:0px;font-family:'Trebuchet MS', Arial, Helvetica, sans-serif'><b>MODULO RILIEVO PONTEGGI_SOSPESI</b></div>
+                        <center><div style='font-size:13px;border-top:1px solid #03004d;width:350px;margin-left:auto;
+  margin-right:auto;'>RILIEVO CON <b>VISTA DALL'ESTERNO</b> DEL VANO DI APPLICAZIONE</div></center>
+                    </div>
+                    
+                    <div style="width:210px;height:45px;border-right:0.1mm solid #03004d;float:left;">
+                        <div style="margin-left:10;margin-top:5px;width:210px;clear:both;">
+                        	<div style="float:left;height:20px;width:210px;">
+                            	<div style="margin-top:6px;color:#03004d;font-size:13px;">
+                                	<b>PROVVISORIO</b>
+                                	<div style="float:left;width:65px;">
+                                    <div style="margin-top:0px;color:#03004d;font-size:13px;"><b>Data rilievo</b></div>
+                                </div>
+                                <div style="float:left;text-align:left;margin-top:12px;width:100px;border-bottom:0.1mm solid #03004d;font-size:10px;">
+                                    <div style='padding:0px 0px 0px 6px;' id="codice_cliente"></div>
+                                </div>
+                              	</div> 
+                           	</div>
+                    	</div>
+                    </div>
+                    
+                    
+                   <div style="width:210px;height:45px;float:left;">
+                        <div style="margin-left:10;margin-top:5px;width:210px;clear:both;">
+                        	<div style="float:left;height:20px;width:210px;">
+                            	<div style="margin-top:6px;color:#03004d;font-size:13px;">
+                                	<b>DEFINITIVO</b>
+                                	<div style="float:left;width:65px;">
+                                    <div style="margin-top:0px;color:#03004d;font-size:13px;"><b>Data rilievo</b></div>
+                                </div>
+                                <div style="float:left;text-align:left;margin-top:12px;width:100px;border-bottom:0.1mm solid #03004d;font-size:10px;">
+                                    <div style='padding:0px 0px 0px 6px;' id="data"></div>
+                                </div>
+                              	</div> 
+                           	</div>
+                    	</div>
+                    </div>
+                    
+                    
+                    <div style="width:60px;height:45px;float:left;">
+                        <div style="margin-left:10;margin-top:5px;width:180px;clear:both;">
+                        	<div style="float:left;height:20px;width:180px;">
+                            	<div style="margin-top:6px;color:#03004d;font-size:11px;">
+                                	<div style='padding:6px 0px 0px 6px;'>Pag. {PAGENO} / {nb}</div>
+                              	</div> 
+                           	</div>
+                    	</div>
+                    </div>
+                    
+               </div>
+            	<div style="width:1200px;clear:both;">
+                    <div style="width:1200px;height:10px;color:#FFF;font-size:10px;background-color:#03004d;padding:3px 0px 0px 13px;">
+                        <b>INDIRIZZO CANTIERE O DESTINAZIONE MERCE</b>
+                    </div>
+                </div> 
+                
+               
+            	<div style="width:1100px;;border-right:0.1mm solid #ccc;">
+                	<div style="margin-left:7;width:1100px;clear:both;">
+                        
+                        <div style="height:20px;width:65px;float:left;">
+                            <div style="margin-top:6px;color:#03004d;font-size:12px;"><b>Rag. sociale</b></div>
+                        </div>
+                        
+                        <div style="float:left;text-align:left;height:20px;width:230px;border-bottom:0.1mm solid #03004d;font-size:10px;">
+                            <div style='padding:6px 0px 0px 6px;' id="ragione_sociale"></div>
+                        </div>
+                        
+                         <div style="height:20px;width:26px;float:left;">
+                            <div style="margin-top:6px;margin-left:4;color:#03004d;font-size:12px;"><b>Via</b></div>
+                        </div>
+                        
+                        <div style="float:left;text-align:left;height:20px;width:340px;border-bottom:0.1mm solid #03004d;font-size:10px;">
+                            <div style='padding:6px 0px 0px 6px;' id="indirizzo_cantiere"></div>
+                        </div>
+                        
+                        <div style="float:left;height:20px;width:30px;">
+                        	<div style="margin-top:6px;margin-left:4;color:#03004d;font-size:12px;"><b>Città</b></div>
+                        </div>
+                        
+                        <div style="float:left;text-align:left;height:20px;width:230px;border-bottom:0.1mm solid #03004d;font-size:10px;">
+                        	<div style='padding:6px 0px 0px 6px;' id="citta_cantiere"></div>
+                        </div>
+                        
+                        <div style="float:left;height:20px;width:30px;">
+                        	<div style="margin-top:6px;margin-left:4;color:#03004d;font-size:12px;"><b>Prov.</b></div>
+                        </div>
+                        
+                        <div style="float:left;text-align:left;height:20px;width:40px;border-bottom:0.1mm solid #03004d;font-size:10px;">
+                        	<div style='padding:6px 0px 0px 6px;' id="provincia_cantiere"></div>
+                        </div>
+                      
+                  	</div>
+            	</div>
+                
+                <div style="width:1000px;;border-right:0.1mm solid #ccc;">
+                	<div style="margin-left:7;width:1000px;clear:both;">
+                        
+                        <div style="height:20px;width:65px;float:left;">
+                            <div style="margin-top:6px;color:#03004d;font-size:12px;"><b>Referente</b></div>
+                        </div>
+                        
+                        <div style="float:left;text-align:left;height:20px;width:300px;border-bottom:0.1mm solid #03004d;font-size:10px;">
+                            <div style='padding:6px 0px 0px 6px;' id="referente"></div>
+                        </div>
+                        
+                         <div style="height:20px;width:50px;float:left;">
+                            <div style="margin-top:6px;margin-left:4;color:#03004d;font-size:12px;"><b>E-mail</b></div>
+                        </div>
+                        
+                        <div style="float:left;text-align:left;height:20px;width:316px;border-bottom:0.1mm solid #03004d;font-size:10px;">
+                            <div style='padding:6px 0px 0px 6px;' id="email_referente"></div>
+                        </div>
+                        
+                        <div style="float:left;height:20px;width:30px;">
+                        	<div style="margin-top:6px;margin-left:4;color:#03004d;font-size:12px;"><b>Cell</b></div>
+                        </div>
+                        
+                        <div style="float:left;text-align:left;height:20px;width:230px;border-bottom:0.1mm solid #03004d;font-size:10px;">
+                        	<div style='padding:6px 0px 0px 6px;' id="cellulare_referente"></div>
+                        </div>
+                        
+                       
+                  	</div>
+            	</div>
+                
+        </div>
+        </div>
+        
+        <table style="overflow: wrap;padding:0px;border-collapse: separate;border-spacing: 0px;*border-collapse: expression('separate', cellSpacing = '0px', cellPadding = '0px');font-size:10px;margin-top:0px;">
+        	<tr>
+            	<td class="name_column" style="width:56px;"><b>RIF.</b></td>
+                <td class="name_column" style="width:57px;"><b>PZ.</b></td>
+                <td class="name_column" style="width:220px;"><b>DIM. FORO MURO<br>(mm)</b></td>
+                <td class="name_column" style="width:120px;">
+                	<table style="width:120px;overflow: wrap;padding:0px;border-collapse: separate;border-spacing: 0px;*border-collapse: expression('separate', cellSpacing = '0px', cellPadding = '0px');font-size:10px;margin:0px;color:#FFF;font-weight:bold;">
+                    	<tr>
+                        	<td colspan="2" style="border-bottom:0.1mm solid #fff;width:120px;text-align:center;padding:5px 0px 5px 0px">DIM. PORTA (ORDINE)</td>
+                       	</tr>
+                        <tr>
+                        	<td style="border-right:0.1mm solid #fff;width:60px;text-align:center;padding:5px 0px 5px 0px">L<sub>p</sub> (mm)</td>
+                            <td style="width:60px;text-align:center;padding:5px 0px 5px 0px">H<sub>p</sub> (mm)</td>
+                      	</tr>
+                    </table>
+              	</td>
+                <td class="name_column" style="width:120px;">
+                	<table style="width:120px;overflow: wrap;padding:0px;border-collapse: separate;border-spacing: 0px;*border-collapse: expression('separate', cellSpacing = '0px', cellPadding = '0px');font-size:10px;margin:0px;color:#FFF;font-weight:bold;">
+                    	<tr>
+                        	<td colspan="2" style="border-bottom:0.1mm solid #fff;width:120px;text-align:center;padding:5px 0px 5px 0px">SOPRAL. (APPLICATO)</td>
+                       	</tr>
+                        <tr>
+                        	<td style="border-right:0.1mm solid #fff;width:60px;text-align:center;padding:5px 0px 5px 0px">H<sub>s</sub> (mm)</td>
+                            <td style="width:60px;text-align:center;padding:5px 0px 5px 0px">TUBO</td>
+                      	</tr>
+                    </table>
+              	</td>
+                <td class="name_column" style="width:95px;">
+                	<table style="width:120px;overflow: wrap;padding:0px;border-collapse: separate;border-spacing: 0px;*border-collapse: expression('separate', cellSpacing = '0px', cellPadding = '0px');font-size:10px;margin:0px;color:#FFF;font-weight:bold;">
+                    	<tr>
+                        	<td colspan="3" style="border-bottom:0.1mm solid #fff;width:95px;text-align:center;padding:5px 0px 5px 0px">COPRIFILI</td>
+                       	</tr>
+                        <tr>
+                        	<td style="border-right:0.1mm solid #fff;width:30px;text-align:center;padding:5px 0px 5px 0px">SX <span style="font-size:4px !important;">AP/SC</span></td>
+                            <td style="border-right:0.1mm solid #fff;width:30px;text-align:center;padding:5px 0px 5px 0px">DX <span style="font-size:4px !important;">AP/SC</span></td>
+                            <td style="width:35px;text-align:center;padding:5px 0px 5px 0px">SUP. <span style="font-size:4px !important;">AP/SC</span></td>
+                      	</tr>
+                    </table>
+              	</td>
+                <td class="name_column" style="width:45px;"><b>AERAZ. RICH. (mq)</b></td>
+                
+                <td class="name_column" style="width:140px;">
+                	<table style="width:140px;overflow: wrap;padding:0px;border-collapse: separate;border-spacing: 0px;*border-collapse: expression('separate', cellSpacing = '0px', cellPadding = '0px');font-size:10px;margin:0px;color:#FFF;font-weight:bold;">
+                    	<tr>
+                        	<td colspan="5" style="border-bottom:0.1mm solid #fff;width:140px;text-align:center;padding:5px 0px 5px 0px">TIP. AERAZIONE</td>
+                       	</tr>
+                        <tr>
+                        	<td style="border-right:0.1mm solid #fff;width:50px;text-align:center;padding:5px 0px 5px 0px">CAPP/ASOL</td>
+                            <td style="border-right:0.1mm solid #fff;width:25px;text-align:center;padding:5px 0px 5px 0px">SUP.</td>
+                            <td style="border-right:0.1mm solid #fff;width:25px;text-align:center;padding:5px 0px 5px 0px">INF.</td>
+                            <td style="border-right:0.1mm solid #fff;width:25px;text-align:center;padding:5px 0px 5px 0px">MIC.</td>
+                            <td style="width:35px;text-align:center;padding:5px 0px 5px 0px">ALETT.</td>
+                      	</tr>
+                    </table>
+              	</td>
+                
+                <td class="name_column" style="width:60px;">
+                	<table style="width:60px;overflow: wrap;padding:0px;border-collapse: separate;border-spacing: 0px;*border-collapse: expression('separate', cellSpacing = '0px', cellPadding = '0px');font-size:10px;margin:0px;color:#FFF;font-weight:bold;">
+                    	<tr>
+                        	<td colspan="2" style="border-bottom:0.1mm solid #fff;width:60px;text-align:center;padding:5px 0px 5px 0px">ALIMENT.</td>
+                       	</tr>
+                        <tr>
+                        	<td style="border-right:0.1mm solid #fff;width:30px;text-align:center;padding:5px 0px 5px 0px">SX</td>
+                            <td style="width:30px;text-align:center;padding:5px 0px 5px 0px">DX</td>
+                      	</tr>
+                    </table>
+              	</td>
+                
+                <td class="name_column" style="width:60px;">
+                	<table style="width:60px;overflow: wrap;padding:0px;border-collapse: separate;border-spacing: 0px;*border-collapse: expression('separate', cellSpacing = '0px', cellPadding = '0px');font-size:10px;margin:0px;color:#FFF;font-weight:bold;">
+                    	<tr>
+                        	<td colspan="2" style="border-bottom:0.1mm solid #fff;width:60px;text-align:center;padding:5px 0px 5px 0px">TIP.APPL.</td>
+                       	</tr>
+                        <tr>
+                        	<td style="border-right:0.1mm solid #fff;width:30px;text-align:center;padding:5px 0px 5px 0px">L</td>
+                            <td style="width:30px;text-align:center;padding:5px 0px 5px 0px">H</td>
+                      	</tr>
+                    </table>
+              	</td>
+                
+                <td class="name_column" style="width:111px;"><b>NOTE</b><div style="font-size:6px;"> (da indicare se: non debordante, coibentata, legno, verniciata,serrature speciali, passaggio pedonale, massima profondità interna, etc.)</div></td>
+            </tr>
+       </table>
+       
+       
+       
+       </htmlpageheader>
+       
+       
+       <table style="overflow: wrap;padding:0px;border-collapse: separate;border-spacing: 0px;*border-collapse: expression('separate', cellSpacing = '0px', cellPadding = '0px');font-size:10px;margin-top:0px;" id="articoli">
+        	
+       </table>
+         
+       
+   </body>
+</html>
+
+

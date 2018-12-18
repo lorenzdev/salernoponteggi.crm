@@ -1,0 +1,1115 @@
+var MisureBasculante = function(content){
+	
+	var _this = this;
+	_this.elem;
+	_this.HportaFissa;
+	_this.HsopraluceFissa = 300;
+	_this.content = content;
+	_this.Disegno;
+	_this.dim = {
+			foroMuro: {"width":"", "height": ""},
+			porta: {"width": "","height": ""},
+			sopraluce: {"height": ""},
+			posa: ""
+		}
+	
+	_this.misureForo = {
+		"width": 0,
+		"height":0	
+	}
+	
+	_this.posa = {
+		"up": null,
+		"dx": null,
+		"sx":null	
+	}
+	
+	_this.sopraluce = 0;
+	
+	_this.initialize = function(){
+		jQuery("#repeatSistemaRifinitura").prop("checked",false);
+		jQuery("#Lforo").unbind("click");
+		jQuery("#Hforo").unbind("click");
+		
+		jQuery("#Lforo").val("");
+		jQuery("#Hforo").val("");
+		jQuery("#Lporta").val("");
+		jQuery("#Hporta").val("");
+		
+		jQuery("#repeatSopraluce").prop("checked",false);		
+				
+		jQuery("#Lforo").removeAttr("disabled");
+		jQuery("#Hforo").removeAttr("disabled");
+		jQuery("#Lporta").val("");
+		jQuery("#Hporta").val("");
+		
+		jQuery("#Hsopraluce").css({backgroundColor:"#fff"});
+				
+		_this.misureForo = {
+			"width": 0,
+			"height":0	
+		}
+				
+		_this.posa = {
+			"up": 0,
+			"dx": 0,
+			"sx":0	
+		}
+		
+		_this.sopraluce = {
+			"height": 0,
+		}
+				
+		jQuery(".up_tipo_posa").each(function(){
+			jQuery(this).removeAttr("checked");
+		});
+		jQuery("#up_valore_tipo_posa").val(0);
+		//jQuery("#up_valore_tipo_posa").attr("disabled","disabled");
+		jQuery(".up_tipo_posa").attr("disabled","disabled");
+			
+		jQuery(".sx_tipo_posa").each(function(){
+			jQuery(this).removeAttr("checked");
+		});
+		jQuery("#sx_valore_tipo_posa").val(0);
+		//jQuery("#sx_valore_tipo_posa").attr("disabled","disabled");
+		jQuery(".sx_tipo_posa").attr("disabled","disabled");
+				
+		jQuery(".dx_tipo_posa").each(function(){
+			jQuery(this).removeAttr("checked");
+		});
+		jQuery("#dx_valore_tipo_posa").val(0);
+		//jQuery("#dx_valore_tipo_posa").attr("disabled","disabled");
+		jQuery(".dx_tipo_posa").attr("disabled","disabled");
+		
+		
+		jQuery(".sopraluce").removeAttr("checked");
+		jQuery(".sopraluce").each(function(){
+			if(jQuery(this).attr("value") == "no"){
+				jQuery(this).prop('checked', true);
+				return;
+			}
+		});
+		jQuery("#Hsopraluce").val(0);
+		jQuery(".sopraluce").attr("disabled","disabled");
+		jQuery("#Hsopraluce").attr("disabled","disabled");
+		
+		jQuery("#cambiaMisurePorta").val("Cambia le misure della porta");
+		jQuery("#Hpiu").attr("disabled","disabled");
+		jQuery("#Hmeno").attr("disabled","disabled");
+		jQuery("#Lpiu").attr("disabled","disabled");
+		jQuery("#Lmeno").attr("disabled","disabled");
+		
+		jQuery("#warning").html("");
+		
+		jQuery("#DisegnoTecnico").html("");
+		
+		jQuery("#continua").attr("disabled","disabled");
+	
+	}
+	
+	_this.init = function(elem){
+		_this.elem = elem;
+		
+		jQuery.get(P_FORM_FOROMURO, function(dataHtml){
+			_this.elem.html(dataHtml);
+			_this.elem.append("<script language=\"javascript\" src=\"js/BASCULANTI/DisegnoTecnico/DisegnoBasculante.js\" type=\"text/javascript\"></script>");
+			
+			_this.Disegno = new DisegnoBasculante();
+			
+			var selezione = jQuery.getCookie("selezione");
+			
+			// PRIMA SELEZIONE MISURE FORO MURO
+			
+			jQuery("#Lforo").on("keyup", function(){
+				if(jQuery(this).val()=="") jQuery(this).val(0);
+				_this.misureForo.width = jQuery(this).val();
+				jQuery(this).val(_this.misureForo.width);
+				_this.checkForoMuro();
+				_this.compilaMisurePorta();
+				if(jQuery(this).val()==0) jQuery(this).select();
+			});
+			
+			jQuery("#Lforo").on("keypress", function(e){
+				 return jQuery.onlynumbers(e);
+			});
+			
+			jQuery("#Hforo").on("keyup", function(){
+				if(jQuery(this).val()=="") jQuery(this).val(0);
+				_this.misureForo.height = jQuery(this).val();
+				jQuery(this).val(_this.misureForo.height);
+				_this.checkForoMuro();
+				_this.compilaMisurePorta();
+				if(jQuery(this).val()==0) jQuery(this).select();
+			});
+			
+			jQuery("#Hforo").on("keypress", function(e){
+				 return jQuery.onlynumbers(e);
+			});
+			
+			
+			
+			
+			
+			// SECONDA SELEZIONE IN LUCE OLTRE LUCE
+			if(selezione.ingombro.sx != null && selezione.ingombro.dx != null && selezione.ingombro.up != null){
+				var repeat = "<input type='checkbox' id=\"repeatSistemaRifinitura\" value='si' disabled/>";
+					repeat += "Compila con i valori in memoria";
+				jQuery("#checkRepeatTipoPosa").html(repeat);	
+				jQuery("#repeatSistemaRifinitura").bind("click",function(){
+						
+						if(jQuery(this).is(":checked")){
+							
+							var up = selezione.ingombro.up;
+							var sx = selezione.ingombro.sx;
+							var dx = selezione.ingombro.dx;
+							
+							// UP
+							if(up != 0){
+								jQuery("#up_valore_tipo_posa").val(up);
+								jQuery("#up_valore_tipo_posa").attr("disabled","disabled");
+								_this.posa.up = up;
+								jQuery(".up_tipo_posa").each(function(){
+									if(jQuery(this).attr("value") == "up_1")
+										jQuery(this).prop("checked","checked");
+										else
+										jQuery(this).removeAttr("checked");
+								});
+								jQuery(".up_tipo_posa").attr("disabled","disabled");
+							}else{
+								jQuery("#up_valore_tipo_posa").val(0);
+								jQuery("#up_valore_tipo_posa").attr("disabled","disabled");
+								_this.posa.up = 0;
+								jQuery(".up_tipo_posa").removeAttr("disabled");
+								jQuery(".up_tipo_posa").attr("disabled","disabled");
+								jQuery(".up_tipo_posa").each(function(){
+									if(jQuery(this).attr("value") == "up_0")
+										jQuery(this).prop("checked","checked");
+										else
+										jQuery(this).removeAttr("checked");
+								});
+							}
+							
+							// SX
+							if(sx != 0){
+								jQuery("#sx_valore_tipo_posa").val(sx);
+								jQuery("#sx_valore_tipo_posa").attr("disabled","disabled");
+								_this.posa.sx = sx;
+								jQuery(".sx_tipo_posa").each(function(){
+									if(jQuery(this).attr("value") == "sx_1")
+										jQuery(this).prop("checked","checked");
+										else
+										jQuery(this).removeAttr("checked");
+								});
+								jQuery(".sx_tipo_posa").attr("disabled","disabled");
+							}else{
+								jQuery("#sx_valore_tipo_posa").val(0);
+								jQuery("#sx_valore_tipo_posa").attr("disabled","disabled");
+								_this.posa.sx = 0;
+								jQuery(".sx_tipo_posa").removeAttr("disabled");
+								jQuery(".sx_tipo_posa").attr("disabled","disabled");
+								jQuery(".sx_tipo_posa").each(function(){
+									if(jQuery(this).attr("value") == "sx_0")
+										jQuery(this).prop("checked","checked");
+										else
+										jQuery(this).removeAttr("checked");
+								});
+							}
+							
+							// DX
+							if(dx != 0){
+								jQuery("#dx_valore_tipo_posa").val(dx);
+								jQuery("#dx_valore_tipo_posa").attr("disabled","disabled");
+								_this.posa.dx = dx;
+								jQuery(".dx_tipo_posa").each(function(){
+									if(jQuery(this).attr("value") == "dx_1")
+										jQuery(this).prop("checked","checked");
+										else
+										jQuery(this).removeAttr("checked");
+								});
+								jQuery(".dx_tipo_posa").attr("disabled","disabled");
+							}else{
+								jQuery("#dx_valore_tipo_posa").val(0);
+								jQuery("#dx_valore_tipo_posa").attr("disabled","disabled");
+								_this.posa.dx = 0;
+								jQuery(".dx_tipo_posa").removeAttr("disabled");
+								jQuery(".dx_tipo_posa").attr("disabled","disabled");
+								jQuery(".dx_tipo_posa").each(function(){
+									if(jQuery(this).attr("value") == "dx_0")
+										jQuery(this).prop("checked","checked");
+										else
+										jQuery(this).removeAttr("checked");
+								});
+							}
+							
+						}else{
+							jQuery("#up_valore_tipo_posa").val(0);
+							jQuery("#up_valore_tipo_posa").removeAttr("disabled");
+							jQuery(".up_tipo_posa").removeAttr("disabled");
+							jQuery(".up_tipo_posa").removeAttr("checked");
+							_this.posa.up = 0;
+							
+							jQuery("#sx_valore_tipo_posa").val(0);
+							jQuery("#sx_valore_tipo_posa").removeAttr("disabled");
+							jQuery(".sx_tipo_posa").removeAttr("disabled");
+							jQuery(".sx_tipo_posa").removeAttr("checked");
+							_this.posa.sx = 0;
+							
+							jQuery("#dx_valore_tipo_posa").val(0);
+							jQuery("#dx_valore_tipo_posa").removeAttr("disabled");
+							jQuery(".dx_tipo_posa").removeAttr("disabled");
+							jQuery(".dx_tipo_posa").removeAttr("checked");
+							_this.posa.dx = 0;
+							
+						}
+						
+						
+						_this.checkTipoPosa();
+						_this.compilaMisurePorta();
+				});
+			}
+			
+			
+			
+			/*if(selezione.repeat){
+				jQuery("#boxTipoPosa").html("");
+				
+				if(selezione.accessori.sistemaRifinitura.repeat){
+					jQuery("#boxTipoPosa").append("<h3>Scegli il tipo posa</h3>");
+					
+					var label1 = "";
+					if(selezione.ingombro.up != null)
+						label1 = "Lato superiore oltre luce di " + selezione.ingombro.up + "(mm)<br>";	
+						else
+						label1 = "Lato superiore in luce<br>";
+					if(selezione.ingombro.sx != null)
+						label1 += "Lato sinistro oltre luce di " + selezione.ingombro.sx + "(mm)<br>";	
+						else
+						label1 += "Lato sinistro in luce<br>";
+					if(selezione.ingombro.dx != null)
+						label1 += "Lato destro oltre luce di " + selezione.ingombro.dx + "(mm)<br>";	
+						else
+						label1 += "Lato destro in luce<br>";
+					jQuery("#boxTipoPosa").append("<input type='radio' id='sistemaRifinituraOld' class='sistemaRifinitura'/>"+label1);
+					jQuery("#boxTipoPosa").append("<input type='radio' id='sistemaRifinituraNew' class='sistemaRifinitura'/> Imposta un nuovo tipo posa");
+					
+				}
+			}*/
+			
+			jQuery("#up_valore_tipo_posa").bind("click",function(){
+				jQuery(".up_tipo_posa").prop("checked", false);
+				jQuery(".up_tipo_posa").each(function(){
+					if(jQuery(this).val() == "up_1"){
+						if(Number(jQuery("#up_valore_tipo_posa").val()) == 0)
+							jQuery("#up_valore_tipo_posa").val(20);
+						jQuery(this).prop("checked",true);
+						return;	
+					}
+				});
+				_this.checkTipoPosa();
+				_this.posa.up = parseInt(jQuery("#up_valore_tipo_posa").val());
+				_this.compilaMisurePorta();
+				
+			});
+			
+			jQuery("#sx_valore_tipo_posa").bind("click",function(){
+				jQuery(".sx_tipo_posa").prop("checked", false);
+				jQuery(".sx_tipo_posa").each(function(){
+					if(jQuery(this).val() == "sx_1"){
+						
+						if(Number(jQuery("#sx_valore_tipo_posa").val()) == 0)
+							jQuery("#sx_valore_tipo_posa").val(20);
+							
+						jQuery(this).prop("checked",true);
+						return;	
+					}
+				});
+				_this.checkTipoPosa();
+				_this.posa.sx = parseInt(jQuery("#sx_valore_tipo_posa").val());
+				_this.compilaMisurePorta();
+			});
+			
+			jQuery("#dx_valore_tipo_posa").bind("click",function(){
+				jQuery(".dx_tipo_posa").prop("checked", false);
+				jQuery(".dx_tipo_posa").each(function(){
+					if(jQuery(this).val() == "dx_1"){
+						if(Number(jQuery("#dx_valore_tipo_posa").val()) == 0)
+							jQuery("#dx_valore_tipo_posa").val(20);
+						jQuery(this).prop("checked",true);
+						return;	
+					}
+				});
+				_this.posa.dx = parseInt(jQuery("#dx_valore_tipo_posa").val());
+				_this.checkTipoPosa();
+				_this.compilaMisurePorta();
+			});
+			
+			
+			
+			jQuery(".up_tipo_posa").bind("click",function(){
+				
+				_this.checkTipoPosa();
+				if(jQuery(this).attr("value") == "up_1"){
+					jQuery("#up_valore_tipo_posa").removeAttr("disabled");
+					jQuery("#up_valore_tipo_posa").val(20);
+				}else{
+					jQuery("#up_valore_tipo_posa").val(0);
+					//jQuery("#up_valore_tipo_posa").attr("disabled","disabled");
+				}
+				_this.posa.up = parseInt(jQuery("#up_valore_tipo_posa").val());
+				_this.compilaMisurePorta();
+				
+			});
+			jQuery("#up_valore_tipo_posa").on("keypress",function(ee){
+				return jQuery.onlynumbers(ee);
+			});
+			jQuery("#up_valore_tipo_posa").on("keyup",function(){
+				/*if(isNaN(parseInt(jQuery(this).val())) || (parseInt(jQuery(this).val()) < 20 && parseInt(jQuery(this).val()) >= 0))
+					jQuery(this).val(20);
+				if(parseInt(jQuery(this).val()) > 100)
+					jQuery(this).val(100);*/
+				_this.posa.up = parseInt(jQuery(this).val());
+				_this.compilaMisurePorta();
+			});
+			
+			jQuery(".sx_tipo_posa").bind("click",function(){
+				_this.checkTipoPosa();
+				if(jQuery(this).attr("value") == "sx_1"){
+					jQuery("#sx_valore_tipo_posa").val(20);
+					jQuery("#sx_valore_tipo_posa").removeAttr("disabled");
+				}else{
+					jQuery("#sx_valore_tipo_posa").val(0);
+					//jQuery("#sx_valore_tipo_posa").attr("disabled","disabled");
+				}
+				_this.posa.sx = parseInt(jQuery("#sx_valore_tipo_posa").val());
+				_this.compilaMisurePorta();
+			});
+			jQuery("#sx_valore_tipo_posa").on("keypress",function(ee){
+				return jQuery.onlynumbers(ee);
+			});
+			jQuery("#sx_valore_tipo_posa").on("keyup",function(){
+				/*if(isNaN(parseInt(jQuery(this).val())) || (parseInt(jQuery(this).val()) < 20 && parseInt(jQuery(this).val()) >= 0))
+					jQuery(this).val(20);
+				if(parseInt(jQuery(this).val()) > 100)
+					jQuery(this).val(100);*/
+				_this.posa.sx = parseInt(jQuery(this).val());
+				_this.compilaMisurePorta();
+			});
+			
+			jQuery(".dx_tipo_posa").bind("click",function(){
+				_this.checkTipoPosa();
+				if(jQuery(this).attr("value") == "dx_1"){
+					jQuery("#dx_valore_tipo_posa").val(20);
+					jQuery("#dx_valore_tipo_posa").removeAttr("disabled");
+				}else{
+					jQuery("#dx_valore_tipo_posa").val(0);
+					_this.posa.dx = 0;
+					//jQuery("#dx_valore_tipo_posa").attr("disabled","disabled");
+				}
+				_this.posa.dx = parseInt(jQuery("#dx_valore_tipo_posa").val());
+				_this.compilaMisurePorta();
+			});
+			jQuery("#dx_valore_tipo_posa").on("keypress",function(ee){
+				return jQuery.onlynumbers(ee);
+			});
+			jQuery("#dx_valore_tipo_posa").on("keyup",function(){
+				_this.posa.dx = parseInt(jQuery(this).val());
+				_this.compilaMisurePorta();
+			});
+		
+			
+			
+			//sopraluce
+			if(selezione.accessori.sopraluce.height != null){
+				var repeat = "<input type='checkbox' id=\"repeatSopraluce\" value='si' disabled/>";
+					repeat += "Compila con i valori in memoria<br /><br />";
+				jQuery("#checkRepeatSopraluce").html(repeat);	
+				jQuery("#repeatSopraluce").bind("click",function(){
+				  var height = selezione.accessori.sopraluce.height;
+				  if(jQuery(this).is(":checked")){
+					  jQuery(".sopraluce").prop("disabled",true);
+					   jQuery("#Hsopraluce").prop("disabled",true);
+					  if(height <= 0){
+						  jQuery(".sopraluce").each(function(){
+							  if(jQuery(this).attr("value") == "no")
+								  jQuery(this).prop("checked","checked");
+								  
+						  });
+						  jQuery("#Hsopraluce").val(0);
+						  _this.sopraluce = 0;	
+					  }else{
+						  jQuery(".sopraluce").each(function(){
+							  if(jQuery(this).attr("value") == "si")
+								  jQuery(this).prop("checked","checked");
+								  
+						  });
+						  
+						  jQuery("#Hsopraluce").val(height);	
+						  _this.sopraluce = height;
+					  }	
+				  }else{
+					  jQuery(".sopraluce").removeAttr("disabled");
+					   jQuery("#Hsopraluce").prop("disabled",false);
+					  jQuery(".sopraluce").each(function(){
+						  if(jQuery(this).attr("value") == "no")
+							  jQuery(this).prop("checked","checked");	
+					  });
+					  jQuery("#Hsopraluce").val(0);	
+					  _this.sopraluce = 0;
+				  }
+				  _this.compilaMisurePorta();
+			  });
+			}
+			
+			////console.log("UUUUUUUUUUUUUUUUUUUUU!!!!!");
+			////console.log(selezione);
+			if(selezione.modifica.boo || selezione.indietro){
+				
+				////console.log("OLEEEEEEE");
+				////console.log(selezione);
+				_this.autoCompila();
+			}
+			
+			//TERZA SELEZIONE SOPRALUCE
+			jQuery(".sopraluce").click(function(){
+				
+				/*if(jQuery.getCookie("selezione").accessori.sopraluce.repeat){
+					var alertMs = "Stai cercando di modificare la selezione precedente.";
+						alertMs += "I dati riguardo l\'accessorio sopraluce saranno sovrascritti. Sei sicuro di voler procedere?";
+					var conf = confirm(alertMs);
+					////console.log(conf);
+					if(conf != true)
+						return false;
+						else{
+						var selezione = jQuery.getCookie("selezione");
+						selezione.accessori.sopraluce.articolo = null;	
+						selezione.accessori.sopraluce.repeat = false;			
+						jQuery.registerCookie("selezione",selezione);
+						if(jQuery(this).attr("value") == "si"){
+							jQuery("#Hsopraluce").val(110);
+							jQuery("#Hsopraluce").removeAttr("disabled");
+							}else{
+							jQuery("#Hsopraluce").val(0);
+							jQuery("#Hsopraluce").attr("disabled","disabled");
+							}
+						_this.sopraluce = parseInt(jQuery("#Hsopraluce").val());
+						_this.compilaMisurePorta();
+						return true;
+					}
+				}*/
+				
+				
+				if(jQuery(this).attr("value") == "si"){
+					jQuery("#Hsopraluce").val(110);
+					jQuery("#Hsopraluce").removeAttr("disabled");
+					}else{
+					jQuery("#Hsopraluce").val(0);
+					//jQuery("#Hsopraluce").attr("disabled","disabled");
+					}
+				_this.sopraluce = parseInt(jQuery("#Hsopraluce").val());
+				_this.compilaMisurePorta();
+			});
+			
+			
+			/*if(jQuery.getCookie("selezione").accessori.sopraluce.codice != undefined){
+				jQuery(".sopraluce").each(function(){
+					if(jQuery(this).attr("value") == "si")
+						jQuery(this).attr("checked","checked");
+				});
+				jQuery("#Hsopraluce").val(jQuery.getCookie("selezione").accessori.sopraluce.height);
+				jQuery("#Hsopraluce").removeAttr("disabled");
+				_this.sopraluce = jQuery.getCookie("selezione").accessori.sopraluce.height;
+			}*/
+			
+			jQuery("#Hsopraluce").on("keypress", function(e){
+				 return jQuery.onlynumbers(e);
+			});
+			jQuery("#Hsopraluce").on("keyup", function(){
+				_this.sopraluce = parseInt(jQuery("#Hsopraluce").val());
+				_this.compilaMisurePorta();
+			});
+			
+			function cambiaMisurePorta(boo){
+				
+				if(boo){
+					//jQuery("#Lforo").attr("disabled","disabled");
+					//jQuery("#Hforo").attr("disabled","disabled");
+					jQuery(".up_tipo_posa").attr("disabled","disabled");
+					jQuery(".sx_tipo_posa").attr("disabled","disabled");
+					jQuery(".dx_tipo_posa").attr("disabled","disabled");
+					jQuery("#up_valore_tipo_posa").attr("disabled","disabled");
+					jQuery("#sx_valore_tipo_posa").attr("disabled","disabled");
+					jQuery("#dx_valore_tipo_posa").attr("disabled","disabled");
+					jQuery(".sopraluce").attr("disabled","disabled");
+					jQuery("#Hsopraluce").attr("disabled","disabled");
+					
+					
+					jQuery("#Hmeno").removeAttr("disabled");
+					jQuery("#Lmeno").removeAttr("disabled");
+					
+					jQuery("#cambiaMisurePorta").attr("value","Reimposta i valori iniziali");
+				}else{
+					_this.compilaMisurePorta();
+					jQuery("#cambiaMisurePorta").attr("value","Cambia le msure della porta");
+					
+					jQuery(".up_tipo_posa").removeAttr("disabled");
+					jQuery(".sx_tipo_posa").removeAttr("disabled");
+					jQuery(".dx_tipo_posa").removeAttr("disabled");
+					jQuery(".sopraluce").removeAttr("disabled");
+					if(jQuery(".sopraluce:checked").attr("value") == "si")
+						jQuery("#Hsopraluce").removeAttr("disabled");
+					
+					
+					if(jQuery(".up_tipo_posa:checked").attr("value") == "up_1")
+						jQuery("#up_valore_tipo_posa").removeAttr("disabled");
+					
+					if(jQuery(".sx_tipo_posa:checked").attr("value") == "sx_1")
+						jQuery("#sx_valore_tipo_posa").removeAttr("disabled");
+						
+					if(jQuery(".dx_tipo_posa:checked").attr("value") == "dx_1")
+						jQuery("#dx_valore_tipo_posa").removeAttr("disabled");
+					
+					jQuery("#Hpiu").attr("disabled","disabled");
+					jQuery("#Hmeno").attr("disabled","disabled");
+					
+					jQuery("#Lpiu").attr("disabled","disabled");
+					jQuery("#Lmeno").attr("disabled","disabled");
+					
+				}
+			}
+			
+			//BOTTONE CHE CONSENTE DI CAMBIARE LE MISURE DELLA PORTA
+			jQuery("#cambiaMisurePorta").bind("click",function(){
+				if(jQuery(this).attr("value") == "Reimposta i valori iniziali")
+					cambiaMisurePorta(false);
+					else
+					cambiaMisurePorta(true);
+			});
+			
+			jQuery("#Lpiu").bind("click",function(){
+				
+				var widthMax = _this.approssimaL();
+				var Lporta = parseInt(jQuery("#Lporta").val());
+				Lporta += 30;
+				var diff = 30;
+				if(Lporta%100 == 60 || Lporta%100 == 10){
+					Lporta=Lporta-10;
+					diff -= 10;
+				}
+				jQuery("#Lporta").val(Lporta);
+				
+				if(Lporta>=widthMax)
+					jQuery(this).attr("disabled","disabled");
+					
+				jQuery("#Lmeno").removeAttr("disabled");
+				_this.dim.porta.width += diff;
+				_this.verificaDimensioniPorta();
+				
+			});
+			
+			jQuery("#Lmeno").bind("click",function(){
+				var Lporta = parseInt(jQuery("#Lporta").val());
+				Lporta -= 30;
+				var diff = -30;
+				if(Lporta%100 == 70 || Lporta%100 == 20){
+					Lporta=Lporta+10;
+					diff += 10;	
+				}
+					
+				jQuery("#Lporta").val(Lporta);
+				
+				jQuery("#Lpiu").removeAttr("disabled");
+				
+				if(Lporta <= 30){
+					jQuery(this).attr("disabled","disabled");
+					return;	
+				}
+				_this.dim.porta.width += diff;
+				_this.verificaDimensioniPorta();
+				
+			});
+			
+			jQuery("#Hpiu").bind("click",function(){
+				
+				
+				var Hporta = parseInt(jQuery("#Hporta").val());
+				var heightMax = _this.approssimaH();
+				
+				Hporta += 30;
+				var diff = 30;
+				if(Hporta%100 == 60 || Hporta%100 == 10){
+					Hporta=Hporta-10;
+					diff -= 10;
+				}
+				jQuery("#Hporta").val(Hporta);
+				
+				if(Hporta>=heightMax)
+					jQuery(this).attr("disabled","disabled");
+					
+				jQuery("#Hmeno").removeAttr("disabled");
+				
+				_this.dim.porta.height += diff;
+				
+				_this.verificaDimensioniPorta();
+				
+			});
+			
+			jQuery("#Hmeno").bind("click",function(){
+				var Hporta = parseInt(jQuery("#Hporta").val());
+				Hporta -= 30;
+				var diff = -30;
+				if(Hporta%100 == 70 || Hporta%100 == 20){
+					diff += 10;
+					Hporta=Hporta+10;	
+				}
+				jQuery("#Hporta").val(Hporta);
+				
+				jQuery("#Hpiu").removeAttr("disabled");
+				
+				if(Hporta <= 30){
+					jQuery(this).attr("disabled","disabled");
+					return;	
+				}
+				_this.dim.porta.height += diff;
+				_this.verificaDimensioniPorta();
+				
+			});
+			
+			// BOTTONO COMPLETE
+			jQuery("#continua").bind("click", function(){
+				////console.log(_this.content.main);
+				_this.content.main.loader.init(function(){_this.complete();});
+			});
+			
+			//BOTTONE RESETTA
+			jQuery("#resetta").bind("click", function(){
+				_this.initialize();
+			});
+			
+			jQuery("#Hsopraluce").bind("click", function(){
+				jQuery("#Hsopraluce").val(110);
+				_this.sopraluce = parseInt(jQuery("#Hsopraluce").val());
+				jQuery(".sopraluce").each(function(){
+					if(jQuery(this).val() == "si"){
+						jQuery(this).prop("checked", true);
+						return;	
+					}
+				});
+				_this.compilaMisurePorta();
+				
+			});
+			
+			_this.content.main.loader.remove();
+			
+		});
+	}
+	
+	_this.checkForoMuro = function(){
+		if(jQuery.validaValore(_this.misureForo.height) && 
+			jQuery.validaValore(_this.misureForo.width))
+			_this.activeTipoPosa(true);
+			else
+			_this.activeTipoPosa(false);
+		
+	}
+	
+	_this.checkTipoPosa = function(){
+		
+		if(jQuery(".up_tipo_posa").is(":checked") &&
+			jQuery(".sx_tipo_posa").is(":checked") &&
+				jQuery(".dx_tipo_posa").is(":checked"))
+				_this.activeSopraluce(true);
+				else{
+				_this.activeSopraluce(false);
+				jQuery("#continua").attr("disabled","disabled");		
+		}
+	}
+	
+	_this.activeTipoPosa = function(boo){
+		
+		if(!boo){
+			jQuery(".up_tipo_posa").attr("disabled","disabled");
+			jQuery(".dx_tipo_posa").attr("disabled","disabled");
+			jQuery(".sx_tipo_posa").attr("disabled","disabled");
+			jQuery("#repeatSistemaRifinitura").attr("disabled","disabled");
+			_this.activeSopraluce(false);
+		}else{
+			jQuery(".up_tipo_posa").removeAttr("disabled");
+			jQuery(".dx_tipo_posa").removeAttr("disabled");
+			jQuery(".sx_tipo_posa").removeAttr("disabled");
+			jQuery("#repeatSistemaRifinitura").removeAttr("disabled");
+			
+		}
+	}
+	
+	_this.activeSopraluce = function(boo){
+		if(!boo){
+			jQuery(".sopraluce").attr("disabled","disabled");
+			jQuery("#repeatSopraluce").attr("disabled","disabled");
+			jQuery("#Hsopraluce").prop("disabled", true);
+		}else{
+			jQuery(".sopraluce").removeAttr("disabled");
+			jQuery("#Hsopraluce").prop("disabled", false);
+			jQuery("#repeatSopraluce").removeAttr("disabled");
+		}
+	}
+	
+	_this.checkCampi = function(){
+	
+		if(jQuery("#up_tipo_posa:checked").attr("value") == "si")
+		
+		return false;
+	}
+	
+	_this.complete = function(){
+		
+		if(!jQuery.validaValore(jQuery("#riferimento").val())){
+			_this.content.main.loader.remove();	
+			alert("Non hai specificato nessun valore per il campo riferimento");
+			return;
+		}
+		
+		
+		var param = {
+				"width":parseInt(jQuery("#Lporta").val()),
+				"height":parseInt(jQuery("#Hporta").val())	
+			}
+		
+		
+		var cookieSelezione = jQuery.getCookie("selezione");
+		cookieSelezione.riferimento = jQuery("#riferimento").val();
+		/*if(cookieSelezione.repeat){
+			var responseRepeat = {
+				"result": 1,
+				"message": ""
+			};
+			
+			if(!jQuery("#repeatSistemaRifinitura").is(":checked")){
+				
+				var ingombroMemorizzato = cookieSelezione.ingombro;
+				var up;
+				if(ingombroMemorizzato.up <= 0)
+					up = "up_0";
+					else
+					up = "up_1";
+				var upSelezionato = jQuery(".up_tipo_posa:checked").val();
+				////console.log("UP: " + up + " " + upSelezionato);
+				if(up != upSelezionato)
+					responseRepeat.result = 0;
+					
+				var sx;
+				if(ingombroMemorizzato.sx <= 0)
+					sx = "sx_0";
+					else
+					sx = "sx_1";
+				var sxSelezionato = jQuery(".sx_tipo_posa:checked").val();
+				////console.log("SX: " + sx + " " + sxSelezionato);
+				if(sx != sxSelezionato)
+					responseRepeat.result = 0;
+					
+				var dx;
+				if(ingombroMemorizzato.dx <= 0)
+					dx = "dx_0";
+					else
+					dx = "dx_1";
+				var dxSelezionato = jQuery(".dx_tipo_posa:checked").val();
+				////console.log("DX: " + dx + " " + dxSelezionato);
+				if(dx != dxSelezionato)
+					responseRepeat.result = 0;
+					
+				if(!responseRepeat.result)
+				responseRepeat.message += "• Stai cercando di modificare il sistema di rifinitura salvato in precedenza.\n";
+			}
+			
+			if(!jQuery("#repeatSopraluce").is(":checked")){
+				var sop;
+				if(cookieSelezione.accessori.sopraluce.height == 0)
+				sop = "no";
+				else
+				sop = "si";
+				if(jQuery(".sopraluce:checked").attr("value") != sop){
+					responseRepeat.result = 0;
+					responseRepeat.message += "• Stai cercando di modificare la selezione del sopraluce salvata in precedenza.\n";
+				}
+			}
+			
+			if(!responseRepeat.result){
+				responseRepeat.message += "I dati inseriti saranno sovrascritti. Sei sicuro di voler procedere?";
+				var conf = confirm(responseRepeat.message);
+					if(conf != true)
+						return false;
+						else{
+							cookieSelezione.accessori.sopraluce.repeat = false;
+							cookieSelezione.accessori.sistemaRifinitura.repeat = false;
+						}
+			}
+		}*/
+		
+		
+		var id = new Date().getTime();
+		
+		if(!cookieSelezione.modifica.boo)
+			cookieSelezione.id = id;
+		
+		cookieSelezione.tipologia = "Basculante";
+		cookieSelezione.porta.L = parseInt(jQuery("#Lporta").val());	
+		cookieSelezione.porta.H = parseInt(jQuery("#Hporta").val());
+		
+		cookieSelezione.foroMuro.L =  parseInt(jQuery("#Lforo").val());
+		cookieSelezione.foroMuro.H =  parseInt(jQuery("#Hforo").val());
+		
+		cookieSelezione.ingombro.up = parseInt(_this.posa.up);
+		cookieSelezione.ingombro.dx = parseInt(_this.posa.dx);	
+		cookieSelezione.ingombro.sx = parseInt(_this.posa.sx);
+		cookieSelezione.accessori.sopraluce.height = _this.sopraluce;
+			
+			
+	
+		//_this.elem.html(datoHTML);
+			
+		var validita = true;
+		function callBackFamiglie(datoFamiglie){
+				
+			if(datoFamiglie.length > 0){
+				validita = true;
+				famiglia = datoFamiglie[0].codice;
+			}else{
+				validita = false;
+				famiglia = "AP";
+			}
+				
+		}
+			
+		jQuery.postJSON("Famiglie", "getFamiglia","private", param, false, callBackFamiglie);
+			
+		cookieSelezione.famiglia = famiglia;
+		cookieSelezione.validita = validita;
+		jQuery.registerCookie("selezione", cookieSelezione);
+		
+		////console.log("uuuuuuhh");
+		////console.log(jQuery.getCookie("selezione"));
+			
+		_this.content.nextStep();
+		
+		
+	
+	}
+	
+	_this.compilaMisurePorta = function(){
+		
+		////console.log("Qui arrivo");
+		
+		_this.misureForo.width = jQuery("#Lforo").val();
+		_this.misureForo.height = jQuery("#Hforo").val();
+		
+		//_this.posa.dx = jQuery("#up_valore_tipo_posa").val();
+		
+		if(!jQuery(".up_tipo_posa").is(":checked")) return;
+		if(!jQuery(".sx_tipo_posa").is(":checked")) return;
+		if(!jQuery(".dx_tipo_posa").is(":checked")) return;
+		
+		
+		if(!jQuery(".sopraluce").is(":checked")){
+			jQuery("#continua").attr("disabled","disabled");	 
+			return;
+		}
+		
+		if(isNaN(_this.sopraluce)){
+			jQuery("#Lporta").val("");	
+			jQuery("#continua").attr("disabled","disabled");
+			return;
+		}
+		
+		if(isNaN(parseInt(_this.misureForo.width)) || isNaN(parseInt(_this.misureForo.height)) || isNaN(parseInt(_this.posa.dx)) || isNaN(parseInt(_this.posa.sx))){
+			jQuery("#Lporta").val("");
+			jQuery("#continua").attr("disabled","disabled");
+			return;	
+		}
+		
+		var widthPorta = _this.approssimaL();
+		var heightPorta = _this.approssimaH();
+			
+		jQuery("#Lporta").val(widthPorta);
+		jQuery("#Hporta").val(heightPorta);
+		
+		var heightPortaEffettiva = (parseInt(_this.misureForo.height) - 10) + parseInt(_this.posa.up) - parseInt(_this.sopraluce);
+		_this.dim.porta.height = heightPortaEffettiva + 10;
+		
+		var widthPortaEffettiva = (parseInt(_this.misureForo.width) - 20) + parseInt(_this.posa.dx) + parseInt(_this.posa.sx);
+		_this.dim.porta.width = widthPortaEffettiva + 20;
+			
+		//jQuery("#Lforo").attr("disabled","disabled");
+		//jQuery("#Hforo").attr("disabled","disabled");	
+			
+		jQuery("#continua").removeAttr("disabled");
+		
+		jQuery("#cambiaMisurePorta").removeAttr("disabled");
+		
+		_this.verificaDimensioniPorta();
+		
+	}
+	
+	_this.approssimaL = function(){
+		var widthPortaEffettiva = (parseInt(_this.misureForo.width) - 20) + parseInt(_this.posa.dx) + parseInt(_this.posa.sx);
+		
+		if(widthPortaEffettiva%100 >= 0 && widthPortaEffettiva%100 < 30)
+			widthPortaEffettiva = parseInt(Math.floor(widthPortaEffettiva/100)+"00");
+		
+		if(widthPortaEffettiva%100 >= 30 && widthPortaEffettiva%100 < 50)
+			widthPortaEffettiva = parseInt(Math.floor(widthPortaEffettiva/100) + "30");
+		
+		if(widthPortaEffettiva%100 >= 50 && widthPortaEffettiva%100 < 80){
+			widthPortaEffettiva = parseInt(Math.floor(widthPortaEffettiva/100) + "50");
+			//////console.log("entro qiua?");	
+		}
+		if(widthPortaEffettiva%100 >= 80)
+			widthPortaEffettiva = parseInt(Math.floor(widthPortaEffettiva/100) + "80");
+	
+		return widthPortaEffettiva;
+	}
+	
+	_this.approssimaH = function(){
+		var heightPortaEffettiva = (parseInt(_this.misureForo.height) - 10) + parseInt(_this.posa.up) - parseInt(_this.sopraluce);
+		
+		if(heightPortaEffettiva%100 >= 0 && heightPortaEffettiva%100 < 30)
+			heightPortaEffettiva = parseInt(Math.floor(heightPortaEffettiva/100)+"00");
+		
+		if(heightPortaEffettiva%100 >= 30 && heightPortaEffettiva%100 < 50)
+			heightPortaEffettiva = parseInt(Math.floor(heightPortaEffettiva/100) + "30");
+		
+		if(heightPortaEffettiva%100 >= 50 && heightPortaEffettiva%100 < 80)
+			heightPortaEffettiva = parseInt(Math.floor(heightPortaEffettiva/100) + "50");
+		
+		if(heightPortaEffettiva%100 >= 80)
+			heightPortaEffettiva = parseInt(Math.floor(heightPortaEffettiva/100) + "80");	
+		
+		return heightPortaEffettiva;
+	}
+	
+	_this.verificaDimensioniPorta = function(){
+		var Lporta = parseInt(jQuery("#Lporta").val());
+		var Hporta = parseInt(jQuery("#Hporta").val());
+		
+		_this.misureForo.height = parseInt(jQuery("#Hforo").val());
+		_this.misureForo.width = parseInt(jQuery("#Lforo").val());
+		
+		_this.dim.foroMuro = _this.misureForo;
+		
+		jQuery("#warning").html("");
+		var check = true;
+		
+		if(jQuery(".up_tipo_posa:checked").attr("value") == "up_1"){
+		if(_this.posa.up > 100 || _this.posa.up < 20){
+			jQuery("#warning").append("<img src='images/error.png' /> Non puoi scegliere un valore superiore a 100 mm o inferiore a 20 mm per il tipo posa superiore<br>");	
+			jQuery("#continua").attr("disabled","disabled");
+			check = false;
+			jQuery("#up_valore_tipo_posa").css({backgroundColor:"#F0E68C"});
+		}else  jQuery("#up_valore_tipo_posa").css({backgroundColor:"#fff"});
+		}
+		
+		if(jQuery(".sx_tipo_posa:checked").attr("value") == "sx_1"){
+		if(_this.posa.sx > 100 || _this.posa.sx < 20){
+			jQuery("#warning").append("<img src='images/error.png' /> Non puoi scegliere un valore superiore a 100 mm o inferiore a 20 mm per il tipo posa lato sinistro<br>");	
+			jQuery("#continua").attr("disabled","disabled");
+			check = false;
+			jQuery("#sx_valore_tipo_posa").css({backgroundColor:"#F0E68C"});
+		}else jQuery("#sx_valore_tipo_posa").css({backgroundColor:"#fff"});
+		}
+		
+		if(jQuery(".dx_tipo_posa:checked").attr("value") == "dx_1"){
+		if(_this.posa.dx > 100 || _this.posa.dx < 20){
+			jQuery("#warning").append("<img src='images/error.png' /> Non puoi scegliere un valore superiore a 100 mm o inferiore a 20 mm per il tipo posa laterale destro<br>");
+			jQuery("#continua").attr("disabled","disabled");
+			check = false;
+			jQuery("#dx_valore_tipo_posa").css({backgroundColor:"#F0E68C"});
+		}else jQuery("#dx_valore_tipo_posa").css({backgroundColor:"#fff"});
+		}
+		
+		if(jQuery(".sopraluce:checked").attr("value")=="si")
+		if(_this.sopraluce < 110){
+			jQuery("#warning").append("<img src='images/error.png' /> Non puoi scegliere un valore inferiore a 110 mm per il sopraluce<br>");
+			jQuery("#continua").attr("disabled","disabled");
+			jQuery("#Hsopraluce").css({backgroundColor:"#F0E68C"});
+			check = false;
+		}else jQuery("#Hsopraluce").css({backgroundColor:"#fff"});
+		
+		
+		
+		var Heffettiva = Hporta-_this.posa.up;
+		var Leffettiva = Lporta-_this.posa.sx - _this.posa.dx;
+		
+		if(Heffettiva > _this.misureForo.height || Leffettiva > _this.misureForo.width){
+			jQuery("#warning").append("<img src='images/error.png' /> Le misure della porta superano quelle del foro muro<br>");
+			jQuery("#continua").attr("disabled","disabled");
+			check = false;
+		}
+			
+		if(Hporta == 0 || Lporta == 0){
+			jQuery("#warning").append("<img src='images/error.png' /> Le misure della porta non possono essere nulle<br>");
+			jQuery("#continua").attr("disabled","disabled");
+			check = false;
+		}	
+		
+		
+		if(Hporta > 2600 || Lporta > 5400 || Hporta < 2000 || Lporta < 2000){
+			var warn = "<img src='images/warning.png' /> Le dimensioni scelte per la porta non rientrano in un range prestabilito.<br>Verrà fornito un preventivo a progetto personalizzato.<br>Puoi correggere scegliendo un'altezza compresa tra 2000 mm e 2600 mm, una larghezza compresa tra 2000 mm e 5400 mm oppure continuare.";
+			jQuery("#warning").append(warn);
+			jQuery("#continua").attr("disabled","disabled");
+		}
+		
+		
+		
+		var Lporta = Number(jQuery("#Lporta").val());
+		var Hporta = Number(jQuery("#Hporta").val());
+		
+		var Hforo = Number(jQuery("#Hforo").val());
+		var Lforo = Number(jQuery("#Lforo").val());
+		
+		var Hsopraluce = Number(jQuery("#Hsopraluce").val());
+		
+		_this.dim.sopraluce.height = Hsopraluce;
+		_this.dim.posa = _this.posa;
+		//var Hporta = (parseInt(_this.misureForo.height) - 10) + parseInt(_this.posa.up) - parseInt(_this.sopraluce);
+		//var Lporta = (parseInt(_this.misureForo.width) - 20) + parseInt(_this.posa.dx) + parseInt(_this.posa.sx);
+		
+		
+		_this.Disegno.init(_this.dim);
+		
+		
+		if(!check) return;
+		
+		
+		jQuery("#Lforo").bind("click", function(){
+			_this.initialize();
+		});
+		jQuery("#Hforo").bind("click", function(){
+			_this.initialize();
+		});
+		
+		jQuery("#continua").removeAttr("disabled");
+		
+	}
+	
+	
+	_this.autoCompila = function(){
+		
+		var selezione = jQuery.getCookie("selezione");
+		
+		_this.misureForo.height = selezione.foroMuro.H;
+		_this.misureForo.width = selezione.foroMuro.L;
+		
+		jQuery("#Lforo").val(selezione.foroMuro.L);
+		jQuery("#Hforo").val(selezione.foroMuro.H);	
+		_this.checkForoMuro();
+		jQuery("#repeatSistemaRifinitura").prop("disabled",false);
+		jQuery("#Lporta").val(selezione.porta.L);
+		jQuery("#Hporta").val(selezione.porta.H);	
+		
+		jQuery("#repeatSistemaRifinitura").trigger("click");
+		jQuery("#repeatSopraluce").prop("disabled",false);
+		jQuery("#repeatSopraluce").trigger("click");
+		
+		jQuery("#riferimento").val(selezione.riferimento);	
+		
+	}
+	
+}

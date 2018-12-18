@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/cerrato-spa/!svn/ver/1/php/PHPMailer
+END
+LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/cerrato-spa/!svn/ver/1/php/PHPMailer/LICENSE
+END
+aboutus.html
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/cerrato-spa/!svn/ver/1/php/PHPMailer/aboutus.html
+END
+changelog.txt
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/cerrato-spa/!svn/ver/1/php/PHPMailer/changelog.txt
+END
+class.phpmailer.php
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/cerrato-spa/!svn/ver/1/php/PHPMailer/class.phpmailer.php
+END
+class.pop3.php
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/cerrato-spa/!svn/ver/1/php/PHPMailer/class.pop3.php
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/cerrato-spa/!svn/ver/1/php/PHPMailer/README
+END
+class.smtp.php
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/cerrato-spa/!svn/ver/1/php/PHPMailer/class.smtp.php
+END

@@ -1,0 +1,183 @@
+var Login = function(main){
+
+	var _this = this;
+	_this.main = main;
+	_this.header;
+	_this.menu;
+	_this.container;
+	
+	_this.init = function(){
+	
+		_this.header = jQuery("#Header");
+		_this.menu = jQuery("#Menu");
+		_this.container = jQuery("#Container");
+	
+		var utente = jQuery.getCookie("utente");
+		
+			
+		if(jQuery.validaValore(utente)){
+			
+			////console.log("Utente");
+			////console.log(utente);
+			
+			var benvenuto = "Gestionale Cerrato Spa, V. Beta 1.0 - ";
+			if(utente.sesso == "F")
+				benvenuto += "Benvenuta ";
+				else
+				benvenuto += "Benvenuto ";
+			
+			// ENTRO
+			_this.header.find("#Benvenuto").html(benvenuto + utente.nome + " " + utente.cognome+" ");
+			_this.header.append("<a href='' id='esci' >Esci</a><br><br>");
+				
+			jQuery("#esci").bind("click",function(){
+				_this.logout();
+			});
+				
+			var stato = jQuery.getCookie("utente").stato;
+			
+			//console.log("STATO");
+			//console.log(stato);
+			
+			if(stato == 0){
+				_this.header.append("Il tuo account è in attesa di approvazione.");	
+			}else{
+				
+				var menu = new Menu();
+				menu.init(_this.menu);
+			}
+			
+			return true;
+		}else{
+			_this.container.append("<h3>Area riservata</3>");
+			_this.container.append("Username: <input type='text' id='username'><br>");
+			_this.container.append("Password: <input type='password' id='password'><br>");
+			_this.container.append("<input type='button' id='enter' value='entra'><br><br><a href='iscrizione.html'>iscriviti</a>&nbsp;&nbsp;<a style='text-decoration:underline;cursor:pointer;' id='recupera_password'>recupera password</a>");
+				
+			jQuery("#enter").bind("click",function(){
+				_this.login();
+			});
+			
+			jQuery("#recupera_password").bind("click",function(){
+				_this.recuperaPassword();
+			});
+				
+			return false;
+		}
+	}
+	
+	_this.recuperaPassword = function(){
+		_this.container.html("<h3>Inserisci la mail utilizzata durante la fase di iscrizione per rigenerare una nuova password</h3>");
+		_this.container.append("<input id='email_recupera_password' value='' style='width:200px;'/>");
+		_this.container.append("<input type='button' id='invia_email' value='INVIA' /><br><br>");
+		_this.container.append("<a href='index.html'>Torna alla login</a>");
+		
+		jQuery("#invia_email").bind("click",function(){
+			
+			var email = jQuery("#email_recupera_password").val();
+			if(!jQuery.validaValore(email)){
+				alert("Non hai inserito nessuna email");
+				return;	
+			}
+			
+			
+			function callBackRecuperaPassword(dato){
+				
+				console.log("Qui password");
+				console.log(dato);
+				
+				if(!dato.success){
+					alert("Errore!");
+					return;	
+				}
+				
+				if(!dato.results){
+					_this.container.html("<h3>Email non presente nei nostri archivi</h3>");
+					_this.container.append("<input type='button' id='riprova_recupera_mail' value='RIPROVA' /><br><br>");
+					
+					jQuery("#riprova_recupera_mail").bind("click",function(){
+						_this.recuperaPassword();
+					});
+				}else{
+					_this.container.html("<h3>La password è stata rigenerata.<br> Una mail è stata inviata all'indirizzo di posta inserito</h3>");
+					_this.container.append("<a href='index.html'>Effettua login</a>");
+				}
+			}
+			
+			jQuery.postJSON("RegistrazioneUtente","recuperaPassword","public",{"email":email}, false, callBackRecuperaPassword);
+			
+		});
+		
+	}
+	
+	_this.login = function(){
+	
+	
+		
+	
+		////console.log("Effettua login");
+	
+		var username = jQuery("#username").val();
+		var password = jQuery("#password").val();
+		
+		var token = jQuery.generaPassword(32);
+		
+		var user = {
+			"username": username,
+			"password": password,
+			"token":token
+		}
+		
+		function callBackUtente(utente){
+			////console.log("risultato query");
+			////console.log(utente.results);
+			
+			if(utente.results.length <= 0){
+				_this.container.html("<h3>Utente non riconosciuto</h3>");
+				_this.container.append("<input type='button' id='riprova' value='riprova'>");
+				
+				jQuery("#riprova").bind("click",function(){
+					location.reload();
+				});
+				
+				return;
+			}else{
+				
+				var user = {
+					"nome": utente.results.nome,
+					"cognome": utente.results.cognome,
+					"ruolo": utente.results.ruolo,
+					"email": utente.results.email,
+					"tipo": utente.results.tipo,
+					"stato": utente.results.stato,
+					"sesso": utente.results.sesso,
+					"token":token
+				}
+				
+				
+				jQuery.registerCookie("utente",user);
+				location.reload();
+				
+			}
+		}
+		
+		jQuery.postJSON("RegistrazioneUtente","login","public",user, false, callBackUtente);
+	}
+	
+	_this.logout = function(){
+		
+		function callBackUtente(dato){
+			if(!dato.success){
+				alert("Errore nella cancellazione della sessione!");
+				return;	
+			}
+			jQuery.deleteCookie("utente");
+			jQuery.deleteCookie("selezione");
+			
+			location.reload();
+		}
+		
+		jQuery.postJSON("RegistrazioneUtente","logout","public",jQuery.getCookie("utente"), false, callBackUtente);
+
+	}
+}

@@ -1,0 +1,17 @@
+<h3>Scegliere la struttura del sezionale</h3>
+<span id='checkRepeatStruttura'></span>
+<h4 id="selezionaspallette">Seleziona le spallette</h4>
+<div id='ElencoSpallette'></div>
+<br><br>
+<h4 id="selezionavelette">Seleziona la veletta</h4>
+<div id='ElencoVelette'></div>
+<br>
+<div id='ElencoForatura'></div>
+<br><br>
+<div id='warning' style="margin:10px 0px;"></div>
+<div style="text-align:center;">
+<input type="button" value="AVANTI" id="continua" style="height:40px;width:150px;" disabled="disabled"/>&nbsp;&nbsp;
+<input type="button" value="INDIETRO" id="indietro" style="height:40px;width:150px;"/>&nbsp;&nbsp;
+<input type="button" value="SALTA" id="salta" style="height:40px;width:150px;"/>
+</div>
+<br><br><br><br>

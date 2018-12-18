@@ -1,0 +1,16 @@
+<h3>Personalizza l'ingombro della porta nel foro muro</h3>
+<h4>Per l'altezza</h4>
+<input type="radio" name="ingombro_altezza" class="ingombro_h" value="up_1"/> IN LUCE<br>
+<input type="radio" name="ingombro_altezza" class="ingombro_h" value="up_0"/> OLTRE LUCE
+<br><br>
+<h4>Per la lunghezza</h4>
+<input type="radio" name="ingombro_lunghezza" class="ingombro_l" value="sx_1-dx_1"/> IN LUCE<br>
+<input type="radio" name="ingombro_lunghezza" class="ingombro_l" value="sx_0-dx_0"/> OLTRE LUCE<br>
+<input type="radio" name="ingombro_lunghezza" class="ingombro_l" value="sx_1-dx_0"/> IN LUCE A SINISTRA, OLTRE LUCE A DESTRA<br>
+<input type="radio" name="ingombro_lunghezza" class="ingombro_l" value="sx_0-dx_1"/> IN LUCE A DESTRA, OLTRE LUCE A SINISTRA
+<br><br><br><br>
+<div style="text-align:center;">
+<input type="button" value="AVANTI" id="continua" style="height:40px;width:150px;" disabled="disabled"/>&nbsp;&nbsp;
+<input type="button" value="INDIETRO" id="indietro" style="height:40px;width:150px;"/>
+</div>
+<br><br><br><br>

@@ -1,0 +1,82 @@
+<!--<div class="row margin-0 spazio">
+    <h4 class="title_h4">Riferimento</h4>
+    <div class="col-md-4">
+	    <br>
+       <input type="text" id="riferimento" class="form-control" required maxlength="3">
+    </div>
+</div>-->
+
+<div class="row margin-0 spazio">
+    <h4 class="title_h4">Modello</h4>
+    <h5>Inserisci il modello</h5>
+    <div class="col-md-12">
+	    <div class="row" id="tabellaModelli">
+		    <!--
+  		   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+  			   <label>
+  				   <input value="PT300T" type="radio" name="modelli" class="modelli" checked>
+  				   		<a class="thumbnail box_color">
+  							<img src="img/space.png" alt="">
+  						</a>
+  					<p class="pagination-centered"><b>PT300T</b></p>
+  				</label>
+  			</div>
+ 			-->
+    		</div>
+    </div>
+</div>
+
+<div class="row margin-0 spazio">
+	<div class="col-md-12">
+    		<h4 class="title_h4">Misure</h4>
+    		<h5>Inserisci la misura altezza lavoro</h5>
+		<select id="select_altezza" class="regione form-control" style="max-width: 100px;">
+		    <!-- <option value="10.50">10.50</option> -->
+		</select><br />
+    </div>
+	<div class="col-md-12" id="contentOptPe" >
+		<h4 class="title_h4">Optional</h4>
+	     <h5>Seleziona gli optional da abbinare al modello</h5>
+		<br>
+		<div id="rows_optional">
+			<!--
+	     	<div class="checkbox checkbox-primary">
+	             	<input type="checkbox" id="opt_1" class="checkOptPe">
+	             	<label for="opt_1">Test Optional</label>
+	         	</div>
+			-->
+		</div>
+	</div>
+     <div class="col-md-12">
+		<h4 class="title_h4">Sconto e Quantità</h4>
+		<br>
+         	<input type="text" id="sconto" class="form-control" value="0" style="width:100px;display:inline-block;" maxlength="2" required/>
+ 	   &nbsp &nbsp %
+	   	<br><br>
+	   	<input type="text" id="quantita" class="form-control" value="1" style="width:100px;display:inline-block;" maxlength="3" required/>
+	  &nbsp &nbsp quantità
+	  	<br><br>
+     </div>
+	<div class="col-md-12">
+		<h4 class="title_h4">Riepilogo</h4>
+		<br>
+		<span style="font-size:16px !important;">
+         	Totale: <b value="0" id="tot"></b> EUR
+	   	<br>
+	   	Totale scontato: <b value="0" id="totScontato"></b> EUR
+        </span>
+     </div>
+</div>
+<div class="line4"></div>
+<div id="boxStruttura"></div>
+<div id="warning"  style="margin:10px 0px;"></div>
+<div id="a_progetto"  style="margin:10px 0px;"></div>
+
+
+<br><br>
+<div style="text-align:center;">
+<button type="button" id="btnCarrello" class="btn btn-primary">Salva nel carrello</button>
+<button type="button"  id="btnPreventivo" class="btn btn-primary">Crea preventivo</button>
+</div>
+<br><br>
+<br><br>

@@ -1,0 +1,16 @@
+<h3>Inserisci le misure e scegli il tipo di sopraluce</h3>
+<span id='checkRepeatSopraluce'></span>
+
+H: <input type="text" value="" id="HSopraluce" maxlength="3" style="height:25px;"/> (mm)&nbsp;&nbsp;<br><br>
+<input type="radio" name="sopraluce" class="sopraluce" value="In rete zincata 10x10"/> In rete zincata 10x10<br>
+<input type="radio" name="sopraluce" class="sopraluce" value="In lamina zincata e forata a rombi 20x20"/> In lamina zincata e forata a rombi 20x20<br>
+<input type="radio" name="sopraluce" class="sopraluce" value="In lamina zincata cieca"/> In lamina zincata cieca
+<br><br>
+<div id="warning"></div>
+<br><br>
+<div style="text-align:center;">
+<input type="button" value="AVANTI" id="continua" style="height:40px;width:150px;" disabled="disabled"/>&nbsp;&nbsp;
+<input type="button" value="INDIETRO" id="indietro" style="height:40px;width:150px;"/>&nbsp;&nbsp;
+<input type="button" value="SALTA" id="salta" style="height:40px;width:150px;"/>
+</div>
+<br><br><br><br>

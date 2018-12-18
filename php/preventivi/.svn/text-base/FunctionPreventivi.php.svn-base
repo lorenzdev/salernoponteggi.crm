@@ -1,0 +1,829 @@
+<?php
+
+include "ArticoloBasculante.php";
+include "ArticoloPortaCantina.php";
+include "ArticoloPortaMultiuso.php";
+include "ArticoloPortaTagliafuoco.php";
+include "ArticoloSezionale.php";
+
+class FunctionPreventivi{
+
+	private $costiTrasporto = 0;
+	private $costiDistribuzioneV = 0;
+	private $costiDistribuzioneO = 0;
+	private $costiMontaggioM = 0;
+	private $costiMontaggioE = 0;
+	private $costiMontaggioS = 0;
+	public $importoMerceScontata = 0;
+	
+	private $mailAdmin = "info@cerratospa.com";
+	private $link_login = "http://www.cerratospa.com/areariservata/index.html";
+	private $SMTPAuth = true;     // turn on SMTP authentication      
+	private $SMTPSecure = "ssl";  
+	private $Host='smtp.gmail.com';  
+	private $Port = '465';  
+	private $SMTPKeepAlive = true; 
+	private $SMTPDebug = 1;
+	private $Username = "lorenzo.dev@gmail.com";  // SMTP username
+	private $Password = "neonato2000";
+	private $ArticoloBasculante;
+	private $ArticoloPortaCantina;
+	private $ArticoloPortaMultiuso;
+	private $ArticoloPortaTagliafuoco;
+	
+	public $valori;
+	
+	
+	private $indirizzoCerrato = "Cerrato chiusure metalliche Spa\nVia A. Vivaldi, 20 - 84090 Montecorvino Pugliano (Sa)\nTel. +39 0828.350045 - Fax. +39 0828.350617 - info@cerratospa.com\nP.Iva/C.F. 02768800654 - REA 241107 - Cap.Soc Euro 824.265,00";
+	private $informativa = "Si informa che i dati utilizzati in questo documento, sono trattati esclusivamente ai fini degli adempimenti amministrativi-contabili, ai sensi del D.lgs 196/03, testo unico della privacy.";
+	
+	public $cont = 0;
+
+	public function init(){}
+	
+	public function inviaPreventivo($post){
+		
+		$myPdf = $this->processPreventivo($post);
+		$doc = $myPdf->Output('','s');
+			
+		
+		$referente = json_decode($post["referente"]);
+		
+		//var_dump($referente->{"email_referente"});
+		
+		// invio dell'email
+		$objJSON =  array();
+		$objJSON["success"] = false;
+		$objJSON["message"] = "Operazione non riuscita";
+		
+		$emails = array(2);
+		
+		if (filter_var($referente->{"email"}, FILTER_VALIDATE_EMAIL)) {
+    		$emails[0] = $referente->{"email"};
+		}
+		
+		
+		if (filter_var($referente->{"email_referente"}, FILTER_VALIDATE_EMAIL)) {
+    		$emails[1] = $referente->{"email_referente"};
+		}
+		
+		//	var_dump($emails[0]." ".$emails[1]);
+		
+		try{
+		for($i = 0;$i < count($emails);$i++){
+			//var_dump($emails[$i]);
+			$mail = new PHPMailer();
+			$mail->IsHTML(true);
+			$mail->IsSMTP();
+			$mail->SMTPAuth = $this->SMTPAuth;     // turn on SMTP authentication      
+			$mail->SMTPSecure = $this->SMTPSecure;  
+			$mail->Host = $this->Host;  
+			$mail->Port = $this->Port;  
+			$mail->SMTPKeepAlive = $this->SMTPKeepAlive; 
+			$mail->SMTPDebug = $this->SMTPDebug;
+			$mail->Username = $this->Username;  // SMTP username
+			$mail->Password = $this->Password;
+			$mail->AddReplyTo($this->mailAdmin); 
+			$mail->FromName = "Cerrato Spa";
+			$mail->Subject = "Preventivo di spesa";
+			$mail->Body = "Le invio copia del preventivo richiesto. Cordiali Saluti";
+			$mail->AddAddress($emails[$i]);
+			$mail->AddStringAttachment($doc, 'preventivo.pdf', 'base64', 'application/pdf');
+			
+			
+				if($mail->Send()){
+					$objJSON["success"] = true;
+					$objJSON["message"] = "Mail inviata correttamente";
+				}else{
+					$objJSON["success"] = false;
+					$objJSON["message"] = "Operazione non riuscita";
+				}
+			
+			
+			
+			$mail->SmtpClose();
+		}
+		
+		}catch (phpmailerException $e)
+				{
+				  var_dump('error---->PHPMailer error: '.$e->errorMessage() );
+				}
+		
+		
+		// spedizione
+
+		return json_encode($objJSON);
+	}	
+	
+	
+	public function invioPreventivoPerApprovazione($post){
+		
+		//var_dump($post);
+		
+		//$dataIns = date($post["data_inserimento"]);
+		
+		$objJSON =  array();
+		$objJSON["success"] = false;
+		$objJSON["message"] = "Operazione non riuscita";
+		
+		$emails = array();
+		
+		$mail = new PHPMailer();
+		$mail->IsHTML(true);
+		$mail->IsSMTP();
+		$mail->SMTPAuth = $this->SMTPAuth;     // turn on SMTP authentication      
+		$mail->SMTPSecure = $this->SMTPSecure;  
+		$mail->Host = $this->Host;  
+		$mail->Port = $this->Port;  
+		$mail->SMTPKeepAlive = $this->SMTPKeepAlive; 
+		$mail->SMTPDebug = $this->SMTPDebug;
+		$mail->Username = $this->Username;  // SMTP username
+		$mail->Password = $this->Password;
+		//destinatario
+		$mail->AddAddress($this->mailAdmin);
+		
+		//mittente
+		$mail->AddReplyTo($post["account"]); 
+		$mail->FromName = $post["nome"]." ".$post["cognome"];
+		$mail->Subject = "Preventivo per approvazione";
+		$mail->Body = "Notifica di inserimento preventivo per approvazione da parte dell'utente ".$post["nome"]." ".$post["cognome"]."<br>Codice preventivo: ".$post["codice_preventivo"]."<br>Data inserimento: ".$post["data_inserimento"];
+		
+		
+		if($mail->Send()){
+			$objJSON["success"] = true;
+			$objJSON["message"] = "Mail inviata correttamente";
+		}
+		
+		$mail->SmtpClose();
+		return json_encode($objJSON);
+	}
+	
+	
+	public function generaPreviewPdf($post){
+		
+		
+		$myPdf = $this->processPreventivo($post);
+		$doc = $myPdf->Output('','s');	
+		$myDoc = base64_encode($doc);
+		
+		$objJSON = array();
+		$objJSON["success"] = true;
+		$objJSON["message"] = "Operazione riuscita";
+		$objJSON["documento"] = $myDoc;
+		
+		return json_encode($objJSON);
+	}	
+	
+	
+	
+	private function processPreventivo($post){
+		
+		$preventivo = json_decode($post["preventivo"]);
+		$referente = json_decode($post["referente"]);
+	
+		$this->costiTrasporto =0;
+		$this->costiDistribuzioneV = 0;
+		$this->costiDistribuzioneO = 0;
+		$this->costiMontaggioM = 0;
+		$this->costiMontaggioE = 0;
+		$this->costiMontaggioS = 0;
+		
+		$pdf = new fpdf();
+		$pdf->AddPage();
+		
+		$pdf->SetAutoPageBreak('off',0);
+		
+		$logo = '../images/logo_cerrato.png';
+		
+		$pdf->SetFont('Helvetica','',7);
+		$pdf->SetX(9);
+		$pdf->SetY(10);
+		$pdf->Image($logo,$pdf->GetX(),$pdf->GetY());
+		$pdf->SetY(38);
+		$pdf->SetX(9);
+		$pdf->SetTextColor(0,48,101);
+		//$indirizzoCerrato = "Cerrato chiusure metalliche Spa\n";
+		//$indirizzoCerrato .= "Via A. Vivaldi, 20 - 84090 Montecorvino Pugliano (Sa)\n";
+		//$indirizzoCerrato .= "Tel. +39 0828.350045 - Fax. +39 0828.350617 - info@cerratospa.com\n";
+		//$indirizzoCerrato .= "P.Iva/C.F. 02768800654 - REA 241107 - Cap.Soc Euro 824.265,00";
+		
+		$pdf->MultiCell(200,3,$this->indirizzoCerrato,0,'L',false);
+		
+		$indirizzo = "SPETT.LE\n\n";
+		$indirizzo .= $referente->{"ragione_sociale"}."\n";
+		if($referente)
+		$indirizzo .= $referente->{"indirizzo"}.", ".$referente->{"civico"}." - ".$referente->{"cap"}." 84090 ".$referente->{"comune"}.", prov. ".$referente->{"provincia"}."\n";
+		$pdf->SetTextColor(0,0,0);
+		$pdf->SetFont('Courier', '', 8);
+		$pdf->SetXY(100,10);
+		$pdf->MultiCell(100,6,$indirizzo,1);
+		
+		
+		$codice_preventivo = "000".$preventivo->{"results"}->{"codice"};
+		$codice_preventivo = substr($codice_preventivo,strlen($codice_preventivo)-4,strlen($codice_preventivo));
+		
+		//Multicell Cod. cliente
+		$pdf->SetFont('Courier','',6);
+		$pdf->SetXY(10,52);
+		$pdf->MultiCell(25,4,"COD. PREVENTIVO\n".$codice_preventivo,1);
+		
+		//Multicell iva
+		$pdf->SetXY(35,52);
+		$pdf->MultiCell(10,4,"IVA\n ",1);
+		
+		//Multicell zona
+		$pdf->SetXY(45,52);
+		$pdf->MultiCell(10,4,"ZONA\n ",1);
+		
+		
+		$tipo;
+		switch($preventivo->{"results"}->{"tipo"}){
+		case 'Privato' : $tipo = "PR";break;
+		case 'Distributore' : $tipo = "DS";break;
+		case 'Agente commercio' : $tipo = "AG";break;
+		case 'Rivenditore' : $tipo = "RV";break;	
+		case 'Procacciatore di affari' : $tipo = "PA";break;	
+		}
+		
+		//Multicell agente
+		$pdf->SetXY(55,52);
+		$pdf->MultiCell(30,4,"CODICE REFERENTE\n".$tipo."/".$preventivo->{"results"}->{"codice_preventivazione"},1);
+		
+		//Multicell categoria
+		$pdf->SetXY(85,52);
+		$pdf->MultiCell(10,4,"CATEG.\n ",1);
+		
+		//Multicell partita iva
+		$pdf->SetXY(95,52);
+		$pdf->MultiCell(30,4,"PARTITA IVA\n".$referente->{"partita_iva"},1);
+		
+		//Multicell documento
+		$pdf->SetXY(125,52);
+		$pdf->MultiCell(40,4,"NUMERO DOCUMENTO\n",1);
+		
+		//Multicell data
+		$pdf->SetXY(165,52);
+		$pdf->MultiCell(20,4,"DATA\n".date("d/m/Y"),1);
+		
+		//Multicell pagine
+		$pdf->SetXY(185,52);
+		$pdf->MultiCell(15,4,"PAG.\n1",1);
+		
+		//NEW LINE!!!
+		//Multicell condizioni di pagamento
+		$y = $pdf->GetY();
+		$pdf->SetXY(10,$y);
+		$pdf->MultiCell(75,4,"CONDIZIONI DI PAGAMENTO\n".$referente->{"modalita_pagamento"},1);
+		//Multicell banca d'appoggio
+		$pdf->SetXY(85,$y);
+		$pdf->MultiCell(115,4,"BANCA D'APPOGGIO\n".$referente->{"banca"},1);
+		
+		//NEW LINE!!!
+		//Multicell telefono
+		$y = $pdf->GetY();
+		$pdf->SetXY(10,$y);
+		$pdf->MultiCell(30,4,"TELEFONO\n".$referente->{"telefono"},1);
+		//Multicell fax
+		$pdf->SetXY(40,$y);
+		$pdf->MultiCell(30,4,"FAX\n".$referente->{"fax"},1);
+		//Multicell codice fiscale
+		$pdf->SetXY(70,$y);
+		$pdf->MultiCell(40,4,"CODICE FISCALE\n".$referente->{"codice_fiscale"},1);
+		//Multicell valuta
+		$pdf->SetXY(110,$y);
+		$pdf->MultiCell(10,4,"VALUTA\nE.",1);
+		//Multicell tipo documento
+		$pdf->SetFont('Courier','B',6);
+		$pdf->SetXY(120,$y);
+		$pdf->MultiCell(80,4,"TIPO DOCUMENTO\nPREVENTIVO",1);
+		
+		//Multicell codice articolo
+		$pdf->SetFont('Courier','',6);
+		$y = $pdf->GetY();
+		$pdf->SetXY(10,$y);
+		$pdf->MultiCell(20,4,"CODICE ART.",1);
+		//Multicell NUM.
+		$pdf->SetXY(30,$y);
+		$pdf->MultiCell(35,4,"RIF.",1);
+		//Multicell descrizione
+		$pdf->SetXY(65,$y);
+		$pdf->MultiCell(45,4,"DESCRIZIONE",1);
+		//Multicell alt.
+		$pdf->SetXY(110,$y);
+		$pdf->MultiCell(10,4,"ALT.",1);
+		//Multicell larg.
+		$pdf->SetXY(120,$y);
+		$pdf->MultiCell(10,4,"LARG.",1);
+		//Multicell UM
+		$pdf->SetXY(130,$y);
+		$pdf->MultiCell(10,4,"U.M.",1);
+		//Multicell Quantità
+		$pdf->SetXY(140,$y);
+		$pdf->MultiCell(10,4,"Q.TA'",1);
+		//Multicell prezzo unitario
+		$pdf->SetXY(150,$y);
+		$pdf->MultiCell(20,4,"PREZZO UNIT.",1);
+		//Multicell SC. 1%
+		$pdf->SetXY(170,$y);
+		$pdf->MultiCell(10,4,"SC.(%)",1);
+		//Multicell SC. 2%
+		//$pdf->SetXY(160,$y);
+		//$pdf->MultiCell(10,4,"SC. 2%",1);
+		//Multicell importo netto
+		$pdf->SetXY(180,$y);
+		$pdf->MultiCell(20,4,"IMPORTO NETTO",1);
+		//Multicell iva
+		//$pdf->SetXY(190,$y);
+		//$pdf->MultiCell(10,4,"IVA",1);
+		
+		
+		$articolo = $this->getArticoli($preventivo->{"results"});
+		
+		
+		//var_dump(json_encode($articolo));
+		
+		//var_dump($articolo);
+		
+		$codiceArt ="";
+		$descrizione ="";
+		$quantita ="";
+		$importo ="";
+		$altezza ="";
+		$larghezza ="";
+		$um ="";
+		$num ="";
+		$prezzo_unitario ="";
+		$sconto1 ="";
+		$sconto2 ="";
+		$iva ="";
+		
+		for($i = 0;$i < count($articolo["carrello"]);$i++){
+			$codiceArt .= $articolo["carrello"][$i]["codice"]."\n";
+			$riferimentoArt .= $articolo["carrello"][$i]["riferimento"]."\n";	
+			$descrizione .= $articolo["carrello"][$i]["descrizione"]."\n";	
+			$quantita .= $articolo["carrello"][$i]["quantita"]."\n";	
+			$importo .= $articolo["carrello"][$i]["importo"]."\n";	
+			$importo_netto .= $articolo["carrello"][$i]["importo_netto"]."\n";	
+			$altezza .= $articolo["carrello"][$i]["H"]."\n";
+			$larghezza .= $articolo["carrello"][$i]["L"]."\n";	
+			$um .= $articolo["carrello"][$i]["um"]."\n";
+			$num .= $articolo["carrello"][$i]["num"]."\n";	
+			$prezzo_unitario .= $articolo["carrello"][$i]["prezzo_unitario"]."\n";
+			$sconto1 .= $articolo["carrello"][$i]["sconto"]."\n";
+			$sconto2 .= $articolo["carrello"][$i]["sconto2"]." \n";
+			$iva .= $articolo["carrello"][$i]["iva"]."\n";
+		}
+		
+		//NEW LINE!!!
+		//Multicell codice articolo
+		$y = $pdf->GetY();
+		
+		if($y > 260){
+			$pdf->AddPage("P");
+			$y = 20;
+		}
+
+		$pdf->SetFont('Courier','B',6);
+		$pdf->SetXY(10,$y);
+		$pdf->MultiCell(20,3,"REFERENTE \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n".$codiceArt." \n",1);
+		
+		
+		$dati_referente = "C.A. UFFICIO ACQUISTI\n";
+		$dati_referente .= "SIG.: ".$referente->{"responsabile"}."\n";
+		$dati_referente .= "E-MAIL: ".$referente->{"email"}."\n";
+		$dati_referente .= "CELL: ".$referente->{"cellulare"}."\n";
+		$dati_referente .= "NS. REFERENTE DI CANTIERE SIGN.\n";
+		$dati_referente .= $referente->{"referente_cantiere"}."\n";
+		$dati_referente .= "E-MAIL: ".$referente->{"email_referente"}."\n";
+		$dati_referente .= "CELL: ".$referente->{"cellulare_referente"}."\n";
+		$dati_referente .= "INDIRIZZO CANTIERE: \n".$referente->{"indirizzo_cantiere"}.",".$referente->{"civico"}."\n";
+		$dati_referente .= $referente->{"cap"}."\n";
+		$dati_referente .= $referente->{"comune_cantiere"}."\n";
+		$dati_referente .= "PROV ".$referente->{"provincia_cantiere"}."\n";
+		$dati_referente .= "NR. ".count($preventivo->{"results"}->{"carrello"})." articoli\n";
+		$dati_referente .= "\n\n".$descrizione."\n";
+		
+		//Multicell NUM.
+		$pdf->SetXY(30,$y);
+		$pdf->MultiCell(35,3," \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n".$riferimentoArt." \n",1);
+		
+		//Multicell descrizione
+		$pdf->SetXY(65,$y);
+		$pdf->MultiCell(45,3,$dati_referente."",1);
+		$yDescrizione = $pdf->GetY();
+		
+		if($y > 260){
+			$pdf->AddPage("P");
+			$y = 20;
+		}
+		
+		//Multicell alt.
+		$pdf->SetXY(110,$y);
+		$pdf->MultiCell(10,3," \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n".$altezza." \n",1);
+		//Multicell larg.
+		$pdf->SetXY(120,$y);
+		$pdf->MultiCell(10,3," \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n".$larghezza." \n",1);
+		//Multicell UM
+		$pdf->SetXY(130,$y);
+		$pdf->MultiCell(10,3," \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n".$um." \n",1);
+		//Multicell Quantità
+		$pdf->SetXY(140,$y);
+		$pdf->MultiCell(10,3," \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n".$quantita." \n",1);
+		//Multicell prezzo unitario
+		$pdf->SetXY(150,$y);
+		$pdf->MultiCell(20,3," \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n".$prezzo_unitario." \n",1);
+		//Multicell SC. 1%
+		$pdf->SetXY(170,$y);
+		$pdf->MultiCell(10,3," \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n".$sconto1." \n",1);
+		//Multicell importo netto
+		$pdf->SetXY(180,$y);
+		$pdf->MultiCell(20,3," \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n".$importo_netto." \n",1);
+		
+		
+		//NEW LINE!!!
+		//Multicell INFORMAZIONI
+		$pdf->SetFont('Helvetica','',6);
+		$y = $yDescrizione;
+		$pdf->SetXY(10,$y);
+		//$informativa = "Si informa che i dati utilizzati in questo documento,";
+		//$informativa .= " sono trattati esclusivamente ai fini degli adempimenti amministrativi-contabili, ai sensi del D.lgs 196/03,";
+		//$informativa .= " testo unico della privacy.";
+		$pdf->MultiCell(190,4,$this->informativa,1);
+		
+		//NEW LINE!!!
+		//Multicell codice articolo
+		$pdf->SetFont('Courier','',6);
+		$y = $pdf->GetY();
+		
+		if($y > 260){
+			$pdf->AddPage("P");
+			$y = 20;
+		}
+		
+		$pdf->SetXY(10,$y);
+		$pdf->MultiCell(30,4,"IMPONIBILE",1);
+		//Multicell descrizione
+		$pdf->SetXY(40,$y);
+		$pdf->MultiCell(15,4,"AL.IVA",1);
+		//Multicell NUM.
+		$pdf->SetXY(55,$y);
+		$pdf->MultiCell(30,4,"IMPORTO IVA",1);
+		//Multicell alt.
+		$pdf->SetXY(85,$y);
+		$pdf->MultiCell(20,4,"TOTALE MERCE",1);
+		//Multicell larg.
+		$pdf->SetXY(105,$y);
+		$pdf->MultiCell(10,4,"SCONTO",1);
+		//Multicell UM
+		$pdf->SetXY(115,$y);
+		$pdf->MultiCell(30,4,"IMPORTO SCONTO",1);
+		//Multicell netto merce
+		$pdf->SetXY(145,$y);
+		$pdf->MultiCell(25,4,"NETTO MERCE",1);
+		//Multicell NETTO SERVIZI
+		$pdf->SetXY(170,$y);
+		$pdf->MultiCell(30,4,"NETTO SERVIZI",1);
+		
+		$nettoServizi = $this->costiTrasporto + $this->costiDistribuzioneO+$this->costiDistribuzioneV+$this->costiMontaggioE+$this->costiMontaggioM+$this->costiMontaggioS;
+		
+		$sconto = round(($preventivo->{"results"}->{"totale"}*$referente->{"sconto"}/100)*10)/10;
+		$nettoMerce = round($this->importoMerceScontata*10)/10;
+		$totale = round(($preventivo->{"results"}->{"totale"} + $importo_iva + $nettoServizi - $sconto)*10)/10;
+		
+		//var_dump($nettoMerce);
+		
+		$imponibileFinale = round(($nettoMerce + $nettoServizi)*10)/10;
+		
+		
+		//NEW LINE!!!
+		//Multicell codice articolo
+		$pdf->SetFont('Courier','',6);
+		$y = $pdf->GetY();
+		
+		if($y > 260){
+			$pdf->AddPage("P");
+			$y = 20;
+		}
+		
+		$pdf->SetXY(10,$y);
+		$pdf->Cell(30,30,"E. ".number_format($imponibileFinale,2, ',', '.'),1);
+		$pdf->SetXY(40,$y);
+		$pdf->Cell(15,30,$referente->{"aliquota_iva"},1);
+		
+		$importo_iva = round(($imponibileFinale*$referente->{"aliquota_iva"}/100)*10)/10;
+		
+		$pdf->SetXY(55,$y);
+		$pdf->Cell(30,30,"E. ".number_format($importo_iva,2,',','.'),1);
+		
+		//TOTALE MERCE
+		$pdf->SetXY(85,$y);
+		$pdf->Cell(20,7,"",1);
+		
+		//SCONTO referente
+		$pdf->SetXY(105,$y);
+		$pdf->Cell(10,7,"",1);
+		
+		$pdf->SetXY(115,$y);
+		$pdf->Cell(30,7,"",1);
+		
+		//netto merce
+		$pdf->SetXY(145,$y);
+		$pdf->Cell(25,7,"E. ".number_format($nettoMerce,2,',','.'),1);
+		
+		//NETTO SERVIZI
+		
+		$pdf->MultiCell(30,7,"E. ".number_format($nettoServizi,2,',','.'),1);
+		
+		$totalePagare = round(($imponibileFinale + $importo_iva)*10)/10;
+		
+		$y = $pdf->GetY();
+		
+		if($y > 260){
+			$pdf->AddPage("P");
+			$y = 20;
+		}
+		
+		$pdf->SetXY(85,$y);
+		$pdf->MultiCell(23,4,"BOLLI",1);
+		$pdf->SetXY(108,$y);
+		$pdf->MultiCell(23,4,"SPESE INCASSO",1);
+		$pdf->SetXY(131,$y);
+		$pdf->MultiCell(23,4,"TRASPORTO",1);
+		$pdf->SetXY(154,$y);
+		$pdf->MultiCell(23,4,"DISTRIBUZIONE",1);
+		$pdf->SetXY(177,$y);
+		$pdf->MultiCell(23,4,"MONTAGGIO",1);
+		
+		$y = $pdf->GetY();
+		
+		if($y > 260){
+			$pdf->AddPage("P");
+			$y = 20;
+		}
+		
+		$pdf->SetXY(85,$y);
+		$pdf->Cell(23,7,"",1);
+		$pdf->SetXY(108,$y);
+		$pdf->Cell(23,7,"",1);
+		$pdf->SetXY(131,$y);
+		$pdf->Cell(23,7,"E. ".number_format($this->costiTrasporto,2,',','.'),1);
+		$pdf->SetXY(154,$y);
+		$pdf->Cell(23,7,"E. ".number_format($this->costiDistribuzioneV + $this->costiDistribuzioneO,2,',','.'),1);
+		$pdf->SetXY(177,$y);
+		$pdf->Cell(23,7,"E. ".number_format($this->costiMontaggioM + $this->costiMontaggioE+$this->costiMontaggioS,2,',','.'),1);
+		
+		$y = $pdf->GetY()+7;
+		
+		if($y > 260){
+			$pdf->AddPage("P");
+			$y = 20;
+		}
+		
+		$pdf->SetXY(85,$y);
+		$pdf->SetFont('Courier','I',6);
+		$pdf->MultiCell(55,4,"TOTALE A PAGARE",1);
+		$pdf->SetXY(140,$y);
+		$pdf->MultiCell(60,4,"TOTALE PREVENTIVO",1);
+		
+		$y = $pdf->GetY();
+		
+		if($y > 260){
+			$pdf->AddPage("P");
+			$y = 20;
+		}
+		
+		$pdf->SetFont('Courier','',6);
+		$pdf->SetXY(85,$y);
+		$pdf->Cell(55,8,"E. ".number_format($totalePagare,2,',','.'),1);
+		$pdf->SetXY(140,$y);
+		$pdf->Cell(60,8,"E. ".number_format($totalePagare,2,',','.'),1);
+		
+		//NEW LINE!!!
+		//Multicell INFORMAZIONI
+		$pdf->SetFont('Helvetica','',6);
+		$y = $pdf->GetY();
+		
+		if($y > 260){
+			$pdf->AddPage("P");
+			$y = 0;
+		}
+		
+		$pdf->SetXY(10,$y+8);
+		$pdf->MultiCell(190,4,"SCADENZE",1);
+		
+		
+		$pdf->Text(10,$pdf->GetY()+10,"Firma (per uso interno)_____________________________________________________________Firma per accettazione__________________________________________________________");
+		$pdf->Text(10,$pdf->GetY()+20,"Data di accettazione__________________________________________________");	
+		
+		
+		
+		return $pdf;
+	}
+	
+	
+	private function getArticoli($preventivo){
+		
+		$this->importoMerceScontata = 0;
+		$carrello = $preventivo->{"carrello"};
+		$this->valori = $objJSON["carrello"];
+		
+		for($i = 0;$i < count($carrello);$i++){
+			
+			$articolo = json_decode($carrello[$i]->{"descrizione"});
+			
+			$tipologia = $articolo->{"tipologia"};
+			
+			//var_dump($tipologia);
+			
+			switch($tipologia){
+			
+				case 'Basculante': 		$this->ArticoloBasculante = new ArticoloBasculante();
+										$this->ArticoloBasculante->init($this);
+										$this->ArticoloBasculante->get($articolo);
+										break;
+				case 'PortaCantina':	$this->ArticoloPortaCantina = new ArticoloPortaCantina();
+										$this->ArticoloPortaCantina->init($this);
+										$this->ArticoloPortaCantina->get($articolo);
+										break;
+				case 'PortaMultiuso':	$this->ArticoloPortaMultiuso = new ArticoloPortaMultiuso();
+										$this->ArticoloPortaMultiuso->init($this);
+										$this->ArticoloPortaMultiuso->get($articolo);
+										break;
+				case 'PortaTagliafuoco':$this->ArticoloPortaTagliafuoco = new ArticoloPortaTagliafuoco();
+										$this->ArticoloPortaTagliafuoco->init($this);
+										$this->ArticoloPortaTagliafuoco->get($articolo);
+										break;
+				case 'Sezionale':		$this->ArticoloSezionale = new ArticoloSezionale();
+										$this->ArticoloSezionale->init($this);
+										$this->ArticoloSezionale->get($articolo);
+										break;
+				default: break;
+			}
+			
+			
+			
+		}
+		
+		
+	//var_dump($preventivo->{"servizi"}->{"trasporto"});	
+		
+	
+		
+	//Costi trasporto
+	if(count($preventivo->{"servizi"}->{"trasporto"}) > 0){
+		$this->valori["carrello"][$this->cont]["codice"] = "\n";
+		$this->valori["carrello"][$this->cont]["descrizione"] = "\nCOSTI DI TRASPORTO";
+		$this->valori["carrello"][$this->cont]["riferimento"] = "\n";
+		$this->valori["carrello"][$this->cont]["um"] = "\n";
+		$this->valori["carrello"][$this->cont]["quantita"] = "\n";
+		$this->valori["carrello"][$this->cont]["L"] = "\n";
+		$this->valori["carrello"][$this->cont]["H"] = "\n";
+		$this->valori["carrello"][$this->cont]["sconto"] = "\n";
+		$this->valori["carrello"][$this->cont]["num"] = "\n";
+		$this->valori["carrello"][$this->cont]["importo_netto"] = "\n";	
+		$this->valori["carrello"][$this->cont]["prezzo_unitario"] = "\n";	
+		$this->valori["carrello"][$this->cont]["iva"] = "\n";	
+		$this->valori["carrello"][$this->cont]["sconto2"] = "\n";	
+		$this->cont++;
+	}
+	
+	for($i = 0;$i < count($preventivo->{"servizi"}->{"trasporto"});$i++){
+		//var_dump(number_format(round($preventivo->{"servizi"}->{"trasporto"}[$i]->{"prezzo"},2), 2, ',', '.'));	
+		$this->valori["carrello"][$this->cont]["codice"] =$preventivo->{"servizi"}->{"trasporto"}[$i]->{"codice"};
+		$this->valori["carrello"][$this->cont]["descrizione"] = $preventivo->{"servizi"}->{"trasporto"}[$i]->{"nome"};
+		$this->valori["carrello"][$this->cont]["um"] = "";
+		$this->valori["carrello"][$this->cont]["quantita"] = $preventivo->{"servizi"}->{"trasporto"}[$i]->{"quantita"};
+		$this->valori["carrello"][$this->cont]["L"] = "";
+		$this->valori["carrello"][$this->cont]["H"] = "";
+		$this->valori["carrello"][$this->cont]["num"] = "";
+		$this->valori["carrello"][$this->cont]["sconto"] = "";
+		
+		$this->costiTrasporto += $preventivo->{"servizi"}->{"trasporto"}[$i]->{"prezzo"}*$preventivo->{"servizi"}->{"trasporto"}[$i]->{"quantita"};
+		
+		$this->valori["carrello"][$this->cont]["prezzo_unitario"] = "E. ".number_format(round($preventivo->{"servizi"}->{"trasporto"}[$i]->{"prezzo"},2), 2, ',', '.');		
+		$this->valori["carrello"][$this->cont]["importo_netto"] = "E. ".number_format(round($preventivo->{"servizi"}->{"trasporto"}[$i]->{"prezzo"}*$preventivo->{"servizi"}->{"trasporto"}[$i]->{"quantita"},2), 2, ',', '.');	
+		$this->cont++;
+	}
+	
+	//Costi distribuzione
+	if(count($preventivo->{"servizi"}->{"distribuzioneOrizzontale"}) > 0 || count($preventivo->{"servizi"}->{"distribuzioneVerticale"}) > 0){
+		$this->valori["carrello"][$this->cont]["codice"] = "\n";
+		$this->valori["carrello"][$this->cont]["descrizione"] = "\nCOSTI DI DISTRIBUZIONE";
+		$this->valori["carrello"][$this->cont]["riferimento"] = "\n";
+		$this->valori["carrello"][$this->cont]["um"] = "\n";
+		$this->valori["carrello"][$this->cont]["quantita"] = "\n";
+		$this->valori["carrello"][$this->cont]["L"] = "\n";
+		$this->valori["carrello"][$this->cont]["H"] = "\n";
+		$this->valori["carrello"][$this->cont]["sconto"] = "\n";
+		$this->valori["carrello"][$this->cont]["num"] = "\n";
+		$this->valori["carrello"][$this->cont]["prezzo_unitario"] = "\n";	
+		$this->valori["carrello"][$this->cont]["importo_netto"] = "\n";	
+		$this->valori["carrello"][$this->cont]["sconto2"] = "\n";
+		$this->valori["carrello"][$this->cont]["iva"] = "\n";		
+		$this->cont++;
+	}
+	
+	for($i = 0;$i < count($preventivo->{"servizi"}->{"distribuzioneOrizzontale"});$i++){
+		$this->valori["carrello"][$this->cont]["codice"] =$preventivo->{"servizi"}->{"distribuzioneOrizzontale"}[$i]->{"codice"};
+		$this->valori["carrello"][$this->cont]["descrizione"] = $preventivo->{"servizi"}->{"distribuzioneOrizzontale"}[$i]->{"nome"};
+		$this->valori["carrello"][$this->cont]["um"] = "";
+		$this->valori["carrello"][$this->cont]["quantita"] = $preventivo->{"servizi"}->{"distribuzioneOrizzontale"}[$i]->{"quantita"};
+		$this->valori["carrello"][$this->cont]["L"] = "";
+		$this->valori["carrello"][$this->cont]["H"] = "";
+		$this->valori["carrello"][$this->cont]["sconto"] = "";
+		$this->valori["carrello"][$this->cont]["num"] = "";
+		$this->costiDistribuzioneO += $preventivo->{"servizi"}->{"distribuzioneOrizzontale"}[$i]->{"prezzo"}*$preventivo->{"servizi"}->{"distribuzioneOrizzontale"}[$i]->{"quantita"};
+		$this->valori["carrello"][$this->cont]["prezzo_unitario"] = "E. ".number_format(round($preventivo->{"servizi"}->{"distribuzioneOrizzontale"}[$i]->{"prezzo"},2), 2, ',', '.');		
+		$this->valori["carrello"][$this->cont]["importo_netto"] = "E. ".number_format(round($preventivo->{"servizi"}->{"distribuzioneOrizzontale"}[$i]->{"prezzo"}*$preventivo->{"servizi"}->{"distribuzioneOrizzontale"}[$i]->{"quantita"},2), 2, ',', '.');	
+		$this->cont++;
+	}
+	for($i = 0;$i < count($preventivo->{"servizi"}->{"distribuzioneVerticale"});$i++){
+		$this->valori["carrello"][$this->cont]["codice"] =$preventivo->{"servizi"}->{"distribuzioneVerticale"}[$i]->{"codice"};
+		$this->valori["carrello"][$this->cont]["descrizione"] = $preventivo->{"servizi"}->{"distribuzioneVerticale"}[$i]->{"nome"};
+		$this->valori["carrello"][$this->cont]["um"] = "";
+		$this->valori["carrello"][$this->cont]["quantita"] = $preventivo->{"servizi"}->{"distribuzioneVerticale"}[$i]->{"quantita"};
+		$this->valori["carrello"][$this->cont]["L"] = "";
+		$this->valori["carrello"][$this->cont]["H"] = "";
+		$this->valori["carrello"][$this->cont]["sconto"] = "";
+		$this->valori["carrello"][$this->cont]["num"] = "";
+		$this->costiDistribuzioneV += $preventivo->{"servizi"}->{"distribuzioneVerticale"}[$i]->{"prezzo"}*$preventivo->{"servizi"}->{"distribuzioneVerticale"}[$i]->{"quantita"};
+		$this->valori["carrello"][$this->cont]["prezzo_unitario"] = "E. ".number_format(round($preventivo->{"servizi"}->{"distribuzioneVerticale"}[$i]->{"prezzo"},2), 2, ',', '.');	
+		$this->valori["carrello"][$this->cont]["importo_netto"] = "E. ".number_format(round($preventivo->{"servizi"}->{"distribuzioneVerticale"}[$i]->{"prezzo"}*$preventivo->{"servizi"}->{"distribuzioneVerticale"}[$i]->{"quantita"},2), 2, ',', '.');	
+		$this->cont++;
+	}
+	
+	
+	//Costi di montaggio
+	if(count($preventivo->{"servizi"}->{"montaggioElettrico"}) > 0 || count($preventivo->{"servizi"}->{"montaggioMeccanica"}) > 0){
+		$this->valori["carrello"][$this->cont]["codice"] = "\n";
+		$this->valori["carrello"][$this->cont]["descrizione"] = "\nCOSTI DI MONTAGGIO";
+		$this->valori["carrello"][$this->cont]["riferimento"] = "\n";
+		$this->valori["carrello"][$this->cont]["um"] = "\n";
+		$this->valori["carrello"][$this->cont]["quantita"] = "\n";
+		$this->valori["carrello"][$this->cont]["L"] = "\n";
+		$this->valori["carrello"][$this->cont]["H"] = "\n";
+		$this->valori["carrello"][$this->cont]["sconto"] = "\n";
+		$this->valori["carrello"][$this->cont]["num"] = "\n";
+		$this->valori["carrello"][$this->cont]["prezzo_unitario"] = "\n";	
+		$this->valori["carrello"][$this->cont]["importo_netto"] = "\n";	
+		$this->valori["carrello"][$this->cont]["sconto2"] = "\n";
+		$this->valori["carrello"][$this->cont]["iva"] = "\n";		
+		$this->cont++;
+	}
+	
+	
+	for($i = 0;$i < count($preventivo->{"servizi"}->{"montaggioMeccanica"});$i++){
+		$this->valori["carrello"][$this->cont]["codice"] =$preventivo->{"servizi"}->{"montaggioMeccanica"}[$i]->{"codice"};
+		$this->valori["carrello"][$this->cont]["descrizione"] = $preventivo->{"servizi"}->{"montaggioMeccanica"}[$i]->{"nome"};
+		$this->valori["carrello"][$this->cont]["um"] = "";
+		$this->valori["carrello"][$this->cont]["quantita"] = $preventivo->{"servizi"}->{"montaggioMeccanica"}[$i]->{"quantita"};
+		$this->valori["carrello"][$this->cont]["L"] = "";
+		$this->valori["carrello"][$this->cont]["H"] = "";
+		$this->valori["carrello"][$this->cont]["sconto"] = "";
+		$this->valori["carrello"][$this->cont]["num"] = "";
+		$this->costiMontaggioM += $preventivo->{"servizi"}->{"montaggioMeccanica"}[$i]->{"prezzo"}*$preventivo->{"servizi"}->{"montaggioMeccanica"}[$i]->{"quantita"};
+		$this->valori["carrello"][$this->cont]["prezzo_unitario"] = "E. ".number_format(round($preventivo->{"servizi"}->{"montaggioMeccanica"}[$i]->{"prezzo"},2), 2, ',', '.');	
+		$this->valori["carrello"][$this->cont]["importo_netto"] = "E. ".number_format(round($preventivo->{"servizi"}->{"montaggioMeccanica"}[$i]->{"prezzo"}*$preventivo->{"servizi"}->{"montaggioMeccanica"}[$i]->{"quantita"},2), 2, ',', '.');	
+		$this->cont++;
+	}
+	
+	for($i = 0;$i < count($preventivo->{"servizi"}->{"montaggioSopraluce"});$i++){
+		$this->valori["carrello"][$this->cont]["codice"] =$preventivo->{"servizi"}->{"montaggioSopraluce"}[$i]->{"codice"};
+		$this->valori["carrello"][$this->cont]["descrizione"] = $preventivo->{"servizi"}->{"montaggioSopraluce"}[$i]->{"nome"};
+		$this->valori["carrello"][$this->cont]["um"] = "";
+		$this->valori["carrello"][$this->cont]["quantita"] = $preventivo->{"servizi"}->{"montaggioSopraluce"}[$i]->{"quantita"};
+		$this->valori["carrello"][$this->cont]["L"] = "";
+		$this->valori["carrello"][$this->cont]["H"] = "";
+		$this->valori["carrello"][$this->cont]["sconto"] = "";
+		$this->valori["carrello"][$this->cont]["num"] = "";
+		$this->costiMontaggioS += $preventivo->{"servizi"}->{"montaggioSopraluce"}[$i]->{"prezzo"}*$preventivo->{"servizi"}->{"montaggioSopraluce"}[$i]->{"quantita"};
+		$this->valori["carrello"][$this->cont]["prezzo_unitario"] = "E. ".number_format(round($preventivo->{"servizi"}->{"montaggioSopraluce"}[$i]->{"prezzo"},2), 2, ',', '.');	
+		$this->valori["carrello"][$this->cont]["importo_netto"] = "E. ".number_format(round($preventivo->{"servizi"}->{"montaggioSopraluce"}[$i]->{"prezzo"}*$preventivo->{"servizi"}->{"montaggioSopraluce"}[$i]->{"quantita"},2), 2, ',', '.');	
+		$this->cont++;
+	}
+	
+	for($i = 0;$i < count($preventivo->{"servizi"}->{"montaggioElettrico"});$i++){
+		$this->valori["carrello"][$this->cont]["codice"] =$preventivo->{"servizi"}->{"montaggioElettrico"}[$i]->{"codice"};
+		$this->valori["carrello"][$this->cont]["descrizione"] = $preventivo->{"servizi"}->{"montaggioElettrico"}[$i]->{"nome"};
+		$this->valori["carrello"][$this->cont]["um"] = "";
+		$this->valori["carrello"][$this->cont]["quantita"] = $preventivo->{"servizi"}->{"montaggioElettrico"}[$i]->{"quantita"};
+		$this->valori["carrello"][$this->cont]["L"] = "";
+		$this->valori["carrello"][$this->cont]["H"] = "";
+		$this->valori["carrello"][$this->cont]["sconto"] = "";
+		$this->valori["carrello"][$this->cont]["num"] = "";
+		$this->costiMontaggioE += $preventivo->{"servizi"}->{"montaggioElettrico"}[$i]->{"prezzo"}*$preventivo->{"servizi"}->{"montaggioElettrico"}[$i]->{"quantita"};
+		$this->valori["carrello"][$this->cont]["prezzo_unitario"] = "E. ".number_format(round($preventivo->{"servizi"}->{"montaggioElettrico"}[$i]->{"prezzo"},2), 2, ',', '.');		
+		$this->valori["carrello"][$this->cont]["importo_netto"] = "E. ".number_format(round($preventivo->{"servizi"}->{"montaggioElettrico"}[$i]->{"prezzo"}*$preventivo->{"servizi"}->{"montaggioElettrico"}[$i]->{"quantita"},2), 2, ',', '.');	
+		$this->cont++;
+	}
+	
+	
+		
+	//var_dump($this->valori);
+	$articolo = $this->valori;
+	return $articolo;
+	}
+	
+}
+
+?>

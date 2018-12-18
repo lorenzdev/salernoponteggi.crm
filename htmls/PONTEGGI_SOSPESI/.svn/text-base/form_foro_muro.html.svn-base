@@ -1,0 +1,55 @@
+<h3>Riferimento: <input type="text" id="riferimento" /></h3>
+<h3>Inserisci le misure foro muro</h3>
+<hr /><br />
+<div style="float:left;margin-right:20px;">L: <input type="text" value="" id="Lforo" style="height:25px;" maxlength="4"/> (mm)</div>
+<div style="float:left;">H: <input type="text" value="" id="Hforo" style="height:25px;" maxlength="4"/> (mm)</div>
+<div style="clear:both;"></div>
+<br /><hr />
+<div id="boxTipoPosa">
+<h3>Scegli il tipo posa</h3>
+<div style="float:left;width:250px;">
+<span id='checkRepeatTipoPosa'></span>
+<h4>Lato superiore*</h4>
+<input type="radio" name="ingombro_altezza" class="up_tipo_posa" value="up_1" disabled="disabled"/> Oltre luce &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="text" id="up_valore_tipo_posa" value="0" class="valore_tipo_posa" style="height:25px;width:30px;width:50px;" maxlength="3" /> (mm)<br><br>
+<input type="radio" name="ingombro_altezza" class="up_tipo_posa" value="up_0" disabled="disabled"/> In luce
+</div>
+<div style="float:left;width:250px;">
+<h4>Lato sinistro*</h4>
+<input type="radio" name="ingombro_lunghezza_sx" class="sx_tipo_posa" value="sx_1" disabled="disabled"/> Oltre luce &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="sx_valore_tipo_posa" class="valore_tipo_posa" value="0" style="height:25px;width:50px;" maxlength="3"/> (mm)<br><br>
+<input type="radio" name="ingombro_lunghezza_sx" class="sx_tipo_posa" value="sx_0" disabled="disabled"/> In luce
+</div>
+<div style="float:left;width:250px;">
+<h4>Lato destro*</h4>
+<input type="radio" name="ingombro_lunghezza_dx" class="dx_tipo_posa" value="dx_1" disabled="disabled"/> Oltre luce &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="dx_valore_tipo_posa" class="valore_tipo_posa" value="0" style="height:25px;width:50px;" maxlength="3"/> (mm)<br><br>
+<input type="radio" name="ingombro_lunghezza_dx" class="dx_tipo_posa" value="dx_0" disabled="disabled"/> In luce
+</div>
+</div>
+<div style="clear:both;"></div>
+<br /><br /><hr />
+<div id="boxSopraluce">
+
+<h3>Con sopraluce?</h3>
+<span id='checkRepeatSopraluce'></span>
+Si<input type="radio" name="sopraluce" class="sopraluce" value="si" disabled="disabled"/>
+No<input type="radio" name="sopraluce" class="sopraluce" value="no" checked disabled="disabled"/> H: <input type="text" value="0" id="Hsopraluce" disabled="disabled" maxlength="3" style="height:25px;wdith:50px;"/> (mm)
+<br /><br /><br />
+</div>
+<hr />
+<h3>Seleziona le misure della porta**</h3>
+<div style="float:left;margin-right:20px;">L: <input type="text" value="" id="Lporta" disabled="disabled" maxlength="4" style="height:25px;"/> (mm)&nbsp;&nbsp;<input type="button" value="+" id="Lpiu" disabled="disabled"/>&nbsp;<input type="button" value="-" id="Lmeno" disabled="disabled"/></div>
+<div style="float:left;margin-right:20px;">H: <input type="text" value="" id="Hporta" disabled="disabled" maxlength="4" style="height:25px;"/> (mm)&nbsp;&nbsp;<input type="button" value="+" id="Hpiu" disabled="disabled"/>&nbsp;<input type="button" value="-" id="Hmeno" disabled="disabled"/></div><br />
+<br /><br />
+<input type="button" id="cambiaMisurePorta" value="cambia le misure della porta" disabled="disabled"/>
+<hr />
+<div id="DisegnoTecnico" style="height:auto;"></div><br />
+<div id="warning"></div>
+<br><br><br><br>
+<div style="text-align:center;">
+<input type="button" value="AVANTI" id="continua" style="height:40px;width:150px;" disabled="disabled"/>&nbsp;&nbsp;
+<input type="button" value="RESETTA" id="resetta" style="height:40px;width:150px;"/>
+</div>
+<br><br><br><br>
+* Il sistema calcolerà una tolleranza di 10 mm per lato<br />
+** I valori calcolati per le misure della porta si approssimano per difetto alla seconda cifra decimale secondo la sequenza standardizzata(00, 30,50,80)
+<br><br>

@@ -1,0 +1,33 @@
+<h3>Scegli il tipo di chiusura</h3>
+<span id='checkRepeatSistemaChiusura'></span>
+<div id="anta1">
+<!--<b>Anta primaria</b><br />-->
+<input type="radio" name="chiusura" class="chiusura" codice="PR/CP" tipologia="" descrizione="Cilindro patent"/> Cilindro patent<br>
+<input type="radio" name="chiusura" class="chiusura" codice="PR/CY" tipologia="" descrizione="Cilindro yale"/> Cilindro yale<br>
+<input type="radio" name="chiusura" class="chiusura" value="exus" id="exus"/> Maniglione EXUS (a leva)<br />
+&nbsp;&nbsp;<input type="checkbox" name="exus" class="exus" codice="PR/EX" tipologia="APP" disabled /> Applicato<br />
+&nbsp;&nbsp;<input type="checkbox" name="exus" class="exus" codice="PR/EX" tipologia="IMB" disabled /> In imballo<br /><br /><br />
+<input type="radio" name="chiusura" class="chiusura" value="slash" id="slash"/> Maniglione SLASH (a leva)<br />
+&nbsp;&nbsp;<input type="checkbox" name="slash" class="slash" codice="PR/SL" tipologia="APP" disabled/> Applicato<br />
+&nbsp;&nbsp;<input type="checkbox" name="slash" class="slash" codice="PR/SL" tipologia="IMB" disabled/> In imballo<br />
+</div><br /><br />
+
+<!--<div id="anta2" style="display:none;">
+<b>Anta secondaria</b><br />
+<input type="radio" name="chiusura2" class="chiusura2" codice="PR/CP" descrizione="Cilindro patent"/> Cilindro patent<br>
+<input type="radio" name="chiusura2" class="chiusura2" codice="PR/CY" descrizione="Cilindro yale"/> Cilindro yale<br>
+<input type="radio" name="chiusura2" class="chiusura2" value="exus2" id="exus2"/> Maniglione EXUS (a leva)<br />
+&nbsp;&nbsp;<input type="checkbox" name="exus" class="exus2" codice="PR/EX2-APP" disabled /> Applicato<br />
+&nbsp;&nbsp;<input type="checkbox" name="exus" class="exus2" codice="PR/EX2-IMB" disabled /> In imballo<br /><br /><br />
+<input type="radio" name="chiusura2" class="chiusura2" value="slash2" id="slash2"/> Maniglione SLASH (a leva)<br />
+&nbsp;&nbsp;<input type="checkbox" name="slash2" class="slash2" codice="PR/SL2-APP" disabled/> Applicato<br />
+&nbsp;&nbsp;<input type="checkbox" name="slash2" class="slash2" codice="PR/SL2-IMB" disabled/> In imballo<br />
+</div>
+<br><br>-->
+<div id="warning"></div>
+<br><br>
+<div style="text-align:center;">
+<input type="button" value="AVANTI" id="continua" style="height:40px;width:150px;" disabled="disabled"/>&nbsp;&nbsp;
+<input type="button" value="INDIETRO" id="indietro" style="height:40px;width:150px;"/>
+</div>
+<br><br><br><br>

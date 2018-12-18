@@ -1,0 +1,417 @@
+var Profilo = function(content){
+
+	var _this = this;
+	_this.content = content;	
+	_this.elem;
+	_this.user = {}
+	var request = {
+			"user":{},
+			"account":{},
+			"indirizzo":{}
+	};
+	
+	_this.init = function(elem){
+		
+		_this.elem = elem;
+		
+		jQuery.get(P_FORM_MODIFICA_UTENTE, function(datoHTML){
+		
+			
+			_this.elem.html(datoHTML);
+		
+			function callBackUtente(datoUtente){
+				//console.log("Dati dell'utente:");
+				//console.log(datoUtente);
+				
+				_this.elem.find("#nome").val(datoUtente.results.nome); 
+				_this.elem.find("#cognome").val(datoUtente.results.cognome); 
+				_this.elem.find("#ragione_sociale").val(datoUtente.results.ragione_sociale); 
+				_this.elem.find("#codice_fiscale").val(datoUtente.results.codice_fiscale); 
+				_this.elem.find("#partita_iva").val(datoUtente.results.partita_iva); 
+				_this.elem.find("#website").val(datoUtente.results.website); 
+				_this.elem.find("#mansioni").val(datoUtente.results.mansioni); 
+				_this.elem.find("#cellulare").val(datoUtente.results.cellulare);
+				_this.elem.find("#telefono").val(datoUtente.results.telefono); 
+				_this.elem.find("#fax").val(datoUtente.results.fax); 
+				_this.elem.find("#indirizzo").val(datoUtente.results.indirizzo); 
+				_this.elem.find("#indirizzo").attr("id_indirizzo", datoUtente.results.id_indirizzo); 
+				_this.elem.find("#civico").val(datoUtente.results.civico); 
+				_this.elem.find("#cap").val(datoUtente.results.cap); 
+				request.account.stato = datoUtente.results.stato;
+				request.account.ruolo = datoUtente.results.ruolo;
+				//_this.elem.find("#email").html(datoUtente.results.email);
+				
+				
+				jQuery("#cap").on("keypress",function(e){
+					return jQuery.onlynumbers(e);
+				});
+				
+				jQuery("#telefono").on("keypress",function(e){
+					return jQuery.onlynumbers(e);
+				});
+				
+				jQuery("#cellulare").on("keypress",function(e){
+					return jQuery.onlynumbers(e);
+				});
+				
+				jQuery("#fax").on("keypress",function(e){
+					return jQuery.onlynumbers(e);
+				});
+				
+				jQuery("#tipo_utente option").each(function(){
+					if(jQuery(this).attr("value") == datoUtente.results.tipo){
+						jQuery(this).prop("selected",true)
+						return;
+					}
+				});
+				
+				
+				jQuery("#sesso option").each(function(){
+					if(jQuery(this).attr("value") == datoUtente.results.sesso){
+						jQuery(this).prop("selected",true)
+						return;
+					}
+				});
+				
+				
+				
+				_this.popolaNazioni(jQuery("#nazione"));
+				jQuery("#nazione option").each(function(){
+					if(jQuery(this).attr("value") == datoUtente.results.nazione){
+						jQuery(this).prop("selected",true)
+						return;
+					}
+				});
+				
+				
+				_this.popolaRegioni(jQuery("#regione"));
+				
+				jQuery("#regione option").each(function(){
+					if(jQuery(this).text() == datoUtente.results.regione){
+						jQuery(this).prop("selected",true);
+						return;
+					}
+				});
+				
+				_this.popolaProvince(jQuery("#regione option:selected").val(),jQuery("#provincia"));
+				jQuery("#provincia").removeAttr("disabled");
+				jQuery("#provincia option").each(function(){
+					if(jQuery(this).text() == datoUtente.results.provincia){
+						jQuery(this).prop("selected",true);
+						return;
+					}
+				});
+				
+				_this.popolaComuni(jQuery("#provincia option:selected").val(),jQuery("#comune"));
+				jQuery("#comune option").each(function(){
+					if(jQuery(this).text() == datoUtente.results.comune){
+						jQuery(this).prop("selected",true);
+						return;
+					}
+				});
+				jQuery("#comune").removeAttr("disabled");
+				
+				
+				jQuery("#regione").bind("change",function(){
+					var regione = jQuery(this).val();
+					jQuery("#provincia").html("<option value=\"null\">Seleziona la provincia</option>");
+					jQuery("#provincia").removeAttr("disabled");
+					jQuery("#comune").html("<option value=\"null\">Seleziona il comune</option>");
+					jQuery("#comune").addClass("selectDisabled");
+					jQuery("#comune").attr("disabled","disabled");
+					_this.popolaProvince(regione,jQuery("#provincia"));
+				});
+				
+				jQuery("#provincia").bind("change",function(){
+					var provincia = jQuery(this).val();
+					jQuery("#comune").removeClass("selectDisabled");
+					jQuery("#comune").removeAttr("disabled");
+					jQuery("#comune").html("<option value=\"null\">Seleziona il comune</option>");
+					_this.popolaComuni(provincia,jQuery("#comune"));
+				});
+				
+				jQuery("#modifica").bind("click",function(){
+					_this.content.loader.init(function(){ _this.modificaUtente();});
+				});
+				
+				
+				_this.content.loader.remove();
+	
+			}
+			
+			var email = jQuery.getCookie("utente").email;
+			jQuery.postJSON("RegistrazioneUtente", "getUtenteByAccount","private", {"account":email}, false, callBackUtente);
+		
+		});
+	
+	}
+	
+	
+	
+	_this.popolaNazioni = function(elemSelect){
+		
+		function callBackNazioni(dato){
+			//console.log("Nazioni:");
+			//console.log(dato);
+			//jQuery("#regione").html("<option ");
+			for(var i = 0;i < dato.length;i++){
+				var selected = "";
+				//console.log(dato[i].id +  " == IT");
+				if(dato[i].id == "IT")
+					selected = "selected";
+				var tmp = "<option value='"+dato[i].id+"' "+selected+">"+dato[i].nome+"</option>";
+				elemSelect.append(tmp);
+			}
+		}
+		
+		jQuery.postJSON("RegistrazioneUtente", "getNazioni","public", {}, false, callBackNazioni);
+	}
+	
+	_this.popolaRegioni = function(elemSelect){
+			
+		function callBackRegione(dato){
+			
+			//console.log(dato);
+			//jQuery("#regione").html("<option ");
+			for(var i = 0;i < dato.length;i++){	
+				var tmp = "<option value='"+dato[i].id+"'>"+dato[i].nome+"</option>";
+				elemSelect.append(tmp);
+			}
+		}
+		
+		jQuery.postJSON("RegistrazioneUtente", "getRegioni","public", {}, false, callBackRegione);
+			
+	}
+	
+	_this.popolaProvince = function(id_regione, elemSelect){
+		
+		function callBackProvince(dato){
+			//console.log(dato);
+			//jQuery("#provincia").html("");
+			for(var i = 0;i < dato.length;i++){
+				var tmp = "<option value='"+dato[i].id+"'>"+dato[i].nome+"</option>";
+				elemSelect.append(tmp);
+			}
+		}
+		
+		jQuery.postJSON("RegistrazioneUtente", "getProvince","public", {"regione":id_regione}, false, callBackProvince);
+	}
+	
+	_this.popolaComuni = function(id_provincia,elemSelect){
+		
+		function callBackComuni(dato){
+			//console.log(dato);
+			//jQuery("#comune").html("");
+			for(var i = 0;i < dato.length;i++){
+				var tmp = "<option value='"+dato[i].id+"'>"+dato[i].nome+"</option>";
+				elemSelect.append(tmp);
+			}
+		}
+		
+		jQuery.postJSON("RegistrazioneUtente", "getComuni","public", {"provincia":id_provincia}, false, callBackComuni);
+	}
+	
+	
+	
+	_this.modificaUtente = function(){
+		
+		 request.user.account = jQuery.getCookie("utente").email;
+		 request.account.account = jQuery.getCookie("utente").email; 
+		 request.user.nome = jQuery("#nome").val();	
+		 request.user.cognome = jQuery("#cognome").val();
+		 request.user.sesso = jQuery("#sesso option:selected").val();
+		 request.user.ragione_sociale = jQuery("#ragione_sociale").val();
+		 request.user.codice_fiscale = jQuery("#codice_fiscale").val();
+		 request.user.partita_iva = jQuery("#partita_iva").val();
+		 request.user.telefono = jQuery("#telefono").val();
+		 request.user.cellulare = jQuery("#cellulare").val();
+		 request.user.fax = jQuery("#fax").val();
+		 request.user.website = jQuery("#website").val();
+		 request.user.id_indirizzo = jQuery("#indirizzo").attr("id_indirizzo");
+		 request.account.password = jQuery("#password").val();
+		 request.account.ripeti_password = jQuery("#ripeti_password").val();
+		 //request.user.tipo = jQuery("#tipo_utente option:selected").val();
+		 request.user.mansioni = jQuery("#mansioni").val();
+		 request.indirizzo.id_indirizzo = jQuery("#indirizzo").attr("id_indirizzo");
+		 request.indirizzo.nazione = jQuery("#nazione").val();
+		 request.indirizzo.regione = jQuery("#regione option:selected").val();
+		 request.indirizzo.provincia = jQuery("#provincia option:selected").val();
+		 request.indirizzo.comune = jQuery("#comune option:selected").val();
+		 request.indirizzo.indirizzo = jQuery("#indirizzo").val();
+		 request.indirizzo.civico = jQuery("#civico").val();
+		 request.indirizzo.cap = jQuery("#cap").val();
+		
+		var response = {};
+		response.result = 1;
+		response.message = "";
+		
+		/*if(!jQuery.validaValore(request.user.tipo)){
+			response.result = 0;
+			response.message += "• Non hai selezionato la tipologia di utente\n";	
+		}*/
+		
+		if(jQuery.validaValore(request.account.password) || jQuery.validaValore(request.account.ripeti_password)){
+			if(request.account.password != request.account.ripeti_password){
+				response.result = 0;
+				response.message += "• Le password inserite non coincidono\n";
+			}
+			
+			
+			if(request.account.password.length < 6){
+				response.result = 0;
+				response.message += "• Scegliere una password di almeno 6 caratteri\n";
+			}
+		}
+		
+		if(!jQuery.validaValore( request.user.nome)){
+			response.result = 0;
+			response.message += "• Non hai inserito il nome\n";	
+		}
+		
+		if(!jQuery.validaValore( request.user.cognome)){
+			response.result = 0;
+			response.message += "• Non hai inserito il cognome\n";	
+		}
+		
+		if(!jQuery.validaValore(request.user.mansioni)){
+			response.result = 0;
+			response.message += "• Non hai inserito le mansioni\n";	
+		}
+		
+		if(!jQuery.validaValore( request.user.codice_fiscale) && !jQuery.validaValore( request.user.partita_iva)){
+			response.result = 0;
+			response.message += "• Non hai inserito la partita iva o il codice fiscale\n";	
+		}
+		
+		if(jQuery.validaValore(request.user.codice_fiscale)){
+			var tmp = jQuery.checkCodiceFiscale( request.user.codice_fiscale);
+			if(!tmp.result){
+				response.result = 0;
+				response.message += tmp.message+"\n";
+			}
+		}
+		
+		if(jQuery.validaValore( request.user.partita_iva)){
+			var tmp = jQuery.checkPartitaIva(request.user.partita_iva);
+			if(!tmp.result){
+				response.result = 0;
+				response.message += tmp.message+"\n";
+			}
+		}
+	
+		
+		if(!jQuery.validaValore(request.user.telefono)){
+			response.result = 0;
+			response.message += "• Non hai inserito il numero di telefono\n";	
+		}
+		
+		if(!jQuery.validaValore(request.user.cellulare)){
+			response.result = 0;
+			response.message += "• Non hai inserito il cellulare\n";	
+		}
+		
+	
+		if(!jQuery.validaValore( request.indirizzo.regione)){
+			response.result = 0;
+			response.message += "• Non hai seleziona la regione\n";	
+		}
+		
+		if(!jQuery.validaValore( request.indirizzo.provincia)){
+			response.result = 0;
+			response.message += "• Non hai seleziona la provincia\n";	
+		}
+		
+		if(!jQuery.validaValore( request.indirizzo.comune)){
+			response.result = 0;
+			response.message += "• Non hai seleziona il comune\n";	
+		}
+		
+		if(!jQuery.validaValore( request.indirizzo.indirizzo)){
+			response.result = 0;
+			response.message += "• Non hai inserito l'indirizzo\n";	
+		}
+		
+		if(!jQuery.validaValore( request.indirizzo.civico)){
+			response.result = 0;
+			response.message += "• Non hai inserito il numero civico\n";	
+		}
+		
+		if(!jQuery.validaValore( request.indirizzo.cap)){
+			response.result = 0;
+			response.message += "• Non hai inserito il cap\n";	
+		}
+		
+		if(response.result == 0){
+			alert(response.message);
+			_this.content.loader.remove();
+			return;	
+		}
+		
+		
+		
+		
+		function callBackAccount(datoAccount){
+			//console.log("Utente Registrato?");
+			//console.log(datoAccount);
+			
+			if(!datoAccount.success){
+				alert(datoAccount.messageError);	
+				return;	
+			}
+		}
+		
+		if(jQuery.validaValore(request.account.password))
+		jQuery.postJSON("RegistrazioneUtente","modifyAccount","private", request.account, false, callBackAccount);
+		
+		
+		//console.log("Indirizzo");
+		//console.log(request.indirizzo);
+		
+		function callBackIndirizzo(datoIndirizzo){
+			
+				if(!datoIndirizzo.success){
+					alert(datoIndirizzo.messageError);	
+					return;
+				}
+			}
+			
+		jQuery.postJSON("RegistrazioneUtente","modifyIndirizzo", "private", request.indirizzo, false, callBackIndirizzo);
+		
+		
+		function callBackUser(datoUser){
+			  //console.log("qui arrivo?");
+			  
+			  if(!datoUser.success){
+				  alert(datoUser.messageError);	
+				  return;
+			  }
+			  
+			  var message = "<h3 align='center'>I tuo dati sono stati modificati correttamente.<br>";
+			  _this.elem.html(message);
+					
+		}
+				
+		jQuery.postJSON("RegistrazioneUtente","modifyUser","private", request.user, false, callBackUser);			
+		
+		var cookieUtente = jQuery.getCookie("utente");
+		cookieUtente.nome = request.user.nome;
+		cookieUtente.cognome = request.user.cognome;
+		cookieUtente.sesso = request.user.sesso;
+		jQuery.registerCookie("utente", cookieUtente);
+		
+		var benvenuto = "";
+		if(request.user.sesso == "F")
+			benvenuto = "Benvenuta ";
+		else
+			benvenuto = "Benvenuto ";
+		
+		//console.log(request.user.sesso + " " + benvenuto);
+		
+		jQuery("#Benvenuto").html(benvenuto + request.user.nome + " " + request.user.cognome+" ");
+		
+		
+		_this.content.loader.remove();
+		
+	}
+	
+}

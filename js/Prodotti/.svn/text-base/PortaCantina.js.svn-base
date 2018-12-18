@@ -1,0 +1,387 @@
+var PortaCantina = function(main){
+
+	var _this = this;
+	_this.selezione;
+	_this.id;
+	_this.tipologia;
+	_this.famiglia;
+	_this.dimensioniPorta;
+	_this.debordatura;
+	_this.versione;
+	_this.sottoversione;
+	_this.tipoPosa;
+	
+	_this.sopraluce = null;
+	_this.sistemaChiusura = null;
+	_this.sistemaRifinitura = null;
+	_this.verniciatura = null;
+	_this.passaggioPedonale = null;
+	_this.siAccessori = false;
+	
+	
+	_this.prezzoTotale;
+	
+	
+	_this.init = function(cookie){
+		
+	
+		_this.selezione = cookie;
+		
+		//console.log("Selezione 1");
+		//console.log(cookie);
+		
+		
+		_this.id = _this.selezione.id;
+		_this.riferimento = _this.selezione.riferimento;
+		_this.tipologia = _this.selezione.tipologia;
+		_this.areazione = _this.selezione.areazione;
+		_this.apertura = _this.selezione.apertura;
+		_this.porta = _this.selezione.porta;
+		_this.sopraluce = _this.selezione.accessori.sopraluce;
+		_this.prodotto = _this.selezione.prodotto;
+		_this.validita = _this.selezione.validita;
+		
+		
+		
+		
+		if(_this.validita){
+			_this.findProdotto();
+		}
+		
+		_this.getSopraluce();
+	}
+	
+	_this.getTipologiaProgetto = function(){
+	
+		return _this.validita;
+	}
+	
+	_this.findProdotto = function(){
+		
+		var porta_cantina = {
+			"tipologia": _this.tipologia,
+			"areazione":_this.areazione,
+			"apertura":_this.apertura,
+			"L": _this.porta.L,
+			"H":_this.porta.H
+		}
+		
+		function callBackPrezzo(dato){
+			
+			//console.log("QUIQIIQIQIQIIQIQI");
+			if(!dato.success){
+				alert(dato.messageError);
+				return;
+			}
+			
+			
+			
+			if(dato.results.length > 0){
+				////console.log(dato.results.codice);
+				
+				
+				var cookieSelezione = _this.selezione;
+				//_this.prodotto.sconto = cookie.prodotto.sconto;
+				
+				
+				
+				_this.prodotto.codice =  dato.results[0].codice;
+				_this.prodotto.descrizione = dato.results[0].descrizione;
+				_this.prodotto.prezzo = Number(dato.results[0].costo);
+				_this.prodotto.totale = Number(dato.results[0].costo);
+				
+				jQuery.registerCookie("selezione",cookieSelezione);
+			}else{
+				alert("Non è stata trovata nessuna porta cantina! Contattare l'amministratore del sistema comunicando i seguenti valori per la risoluzione del problema\nTipologia: "+_this.tipologia+"\nLarghezza: "+_this.porta.L+"\nAltezza: "+_this.porta.H);
+				jQuery("#Form"+jQuery.getCookie("selezione").tipologia).trigger("click");
+				return;	
+			}
+			
+			
+			//console.log("Selezione");
+			//console.log(_this.selezione);
+			
+		}	
+		
+		
+		if(_this.validita)
+			jQuery.postJSON("PortaCantina","getPortaCantina","private", porta_cantina, false, callBackPrezzo);	
+		
+		
+	}
+	
+
+	
+	_this.getRiepilogo = function(){
+		var riepilogo = "";
+		riepilogo += "<h4>RIFERIMENTO: "+_this.riferimento+"</h4>";
+		riepilogo += "Tipologia: <b>"+_this.tipologia+"</b><br>";
+		riepilogo += "Dimensioni porta LxH(mm): <b>"+_this.porta.L+"x"+_this.porta.H+"</b><br>";
+		riepilogo += "Apertura: <b>"+_this.apertura+"</b><br>";
+		riepilogo += "Areazione: <b>"+_this.areazione+"</b><br>";
+		if(_this.areazione.grigliaSuperiore)
+			riepilogo += "• Griglia superiore<br>";
+		if(_this.areazione.grigliaInferiore)
+			riepilogo += "• Griglia inferiore<br>";
+		
+		if(!_this.validita){
+			if(_this.prodotto.sconto > 0)
+			riepilogo += "Sconto da applicare: <b>" +_this.prodotto.sconto+ "%</b><br>" ;
+			else
+			riepilogo += "<b>Nessuno sconto da applicare</b><br>" ;	
+		}
+		
+		
+		if(_this.validita){
+			riepilogo += "Codice: <b>" + _this.prodotto.codice + "</b><br>";
+			riepilogo += "Descrizione: <b>"+_this.prodotto.descrizione + "</b><br>";
+			riepilogo += "Prezzo: <b>" + Number(_this.prodotto.prezzo).format(false) + " €</b><br>";
+			_this.prezzoTotale = _this.prodotto.prezzo;
+			
+		}else{ 
+			if(jQuery.getCookie("utente").ruolo != "ROLE_ADMIN"){
+				riepilogo += "<h3><img src='images/warning.png' /> Attenzione!</h3> Le scelte precedenti con consentono al sistema";
+				riepilogo += " di emettere un preventivo corretto automaticamente.<br>";
+			}
+		}
+		
+		
+		
+		if(_this.validita){
+			var totaleProdotto = _this.prezzoTotale;
+			
+			//console.log(totaleProdotto);
+			////console.log(totaleProdotto.format(false));
+			
+			riepilogo += "Totale: <b>" + Number(_this.prezzoTotale).format(false) + " €</b><br>";
+			var totaleScontatoProdotto = totaleProdotto - _this.prezzoTotale*_this.prodotto.sconto/100;
+			riepilogo += "Prezzo totale scontato: <b><span id='scontoProdottoTotale'>" + totaleScontatoProdotto.format(false) + "</span> €</b><br>";
+			riepilogo += "<div class='boxSconto'>Sconto: <input type='text' id='scontoProdotto' class='sconto' value='"+_this.prodotto.sconto+"' totale='"+totaleProdotto+"' style='width:40px;' maxlength='3'/>%<br></div><br>";
+		}
+		
+		
+		
+		if(jQuery.validaValore(_this.sopraluce)){
+			
+		riepilogo += "<h3>Accessori:</h3>";
+		
+		
+		
+			riepilogo += "SOPRALUCE DI <b>"+_this.sopraluce.height+" (mm)</b> di altezza<br>";
+			//riepilogo += "Descrizione: <b>" + _this.sopraluce.descrizione + "</b><br>";  
+			riepilogo += "Codice: <b>" + _this.sopraluce.codice + "</b><br>";  
+					
+			if(_this.validita){
+				riepilogo += "Prezzo al ML: <b>" + Number(_this.sopraluce.costo).format(false) + " €</b><br>"; 
+				riepilogo += "Totale: <b>" +Number(_this.sopraluce.totale).format(false) + "</b> €<br>";
+				var tot = _this.sopraluce.totale;
+				var totaleScontato = tot - tot*_this.sopraluce.sconto/100;
+				riepilogo += "Totale scontato: <b><span id='scontoSopraluceTotale'>"+totaleScontato.format(false)+"</span> €</b>";
+				riepilogo += "<div class='boxSconto'>Sconto: <input type='text' id='scontoSopraluce' style='width:40px;' class='sconto' totale='"+tot+"' value='"+_this.sopraluce.sconto+"' />%<br></div>";
+			}
+				
+		
+	
+		//console.log("E qua si!");
+	
+		riepilogo += "<br>";				
+		_this.prezzoTotale += _this.sopraluce.totale;
+
+		}
+		
+		
+		var tmpSX = 1;
+		var tmpDX = 0;
+		
+		if(_this.selezione.prodotto.quantita){
+			//console.log("Quantita: " + _this.selezione.prodotto.quantita);
+			riepilogo += "<div class='containerBoxRepeat'><br><br><input type='checkbox' id=\"repeatQuantita\" value='si'/>";
+			riepilogo += "Compila con i valori delle quantità in memoria<br><br></div>";	
+			
+			tmpSX = _this.selezione.prodotto.quantitaSX;
+			tmpDX = _this.selezione.prodotto.quantitaDX;
+		}	
+			
+			
+			
+		riepilogo += "<span id='messageQuantita'><b>Quantità con apertura a sinistra</b>: </h4><input type='text' class='quantitaProdotto' id=\"quantitaSX\" value='"+tmpSX+"' maxlength='3'></span><br><span id='messageQuantita'><b>Quantità con apertura a destra</b>: <input type='text' class='quantitaProdotto' value='"+tmpDX+"' maxlength='3' id=\"quantitaDX\"></span><br><br>";	
+
+		return riepilogo;
+	}
+	
+	_this.activeButtonRepeatQuantita = function(){
+	
+		var selezione = jQuery.getCookie("selezione");	
+		jQuery("#repeatQuantita").click(function(){
+			
+			if(jQuery(this).is(":checked")){
+				
+				tmpSX = parseInt(selezione.prodotto.quantitaSX);
+				tmpDX = parseInt(selezione.prodotto.quantitaDX);
+				
+				jQuery("#quantitaSX").val(selezione.prodotto.quantitaSX);
+				jQuery("#quantitaSX").prop("disabled",true);
+				jQuery("#quantitaDX").val(selezione.prodotto.quantitaDX);
+				jQuery("#quantitaDX").prop("disabled",true);
+				
+			}else{
+				jQuery(".quantitaProdotto").prop("disabled",false);	
+			}
+			
+			var e = jQuery.Event("keyup");
+			jQuery(".quantitaProdotto").trigger(e);
+			
+		});	
+		
+		
+		jQuery(".quantitaProdotto").on("keypress", function(e){
+			return jQuery.onlynumbers(e);
+		});
+		
+		if(selezione.modifica.boo){
+			jQuery("#repeatQuantita").trigger("click");
+		}
+		
+	}
+	
+	
+	_this.getValidita = function(){
+		return _this.validita;	
+	}
+	
+	
+	_this.getSopraluce = function(){
+		
+		if(jQuery.validaValore(_this.sopraluce))
+		if(_this.sopraluce.height > 0){
+			_this.prezzoTotale += _this.sopraluce.totale;
+		}
+	}
+	
+	
+	_this.getPrezzoTotale = function(){
+		var cookieSelezione = _this.selezione;
+		
+		var prezzoProdotto = cookieSelezione.prodotto.totale;
+		var scontoProdotto = parseInt(jQuery("#scontoProdotto").val());
+		var totaleProdotto = prezzoProdotto;
+		
+		if(jQuery.validaValore(_this.sopraluce)){
+			var totaleSopraluce = _this.sopraluce.totale;
+			totaleProdotto += totaleSopraluce;
+		}
+		return totaleProdotto;
+	}
+	
+	_this.getPrezzoScontato = function(){
+		
+		var cookieSelezione = _this.selezione;
+		
+		var prezzoProdotto = cookieSelezione.prodotto.totale;
+		var scontoProdotto = parseInt(jQuery("#scontoProdotto").val());
+		cookieSelezione.prodotto.sconto = parseInt(jQuery("#scontoProdotto").val());
+		var totaleProdottoScontato = prezzoProdotto - (prezzoProdotto * scontoProdotto)/100;
+		
+		
+		if(jQuery.validaValore(_this.sopraluce)){
+			var totaleSopraluce = _this.sopraluce.totale;
+			var scontoSopraluce = parseInt(jQuery("#scontoSopraluce").val());
+			cookieSelezione.accessori.sopraluce.sconto = scontoSopraluce;
+			totaleProdottoScontato += (totaleSopraluce - (totaleSopraluce * scontoSopraluce)/100);
+		}
+		cookieSelezione.totaleScontato = totaleProdottoScontato;
+		
+		jQuery.registerCookie("selezione", cookieSelezione);
+		return totaleProdottoScontato;
+	}
+	
+	
+	
+	
+	_this.ricalcolaTotale = function(prodotto){
+		var cookieSelezione = prodotto;
+		
+		var totaleProdotto = 0;
+		totaleProdotto = cookieSelezione.prodotto.totale;
+		var quantita = cookieSelezione.prodotto.quantita;
+		
+		_this.id = cookieSelezione.id;
+		_this.riferimento = cookieSelezione.riferimento;
+		_this.tipologia = cookieSelezione.tipologia;
+		
+		if(jQuery.validaValore(_this.sopraluce)){
+			_this.sopraluce = cookieSelezione.accessori.sopraluce;
+			_this.prodotto = cookieSelezione.prodotto;
+			_this.getSopraluce();
+			
+			var totaleSopraluce = _this.sopraluce.totale;
+			totaleProdotto += totaleSopraluce;
+		}
+		
+		return totaleProdotto*quantita;
+	}
+	
+	
+	_this.ricalcolaTotaleScontato = function(prodotto){
+		var cookieSelezione = prodotto;
+		
+		var totaleProdottoScontato = 0;
+		
+		var prezzoProdotto = cookieSelezione.prodotto.totale;
+		var quantita = cookieSelezione.prodotto.quantita;
+		var scontoProdotto = cookieSelezione.prodotto.sconto;
+		var tmpScontato = prezzoProdotto - (prezzoProdotto * scontoProdotto)/100;
+		var totaleProdottoScontato = tmpScontato;
+		
+		//console.log("Totale prodotto: " + tmpScontato);
+		
+		_this.id = cookieSelezione.id;
+		_this.riferimento = cookieSelezione.riferimento;
+		_this.tipologia = cookieSelezione.tipologia;
+		_this.sopraluce = cookieSelezione.accessori.sopraluce;
+		
+		
+		if(jQuery.validaValore(_this.sopraluce)){
+			_this.prodotto = cookieSelezione.prodotto;
+			_this.getSopraluce();
+			
+			var totaleSopraluce = _this.sopraluce.totale;
+			var scontoSopraluce = _this.sopraluce.sconto;
+			var tmpScontato = (totaleSopraluce - (totaleSopraluce * scontoSopraluce)/100);
+			totaleProdottoScontato += tmpScontato;
+		}
+		
+		return totaleProdottoScontato*quantita;
+	}
+	
+	_this.aggiornaRiepilogo = function(){
+			
+		var cookieSelezione = jQuery.getCookie("selezione")	;
+			
+		var totQuantita = 0;
+		jQuery(".quantitaProdotto").each(function(){
+			totQuantita += parseInt(jQuery(this).val());
+		});
+		
+		cookieSelezione.modifica.boo = false;
+		cookieSelezione.modifica.id = null;
+		cookieSelezione.indietro = false;
+		cookieSelezione.currentStep = 0;
+		cookieSelezione.prodotto.quantita = totQuantita;
+		cookieSelezione.prodotto.quantitaSX = jQuery("#quantitaSX").val();
+		cookieSelezione.prodotto.quantitaDX = jQuery("#quantitaDX").val();
+		
+		
+		if(_this.getValidita()){
+		cookieSelezione.totale = _this.getPrezzoTotale()*totQuantita;
+		cookieSelezione.totaleScontato = _this.getPrezzoScontato()*totQuantita;
+		}else{
+		cookieSelezione.totale = 0;
+		cookieSelezione.totaleScontato = 0;
+		}
+		
+		jQuery.registerCookie("selezione",cookieSelezione);
+	}
+	
+	
+}

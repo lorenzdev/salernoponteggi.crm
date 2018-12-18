@@ -1,0 +1,68 @@
+body {
+    color: #081f3f;
+  }
+.form-check-input{
+  width: 15px;
+  height: 15px;
+}
+.big_radio{
+  width: 15px;
+  height: 15px;
+}
+.form-control {
+    background-color: #e2e2e2;
+  }
+
+.pagination-centered{text-align:center;}
+
+.custommargin{
+  margin-top: 80px;
+  margin-bottom: 50px;
+}
+
+.customtop{
+  margin-top: 80px;
+}
+
+.custombottom{
+  margin-bottom: 50px;
+}
+
+.customtopbutton{
+  margin-top: 30px;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-default {
+  color: #fff;
+  background-color: #081f3f;
+  border-radius: 5px 5px 5px 5px;
+  border: 0px;
+}
+
+.btn-default:hover {
+  color: #333;
+  background-color: #e2e2e2;
+  border: 0px;
+}
+
+
+.btn-default2 {
+  color: #fff;
+  background-color: #707070;
+  border-radius: 5px 5px 0px 0px;
+  border: 0px;
+}
+
+.btn-default2:hover {
+  color: #333;
+  background-color: #e2e2e2;
+  border: 0px;
+}

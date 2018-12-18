@@ -1,0 +1,330 @@
+/*
+* Customer: MomentoEspresso
+* Company: Inova Spa
+* Author: Lorenzo Vitale
+* date: Luglio 2013
+*
+*/
+
+jQuery(document).ready(function(){
+	
+	var expireCookie = {};
+	
+	////console.log("QUI!");
+	
+	// function send post request to server
+	jQuery.postJSON = function(classe, metodo, isPublic, dataJS, as, callback) {
+		
+		//dataJS["_bl_manager"] = manager;
+		//dataJS["_bl_method"] = method;
+		//dataJS["_bl_jsonString"] = jsonData;
+		//dataJS["_bl_accessMode"] = isPublic;
+		
+		var boo = true;
+		if(isPublic == "private"){
+			function callBack(dato){
+				//console.log(dato);
+				if(!dato.success){
+					alert("Sessione scaduta!");
+					jQuery.deleteCookie("utente");
+					jQuery.deleteCookie("selezione");
+					location.reload();	
+					boo = false;
+				}	
+			}
+			
+			jQuery.checkSession(callBack);	
+			if(!boo) return;
+		}
+		
+		var url = "php/proxy.php";
+		
+		//dataJS = "oggetto=Basculanti&metodo=getBasculanti";
+		dataJS.classe = classe;
+		dataJS.metodo = metodo;
+		
+		//console.log(classe+" "+metodo);
+		
+		//dataJS["oggetto"] = "Basculanti";
+		//dataJS["metodo"] = "getBasculanti";
+		
+ 		/*var proceed = false;
+		var jsonCookie;
+		var secToken;
+
+	
+
+
+		if(isPublic){
+			proceed = true;
+		}else if(isPublic == ""){
+			proceed = true;
+			//jsonCookie = jQuery.checkCookie();
+			//secToken = jsonCookie.token;
+			
+		}else proceed = false;
+
+
+		 if(!dataJS) {
+			 dataJS = {};
+		 }
+
+
+		 if(proceed) {
+			*/ //var url = "jsp/proxyjson.jsp";
+		//	 var url = "jsp/echo.jsp";
+		//	 dataJS["_bl_manager"] = manager;
+		//	 dataJS["_bl_method"] = method;
+			 //dataJS["token"] = secToken;
+		
+		 //if(jsonData) {
+		  //dataJS["_bl_jsonString"] = JSON.stringify(jsonData);
+		 //}
+		 
+		// dataJS["_bl_accessMode"] = isPublic;
+
+		 return jQuery.ajax({
+			 url: url,
+			 type: 'POST',
+			 async: as,
+			 data: dataJS,
+			 timeout: 30000,
+				dataType: 'json',
+			 success: function(data){
+				callback(data);
+		 	},
+			error: function(data){
+				//alert("Errore di connessione al server");
+				//console.log("Errore: ");
+				console.log(data.responseText);
+			}
+		});
+	}
+});
+
+
+jQuery.checkSession = function(callBack){
+	
+	var dataJS = {};
+	dataJS.classe = "RegistrazioneUtente";
+	dataJS.metodo = "checkSession";
+	
+	account = "";
+	if(!jQuery.getCookie("utente")){
+		account = "";
+		token = "";
+	}else{
+		account = jQuery.getCookie("utente").email;
+		token = jQuery.getCookie("utente").token;	
+		}
+		
+	
+	dataJS.account = account;
+	dataJS.token = token;
+	
+	return jQuery.ajax({
+			 url: "php/proxy.php",
+			 type: 'POST',
+			 async: false,
+			 data: dataJS,
+			 timeout: 30000,
+			 dataType: 'json',
+			 success: function(data){
+				callBack(data);
+		 	},
+			error: function(data){
+				//alert("Errore di connessione al server");
+				//console.log("Errore: ");
+				//console.log(data.responseText);
+			}
+		});
+
+}
+
+jQuery.validaValore = function(valore){
+	
+	if(valore != "" && 	valore != undefined && valore != null && valore != "null")
+		return true;
+		else
+		return false;
+}
+
+	Number.prototype.format = function(arrotondamento) {
+    		
+			var value;
+			if(arrotondamento)
+			value = Math.round(this*10)/10;
+			else
+			value = Math.abs(this);
+				
+			return value.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+		};
+		
+		
+	jQuery.onlyDecimal = function(event) {
+	 return !((event.which != 46 || jQuery(event.target).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57))
+	 
+	}
+
+jQuery.onlynumbers = function(e){
+  		return (e.which!=8 && e.which!=0 && (e.which<48 || e.which>57)) ? false : true ;
+	}
+
+jQuery.registerCookie = function(nome_cookie, cookie){
+		jQuery.cookie(nome_cookie, JSON.stringify(cookie), { expires: 60});
+	}
+	
+
+jQuery.deleteCookie = function(nomecookie){
+		////console.log("Ci sto provando!");
+		jQuery.cookie(nomecookie,"",{expires:-1});
+		jQuery.cookie(nomecookie, null);
+	}
+
+jQuery.getCookie = function(nome_cookie){
+		
+		if(jQuery.cookie(nome_cookie) == undefined)
+			return undefined;
+		
+		return JSON.parse(jQuery.cookie(nome_cookie));	
+	}
+	
+	
+	
+jQuery.checkPartitaIva = function(pIva){
+	
+		var result = {"message":"", "result":1};
+	
+		if (pIva.length < 10 || pIva.length > 11){
+			return {"message":"• Il campo PARTITA IVA non è corretto", "result": 0};
+		}
+		 
+		 function callBackIva(dato){
+			
+			
+			if(!dato.success){
+				alert(JSON.stringify(dato.errorMessage));	
+				return;
+			}
+			
+			if(dato.results.length > 0){
+				result = {"message":"• PARTITA IVA utilizzata da un altro utente", "result": 0};
+			}
+			 
+		 }
+		 
+		 
+		 var utente = jQuery.getCookie("utente");
+		 if(utente != undefined)
+		 jQuery.postJSON("RegistrazioneUtente","checkPartitaIva","public", {"partita_iva":pIva,"email":utente.email}, false, callBackIva);
+		 
+		return result;	 
+	}
+	
+	
+	jQuery.checkCodiceFiscale = function(cf){
+		
+		var result = {"message":"", "result":1};
+		
+		if(cf != "" && cf != null){
+			
+			var pattern = /^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$/;
+			if (cf.search(pattern) == -1) {
+				return {"message":"• Inserire un CODICE FISCALE valido", "result": 0};
+			}
+		}	
+		
+		 function callBackCF(dato){
+			
+			//console.log("Codice fiscale");
+			//console.log(dato);
+			
+			if(!dato.success){
+				alert(JSON.stringify(dato.errorMessage));	
+				return;
+			}
+			
+			if(dato.results.length > 0){
+				result = {"message":"• CODICE FISCALE utilizzato da un altro utente", "result": 0};
+			}
+			 
+		 }
+		 
+		var utente = jQuery.getCookie("utente");
+		if(utente != undefined)
+			jQuery.postJSON("RegistrazioneUtente","checkCodiceFiscale","public", {"codice_fiscale":cf,"email":utente.email}, false, callBackCF);
+		return result;	
+	}
+	
+	
+	jQuery.email = function(email){
+		var result = {"message":"", "result":0};
+		
+		if(email != ""){
+			var email_reg_exp = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-]{2,})+\.)+([a-zA-Z0-9]{2,})+$/;
+			if (!email_reg_exp.test(email)) {
+				return {"message":"• Inserire una E-MAIL valida.", "result": 0};
+			}else
+				return {"message":"", "result":1};
+		}
+		
+		return result;
+	}
+	
+	jQuery.checkEmail = function(email){
+		
+		var result = {"message":"", "result":1};
+		
+		if(email != ""){
+			var email_reg_exp = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-]{2,})+\.)+([a-zA-Z0-9]{2,})+$/;
+			if (!email_reg_exp.test(email)) {
+				return {"message":"• Inserire una E-MAIL valida.", "result": 0};
+			}
+		}
+		
+		
+		function callBackEmail(dato){
+			
+			if(!dato.success){
+				alert(JSON.stringify(dato.errorMessage));	
+				return;
+			}
+			
+			if(dato.results.length > 0){
+				result = {"message":"• EMAIL utilizzata da un altro utente", "result": 0};
+			}
+		 }
+		 	
+		 jQuery.postJSON("RegistrazioneUtente","checkEmail","public", {"email":email}, false, callBackEmail);
+		
+		return result;	
+	}
+	
+	
+	jQuery.generaPassword = function(plength){
+		var keylist = "abcdefghijklmnopqrstuvwxyz1234567890";
+		var temp = "";
+	 	for (i=0; i<plength; i++){
+	 		temp += keylist.charAt(Math.floor(Math.random()*keylist.length));
+	 	}
+		
+		
+		//console.log("Password: " + temp);
+		return temp;
+	}
+	
+	
+	jQuery.ImageExist = function(url){
+   		if(url){
+			try{
+				var req = new XMLHttpRequest();
+				req.open('GET', url, false);
+				req.send();
+			}catch(ex){
+				return false;	
+			}
+        	return req.status==200;
+		} else {
+			return false;
+		}
+	}

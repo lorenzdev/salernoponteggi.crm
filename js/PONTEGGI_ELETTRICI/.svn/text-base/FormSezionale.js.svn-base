@@ -1,0 +1,186 @@
+var FormSezionale = function(main){
+
+	var _this = this;
+	_this.main = main;
+	_this.elem;
+	_this.carrello;
+	_this.step = {
+		0: "MisureSezionali",
+		1: "Modello",
+		2: "Struttura",
+		3: "SistemaRifinitura",
+		4: "Molle",
+		5: "Oblo",
+		6: "Griglie",
+		7: "PortaPedonale",
+		8: "SistemaChiusura",
+		9: "Motorizzazione",
+		10: "Sconto",
+		11: "Riepilogo"
+	};
+	
+	_this.numStep = -1;
+	
+	
+	_this.init = function(elem){
+		_this.elem = elem;
+		
+		
+		
+		
+		
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/Foromuro/MisureSezionali.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/Modello/Modello.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/Struttura/Struttura.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/SistemaRifinitura/SistemaRifinitura.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/Molle/Molle.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/Oblo/Oblo.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/Griglie/Griglie.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/PortaPedonale/PortaPedonale.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/SistemaChiusura/SistemaChiusura.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/Motorizzazione/Motorizzazione.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/Sconto/Sconto.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/Riepilogo/Riepilogo.js\" type=\"text/javascript\"></script>");
+		/*_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/Debordatura/Debordatura.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/Versione/Versione.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/Verniciatura/Verniciatura.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/SistemaChiusura/SistemaChiusura.js\" type=\"text/javascript\"></script>");
+		
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/PassaggioPedonale/PassaggioPedonale.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/Sopraluce/Sopraluce.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/Motorizzazione/Motorizzazione.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/PredisposizioneMotorizzazione/PredisposizioneMotorizzazione.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/SEZIONALI/Sconto/Sconto.js\" type=\"text/javascript\"></script>");
+		_this.elem.html("<script language=\"javascript\" src=\"js/Riepilogo/Riepilogo.js\" type=\"text/javascript\"></script>");*/
+		
+		//var test = new TesterPOST();
+		//test.init();
+
+		// creo i cookie
+		var selezione = {
+			"indietro": false,
+			"currentStep":0,
+			"validita": true,
+			"modifica":{"boo":false,"id":null},
+			"riferimento": null,
+			"porta":{
+			"L":null,
+			"H":null	
+			},
+			"foroMuro":{
+			"L":null,
+			"H":null	
+			},
+			"ingombro":{
+			"up":null,
+			"dx":null,
+			"sx":null
+			},
+			"accessori":{}
+		}
+		
+		
+		if(!jQuery.getCookie("selezione")){
+			/*if(jQuery.getCookie("selezione").repeat == true){
+				selezione.accessori = jQuery.getCookie("selezione").accessori;
+				selezione.versione = jQuery.getCookie("selezione").versione;
+				selezione.sottoversione = jQuery.getCookie("selezione").sottoversione;
+				selezione.debordatura = jQuery.getCookie("selezione").debordatura;
+				selezione.ingombro = jQuery.getCookie("selezione").ingombro;
+				selezione.accessori.sopraluce.repeat = true;
+				selezione.accessori.sistemaChiusura.repeat = true;
+				selezione.accessori.sistemaRifinitura.repeat = true;
+				selezione.accessori.motorizzazione.repeat = true,
+				selezione.accessori.predisposizioneMotorizzazione.repeat = true;
+				selezione.accessori.verniciatura.repeat = true;
+				selezione.accessori.passaggioPedonale.repeat = true;
+				selezione.repeat = true;
+			}*/
+			jQuery.registerCookie("selezione",selezione);
+		}else{
+			if(jQuery.getCookie("selezione").tipologia != "Sezionale")
+				jQuery.registerCookie("selezione",selezione);
+				
+			if(jQuery.getCookie("selezione").indietro){
+				selezione.indietro = false;
+				selezione.currentStep = 0;
+				jQuery.registerCookie("selezione",selezione);
+			}
+		}
+		
+		
+		////console.log("Selezione:");
+		////console.log(jQuery.getCookie("selezione"));
+		
+		
+		
+		jQuery.get(P_MISURE_SEZIONALI, function(dataHtml){
+			
+			
+			
+			_this.elem.html("<h3>Form di compilazione preventivi</h3>");
+			_this.elem.append(dataHtml);
+			_this.nextStep();	
+			
+			_this.main.loader.remove();
+			
+			//creo il carrello
+			//_this.carrello = new Carrello(_this);
+			//_this.carrello.init(jQuery("#Content"));
+		});
+	}
+	
+	
+	_this.nextStep = function(){
+	
+		_this.numStep++;
+	
+		jQuery(".menu-selezione").each(function(index){
+			if(index == _this.numStep){
+				jQuery(this).addClass("selezionato");
+			}else
+			jQuery(this).removeClass("selezionato");
+		});
+		
+		var selezione = jQuery.getCookie("selezione");
+		
+		
+		if(selezione.currentStep <= _this.numStep){
+			selezione.indietro = false;	
+			selezione.currentStep = _this.numStep;
+			jQuery.registerCookie("selezione", selezione);
+		}
+		
+		console.log("NEXT " + _this.numStep);
+		console.log(jQuery.getCookie("selezione"));
+		
+		
+		var obj = eval("new "+ _this.step[_this.numStep]+"(_this)");
+		obj.init(jQuery("#Content"));
+		
+	}
+	
+	_this.prevStep = function(num){
+	
+		
+		
+		if(jQuery.validaValore(num))
+			_this.numStep = _this.numStep - num;
+			else
+			_this.numStep--;
+	
+		jQuery(".menu-selezione").each(function(index){
+			if(index == _this.numStep){
+				jQuery(this).addClass("selezionato");
+			}else
+			jQuery(this).removeClass("selezionato");
+		});
+		
+		console.log("PREV " + _this.numStep);
+		console.log(jQuery.getCookie("selezione"));
+		
+		var obj = eval("new "+ _this.step[_this.numStep]+"(_this)");
+		obj.init(jQuery("#Content"));
+		
+	}
+}

@@ -1,0 +1,321 @@
+var Menu = function(){
+
+	var _this = this;
+	_this.elem;
+	
+	_this.init = function(elem){
+		_this.elem = elem;
+		_this.loader = new Loader();
+		
+		_this.loader.init(function(){_this.start();});
+		
+		
+		
+		
+	}
+	
+	
+	_this.start = function(){
+		
+		var utente = jQuery.getCookie("utente");
+		
+	
+		//creo il carrello
+		//var carrello = new Carrello();
+		//carrello.init(jQuery("#Container"));
+		
+		
+		
+		
+		jQuery.get(P_MENU, function(datoHtml){
+			
+			_this.elem.html(datoHtml);
+			_this.elem.append("<script language=\"javascript\" src=\"js/Prodotti/Basculante.js\" type=\"text/javascript\"></script>");	
+			_this.elem.append("<script language=\"javascript\" src=\"js/Prodotti/PortaCantina.js\" type=\"text/javascript\"></script>");	
+			_this.elem.append("<script language=\"javascript\" src=\"js/Prodotti/PortaMultiuso.js\" type=\"text/javascript\"></script>");	
+			_this.elem.append("<script language=\"javascript\" src=\"js/Prodotti/PortaTagliafuoco.js\" type=\"text/javascript\"></script>");	
+			_this.elem.append("<script language=\"javascript\" src=\"js/Prodotti/Sezionale.js\" type=\"text/javascript\"></script>");	
+		
+			
+			
+			jQuery(".menu").each(function(){
+				var classes = jQuery(this).attr("class");
+				//console.log(utente.ruolo);
+				if(classes.indexOf(utente.ruolo)<=0){
+					jQuery(this).remove();	
+				}
+			});
+			
+			
+			jQuery(".menu").bind("mouseover",function(){
+				jQuery(this).css({cursor:"pointer"})
+			});
+			
+			jQuery(".menu").bind("mouseout",function(){
+				jQuery(this).css({cursor:"auto"})
+			});
+			
+			jQuery("#FormBasculante").bind("click",function(){
+				_this.loadSezione("FormBasculante", jQuery(this));
+			});
+			
+			jQuery("#FormPortaCantina").bind("click",function(){
+				_this.loadSezione("FormPortaCantina", jQuery(this));
+			});
+			
+			jQuery("#FormPortaMultiuso").bind("click",function(){
+				_this.loadSezione("FormPortaMultiuso", jQuery(this));
+			});
+			
+			jQuery("#FormPortaTagliafuoco").bind("click",function(){
+				_this.loadSezione("FormPortaTagliafuoco", jQuery(this));
+			});
+			
+			jQuery("#FormSezionale").bind("click",function(){
+				_this.loadSezione("FormSezionale", jQuery(this));
+			});
+		
+			jQuery("#Carrello").bind("click",function(){
+				_this.loadSezione("Carrello",jQuery(this));
+			});
+			
+			jQuery("#GestionePreventivi").bind("click",function(){
+				_this.loadSezione("Preventivi",jQuery(this));
+			});
+			
+			jQuery("#GestioneUtenti").bind("click",function(){
+				_this.loadSezione("GestioneUtenti",jQuery(this));
+			});
+			
+			jQuery("#Rubrica").bind("click",function(){
+				_this.loadSezione("Rubrica",jQuery(this));
+			});
+			
+			jQuery("#Profilo").bind("click",function(){
+				_this.loadSezione("Profilo",jQuery(this));
+			});
+			
+			_this.aggiornaCarrello();
+			_this.loader.remove();
+			
+			
+			if(jQuery.getCookie("utente").ruolo == "ROLE_ADMIN"){
+				var interval = setInterval(function(){
+					_this.getNotifies();
+				}, 10000);
+			}
+			
+		});
+		
+	}
+	
+	_this.loadSezione = function(sezione,elem){
+		
+			function goLoad(){
+			
+				var cookieSelezione = jQuery.getCookie("selezione");
+				var check = false;
+				
+				//alert(jQuery.validaValore(cookieSelezione)+" "+cookieSelezione.modifica.boo+" "+sezione);
+				
+				var tipologia_temp = "";
+				switch(sezione){
+					
+						case 'Basculante': 			tipologia_temp="FormBasculante";break;
+						case 'PortaCantina': 		tipologia_temp="FormPortaCantina";break;
+						case 'PortaMultiuso': 		tipologia_temp="FormPortaMultiuso";break;
+						case 'PortaTagliafuoco': 	tipologia_temp="FormPortaTagliafuoco";break;
+						case 'Sezionale': 			tipologia_temp="FormSezionale";break;
+						
+					}
+				
+				
+				//alert(jQuery.validaValore(cookieSelezione)+" "+cookieSelezione.modifica.boo+" "+sezione + " "+tipologia_temp);
+				
+				if(jQuery.validaValore(cookieSelezione)){
+					
+					if(("Form"+cookieSelezione.tipologia) != sezione){
+							if(cookieSelezione.modifica.boo){
+								 var result = confirm("Attenzione è attiva una procedura di modifica di una "+cookieSelezione.tipologia+". Vuoi annullare la procedura e proseguire nella navigazione?");
+								 if(!result){
+									 _this.loader.remove();
+									  check = true;
+									  return;
+									  }else{
+									  check = false;
+									  cookieSelezione.modifica.boo = false;
+									  cookieSelezione.modifica.id = null;
+									  jQuery.registerCookie("selezione", cookieSelezione);	
+								  }
+							}else{
+								
+								if(sezione != "Carrello" && sezione != "Profilo" && sezione != "Rubrica" && sezione != "GestionePreventivi" && sezione != "GestioneUtenti"){
+					
+									jQuery.registerCookie("selezione",null);
+									jQuery.deleteCookie("selezione");	
+								
+								}
+						}
+						
+					}
+				}
+				
+				
+				/*if(jQuery.validaValore(cookieSelezione) && cookieSelezione.modifica.boo && ("Form"+sezione)!=tipologia_temp){
+					  var result = confirm("Attenzione è attiva una procedura di modifica di un prodotto. Vuoi annullare la procedura e proseguire nella navigazione?");
+					 _this.loader.remove();
+					  if(!result){
+						  check = true;
+						  }else{
+						  check = false;
+						  cookieSelezione.modifica.boo = false;
+						  cookieSelezione.modifica.id = null;
+						  jQuery.registerCookie("selezione", cookieSelezione);	
+					  }
+				  }*/
+					
+					var check = false;
+				  if(!check){
+					  var mySezione = eval("new "+sezione+"(_this)");
+					  mySezione.init(jQuery("#Container")); 
+					  _this.active(elem);
+				  }
+				  
+			}
+			
+			
+			_this.loader.init(goLoad);
+	
+	}
+	
+	_this.active = function(elem){
+		
+		
+		jQuery(".menu").removeClass("active");
+		jQuery(".menu").addClass("inactive");
+		elem.addClass("active");
+		elem.removeClass("inactive");
+	}
+	
+	
+	
+	_this.aggiornaCarrello = function(){
+		
+		function callBackCarrello(dato){
+				
+				console.log("Num prodotti");
+				console.log(dato);
+				
+				if(!dato.success){
+					alert("Errore inserimento in carrello");
+					return;	
+				}
+				
+				prodotti = dato.results;
+				if(Number(prodotti) > 0){
+					jQuery(".numero_notifica_carrello").html(prodotti);
+					jQuery(".numero_notifica_carrello").css({"display":"block"});
+				}else{
+					jQuery(".numero_notifica_carrello").html(prodotti);
+					jQuery(".numero_notifica_carrello").css({"display":"none"});
+				}
+			}
+				
+			jQuery.postJSON("Preventivi", "getNumCarrello","private",{"account":jQuery.getCookie("utente").email}, false, callBackCarrello);
+		
+	}
+	
+	
+	_this.getNotifies = function(){
+	
+			
+		function callBackNotifies(dato){
+				
+			console.log("Notifiche");
+			console.log(dato);
+			
+			if(!dato.success){
+				alert("Errore notifiche " + dato.messageError);
+				return;	
+			}
+			
+			var message = "<div style='padding:25px;padding-left:60px;background: url(images/check48.png) no-repeat 10px 10px;'> Sono stati inseriti " + dato.results + " nuovi preventivi.</div>";
+			
+			if(dato.results <= 0)
+				return;
+			
+			if(dato.results == 1)
+				message = "<div style='padding:25px;padding-left:60px;background: url(images/check48.png) no-repeat 10px 10px;'> E' stato inserito un nuovo preventivo.";
+			
+			
+			/*jQuery.growlUI.defaults = {
+				css: { 
+					padding:        0, 
+					margin:         0, 
+					width:          '30%', 
+					top:            '40%', 
+					left:           '35%', 
+					textAlign:      'center', 
+					color:          '#000', 
+					border:         '3px solid #aaa', 
+					backgroundColor:'#fff', 
+					cursor:         'wait' 
+				}	
+			}*/
+			/*jQuery.blockUI.defaults = {
+				
+				growlCSS: { 
+					width:    '350px', 
+					top:      '10px',  
+					border:   'none',
+					right: "10px",
+					padding: "10px",
+					opacity:   0.6, 
+					fontSize: "10px",
+					fontFamily: "Arial",
+					cursor:    null, 
+					color:    '#fff', 
+					backgroundColor: '#000', 
+					'-webkit-border-radius': '10px', 
+					'-moz-border-radius':    '10px' 
+				}	
+				
+			}*/
+			jQuery.blockUI({
+			 message: message,
+			 fadeIn: 700,
+			 fadeOut: 700,
+			 timeout: 20000,
+			 showOverlay: false,
+			 centerY: false,
+			 css: {
+				 width: '370px',
+				 top: '10px',
+				 left: '',
+				 right: '10px',
+				 border: 'none',
+				 padding: '5px',
+				 fontFamily : 'trebuchet ms, verdana, arial',
+				/* background: 'url(../images/check48.png) no-repeat 10px 10px ',*/
+				 backgroundColor: '#000',
+					 '-webkit-border-radius': '10px',
+					 '-moz-border-radius': '10px',
+				 opacity: .6,
+				 color: '#fff'
+			 }
+		 });
+			//jQuery.growlUI('',message); 
+			/*prodotti = dato.results;
+			if(Number(prodotti) > 0){
+				jQuery(".numero_notifica_carrello").html(prodotti);
+				jQuery(".numero_notifica_carrello").css({"display":"block"});
+			}else{
+				jQuery(".numero_notifica_carrello").html(prodotti);
+				jQuery(".numero_notifica_carrello").css({"display":"none"});
+			}*/
+		}
+				
+		jQuery.postJSON("Preventivi", "getPreventiviNonLetti","private",{}, false, callBackNotifies);
+	}
+	
+}

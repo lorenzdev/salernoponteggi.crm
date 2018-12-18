@@ -1,0 +1,15 @@
+<ul style="list-style-type:decimal">
+<li class="menu-selezione">Misure del sezionale</li>
+<li class="menu-selezione">Seleziona il modello</li>
+<li class="menu-selezione">Seleziona la struttura</li>
+<li class="menu-selezione">Seleziona il sistema di rifinitura</li>
+<li class="menu-selezione">Seleziona le molle</li>
+<li class="menu-selezione">Seleziona gli oblò</li>
+<li class="menu-selezione">Seleziona le griglie</li>
+<li class="menu-selezione">Seleziona il passaggio pedonale</li>
+<li class="menu-selezione">Seleziona il sistema di chiusura</li>
+<li class="menu-selezione">Seleziona la motorizzazione</li>
+<li class="menu-selezione">Seleziona lo sconto</li>
+<li class="menu-selezione">Riepilogo</li>
+</ul><br><br>
+<div id="Content"></div>

@@ -1,0 +1,14 @@
+<h3>Scegli la motorizzazione</h3>
+<span id='checkRepeatMotorizzazione'></span><br />
+<div id="motorizzazione">
+</div>
+<br><br>
+<div id="accessoriMotorizzazione">
+</div><br><br>
+<div id="warning" style="margin:10px 0px;"></div>
+<div style="text-align:center;">
+<input type="button" value="AVANTI" id="continua" style="height:40px;width:150px;" disabled="disabled"/>&nbsp;&nbsp;
+<input type="button" value="INDIETRO" id="indietro" style="height:40px;width:150px;"/>&nbsp;&nbsp;
+<input type="button" value="SALTA" id="salta" style="height:40px;width:150px;"/>
+</div>
+<br><br><br><br>

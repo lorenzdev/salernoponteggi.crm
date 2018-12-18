@@ -1,0 +1,49 @@
+.selezionato{
+	font-weight:bold;	
+	text-decoration:underline;
+	cursor:auto;
+	background-color:transparent;
+}
+
+.contentButton{
+	cursor:pointer;	
+}
+
+li{
+font-size:12px;	
+height:20px;
+padding-top:5px;
+padding-bottom:5px;
+}
+
+
+.table:hover{
+	text-decoration:underline;	
+	cursor:pointer;
+}
+
+
+.selectDisabled{
+	opacity:0.7;	
+}
+
+body{
+margin:0 !important;	
+}
+
+
+
+#boxLoader{
+-moz-border-radius: 10px; /* Firefox */  
+-webkit-border-radius: 10px; /* Safari, Chrome */  
+border-radius: 10px; /* CSS3 */  
+position:absolute;
+top:20px;
+left:20px;
+background-color:#FFF;
+padding:50px;
+width:50px;
+height:30px;	
+}
+
+

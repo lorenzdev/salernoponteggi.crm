@@ -1,0 +1,14 @@
+<h3>Scegli gli oblò</h3>
+<span id='checkRepeatOblo'></span>
+<div id='ElencoOblo'></div>
+<br><br>
+<div id='ElencoSezioniOblo'></div>
+<div id='BoxAggiungi' style="margin-top:15px;"></div>
+<br><br>
+<div id="warning" style="margin:10px 0px;"></div>
+<div style="text-align:center;">
+<input type="button" value="AVANTI" id="continua" style="height:40px;width:150px;" disabled="disabled"/>&nbsp;&nbsp;
+<input type="button" value="INDIETRO" id="indietro" style="height:40px;width:150px;"/>&nbsp;&nbsp;
+<input type="button" value="SALTA" id="salta" style="height:40px;width:150px;"/>
+</div>
+<br><br><br><br>

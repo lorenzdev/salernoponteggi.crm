@@ -1,0 +1,527 @@
+var GestioneUtenti = function(content){
+
+	var _this = this;
+	
+	_this.content = content;	
+	_this.elem;
+	_this.user = {}
+	
+	_this.init = function (elem){
+		
+		_this.elem = elem;
+		_this.elem.html("");
+		
+		function callBackUtenti(datoUtenti){
+			
+			_this.content.loader.remove();
+			
+			if(!datoUtenti.success){
+				alert("Errore gestione utenti");
+				_this.content.loader.remove();
+				return;	
+			}
+			
+			if(datoUtenti.results.length <= 1){
+				_this.content.loader.remove();
+				_this.elem.html("<h4 align='center'>Non ci sono utenti salvati</h4>");
+				return;	
+			}
+		
+			var tabella = "<div style='clear:both;width:100%;'>";
+				tabella += "<div style='float:left;text-align:center;width:5%;'>";
+				tabella += "	<ul id='checkbox_utenti' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>&nbsp;</b></li>";
+				tabella += 		"</ul>";
+				tabella += 	"</div>";
+				tabella += "<div style='float:left;text-align:center;width:140px;'>";
+				tabella += "	<ul id='nome_completo' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Nome</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style='float:left;text-align:center;width:10%;'>";
+				tabella += "	<ul id='data_creazione' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Data Ins.</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style='float:left;text-align:center;width:210px;'>";
+				tabella += "	<ul id='email' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Email</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style='float:left;text-align:center;width:10%;'>";
+				tabella += "	<ul id='cellulare' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Cellulare</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style='float:left;text-align:center;width:120px;'>";
+				tabella += "	<ul id='tipo' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Tipo</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style='float:left;text-align:center;width:10%;'>";
+				tabella += "	<ul id='stato' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Stato</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style='float:left;text-align:center;width:10%;'>";
+				tabella += "	<ul id='ruolo' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Ruolo</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style='float:left;text-align:center;width:70px;'>";
+				tabella += "	<ul id='azioni' style='list-style-type:none;margin:0;padding:0;'>";
+				tabella += 			"<li style='background:#f2f2f2;height:25px;line-height:25px;border-right:1px solid #fff;'><b>Azioni</b></li>";
+				tabella += 		"</ul>";
+				tabella += "</div>";
+				tabella += "<div style=\"text-align:center;width:100%;display: inline-block;\">";
+				tabella += "<input style=\"margin-top:50px;\" disabled type=\"button\" value=\"CANCELLA SELEZIONATI\" id=\"cancella_selezionati\" align=\"center\">&nbsp;&nbsp;";
+				tabella += "<input style=\"margin-top:50px;\" type=\"button\" stato=\"1\" value=\"SELEZIONA TUTTI\" id=\"seleziona_tutti\" align=\"center\">";
+				tabella += "</div></div>";
+				
+				_this.elem.append(tabella);
+				
+				for(var i = 0;i < datoUtenti.results.length;i++){
+					
+					if(datoUtenti.results[i].email == jQuery.getCookie("utente").email) continue;
+					var data = parseInt(datoUtenti.results[i].data_creazione);
+					
+					data = new Date(data);
+					var nome_completo = "<li class='elem_"+i+"'>"+datoUtenti.results[i].nome+" "+datoUtenti.results[i].cognome+"</li>";	
+					var email = "<li class='elem_"+i+"'>"+datoUtenti.results[i].email+"</li>";	
+					var cellulare = "<li class='elem_"+i+"'>"+datoUtenti.results[i].cellulare+"</li>";	
+					var data_creazione = "<li class='elem_"+i+"'>"+data.getDate()+"/"+(data.getMonth()+1)+"/"+data.getFullYear()+"</li>";
+					var stato = "";
+					if(datoUtenti.results[i].stato == "non attivo")
+					 stato = "<li class='elem_"+i+"' style='color:red;'>non attivo</li>";	
+					 else
+					 stato = "<li class='elem_"+i+"' style='color:green;'>attivo</li>";	
+					
+					var ruolo = "<li class='elem_"+i+"'>"+datoUtenti.results[i].ruolo+"</li>";
+					var tipo = "<li class='elem_"+i+"'>"+datoUtenti.results[i].tipo+"</li>";
+					var azioni = "<li class='elem_"+i+"' style='cursor:pointer;text-decoration:uderline;color:#FF0000;'>";
+						azioni += "<a id='elimina_"+i+"' account='"+datoUtenti.results[i].email+"' elem='elem_"+i+"' class='table'><img src='images/delete.png' width='16' height='16' border='0' title='elimina'></a>&nbsp;&nbsp;";
+						azioni += "<a id='dett_"+i+"' account='"+datoUtenti.results[i].email+"' class='table'><img src='images/dettagli.png' width='16' height='16' border='0' title='dettagli'></a>&nbsp;&nbsp;";
+						azioni += "<a id='rigenera_password_"+i+"' account='"+datoUtenti.results[i].email+"' class='table' '><img src='images/edit.png' width='16' height='16' border='0' title='rigenera password'></a></li>";
+				
+				
+					jQuery("#checkbox_utenti").append("<li class='elem_"+i+"'><input type='checkbox' class='checkbox_utenti' account='"+datoUtenti.results[i].email+"'/></li>");
+					jQuery("#stato").append(stato);
+					jQuery("#nome_completo").append(nome_completo);
+					jQuery("#data_creazione").append(data_creazione);
+					jQuery("#email").append(email);
+					jQuery("#ruolo").append(ruolo);
+					jQuery("#tipo").append(tipo);
+					jQuery("#cellulare").append(cellulare);
+					jQuery("#azioni").append(azioni);
+					
+					jQuery("#dett_"+i).bind("click",function(){
+						var myEmail = jQuery(this).attr("account");
+						_this.content.loader.init(function(){_this.viewDettagliUtente(myEmail);});
+					});
+					
+					jQuery("#elimina_"+i).bind("click",function(){
+						//console.log("Elimina!!!!");
+						var result = confirm("Sei sicuro di voler eliminare l'utente? Procedendo verranno eliminati tutti i dati e le operazioni effettuate dall'utente.");
+						
+						if(result){
+							var account = jQuery(this).attr("account");
+							_this.content.loader.init(function(){_this.cancellaUtente(account);});
+							
+							var classe = jQuery(this).attr("elem");
+							jQuery("."+classe).remove();
+						} else _this.content.loader.remove();
+					});
+					
+					jQuery("#rigenera_password_"+i).bind("click",function(){
+						
+						var result = confirm("Sei sicuro di voler rigenerare la password per l'utente?");
+						
+						if(result){
+							var account = jQuery(this).attr("account");
+							_this.content.loader.init(function(){_this.rigeneraPassword(account)});
+						} else _this.content.loader.remove();
+					});
+				}
+				
+				jQuery("#seleziona_tutti").bind("click",function(){
+					var stato = jQuery("#seleziona_tutti").attr("stato");
+					if(stato == "1"){
+						jQuery("#seleziona_tutti").attr("stato",0);
+						jQuery("#seleziona_tutti").attr("value", "DESELEZIONA TUTTI");
+						jQuery("#cancella_selezionati").prop("disabled",false);
+						jQuery(".checkbox_utenti").each(function(){
+							jQuery(this).prop("checked",true);
+						});
+					}else{
+						jQuery("#seleziona_tutti").attr("stato",1);
+						jQuery("#seleziona_tutti").attr("value", "SELEZIONA TUTTI");
+						jQuery("#cancella_selezionati").prop("disabled",true);
+						jQuery(".checkbox_utenti").each(function(){
+							jQuery(this).prop("checked",false);
+						});	
+					}
+				});
+				
+				
+				jQuery("#cancella_selezionati").bind("click",function(){
+					_this.cancellaUtentiSelezionati();
+				});	
+			
+			
+				jQuery(".checkbox_utenti").bind("click",function(){
+					jQuery("#cancella_selezionati").prop("disabled",_this.isChecked())
+				});	
+		}
+		
+		
+		jQuery.postJSON("RegistrazioneUtente","getAllUtenti","private", {}, false, callBackUtenti);
+		
+	}
+	
+	_this.isChecked = function(){
+		var boo = true;
+		jQuery(".checkbox_utenti").each(function(){
+			if(jQuery(this).is(":checked")){
+				boo = false;
+			}
+		});
+				
+		return boo;	
+	}
+	
+	_this.rigeneraPassword = function(account){
+		
+		var password = jQuery.generaPassword(10);
+		//console.log(password);
+		
+		function callBackPassword(dato){
+			
+			
+			if(!dato.success){
+				alert("Errore password non rigenerata correttamente");
+			}
+			
+			alert("Password rigenerata correttamente!");
+			_this.content.loader.remove();	
+			return;
+		}
+		
+		jQuery.postJSON("RegistrazioneUtente","rigeneraPassword","private",{"account":account,"password":password}, false, callBackPassword);
+	}
+	
+	_this.cancellaUtente = function(account){
+		
+		function callBackUtenti(dato){
+			if(!dato.success){
+				alert("Errore. Utente non cancellato.");
+			}
+			
+			if(dato.results.numeroAccount <= 0) _this.elem.html("<h4 align='center'>Non ci sono utenti salvati</h4>");	
+		}
+		
+		jQuery.postJSON("RegistrazioneUtente","removeUtente","private",{"account":account}, false, callBackUtenti);
+		_this.content.loader.remove();
+	
+	}
+	
+	
+	_this.cancellaUtentiSelezionati = function(){
+		var result = confirm("Sei sicuro di voler eliminare tutti gli utenti selezionati?");
+		if(result){
+			_this.content.loader.init(function(){
+					jQuery(".checkbox_utenti").each(function(){
+						
+						if(jQuery(this).is(":checked")){
+							
+							var account = jQuery(this).attr("account");
+							
+							
+							
+							function callBackUtenti(dato){
+								if(!dato.success){
+									alert("Errore. Utente non cancellato.");
+								}
+								
+								if(dato.results.numeroAccount <= 0) _this.elem.html("<h4 align='center'>Non ci sono utenti salvati</h4>");
+								
+							}
+							
+							jQuery.postJSON("RegistrazioneUtente","removeUtente","private",{"account":account}, false, callBackUtenti);
+						
+							console.log("Cancello?");
+							jQuery("."+jQuery(this).parent().attr("class")).remove();
+						}
+					});
+					_this.content.loader.remove();
+			});
+		}else _this.content.loader.remove();
+	}
+
+	
+	_this.viewDettagliUtente = function(account){
+		
+		//console.log("ACCOUNT");
+		//console.log(account);
+		
+		
+		_this.elem.html("");
+		 function callBackUtente(datiUtente){
+			  //console.log(datiUtente);
+			  
+			  
+			  _this.content.loader.remove();
+			  
+			  if(!datiUtente.success){
+				  _this.content.loader.remove();
+				  alert("Errore gestione utente");
+				  return;	
+			  }
+			  
+			  
+			  _this.user["stato"] = datiUtente.results.stato;
+			  _this.user["ruolo"] = datiUtente.results.ruolo;
+			  _this.user["email"] = datiUtente.results.email;
+			  
+			  var tipo = datiUtente.results.tipo;
+			  var codice_preventivazione = datiUtente.results.codice_preventivazione;
+			  
+			  
+			  var codicePreventivazione =  "Codice preventivazione: <input value='"+codice_preventivazione+"' id='codice_preventivazione' maxlength='7'/><br><br>";
+			  
+			  
+			  var nome = "";
+			  if(jQuery.validaValore(datiUtente.results.nome))
+				  nome = "Nome: <b>" + datiUtente.results.nome + "</b><br><br>";
+			  
+			  var cognome = "";
+			  if(jQuery.validaValore(datiUtente.results.cognome))
+				  cognome = "Cognome: <b>" + datiUtente.results.cognome + "</b><br><br>";
+			  
+			  var sesso  = "";
+			  if(jQuery.validaValore(datiUtente.results.sesso))
+				  sesso = "Sesso: <b>" + datiUtente.results.sesso + "</b><br><br>";
+				  
+			  var email = ""
+			  if(jQuery.validaValore(datiUtente.results.cognome))
+				  email = "Email: <b>" + datiUtente.results.email + "</b><br><br>";
+				  
+			  var website = ""
+			  if(jQuery.validaValore(datiUtente.results.website))
+				  website = "Website: <b>" + datiUtente.results.website + "</b><br><br>";
+			  
+			  var telefono = ""
+			  if(jQuery.validaValore(datiUtente.results.telefono))
+				  telefono = "Telefono: <b>" + datiUtente.results.telefono + "</b><br><br>";
+				  
+			  var cellulare = "";
+			  if(jQuery.validaValore(datiUtente.results.cellulare))
+				  cellulare = "Cellulare: <b>" + datiUtente.results.cellulare + "</b><br><br>";
+				  
+			  var fax = "";
+			  if(jQuery.validaValore(datiUtente.results.fax))
+				  fax = "Fax: <b>" + datiUtente.results.fax + "</b><br><br>";
+				  
+			  
+			  
+			  var tipologiaUtente = "Tipologia: <select id='tipologiaUtente'>";
+			  tipologiaUtente += "<option value=\"Distributore\" codice=\"0001\">Distributore</option>";
+			  tipologiaUtente += "<option value=\"Rivenditore\" codice=\"0001\">Rivenditore</option>";
+			  tipologiaUtente += "<option value=\"Impresa edile\" codice=\"0001\">Impresa edile</option>";
+			  tipologiaUtente += "<option value=\"Privato\" codice=\"101\">Privato</option>";
+			  tipologiaUtente += "<option value=\"Agente commercio\" codice=\"101\">Agente di commercio</option>";
+			  tipologiaUtente += "<option value=\"Procacciatore affari\" codice=\"0001\">Procacciatore di affari</option></select><br><br>";
+			  
+			  var stato = "Stato: <select id='stato'><option value='0' val='non attivo'>Non attivo</option><option value='1' val='attivo'>attivo</option></select><br><br>";
+			  
+			  
+			  
+			  var ruolo = "Ruolo: <select id='ruolo'><option value='0' val='ROLE_ADMIN'>Amministratore</option><option value='1' val='ROLE_ASSISTANT'>Collaboratore</option><option value='2' val='ROLE_USER'>Utente semplice</option></select><br><br>";
+			  
+			  //var stato = "Stato: " + datiUtente.results.stato + "<br>";
+			  //var ruolo = "Ruolo: " + datiUtente.results.ruolo + "<br>";
+			  var ragione_sociale = "";
+			  if(jQuery.validaValore(datiUtente.results.ragione_sociale))
+				  ragione_sociale = "Ragione sociale: <b>" + datiUtente.results.ragione_sociale + "</b><br><br>";
+			  
+			  var codice_fiscale = ""
+			  if(jQuery.validaValore(datiUtente.results.codice_fiscale))
+				  codice_fiscale = "Codice fiscale: <b>" + datiUtente.results.codice_fiscale + "</b><br><br>";
+			  
+			  var partita_iva = "";
+			  if(jQuery.validaValore(datiUtente.results.partita_iva))
+				  partita_iva = "Partita iva: <b>" + datiUtente.results.partita_iva + "</b><br><br>";
+			  
+			  var nazione = "Nazione: <b>" +  datiUtente.results.nazione + "</b><br><br>";
+			  var residenza = "Indirizzo: <b>" + datiUtente.results.indirizzo + ", " + datiUtente.results.civico + " - "+datiUtente.results.cap+" "+datiUtente.results.comune+", prov. "+datiUtente.results.provincia+"</b><br><br>";
+			  
+			  
+			  _this.elem.html("<input type='button' class='indietro' value='torna agli utenti' />");
+			  _this.elem.append("<h3>Dettagli utente</h3>");
+			  _this.elem.append(nome);
+			  _this.elem.append(cognome);
+			  _this.elem.append(sesso);
+			  _this.elem.append(email);
+			  _this.elem.append(website);
+			  _this.elem.append(cellulare);
+			  _this.elem.append(telefono);
+			  _this.elem.append(fax);
+			  _this.elem.append(tipologiaUtente);
+			  _this.elem.append(codicePreventivazione);
+			  _this.elem.append(stato);
+			  _this.elem.append(ruolo);
+			  _this.elem.append(ragione_sociale);
+			  _this.elem.append(codice_fiscale);
+			  _this.elem.append(partita_iva);
+			  _this.elem.append(nazione);
+			  _this.elem.append(residenza);
+			  
+			  _this.elem.append("<br><input type='button' id='modifica_utente' value='modifica' />")
+			  
+			  jQuery("#tipologiaUtente option").each(function(){
+				  //console.log(tipo +" "+jQuery(this).val());
+				  if(tipo == jQuery(this).val()){
+					  jQuery(this).prop("selected",true);	
+					  //alert(jQuery.validaValore(codice_preventivazione));
+					  if(!jQuery.validaValore(codice_preventivazione))
+						  jQuery("#codice_preventivazione").val(jQuery(this).attr("codice"));
+				  }
+			  });
+			  
+			  jQuery("#tipologiaUtente").bind("change",function(){
+				  //if(!jQuery.validaValore(datiUtente.results.codice_preventivazione))
+				  jQuery("#codice_preventivazione").val(jQuery("#tipologiaUtente option:selected").attr("codice"));
+			  })
+			  
+			  
+			  //console.log("Stato utente");
+			  //console.log(datiUtente.results.stato);
+			  
+			  jQuery("#stato option").each(function(){
+				  if(jQuery(this).val() == datiUtente.results.stato)
+					  jQuery(this).attr("selected","selected");
+			  });
+			  
+			  jQuery("#ruolo option").each(function(){
+				  if(jQuery(this).val() == datiUtente.results.ruolo)
+					  jQuery(this).attr("selected","selected");
+			  });
+			  
+			  jQuery("#modifica_utente").bind("click",function(){
+				 _this.content.loader.init(function(){ _this.modificaUtente(account)});
+			  });
+			  
+			  jQuery(".indietro").bind("click", function(){
+				 jQuery("#GestioneUtenti").trigger("click"); 
+			  });
+			  
+		  }
+		  
+		  jQuery.postJSON("RegistrazioneUtente","getUtenteByAccount","private",{"account":account}, false, callBackUtente);
+	
+	}
+	
+	
+	_this.modificaUtente = function(account){
+	
+		var stato = jQuery("#stato option:selected").attr("value");
+		var ruolo = jQuery("#ruolo option:selected").attr("value");
+		var tipo = jQuery("#tipologiaUtente option:selected").attr("value");
+		var codicePreventivazione = jQuery("#codice_preventivazione").val();
+		
+		if(!jQuery.validaValore(codicePreventivazione)){
+			_this.content.loader.remove();
+			
+			alert("Non hai specificato nessun codice preventivazione");
+			return;	
+		}
+		
+		
+		var unique = true;
+		function callBackCodicePreventivazione(datoCodice){
+			
+			
+			
+			if(!datoCodice.success){
+				unique = false;
+				_this.content.loader.remove();
+				return;
+			}
+			
+			if(datoCodice.results.num > 0)
+				unique = false;
+				
+			
+		}
+		
+		jQuery.postJSON("RegistrazioneUtente","checkCodicePreventivazione","private",{"codice_preventivazione":codicePreventivazione,"tipologiaUtente":tipo,"account":account}, false, callBackCodicePreventivazione);	
+		
+		
+		if(!unique){
+			_this.content.loader.remove();
+			alert("Il codice di preventivazione scelto per l'utente è già stato utilizzato. Sceglierne uno alternativo o cambiare la tipologia utente.");	
+			return;
+		}
+		
+		
+		var inviaMail = false;
+		if(_this.user["stato"] != stato){
+			inviaMail = true;
+		}
+		
+		//alert(inviaMail);
+		
+		var paramAccount = {
+			"account":account,
+			"stato":stato,
+			"ruolo":ruolo,
+			"inviaMail":inviaMail,
+			"author":"ADMIN"
+		}
+		
+		var paramUser = {
+			"account":account,
+			"codice_preventivazione":codicePreventivazione,
+			"tipo":tipo,
+			"author":"ADMIN"
+		}
+		
+		//console.log(paramAccount);
+		//console.log(paramUser);
+		
+
+		_this.elem.html("");
+		
+		function backUser(dato){
+			
+			if(!dato.success){
+				alert("Errore di modifica dati utente");
+				_this.content.loader.remove();
+				return;	
+			}
+		}
+	
+		jQuery.postJSON("RegistrazioneUtente","modifyUser","private",paramUser, false, backUser);
+	
+	
+		function callBackModifica(datoModifica){
+			
+			if(!datoModifica.success){
+				alert("Errore di modifica");
+				_this.content.loader.remove();
+				return;	
+			}
+			
+			
+			
+			
+			_this.elem.html("<h4 align='center'>Modifica effettuata con successo</h4>");
+			
+			_this.content.loader.remove();
+			
+			return;
+		}
+		
+		jQuery.postJSON("RegistrazioneUtente","modifyAccount","private",paramAccount, false, callBackModifica);	
+		
+	}
+}

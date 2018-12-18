@@ -1,0 +1,15 @@
+<h3>Scegli la versione della basculante</h3>
+<span id='checkRepeatVersione'></span>
+<div id="elenco_versioni">
+</div>
+<div id="elenco_sottoversioni">
+</div>
+<br><br>
+<div id="infoAreazione"></div><br /><br />
+<div id="avviso_sottoversioni"></div><br><br>
+<div style="text-align:center;">
+<!--<input type="button" value="RIEPILOGO" id="riepilogo" style="height:100px;width:200px;padding:20px;" disabled="disabled"/>&nbsp;&nbsp;-->
+<input type="button" value="AVANTI" id="continua" style="height:40px;width:150px;" disabled="disabled"/>&nbsp;&nbsp;
+<input type="button" value="INDIETRO" id="indietro" style="height:40px;width:150px;"/>&nbsp;&nbsp;
+</div>
+<br><br><br><br>

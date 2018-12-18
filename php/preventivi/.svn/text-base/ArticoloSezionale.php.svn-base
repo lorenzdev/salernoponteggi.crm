@@ -1,0 +1,460 @@
+<?
+
+class ArticoloSezionale{
+	
+	
+	private $merceScontata;
+	public $main;
+
+	public function init($main){
+		$this->main = $main;
+	}
+	
+	public function get($articolo){
+		
+		
+		
+		
+		$riferimento = $articolo->{"riferimento"};
+		$porta = $articolo->{"porta"};
+		$portaW = $porta->{"L"};
+		$portaH = $porta->{"H"};
+		$accessori = $articolo->{"accessori"};
+		$quantita = $articolo->{"prodotto"}->{"quantita"};
+		$descr = "Sezionale";
+		
+			
+		$this->main->valori["carrello"][$this->main->cont]["codice"] = $articolo->{"prodotto"}->{"codice"};
+		$this->main->valori["carrello"][$this->main->cont]["riferimento"] = $riferimento;
+		$this->main->valori["carrello"][$this->main->cont]["descrizione"] = substr($descr,0,30);
+		if(strlen($descr)>30)
+			$this->main->valori["carrello"][$this->main->cont]["descrizione"] .= "...";
+		$this->main->valori["carrello"][$this->main->cont]["um"] = "MQ";
+		$this->main->valori["carrello"][$this->main->cont]["quantita"] = $quantita;
+		$this->main->valori["carrello"][$this->main->cont]["L"] = $porta->{"L"};
+		$this->main->valori["carrello"][$this->main->cont]["H"] = $porta->{"H"};
+		$this->main->valori["carrello"][$this->main->cont]["num"] = "";
+		$this->main->valori["carrello"][$this->main->cont]["sconto"] = $articolo->{"prodotto"}->{"sconto"};
+		$this->main->valori["carrello"][$this->main->cont]["prezzo_unitario"] = "E. ".number_format($articolo->{"prodotto"}->{"costo"},2,',','.');	
+				
+		$this->main->valori["carrello"][$this->main->cont]["importo"] = "E. ".number_format($articolo->{"prodotto"}->{"costo"}*$quantita,2,',','.');
+		$costoScontato = $articolo->{"prodotto"}->{"costo"}*$quantita-$articolo->{"prodotto"}->{"costo"}*$quantita*$articolo->{"prodotto"}->{"sconto"}/100;
+		
+		$this->main->importoMerceScontata += $costoScontato;
+			
+		$this->main->valori["carrello"][$this->main->cont]["importo_netto"] = "E. ".number_format($costoScontato,2,',','.');
+		$this->main->cont++;
+
+
+		$struttura = $accessori->{"struttura"};
+		
+		if($struttura){
+			
+			$totStruttura = 0;
+			
+			
+			if($struttura->{"veletta"}){
+				for($i = 0; $i < count($struttura->{"veletta"}->{"articoli"});$i++){
+					$this->main->valori["carrello"][$this->main->cont]["codice"] = $struttura->{"veletta"}->{"articoli"}[$i]->{"codice"};
+					$this->main->valori["carrello"][$this->main->cont]["riferimento"] = $riferimento;
+					$this->main->valori["carrello"][$this->main->cont]["descrizione"] = "Veletta";
+					$this->main->valori["carrello"][$this->main->cont]["um"] = "ML";
+					$this->main->valori["carrello"][$this->main->cont]["quantita"] = $quantita;
+					$this->main->valori["carrello"][$this->main->cont]["L"] = $portaW;
+					$this->main->valori["carrello"][$this->main->cont]["H"] = "";
+					$this->main->valori["carrello"][$this->main->cont]["importo"] = "E. ".number_format(round($struttura->{"veletta"}->{"articoli"}[$i]->{"costo"},2), 2, ',', '.');
+					
+					$costoTotale = $struttura->{"veletta"}->{"articoli"}[$i]->{"costo"}*($portaW/1000)*$quantita;
+					$costoScontato = $costoTotale - $costoTotale*$struttura->{"sconto"}/100;
+					$this->main->valori["carrello"][$this->main->cont]["importo_netto"] = "E. ".number_format($costoScontato,2,',','.');
+					
+					$this->main->valori["carrello"][$this->main->cont]["num"] = "ML";
+					$this->main->valori["carrello"][$this->main->cont]["prezzo_unitario"] = "E. ".number_format($struttura->{"veletta"}->{"articoli"}[$i]->{"costo"}, 2, ',', '.');
+					$this->main->valori["carrello"][$this->main->cont]["sconto"] = $struttura->{"sconto"};
+					
+					$this->main->importoMerceScontata += $costoScontato;
+					$this->main->cont++;
+				}
+				
+				if($struttura->{"veletta"}->{"foratura"}){
+					$this->main->valori["carrello"][$this->main->cont]["codice"] = $struttura->{"veletta"}->{"foratura"}->{"codice"};
+					$this->main->valori["carrello"][$this->main->cont]["riferimento"] = $riferimento;
+					$this->main->valori["carrello"][$this->main->cont]["descrizione"] = "Extra Veletta";
+					$this->main->valori["carrello"][$this->main->cont]["um"] = "ML";
+					$this->main->valori["carrello"][$this->main->cont]["quantita"] = $quantita;
+					$this->main->valori["carrello"][$this->main->cont]["L"] = $portaW;
+					$this->main->valori["carrello"][$this->main->cont]["H"] = "";
+					$this->main->valori["carrello"][$this->main->cont]["importo"] = "E. ".number_format(round($struttura->{"veletta"}->{"foratura"}->{"costo"},2), 2, ',', '.');
+					
+					$costoTotale = $struttura->{"veletta"}->{"foratura"}->{"costo"}*($portaW/1000)*$quantita;
+					$costoScontato = $costoTotale - $costoTotale*$struttura->{"sconto"}/100;
+					$this->main->valori["carrello"][$this->main->cont]["importo_netto"] = "E. ".number_format($costoScontato,2,',','.');
+					
+					$this->main->valori["carrello"][$this->main->cont]["num"] = "ML";
+					$this->main->valori["carrello"][$this->main->cont]["prezzo_unitario"] = "E. ".number_format($struttura->{"veletta"}->{"foratura"}->{"costo"}, 2, ',', '.');
+					$this->main->valori["carrello"][$this->main->cont]["sconto"] = $struttura->{"sconto"};
+					
+					$this->main->importoMerceScontata += $costoScontato;
+					$this->main->cont++;
+				}
+			}
+			
+			if($struttura->{"spallettaSX"}){
+				$this->main->valori["carrello"][$this->main->cont]["codice"] = $struttura->{"spallettaSX"}->{"codice"};
+				$this->main->valori["carrello"][$this->main->cont]["riferimento"] = $riferimento;
+				$this->main->valori["carrello"][$this->main->cont]["descrizione"] = "Spalletta sx";
+				$this->main->valori["carrello"][$this->main->cont]["um"] = "ML";
+				$this->main->valori["carrello"][$this->main->cont]["quantita"] = $quantita;
+				$this->main->valori["carrello"][$this->main->cont]["L"] = "";
+				$this->main->valori["carrello"][$this->main->cont]["H"] = $portaH;
+				$this->main->valori["carrello"][$this->main->cont]["importo"] = "E. ".number_format(round($struttura->{"spallettaSX"}->{"costo"},2), 2, ',', '.');
+				
+				$costoTotale = $struttura->{"spallettaSX"}->{"costo"}*$quantita*($portaH/1000);
+				$costoScontato = $costoTotale - $costoTotale*$struttura->{"sconto"}/100;
+				$this->main->valori["carrello"][$this->main->cont]["importo_netto"] = "E. ".number_format($costoScontato,2,',','.');
+				
+				$this->main->valori["carrello"][$this->main->cont]["num"] = "ML";
+				$this->main->valori["carrello"][$this->main->cont]["prezzo_unitario"] = "E. ".number_format($struttura->{"spallettaSX"}->{"costo"}, 2, ',', '.');
+				$this->main->valori["carrello"][$this->main->cont]["sconto"] = $struttura->{"sconto"};
+				
+				$this->main->importoMerceScontata += $costoScontato;
+				$this->main->cont++;
+			
+			}
+			
+			
+			if($struttura->{"spallettaDX"}){
+				$this->main->valori["carrello"][$this->main->cont]["codice"] = $struttura->{"spallettaDX"}->{"codice"};
+				$this->main->valori["carrello"][$this->main->cont]["riferimento"] = $riferimento;
+				$this->main->valori["carrello"][$this->main->cont]["descrizione"] = "Spalletta dx";
+				$this->main->valori["carrello"][$this->main->cont]["um"] = "";
+				$this->main->valori["carrello"][$this->main->cont]["quantita"] = $quantita;
+				$this->main->valori["carrello"][$this->main->cont]["L"] = "";
+				$this->main->valori["carrello"][$this->main->cont]["H"] = $portaH;
+				$this->main->valori["carrello"][$this->main->cont]["importo"] = "E. ".number_format(round($struttura->{"spallettaDX"}->{"costo"},2), 2, ',', '.');
+				
+				$costoTotale = $struttura->{"spallettaDX"}->{"costo"}*$quantita*($portaH/1000);
+				$costoScontato = $costoTotale - $costoTotale*$struttura->{"sconto"}/100;
+				$this->main->valori["carrello"][$this->main->cont]["importo_netto"] = "E. ".number_format($costoScontato,2,',','.');
+				
+				$this->main->valori["carrello"][$this->main->cont]["num"] = "";
+				$this->main->valori["carrello"][$this->main->cont]["prezzo_unitario"] = "E. ".number_format($struttura->{"spallettaDX"}->{"costo"}, 2, ',', '.');
+				$this->main->valori["carrello"][$this->main->cont]["sconto"] = $struttura->{"sconto"};
+				
+				$this->main->importoMerceScontata += $costoScontato;
+				$this->main->cont++;
+			
+			}
+			
+		}
+
+
+		$griglie = $accessori->{"griglie"};
+		//var_dump($sistemaRifinitura->{"articolo"});
+		if($griglie){
+			
+			$costoPrezzo = $griglie->{"costo"};
+			$tmpQuantita = 0;
+			$tmpQuantita += $griglie->{"quantita"}->{"sezione1"};
+			$tmpQuantita += $griglie->{"quantita"}->{"sezione2"};
+			$tmpQuantita += $griglie->{"quantita"}->{"sezione3"};
+			$tmpQuantita += $griglie->{"quantita"}->{"sezione4"};
+			$tmpQuantita += $griglie->{"quantita"}->{"sezione5"};
+			$tmpQuantita += $griglie->{"quantita"}->{"sezione6"};
+			
+			$prezzoGriglie = $griglie->{"costo"}*$quantita*$tmpQuantita;
+			$this->main->valori["carrello"][$this->main->cont]["codice"] = $griglie->{"codice"};
+			$this->main->valori["carrello"][$this->main->cont]["riferimento"] = $riferimento;
+			$this->main->valori["carrello"][$this->main->cont]["descrizione"] = "Griglie";
+			$this->main->valori["carrello"][$this->main->cont]["um"] = "NR";
+			$this->main->valori["carrello"][$this->main->cont]["quantita"] = $quantita*$tmpQuantita;
+			$this->main->valori["carrello"][$this->main->cont]["L"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["H"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["importo"] = "E. ".number_format($prezzoGriglie, 2, ',', '.');
+			
+			$costoScontato = $prezzoGriglie - $prezzoGriglie*$griglie->{"sconto"}/100;
+				
+			$this->main->importoMerceScontata += $costoScontato;
+			
+			$this->main->valori["carrello"][$this->main->cont]["importo_netto"] = "E. ".number_format($costoScontato,2,',','.');
+			
+			$this->main->valori["carrello"][$this->main->cont]["num"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["prezzo_unitario"] = "E. ".number_format($griglie->{"costo"}, 2, ',', '.');
+			$this->main->valori["carrello"][$this->main->cont]["sconto"] =  $griglie->{"sconto"};
+			$this->main->cont++;
+				
+		}
+
+		//var_dump("OK!");
+		$oblo = $accessori->{"oblo"};
+		
+		if($oblo){
+			
+			$totOblo = 0;
+			$quantitaOblo = 0;
+			$quantitaOblo += $oblo->{"quantita"}->{"sezione1"};
+			$quantitaOblo += $oblo->{"quantita"}->{"sezione2"};
+			$quantitaOblo += $oblo->{"quantita"}->{"sezione3"};
+			$quantitaOblo += $oblo->{"quantita"}->{"sezione4"};
+			$quantitaOblo += $oblo->{"quantita"}->{"sezione5"};
+			$quantitaOblo += $oblo->{"quantita"}->{"sezione6"};
+			
+			
+			$costoOblo = $oblo->{"costo"}*$quantitaOblo*$quantita;
+			
+			$this->main->valori["carrello"][$this->main->cont]["codice"] = $oblo->{"codice"};
+			$this->main->valori["carrello"][$this->main->cont]["riferimento"] = $riferimento;
+			$this->main->valori["carrello"][$this->main->cont]["descrizione"] = "Oblo";
+			$this->main->valori["carrello"][$this->main->cont]["um"] = "NR";
+			$this->main->valori["carrello"][$this->main->cont]["quantita"] = $quantita*$quantitaOblo;
+			$this->main->valori["carrello"][$this->main->cont]["L"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["H"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["importo"] = "E. ".number_format(round($costoOblo,2), 2, ',', '.');
+			
+			
+			$costoScontato = $costoOblo - $costoOblo*$oblo->{"sconto"}/100;
+			$this->main->valori["carrello"][$this->main->cont]["importo_netto"] = "E. ".number_format($costoScontato,2,',','.');
+			
+			$this->main->valori["carrello"][$this->main->cont]["num"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["prezzo_unitario"] = "E. ".number_format($oblo->{"costo"}, 2, ',', '.');
+			$this->main->valori["carrello"][$this->main->cont]["sconto"] = $oblo->{"sconto"};
+			
+			$this->main->importoMerceScontata += $costoScontato;
+			$this->main->cont++;
+			
+		}
+		
+		$molle = $accessori->{"molle"};
+		//var_dump($sistemaRifinitura->{"articolo"});
+		if($molle){
+			
+			for($i = 0;$i < count($molle->{"articoli"});$i++){
+				$costoPrezzo = $molle->{"articoli"}[$i]->{"costo"};
+				$prezzoMolle = round($molle->{"articoli"}[$i]->{"costo"},2);
+				
+				$this->main->valori["carrello"][$this->main->cont]["codice"] = $molle->{"articoli"}[$i]->{"codice"};
+				$this->main->valori["carrello"][$this->main->cont]["riferimento"] = $riferimento;
+				$this->main->valori["carrello"][$this->main->cont]["descrizione"] = "molla";
+				$this->main->valori["carrello"][$this->main->cont]["um"] = "NR";
+				$this->main->valori["carrello"][$this->main->cont]["quantita"] = $quantita;
+				$this->main->valori["carrello"][$this->main->cont]["L"] = "";
+				$this->main->valori["carrello"][$this->main->cont]["H"] = "";
+				$this->main->valori["carrello"][$this->main->cont]["importo"] = "E. ".number_format($costoPrezzo*$quantita, 2, ',', '.');
+				
+				$costoScontato = $molle->{"articoli"}[$i]->{"costo"}*$quantita - $molle->{"articoli"}[$i]->{"costo"}*$quantita*$molle->{"sconto"}/100;
+				
+				$this->main->importoMerceScontata += $costoScontato;
+				
+				$this->main->valori["carrello"][$this->main->cont]["importo_netto"] = "E. ".number_format($costoScontato,2,',','.');
+				
+				$this->main->valori["carrello"][$this->main->cont]["num"] = "";
+				$this->main->valori["carrello"][$this->main->cont]["prezzo_unitario"] = "E. ".number_format($prezzoMolle, 2, ',', '.');
+				$this->main->valori["carrello"][$this->main->cont]["sconto"] =  $molle->{"sconto"};
+				$this->main->cont++;
+			
+			}
+				
+		}
+			
+			
+		$motorizzazione = $accessori->{"motorizzazione"};
+		
+		if($motorizzazione){
+			
+			$totMotorizzazione = 0;
+			
+			$this->main->valori["carrello"][$this->main->cont]["codice"] = $motorizzazione->{"codice"};
+			$this->main->valori["carrello"][$this->main->cont]["riferimento"] = $riferimento;
+			$this->main->valori["carrello"][$this->main->cont]["descrizione"] = "Motorizzazione";
+			$this->main->valori["carrello"][$this->main->cont]["um"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["quantita"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["L"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["H"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["importo"] = "E. ".number_format(round($motorizzazione->{"costo"},2)*$quantita, 2, ',', '.');
+			$totMotorizzazione += $motorizzazione->{"costo"};
+			
+		
+		
+			$this->main->valori["carrello"][$this->main->cont]["importo_netto"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["num"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["prezzo_unitario"] = "E. ".number_format($motorizzazione->{"costo"}, 2, ',', '.');
+			$this->main->valori["carrello"][$this->main->cont]["sconto"] =  "";
+			$this->main->cont++;
+			
+			$optional = $motorizzazione->{"accessori"};
+			if($optional){
+				
+				for($l = 0;$l < count($optional);$l++){
+					$this->main->valori["carrello"][$this->main->cont]["codice"] = $optional[$l]->{"codice"};
+					$this->main->valori["carrello"][$this->main->cont]["riferimento"] = $riferimento;
+					$this->main->valori["carrello"][$this->main->cont]["descrizione"] = "Optional motorizzazione";
+					$this->main->valori["carrello"][$this->main->cont]["um"] = "";
+					$this->main->valori["carrello"][$this->main->cont]["quantita"] = "";
+					$this->main->valori["carrello"][$this->main->cont]["L"] = "";
+					$this->main->valori["carrello"][$this->main->cont]["H"] = "";
+					$this->main->valori["carrello"][$this->main->cont]["importo"] = "E. ".number_format(round($optional[$l]->{"costo"}*$quantita,2), 2, ',', '.');
+					$costoScontato = $optional[$l]->{"costo"}*$quantita - $optional[$l]->{"costo"}*$quantita*$motorizzazione->{"sconto"}/100;
+					$totMotorizzazione += $optional[$l]->{"costo"};
+				
+					$this->main->valori["carrello"][$this->main->cont]["importo_netto"] = "";
+					$this->main->valori["carrello"][$this->main->cont]["num"] = "";
+					$this->main->valori["carrello"][$this->main->cont]["prezzo_unitario"] = "E. ".number_format($optional[$l]->{"costo"}, 2, ',', '.');
+					$this->main->valori["carrello"][$this->main->cont]["sconto"] =  "";
+					$this->main->cont++;
+				}
+			}
+			
+			
+			$this->main->valori["carrello"][$this->main->cont]["codice"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["riferimento"] = $riferimento;
+			$this->main->valori["carrello"][$this->main->cont]["descrizione"] = "Tot. Motorizzazione";
+			$this->main->valori["carrello"][$this->main->cont]["um"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["quantita"] = $quantita;
+			$this->main->valori["carrello"][$this->main->cont]["L"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["H"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["importo"] = "E. ".number_format(round($totMotorizzazione*$quantita,2), 2, ',', '.');
+			$costoScontato = $totMotorizzazione*$quantita - $totMotorizzazione*$quantita*$motorizzazione->{"sconto"}/100;			
+			$this->main->valori["carrello"][$this->main->cont]["importo_netto"] = "E. ".number_format($costoScontato,2,',','.');
+			$this->main->valori["carrello"][$this->main->cont]["num"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["prezzo_unitario"] = "E. ".number_format($totMotorizzazione, 2, ',', '.');
+			$this->main->valori["carrello"][$this->main->cont]["sconto"] =  $motorizzazione->{"sconto"};
+			
+			$this->main->importoMerceScontata += $costoScontato;
+			
+			$this->main->cont++;
+			
+		}
+		
+		
+		
+		
+		
+		$passaggioPedonale = $accessori->{"passaggioPedonale"};
+		if($passaggioPedonale){
+			
+			if($passaggioPedonale->{"maniglione"}){
+				$this->main->valori["carrello"][$this->main->cont]["codice"] = $passaggioPedonale->{"maniglione"}->{"codice"};
+				$this->main->valori["carrello"][$this->main->cont]["riferimento"] = $riferimento;
+				$this->main->valori["carrello"][$this->main->cont]["descrizione"] = "Maniglione";
+				$this->main->valori["carrello"][$this->main->cont]["um"] = "";
+				$this->main->valori["carrello"][$this->main->cont]["quantita"] = $quantita;
+				$this->main->valori["carrello"][$this->main->cont]["L"] = "";
+				$this->main->valori["carrello"][$this->main->cont]["H"] = "";
+				$this->main->valori["carrello"][$this->main->cont]["importo"] = "E. ".number_format(round($passaggioPedonale->{"maniglione"}->{"costo"},2), 2, ',', '.');
+				$costoScontato = $passaggioPedonale->{"maniglione"}->{"costo"}*$quantita - $passaggioPedonale->{"maniglione"}->{"costo"}*$quantita*$passaggioPedonale->{"sconto"}/100;
+				
+				$this->main->importoMerceScontata += $costoScontato;
+				
+				$this->main->valori["carrello"][$this->main->cont]["importo_netto"] = "E. ".number_format($costoScontato,2,',','.');
+				
+				$this->main->valori["carrello"][$this->main->cont]["num"] = "";
+				$this->main->valori["carrello"][$this->main->cont]["prezzo_unitario"] = "E. ".number_format($passaggioPedonale->{"maniglione"}->{"costo"}, 2, ',', '.');
+				$this->main->valori["carrello"][$this->main->cont]["sconto"] = $passaggioPedonale->{"sconto"};
+				$this->main->cont++;
+			}
+			
+			if($passaggioPedonale->{"porta_pedonale"}){
+				$this->main->valori["carrello"][$this->main->cont]["codice"] = $passaggioPedonale->{"porta_pedonale"}->{"codice"};
+				$this->main->valori["carrello"][$this->main->cont]["riferimento"] = $riferimento;
+				$this->main->valori["carrello"][$this->main->cont]["descrizione"] = "Porta pedonale";
+				$this->main->valori["carrello"][$this->main->cont]["um"] = "";
+				$this->main->valori["carrello"][$this->main->cont]["quantita"] = $quantita;
+				$this->main->valori["carrello"][$this->main->cont]["L"] = "";
+				$this->main->valori["carrello"][$this->main->cont]["H"] = "";
+				$this->main->valori["carrello"][$this->main->cont]["importo"] = "E. ".number_format(round($passaggioPedonale->{"porta_pedonale"}->{"costo"},2), 2, ',', '.');
+				$costoScontato = $passaggioPedonale->{"porta_pedonale"}->{"costo"}*$quantita - $passaggioPedonale->{"porta_pedonale"}->{"costo"}*$quantita*$passaggioPedonale->{"sconto"}/100;
+				
+				$this->main->importoMerceScontata += $costoScontato;
+				
+				$this->main->valori["carrello"][$this->main->cont]["importo_netto"] = "E. ".number_format($costoScontato,2,',','.');
+				
+				$this->main->valori["carrello"][$this->main->cont]["num"] = "";
+				$this->main->valori["carrello"][$this->main->cont]["prezzo_unitario"] = "E. ".number_format($passaggioPedonale->{"porta_pedonale"}->{"costo"}, 2, ',', '.');
+				$this->main->valori["carrello"][$this->main->cont]["sconto"] = $passaggioPedonale->{"sconto"};
+				$this->main->cont++;
+			}
+		}
+		
+		
+		$sistemaChiusura = $accessori->{"sistemaChiusura"};
+		
+		if($sistemaChiusura){
+			
+			$totSistemaChiusura = 0;
+			
+			$this->main->valori["carrello"][$this->main->cont]["codice"] = $sistemaChiusura->{"codice"};
+			$this->main->valori["carrello"][$this->main->cont]["riferimento"] = $riferimento;
+			$this->main->valori["carrello"][$this->main->cont]["descrizione"] = "Sistema di chiusura";
+			$this->main->valori["carrello"][$this->main->cont]["um"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["quantita"] = $quantita;
+			$this->main->valori["carrello"][$this->main->cont]["L"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["H"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["importo"] = "E. ".number_format(round($sistemaChiusura->{"costo"},2), 2, ',', '.');
+			
+			$costoTotale = $sistemaChiusura->{"costo"}*$quantita;
+			$costoScontato = $costoTotale - $costoTotale*$sistemaChiusura->{"sconto"}/100;
+			$this->main->valori["carrello"][$this->main->cont]["importo_netto"] = "E. ".number_format($costoScontato,2,',','.');
+			
+			$this->main->valori["carrello"][$this->main->cont]["num"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["prezzo_unitario"] = "E. ".number_format($sistemaChiusura->{"costo"}, 2, ',', '.');
+			$this->main->valori["carrello"][$this->main->cont]["sconto"] = $sistemaChiusura->{"sconto"};
+			
+			$this->main->importoMerceScontata += $costoScontato;
+			$this->main->cont++;
+			
+			
+		}
+		
+		$sistemaRifinitura = $accessori->{"sistemaRifinitura"};
+		
+		if($sistemaRifinitura){
+			
+			$totSistemaRifinitura = 0;
+			
+			$this->main->valori["carrello"][$this->main->cont]["codice"] = $sistemaRifinitura->{"codice"};
+			$this->main->valori["carrello"][$this->main->cont]["riferimento"] = $riferimento;
+			$this->main->valori["carrello"][$this->main->cont]["descrizione"] = "Sistema di rifinitura";
+			$this->main->valori["carrello"][$this->main->cont]["um"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["quantita"] = $quantita;
+			$this->main->valori["carrello"][$this->main->cont]["L"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["H"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["importo"] = "E. ".number_format(round($sistemaRifinitura->{"totale"},2), 2, ',', '.');
+			
+			$costoTotale = $sistemaRifinitura->{"totale"}*$quantita;
+			$costoScontato = $costoTotale - $costoTotale*$sistemaRifinitura->{"sconto"}/100;
+			$this->main->valori["carrello"][$this->main->cont]["importo_netto"] = "E. ".number_format($costoScontato,2,',','.');
+			
+			$this->main->valori["carrello"][$this->main->cont]["num"] = "";
+			$this->main->valori["carrello"][$this->main->cont]["prezzo_unitario"] = "E. ".number_format($sistemaRifinitura->{"costo"}, 2, ',', '.');
+			$this->main->valori["carrello"][$this->main->cont]["sconto"] = $sistemaRifinitura->{"sconto"};
+			
+			$this->main->importoMerceScontata += $costoScontato;
+			$this->main->cont++;
+			
+			
+		}
+		
+		
+		$this->main->valori["carrello"][$this->main->cont]["codice"] = "\n";
+		$this->main->valori["carrello"][$this->main->cont]["riferimento"] = "\n";
+		$this->main->valori["carrello"][$this->main->cont]["descrizione"] = "\n";
+		$this->main->valori["carrello"][$this->main->cont]["um"] = "\n";
+		$this->main->valori["carrello"][$this->main->cont]["quantita"] = "\n";
+		$this->main->valori["carrello"][$this->main->cont]["L"] = "\n";
+		$this->main->valori["carrello"][$this->main->cont]["H"] = "\n";
+		$this->main->valori["carrello"][$this->main->cont]["importo"] = "\n";
+		$this->main->valori["carrello"][$this->main->cont]["importo_netto"] = "\n";
+		$this->main->valori["carrello"][$this->main->cont]["num"] = "\n";
+		$this->main->valori["carrello"][$this->main->cont]["prezzo_unitario"] = "\n";
+		$this->main->valori["carrello"][$this->main->cont]["sconto"] = "\n";
+		$this->main->cont++;
+		
+	}
+		
+	
+	
+}
+
+
+?>
+

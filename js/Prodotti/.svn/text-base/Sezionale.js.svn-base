@@ -1,0 +1,886 @@
+var Sezionale = function(main){
+
+	var _this = this;
+	_this.obj;
+	_this.elem;
+	
+	_this.selezione;
+	_this.id;
+	_this.tipologia;
+	_this.modello;
+	_this.dimensioniPorta;
+	
+	
+	_this.validita;
+	
+	_this.prezzoTotale;
+	
+	_this.init = function(cookie){
+		
+		_this.selezione = cookie;
+		_this.validita = cookie.validita;
+		_this.prodotto = cookie.prodotto;
+		_this.accessori = cookie.accessori;
+		_this.tipologia = cookie.tipologia;
+		
+		if(jQuery.isEmptyObject(_this.accessori))
+		_this.siAccessori = false;
+		else
+		_this.siAccessori = true;
+		
+		console.log(cookie);
+	}
+	
+	_this.getTipologiaProgetto = function(){
+	
+		return _this.validita;
+	}
+	
+	_this.getRiepilogo = function(){
+		
+		//alert("ok");
+		
+		var cookie = jQuery.getCookie("selezione");
+		
+		var riepilogo = "";
+		riepilogo += "<h4>RIFERIMENTO: "+_this.selezione.riferimento+"</h4>";
+		riepilogo += "Tipologia: <b>"+_this.selezione.tipologia+"</b><br>";
+		riepilogo += "Dimensioni porta LxH(mm): <b>"+_this.selezione.porta.L+"x"+_this.selezione.porta.H+"</b><br>";
+		riepilogo += "Foro muro LxH(mm): <b>"+_this.selezione.foroMuro.L+"x"+_this.selezione.foroMuro.H+"</b><br>";
+		
+		riepilogo += "Tipo posa:<br>";
+		if(_this.selezione.ingombro.up == 0)
+			riepilogo += "• In luce lato superiore<br>";
+			else
+			riepilogo += "• Oltre luce lato superiore di <b>"+_this.selezione.ingombro.up+" (mm)</b><br>";
+		if(_this.selezione.ingombro.sx == 0)
+			riepilogo += "• In luce lato sinistro<br>";
+			else
+			riepilogo += "• Oltre luce lato sinistro di <b>"+_this.selezione.ingombro.sx+" (mm)</b><br>";
+		if(_this.selezione.ingombro.dx == 0)
+			riepilogo += "• In luce lato destro<br>";
+			else
+			riepilogo += "• Oltre luce lato destro di <b>"+_this.selezione.ingombro.dx+" (mm)</b><br>";
+		
+		
+		if(!_this.validita){
+			if(_this.prodotto.sconto > 0)
+			riepilogo += "Sconto da applicare: <b>" +_this.prodotto.sconto+ "%</b><br>" ;
+			else
+			riepilogo += "<b>Nessuno sconto da applicare</b><br>" ;	
+		}
+		
+		if(_this.validita){
+			riepilogo += "Codice: <b>" + _this.selezione.prodotto.codice + "</b><br>";
+			riepilogo += "Colorazione: <b>"+_this.selezione.prodotto.colorazione + "</b><br>";
+			
+			//if(_this.quantita)
+			//riepilogo += "Quantità: <b>" + _this.quantita + "</b><br>"; 
+			
+			if(_this.validita){
+				riepilogo += "Prezzo: <b>" + Number(_this.selezione.prodotto.costo).format(false) + " €</b><br>";
+			}
+			//riepilogo += "<br>";
+			
+			//var mq = (_this.selezione.porta.H/1000 * _this.selezione.porta.L/1000);
+			
+			_this.prezzoTotale = _this.selezione.prodotto.costo;
+			
+		}
+		
+		
+		
+		if(_this.validita){
+			var totaleProdotto = _this.prezzoTotale;
+			riepilogo += "Totale: <b>" + parseFloat(totaleProdotto).format(false) + " €</b><br>";
+			var totaleScontatoProdotto = totaleProdotto - totaleProdotto*_this.selezione.prodotto.sconto/100;
+			riepilogo += "Prezzo totale scontato: <b><span id='scontoProdottoTotale'>" + parseFloat(totaleScontatoProdotto).format(false) + "</span> €</b><br>";
+			riepilogo += "<div class='boxSconto'>Sconto: <input type='text' id='scontoProdotto' class='sconto' value='"+_this.selezione.prodotto.sconto+"' totale='"+totaleProdotto+"' style='width:40px;' maxlength='3'/>%<br></div><br>";
+		}else if(jQuery.getCookie("utente").ruolo != "ROLE_ADMIN"){
+			riepilogo += "<h3><img src='images/warning.png' /> Attenzione!</h3> Le scelte precedenti non permettono al sistema di calcolare un preventivo corretto. <br>";
+		}
+		
+		
+		//\alert(1);
+		if(_this.siAccessori){
+			riepilogo += "<h3>Accessori:</h3>";
+			
+			
+			if(jQuery.validaValore(_this.selezione.accessori.struttura)){
+				
+				var totStruttura = 0;
+				
+				
+				riepilogo += "STRUTTURA<br>";
+				
+				if(jQuery.validaValore(_this.selezione.accessori.struttura.veletta)){
+					riepilogo += "Veletta<br>";
+					for(var i = 0;i < _this.selezione.accessori.struttura.veletta.articoli.length;i++){
+						riepilogo += "Codice: <b>" + _this.selezione.accessori.struttura.veletta.articoli[i].codice + "</b><br>"; 
+						
+						if(_this.validita){
+							riepilogo += "Prezzo a ML: <b>" + Number(_this.selezione.accessori.struttura.veletta.articoli[i].costo).format(false) + " €</b><br>"; 
+							totStruttura += Number(_this.selezione.accessori.struttura.veletta.articoli[i].costo)*Number(_this.selezione.porta.L/1000);
+						}
+					}
+					
+					if(_this.selezione.accessori.struttura.veletta.foratura){
+						riepilogo += "<br>Foratura<br>Codice: <b>" + _this.selezione.accessori.struttura.veletta.foratura.codice + "</b><br>"; 	
+						riepilogo += "Prezzo a ML: <b>" + Number(_this.selezione.accessori.struttura.veletta.foratura.costo).format(false) + " €</b><br>"; 
+						totStruttura += Number(_this.selezione.accessori.struttura.veletta.foratura.costo)*Number(_this.selezione.porta.L/1000);
+					}
+				}
+				
+				if(jQuery.validaValore(_this.selezione.accessori.struttura.spallettaSX)){
+					riepilogo += "<br>Spalletta sinistra<br>";
+					riepilogo += "Codice: <b>" + _this.selezione.accessori.struttura.spallettaSX.codice + "</b><br>"; 
+					if(_this.validita){
+						riepilogo += "Prezzo a ML: <b>" + Number(_this.selezione.accessori.struttura.spallettaSX.costo).format(false) + " €</b><br>";
+						totStruttura += Number(_this.selezione.accessori.struttura.spallettaSX.costo)*Number(_this.selezione.porta.H/1000); 
+					}
+				}
+				
+				if(jQuery.validaValore(_this.selezione.accessori.struttura.spallettaDX)){
+					riepilogo += "<br>Spalletta destra<br>";
+					riepilogo += "Codice: <b>" + _this.selezione.accessori.struttura.spallettaDX.codice + "</b><br>"; 
+					if(_this.validita){
+						riepilogo += "Prezzo a ML: <b>" + Number(_this.selezione.accessori.struttura.spallettaDX.costo).format(false) + " €</b><br><br>";
+						totStruttura += Number(_this.selezione.accessori.struttura.spallettaDX.costo)*Number(_this.selezione.porta.H/1000); 
+					}
+				}
+				
+				var totaleScontato = totStruttura - totStruttura*_this.selezione.accessori.struttura.sconto/100;
+				
+				if(_this.validita){
+					riepilogo += "Totale: <b>"+parseFloat(totStruttura).format(false)+" €</b><br>";
+					riepilogo += "Totale scontato: <b><span id='scontoStrutturaTotale'>"+parseFloat(totaleScontato).format(false)+"</span> €</b>";
+					riepilogo += "<div class='boxSconto'>Sconto: <input type='text' id='scontoStruttura' totale='"+totStruttura+"' style='width:40px;' class='sconto' value='"+_this.selezione.accessori.struttura.sconto+"' maxlength='3'/>%<br></div><br>";
+				}
+				
+				_this.prezzoTotale += totStruttura;
+				
+				
+				console.log("STRUTTURA OK!");
+			}
+			
+			
+			if(jQuery.validaValore(_this.selezione.accessori.sistemaRifinitura)){
+				riepilogo += "SISTEMI DI RIFINITURA:<br>"
+				riepilogo += "Codice: <b>" + _this.selezione.accessori.sistemaRifinitura.codice + "</b><br>"; 
+				
+				if(_this.validita)
+					riepilogo += "Prezzo intero kit: <b>" + parseFloat(_this.selezione.accessori.sistemaRifinitura.costo*3).format(false) + " €</b><br>"; 
+				
+				//////console.log("Sistemi di rifinitura ok");
+				
+				var costoSistemaRifinitura = 0;
+				if(_this.selezione.accessori.sistemaRifinitura.up){
+					riepilogo += "Rifinitura superiore<br>";
+					costoSistemaRifinitura += _this.selezione.accessori.sistemaRifinitura.costo;
+				}
+				if(_this.selezione.accessori.sistemaRifinitura.sx){
+					riepilogo += "Rifinitura lato sinistro<br>";
+					costoSistemaRifinitura += _this.selezione.accessori.sistemaRifinitura.costo;
+				}
+				
+				if(_this.selezione.accessori.sistemaRifinitura.dx){
+					riepilogo += "Rifinitura lato destro<br>";
+					costoSistemaRifinitura += _this.selezione.accessori.sistemaRifinitura.costo;	
+				}
+				
+				if(_this.validita)
+					riepilogo += "Totale: <b>" + costoSistemaRifinitura.format(false) + " €</b><br>"; 
+				
+				
+				if(_this.validita){
+					var totaleScontato = costoSistemaRifinitura - costoSistemaRifinitura*_this.selezione.accessori.sistemaRifinitura.sconto/100;
+					riepilogo += "Totale scontato: <b><span id='scontoSistemaRifinituraTotale'>"+parseFloat(totaleScontato).format(false)+"</span> €</b>";
+					riepilogo += "<div class='boxSconto'>Sconto: <input type='text' id='scontoSistemaRifinitura' style='width:40px;' class='sconto' totale='"+tot+"' value='"+_this.selezione.accessori.sistemaRifinitura.sconto+"' maxlength='3'/>%<br></div>";
+				}
+				riepilogo += "<br>";
+				
+				_this.prezzoTotale += costoSistemaRifinitura;
+				
+				console.log("SISTEMA DI RIFINITURA OK!");
+			}
+			
+			
+			if(jQuery.validaValore(_this.selezione.accessori.oblo)){
+				riepilogo += "OBLO'<br>";
+				riepilogo += "Codice: <b>" + _this.selezione.accessori.oblo.codice + "</b><br>"; 
+				
+				if(_this.validita)
+					riepilogo += "Prezzo: <b>" + _this.selezione.accessori.oblo.costo.format(false) + " €</b><br>"; 
+				
+				var quantita = 0;
+				var cont = 0;
+				jQuery.each(_this.selezione.accessori.oblo.quantita, function(i, item) {
+					cont++;
+					quantita += Number(item);
+					if(Number(item) > 0)
+						riepilogo += "Quantità di oblò nella sezione n. "+cont+": <b>" + item + " </b><br>";
+				});
+				
+				if(_this.validita)
+					riepilogo += "Totale: <b>"+(_this.selezione.accessori.oblo.costo*quantita).format(false)+" €</b><br>";
+				
+				var tot = _this.selezione.accessori.oblo.costo*quantita;
+				var totaleScontato = tot - tot*_this.selezione.accessori.oblo.sconto/100;
+				riepilogo += "Totale scontato: <b><span id='scontoObloTotale'>"+parseFloat(totaleScontato).format(false)+"</span> €</b>";
+				riepilogo += "<div class='boxSconto'>Sconto: <input type='text' id='scontoOblo' totale='"+tot+"' style='width:40px;' class='sconto' value='"+_this.selezione.accessori.oblo.sconto+"' maxlength='3'/>%<br></div>";
+				riepilogo += "<br>";
+				
+				_this.prezzoTotale += _this.selezione.accessori.oblo.costo*quantita;
+				
+				console.log("OBLO' OK!");
+			}
+			
+			
+			if(jQuery.validaValore(_this.selezione.accessori.griglie)){
+				riepilogo += "GRIGLIE<br>";
+				riepilogo += "Codice: <b>" + _this.selezione.accessori.griglie.codice + "</b><br>"; 
+				if(_this.validita)
+					riepilogo += "Prezzo: <b>" + _this.selezione.accessori.griglie.costo.format(false) + " €</b><br>"; 
+				
+				var quantita = 0;
+				var cont = 0;
+				jQuery.each(_this.selezione.accessori.griglie.quantita, function(i, item) {
+					cont++;
+					quantita += Number(item);
+					if(Number(item) > 0)
+						riepilogo += "Quantità di griglie nella sezione n. "+cont+": <b>" + item + " </b><br>";
+				});
+				
+				if(_this.validita)
+					riepilogo += "Totale: <b>"+(_this.selezione.accessori.griglie.costo*quantita).format(false)+" €</b><br>";
+				
+				var tot = _this.selezione.accessori.griglie.costo*quantita;
+				var totaleScontato = tot - tot*_this.selezione.accessori.griglie.sconto/100;
+				
+				if(_this.validita){
+					riepilogo += "Totale scontato: <b><span id='scontoGriglieTotale'>"+parseFloat(totaleScontato).format(false)+"</span> €</b>";
+					riepilogo += "<div class='boxSconto'>Sconto: <input type='text' id='scontoGriglie' totale='"+tot+"' style='width:40px;' class='sconto' value='"+_this.selezione.accessori.griglie.sconto+"' maxlength='3'/>%<br></div>";
+				}
+				riepilogo += "<br>";
+				
+				_this.prezzoTotale += _this.selezione.accessori.griglie.costo*quantita;
+				
+				console.log("GRIGLIE OK!");
+			}
+			
+			
+			
+			
+			
+			
+			if(jQuery.validaValore(_this.selezione.accessori.molle)){
+				
+				riepilogo += "MOLLE<br>";
+			
+				var totMolle = 0;
+				for(var i = 0;i < _this.selezione.accessori.molle.articoli.length;i++){
+					totMolle += _this.selezione.accessori.molle.articoli[i].costo;
+					riepilogo += "Codice: <b>" + _this.selezione.accessori.molle.articoli[i].codice + "</b><br>"; 
+					
+					if(_this.validita)
+						riepilogo += "Prezzo: <b>" + _this.selezione.accessori.molle.articoli[i].costo.format(false) + " €</b><br>"; 	
+				}
+				
+				_this.prezzoTotale += totMolle;
+				
+				if(_this.validita)
+					riepilogo += "Totale: <b>" + totMolle.format(false) + " €</b><br>"; 
+				
+				var totaleScontato = totMolle - totMolle*_this.selezione.accessori.molle.sconto/100;
+				if(_this.validita){
+					riepilogo += "Totale scontato: <b><span id='scontoMolleTotale'>"+totaleScontato.format(false)+"</span> €</b>";
+					riepilogo += "<div class='boxSconto'>Sconto: <input type='text' id='scontoMolle' totale='"+totMolle+"' style='width:40px;' class='sconto' value='"+_this.selezione.accessori.molle.sconto+"' maxlength='3'/>%<br></div>";
+				}
+				riepilogo += "<br>";
+				
+				console.log("MOLLE OK!");
+				
+			}
+			  
+			  
+			  if(jQuery.validaValore(_this.selezione.accessori.sistemaChiusura)){
+				riepilogo += "SISTEMA DI CHIUSURA<br>";
+				riepilogo += "Codice: <b>" + _this.selezione.accessori.sistemaChiusura.codice + "</b><br>"; 
+				if(_this.validita)
+				riepilogo += "Prezzo: <b>" + _this.selezione.accessori.sistemaChiusura.costo.format(false) + " €</b><br><br>"; 
+				
+				var totaleSistema = _this.selezione.accessori.sistemaChiusura.costo;
+				
+				if(_this.validita)
+					riepilogo += "Totale: <b>"+totaleSistema.format(false)+" €</b><br>";
+				
+				
+				if(_this.validita){
+					var totaleScontato = totaleSistema - totaleSistema*_this.selezione.accessori.sistemaChiusura.sconto/100;
+					riepilogo += "Totale scontato: <b><span id='scontoSistemaChiusuraTotale'>"+parseFloat(totaleScontato).format(false)+"</span> €</b>";
+					riepilogo += "<div class='boxSconto'>Sconto: <input type='text' id='scontoSistemaChiusura' totale='"+totaleSistema+"' style='width:40px;' class='sconto' value='"+_this.selezione.accessori.sistemaChiusura.sconto+"' maxlength='3'/>%<br></div>";
+				}
+				riepilogo += "<br>";
+				
+				_this.prezzoTotale += totaleSistema;
+				
+				
+				console.log("SISTEMA DI CHIUSURA OK!");
+			}
+			
+			
+			
+			if(jQuery.validaValore(_this.selezione.accessori.passaggioPedonale)){
+				riepilogo += "PASSAGGIO PEDONALE<br>";
+				
+				
+				if(jQuery.validaValore(_this.selezione.accessori.passaggioPedonale.porta_pedonale)){
+					totPassaggio += _this.selezione.accessori.passaggioPedonale.porta_pedonale.costo;
+					riepilogo += "Porta pedonale:<br>"; 
+					riepilogo += "Codice: <b>" + _this.selezione.accessori.passaggioPedonale.porta_pedonale.codice + "</b><br>"; 
+					if(_this.validita)	
+						riepilogo += "Prezzo: <b>" + _this.selezione.accessori.passaggioPedonale.porta_pedonale.costo.format(false) + " €</b><br><br>"; 
+				}
+				
+				var totPassaggio = 0;
+				if(jQuery.validaValore(_this.selezione.accessori.passaggioPedonale.maniglione)){
+					totPassaggio += _this.selezione.accessori.passaggioPedonale.maniglione.costo;
+					riepilogo += "Maniglioni:<br>"; 
+					riepilogo += "Codice: <b>" + _this.selezione.accessori.passaggioPedonale.maniglione.codice + "</b><br>"; 
+					if(_this.validita)
+						riepilogo += "Prezzo: <b>" + _this.selezione.accessori.passaggioPedonale.maniglione.costo.format(false) + " €</b><br><br>"; 
+				}
+				
+				
+				
+				
+				if(_this.validita)
+					riepilogo += "Totale: <b>"+totPassaggio.format(false)+" €</b><br>";
+				
+				
+				if(_this.validita){
+					var totaleScontato = totPassaggio - totPassaggio*_this.selezione.accessori.passaggioPedonale.sconto/100;
+					riepilogo += "Totale scontato: <b><span id='scontoPassaggioPedonaleTotale'>"+parseFloat(totaleScontato).format(false)+"</span> €</b>";
+					riepilogo += "<div class='boxSconto'>Sconto: <input type='text' id='scontoPassaggioPedonale' totale='"+totPassaggio+"' style='width:40px;' class='sconto' value='"+_this.selezione.accessori.passaggioPedonale.sconto+"' maxlength='3'/>%<br></div>";
+				}
+				riepilogo += "<br>";
+				
+				_this.prezzoTotale += totPassaggio;
+				
+				console.log("PASSAGGIO PEDONALE OK!");
+			}
+			  
+			  
+			 if(jQuery.validaValore(_this.selezione.accessori.motorizzazione)){
+				riepilogo += "MOTORIZZAZIONE<br>";
+				riepilogo += "Codice: <b>" + _this.selezione.accessori.motorizzazione.codice + "</b><br>"; 
+				
+				if(_this.validita)
+					riepilogo += "Prezzo: <b>" + _this.selezione.accessori.motorizzazione.costo.format(false) + " €</b><br><br>"; 
+				
+				var totaleMotorizzazione = _this.selezione.accessori.motorizzazione.costo;
+				if(_this.selezione.accessori.motorizzazione.accessori.length > 0){
+					riepilogo += "Accessori motorizzazione<br>"; 
+					
+					for(var i = 0;i < _this.selezione.accessori.motorizzazione.accessori.length;i++){
+						totaleMotorizzazione += _this.selezione.accessori.motorizzazione.accessori[i].costo*Number(_this.selezione.accessori.motorizzazione.accessori[i].quantita);
+						riepilogo += "Codice: <b>" + _this.selezione.accessori.motorizzazione.accessori[i].codice + "</b><br>"; 
+						riepilogo += "Quantità: <b>" + _this.selezione.accessori.motorizzazione.accessori[i].quantita + "</b><br>"; 
+						if(_this.validita)
+							riepilogo += "Prezzo: <b>" + _this.selezione.accessori.motorizzazione.accessori[i].costo.format(false) + " €</b><br><br>"; 
+					}
+				}
+				
+				if(_this.validita)
+					riepilogo += "Totale: <b>"+totaleMotorizzazione.format(false)+" €</b><br>";
+				
+				var totaleScontato = totaleMotorizzazione - totaleMotorizzazione*_this.selezione.accessori.motorizzazione.sconto/100;
+				if(_this.validita){
+					riepilogo += "Totale scontato: <b><span id='scontoMotorizzazioneTotale'>"+parseFloat(totaleScontato).format(false)+"</span> €</b>";
+					riepilogo += "<div class='boxSconto'>Sconto: <input type='text' id='scontoMotorizzazione' totale='"+totaleMotorizzazione+"' style='width:40px;' class='sconto' value='"+_this.selezione.accessori.motorizzazione.sconto+"' maxlength='3'/>%<br></div>";
+				}
+				riepilogo += "<br>";
+				
+				_this.prezzoTotale += totaleMotorizzazione;
+				
+				console.log("MOTORIZZAZIONE OK!");
+			}
+			
+			
+		}else  riepilogo += "<h3>Nessun accessorio selezionato</h3>";
+		
+		
+		var tmpQuantita = 1;
+		if(_this.selezione.prodotto.quantita){
+			tmpQuantita = _this.selezione.prodotto.quantita;
+			//////console.log("Quantita: " + _this.selezione.prodotto.quantita);
+			riepilogo += "<div class='containerBoxRepeat'><br><br><input type='checkbox' id=\"repeatQuantita\" value='si'/>";
+			riepilogo += "Compila con i valori delle quantità in memoria<br><br></div>";	
+		}
+		
+		riepilogo += "<br><span id='messageQuantita'><b>Quantità</b>: <input type='text' class='quantitaProdotto' value='"+tmpQuantita+"' maxlength='3' id=\"quantitaUnitaria\"></span><br><br>";	
+		
+		return riepilogo;
+	}
+	
+	_this.activeButtonRepeatQuantita = function(){
+	
+	
+		var selezione = jQuery.getCookie("selezione");	
+		jQuery("#repeatQuantita").click(function(){
+			
+			if(jQuery(this).is(":checked")){
+				
+				jQuery(".quantitaProdotto").val(selezione.prodotto.quantita);
+				jQuery(".quantitaProdotto").prop("disabled",true);
+					
+			}else{
+				jQuery(".quantitaProdotto").prop("disabled",false);	
+			}
+			
+			var e = jQuery.Event("keyup");
+			jQuery(".quantitaProdotto").trigger(e);
+			
+		});	
+		
+		if(selezione.modifica.boo){
+			jQuery("#repeatQuantita").trigger("click");
+		}
+		
+		jQuery(".quantitaProdotto").on("keypress", function(e){
+			return jQuery.onlynumbers(e);
+		});
+		
+	}
+	
+	_this.getFamiglia = function(){
+		return _this.famiglia;	
+	}
+	
+	_this.getValidita = function(){
+		return _this.validita;	
+	}
+	
+	_this.getSopraluce = function(){
+		
+		_this.sopraluce = _this.accessori.sopraluce;
+		if(_this.sopraluce.height > 0){
+			_this.siAccessori = true;
+			_this.prezzoTotale += _this.sopraluce.totale;
+		}
+	}
+	
+	_this.getSistemaChiusura = function(){
+		
+		_this.sistemaChiusura = _this.accessori.sistemaChiusura;	
+		if(_this.accessori.sistemaChiusura.serratura != null && _this.accessori.sistemaChiusura.serratura != undefined){
+			_this.siAccessori = true;
+			_this.prezzoTotale += _this.sistemaChiusura.totale;
+		}
+	}
+	
+	_this.getSistemaRifinitura = function(){
+		
+		_this.sistemaRifinitura = _this.accessori.sistemaRifinitura;
+		if(_this.accessori.sistemaRifinitura.articolo != null && _this.accessori.sistemaRifinitura.articolo != undefined){
+			_this.siAccessori = true;
+			_this.prezzoTotale += _this.sistemaRifinitura.totale;
+		}
+	}
+	
+	_this.getMotorizzazione = function(){
+		
+		_this.motorizzazione = _this.accessori.motorizzazione;
+		if(_this.accessori.motorizzazione.articolo != null && _this.accessori.motorizzazione.articolo != undefined){
+			_this.siAccessori = true;
+			_this.prezzoTotale += _this.motorizzazione.totale;
+		}
+	}
+	
+	_this.getPredisposizioneMotorizzazione = function(){
+		
+		_this.predisposizioneMotorizzazione = _this.accessori.predisposizioneMotorizzazione;
+		if(_this.accessori.predisposizioneMotorizzazione.articolo != null && _this.accessori.predisposizioneMotorizzazione.articolo != undefined){
+			_this.siAccessori = true;
+			_this.prezzoTotale += _this.predisposizioneMotorizzazione.articolo.totale;
+		}
+	}
+	
+	_this.getPassaggioPedonale = function(){
+		
+		_this.passaggioPedonale = _this.accessori.passaggioPedonale;
+		if(_this.accessori.passaggioPedonale.articolo != null && _this.accessori.passaggioPedonale.articolo != undefined){
+			_this.siAccessori = true;
+			_this.prezzoTotale += _this.passaggioPedonale.totale;
+		}
+	}
+	
+	_this.getVerniciatura = function(){
+		
+		_this.verniciatura = _this.accessori.verniciatura;	
+		if(_this.accessori.verniciatura.articolo != null){
+			_this.siAccessori = true;
+			_this.prezzoTotale += _this.verniciatura.articolo.totale;
+		}
+	}
+	
+	_this.getPrezzoTotale = function(prodotto){
+		
+		var cookie;
+		if(prodotto)
+			cookie = prodotto
+			else
+			cookie = _this.selezione;
+		
+		var prezzoProdotto = cookie.prodotto.costo;
+		var totaleProdotto = prezzoProdotto;
+		
+		console.log("Costo prodotto: " + totaleProdotto);
+		
+		if(_this.siAccessori){
+			if(jQuery.validaValore(cookie.accessori.struttura)){
+				
+				var totVelette = 0;
+				for(var i = 0;i < _this.selezione.accessori.struttura.veletta.articoli.length;i++){
+					totVelette += Number(cookie.accessori.struttura.veletta.articoli[i].costo)*Number(_this.selezione.porta.L/1000);
+				}
+				
+				if(_this.selezione.accessori.struttura.veletta.foratura)
+					totVelette += Number(cookie.accessori.struttura.veletta.foratura.costo)*Number(_this.selezione.porta.L/1000);
+				
+				console.log("Costo velette: " + totVelette);
+				totaleProdotto += totVelette;
+				
+			
+			
+				var totSpallette = 0;
+				if(jQuery.validaValore(cookie.accessori.struttura.spallettaSX))
+					totSpallette += Number(cookie.accessori.struttura.spallettaSX.costo)*Number(_this.selezione.porta.H/1000); 
+					
+				if(jQuery.validaValore(cookie.accessori.struttura.spallettaDX))
+					totSpallette += Number(cookie.accessori.struttura.spallettaDX.costo)*Number(_this.selezione.porta.H/1000); 
+			
+				console.log("Costo spallette: " + totSpallette);
+				totaleProdotto += totSpallette;
+			}
+			
+			if(jQuery.validaValore(cookie.accessori.griglie)){
+				
+				var quantita = 0;
+				var totGriglie = 0;
+				
+				jQuery.each(_this.selezione.accessori.griglie.quantita, function(i, item) {
+					quantita += Number(item);
+				});
+				
+				
+				totGriglie = cookie.accessori.griglie.costo*quantita;
+				console.log("Costo griglie: " + totGriglie);
+				totaleProdotto += totGriglie;
+			}
+			
+			
+			if(jQuery.validaValore(cookie.accessori.oblo)){
+				
+				var quantita = 0;
+				var totOblo = 0;
+				
+				jQuery.each(_this.selezione.accessori.oblo.quantita, function(i, item) {
+					quantita += Number(item);
+				});
+				
+				totOblo += cookie.accessori.oblo.costo*quantita;
+				console.log("Costo oblo: " + totOblo);
+				totaleProdotto += totOblo;
+				
+			}
+			
+			
+			if(jQuery.validaValore(cookie.accessori.molle)){
+				
+				var totMolle = 0;
+				for(var i = 0;i < cookie.accessori.molle.articoli.length;i++)
+					totMolle += cookie.accessori.molle.articoli[i].costo;
+					
+				totaleProdotto += totMolle;
+			 	console.log("Molle: " + totMolle);
+			}
+			 
+			 
+			
+			  
+			 if(jQuery.validaValore(cookie.accessori.motorizzazione)){
+				var totMotorizzazione = cookie.accessori.motorizzazione.costo;
+				for(var i = 0;i < cookie.accessori.motorizzazione.accessori.length;i++)
+					totMotorizzazione += cookie.accessori.motorizzazione.accessori[i].costo*Number(cookie.accessori.motorizzazione.accessori[i].quantita);
+				
+				
+				totaleProdotto += totMotorizzazione;
+				console.log("Motorizzazione: " + totMotorizzazione);
+			}
+			
+			
+			
+			if(jQuery.validaValore(cookie.accessori.passaggioPedonale)){
+				var totPassaggio = 0;
+				
+				if(jQuery.validaValore(cookie.accessori.passaggioPedonale.maniglione))
+					totPassaggio += cookie.accessori.passaggioPedonale.maniglione.costo;
+				
+				if(jQuery.validaValore(cookie.accessori.passaggioPedonale.porta_pedonale))
+					totPassaggio += cookie.accessori.passaggioPedonale.porta_pedonale.costo;
+			
+				totaleProdotto += totPassaggio;
+				console.log("Passaggio pedonale " + totPassaggio);
+			}
+			
+			
+			
+			
+			if(jQuery.validaValore(cookie.accessori.sistemaChiusura)){
+				var totChiusura = 0;
+				totChiusura += cookie.accessori.sistemaChiusura.costo;
+				totaleProdotto += totChiusura;
+				console.log("chiusura: " + totChiusura);
+			}
+			
+				
+			if(jQuery.validaValore(cookie.accessori.sistemaRifinitura)){
+			
+				var totRifinitura = 0;
+				if(cookie.accessori.sistemaRifinitura.up){
+					totRifinitura += cookie.accessori.sistemaRifinitura.costo;
+				}
+				if(cookie.accessori.sistemaRifinitura.sx){
+					totRifinitura += cookie.accessori.sistemaRifinitura.costo;
+				}
+				
+				if(cookie.accessori.sistemaRifinitura.dx){
+					totRifinitura += cookie.accessori.sistemaRifinitura.costo;	
+				}
+				
+				totaleProdotto += totRifinitura;
+				console.log("Rifinitura: " + totRifinitura);
+				
+			}
+			
+		}
+
+		//alert(totaleProdotto);
+		return totaleProdotto;
+	}
+	
+	_this.getPrezzoScontato = function(prodotto){
+		
+		
+		var cookie;
+		if(prodotto)
+			cookie = prodotto
+			else
+			cookie = _this.selezione;
+		
+		var prezzoProdotto = cookie.prodotto.costo;
+		cookie.prodotto.sconto = parseInt(jQuery("#scontoProdotto").val());
+		var totaleProdottoScontato = prezzoProdotto - (prezzoProdotto * cookie.prodotto.sconto)/100;
+		
+		
+		console.log("DEBUG!");
+		////console.log(totaleProdottoScontato);
+		
+		if(_this.siAccessori){
+			
+			
+			var totaleProdotto = 0;
+			if(jQuery.validaValore(cookie.accessori.struttura)){
+				
+				for(var i = 0;i < _this.selezione.accessori.struttura.veletta.articoli.length;i++){
+					totaleProdotto += Number(cookie.accessori.struttura.veletta.articoli[i].costo)*Number(cookie.porta.L/1000);
+				}
+			
+			if(_this.selezione.accessori.struttura.veletta.foratura)
+				totaleProdotto += Number(cookie.accessori.struttura.veletta.foratura.costo)*Number(cookie.porta.L/1000);
+				
+			if(jQuery.validaValore(cookie.accessori.struttura.spallettaSX))
+				totaleProdotto += Number(cookie.accessori.struttura.spallettaSX.costo)*Number(cookie.porta.H/1000); 
+				
+			if(jQuery.validaValore(cookie.accessori.struttura.spallettaDX))
+				totaleProdotto += Number(cookie.accessori.struttura.spallettaDX.costo)*Number(cookie.porta.H/1000); 
+				
+			
+				
+			var scontoStruttura = parseInt(jQuery("#scontoStruttura").val());
+			cookie.accessori.struttura.sconto = scontoStruttura;
+			totaleProdottoScontato += (totaleProdotto - (totaleProdotto * scontoStruttura)/100);
+		
+			}
+			
+			
+			if(jQuery.validaValore(cookie.accessori.griglie)){
+				
+				var quantita = 0;
+				var totaleProdotto = 0;
+				
+				jQuery.each(_this.selezione.accessori.griglie.quantita, function(i, item) {
+					quantita += Number(item);
+				});
+				
+				totaleProdotto += cookie.accessori.griglie.costo*quantita;
+			
+				var scontoGriglie = parseInt(jQuery("#scontoGriglie").val());
+				cookie.accessori.griglie.sconto = scontoGriglie;
+				totaleProdottoScontato += (totaleProdotto - (totaleProdotto * scontoGriglie)/100);
+			
+			}
+			
+			////console.log(totaleProdottoScontato);
+			
+			if(jQuery.validaValore(cookie.accessori.oblo)){
+				var quantita = 0;
+				var totaleProdotto = 0;
+				
+				jQuery.each(_this.selezione.accessori.oblo.quantita, function(i, item) {
+					quantita += Number(item);
+				});
+				
+				totaleProdotto += cookie.accessori.oblo.costo*quantita;
+				
+				
+				var scontoOblo = parseInt(jQuery("#scontoOblo").val());
+				cookie.accessori.oblo.sconto = scontoOblo;
+				totaleProdottoScontato += (totaleProdotto - (totaleProdotto * scontoOblo)/100);
+				
+			}
+			
+			////console.log(totaleProdottoScontato);
+			
+			if(jQuery.validaValore(cookie.accessori.molle)){
+				var totaleProdotto = 0;
+				for(var i = 0;i < cookie.accessori.molle.articoli.length;i++)
+					totaleProdotto += cookie.accessori.molle.articoli[i].costo;
+					
+				var scontoMolle = parseInt(jQuery("#scontoMolle").val());
+				cookie.accessori.molle.sconto = scontoMolle;
+				totaleProdottoScontato += (totaleProdotto - (totaleProdotto * scontoMolle)/100);
+			
+			}
+			  
+			  ////console.log(totaleProdottoScontato);
+			 if(jQuery.validaValore(cookie.accessori.motorizzazione)){
+				var totaleProdotto = cookie.accessori.motorizzazione.costo;
+				
+				for(var i = 0;i < cookie.accessori.motorizzazione.accessori.length;i++)
+					totaleProdotto += cookie.accessori.motorizzazione.accessori[i].costo;
+					
+				var scontoMotorizzazione = parseInt(jQuery("#scontoMotorizzazione").val());
+				cookie.accessori.motorizzazione.sconto = scontoMotorizzazione;
+				totaleProdottoScontato += (totaleProdotto - (totaleProdotto * scontoMotorizzazione)/100);
+				
+			}
+			
+			////console.log(totaleProdottoScontato);
+			
+			if(jQuery.validaValore(cookie.accessori.passaggioPedonale)){
+				var totaleProdotto = 0;
+				if(jQuery.validaValore(cookie.accessori.passaggioPedonale.maniglione))
+					totaleProdotto += cookie.accessori.passaggioPedonale.maniglione.costo;
+				
+				if(jQuery.validaValore(cookie.accessori.passaggioPedonale.porta_pedonale))
+					totaleProdotto += cookie.accessori.passaggioPedonale.porta_pedonale.costo;
+					
+					
+				var scontoPassaggioPedonale = parseInt(jQuery("#scontoPassaggioPedonale").val());
+				cookie.accessori.passaggioPedonale.sconto = scontoPassaggioPedonale;
+				totaleProdottoScontato += (totaleProdotto - (totaleProdotto * scontoPassaggioPedonale)/100);
+			
+			}
+			
+			////console.log(totaleProdottoScontato);
+			if(jQuery.validaValore(cookie.accessori.sistemaChiusura)){
+				var totaleProdotto = cookie.accessori.sistemaChiusura.costo;
+				
+				var scontoSistemaChiusura = parseInt(jQuery("#scontoSistemaChiusura").val());
+				cookie.accessori.sistemaChiusura.sconto = scontoSistemaChiusura;
+				totaleProdottoScontato += (totaleProdotto - (totaleProdotto * scontoSistemaChiusura)/100);	
+			}
+			
+			////console.log(totaleProdottoScontato);
+				
+			if(jQuery.validaValore(cookie.accessori.sistemaRifinitura)){
+			
+				var totaleProdotto = 0;
+			
+				if(cookie.accessori.sistemaRifinitura.up){
+					totaleProdotto += cookie.accessori.sistemaRifinitura.costo;
+				}
+				if(cookie.accessori.sistemaRifinitura.sx){
+					totaleProdotto += cookie.accessori.sistemaRifinitura.costo;
+				}
+				
+				if(cookie.accessori.sistemaRifinitura.dx){
+					totaleProdotto += cookie.accessori.sistemaRifinitura.costo;	
+				}
+				
+				var scontoSistemaRifinitura = parseInt(jQuery("#scontoSistemaRifinitura").val());
+				cookie.accessori.sistemaRifinitura.sconto = scontoSistemaRifinitura;
+				totaleProdottoScontato += (totaleProdotto - (totaleProdotto * scontoSistemaRifinitura)/100);	
+				
+			}
+		}
+		
+		jQuery.registerCookie("selezione", cookie);
+
+		return totaleProdottoScontato;
+		
+		
+	}
+	
+	
+	
+	
+	_this.ricalcolaTotale = function(prodotto){
+		
+		var quantita = prodotto.quantita;
+		return _this.getPrezzoTotale(prodotto)*quantita;
+		
+	}
+	
+	
+	_this.ricalcolaTotaleScontato = function(prodotto){
+		
+		var quantita = prodotto.quantita;
+		return _this.getPrezzoTotaleScontato(prodotto)*quantita;
+	
+	}
+	
+	
+	
+	_this.aggiornaRiepilogo = function(){
+			
+		var cookieSelezione = jQuery.getCookie("selezione");
+			
+		var totQuantita = 0;
+		jQuery(".quantitaProdotto").each(function(){
+			totQuantita += parseInt(jQuery(this).val());
+		});
+		
+		cookieSelezione.modifica.boo = false;
+		cookieSelezione.modifica.id = null;
+		cookieSelezione.indietro = false;
+		cookieSelezione.currentStep = 0;
+		cookieSelezione.prodotto.quantita = totQuantita;
+		
+		jQuery.registerCookie("selezione",cookieSelezione);
+		cookieSelezione = jQuery.getCookie("selezione");
+		
+		if(_this.getValidita()){
+		cookieSelezione.totale = _this.getPrezzoTotale()*totQuantita;
+		cookieSelezione.totaleScontato = _this.getPrezzoScontato()*totQuantita;
+		}else{
+		cookieSelezione.totale = 0;
+		cookieSelezione.totaleScontato = 0;
+		}
+		
+		jQuery.registerCookie("selezione",cookieSelezione);
+	}
+
+}

@@ -1,0 +1,916 @@
+var CostiExtra = function(mainPreventivi){
+
+	var _this = this;
+	_this.content = mainPreventivi;
+	_this.obj;
+	_this.elem;
+	_this.macroFamiglie = {
+		"ST":0,
+		"RF":0,
+		"SRF":0,
+		"ST-co":0,
+		"RF-co":0,
+		"SRF-co":0,
+		"ST-mo":0,
+		"RF-mo":0,
+		"SRF-mo":0,
+		"ST-co-mo":0,
+		"RF-co-mo":0,
+		"SRF-co-mo":0,
+		"ST30":0,
+		"ST60":0,
+		"ST90":0,
+		"RF30":0,
+		"RF60":0,
+		"RF90":0,
+		"SRF30":0,
+		"SRF60":0,
+		"SRF90":0,
+		"PC/L":0,
+		"PC/L-ST":0,
+		"PM":0,
+		"PM-ST":0,
+		"PT-1-ante":0,
+		"PT-2-ante":0,
+		"Maniglioni-PM":0,
+		"Maniglioni-PT":0,
+		"Sezionali":0,
+		"Sezionali-Velette":0,
+		"Sezionali-Spallette-SX":0,
+		"Sezionali-Spallette-DX":0,
+		"Sezionali-accessori":0,
+		"Sezionali-non-accessori":0,
+	}
+
+
+	_this.init = function(obj){
+		
+		_this.obj = obj;
+		
+		console.log("OBJ");
+		console.log(obj);	
+		
+		switch(obj.tipologia){
+			case 'Basculante': 	//per i costi di trasporto raggruppo le famiglie
+								var tmpFamiglia = obj.famiglia;
+								var tmpValidita = obj.validita;
+								var tmpVersione = obj.versione;
+								var tmpMotorizzazione = obj.accessori.motorizzazione;
+								var tmpSopraluce = obj.accessori.sopraluce;
+								
+								var tmpMacro = "";
+								if(tmpValidita){
+									tmpMacro = tmpFamiglia;
+									//console.log("Versione: " + tmpVersione.codice);
+									if(tmpVersione.codice == "A/C" || tmpVersione.codice == "R/L")
+										tmpMacro += "-co";
+									if(tmpMotorizzazione.articolo !=null)
+										tmpMacro += "-mo";
+										
+									
+									if(tmpSopraluce.articolo != null){
+										var tmpMacroSopraluce = tmpSopraluce.articolo.codice.substring(tmpSopraluce.articolo.codice.length-2);
+										_this.macroFamiglie[tmpFamiglia+tmpMacroSopraluce]+=obj.prodotto.quantita;
+									}
+									
+									_this.macroFamiglie[tmpMacro]+=obj.prodotto.quantita;
+								}
+								break;
+			case 'PortaCantina': 	var tmpValidita = obj.validita;
+									
+									if(tmpValidita){
+										tmpMacro = "PC/L";
+										tmpMacroSopraluce = "PC/L-ST";	
+										_this.macroFamiglie[tmpMacro] += obj.prodotto.quantita;
+										
+										if(jQuery.validaValore(obj.sopraluce))
+											_this.macroFamiglie[tmpMacroSopraluce] += obj.prodotto.quantita;
+									}
+									break;
+			case 'PortaMultiuso': 	var tmpValidita = obj.validita;
+									if(tmpValidita){
+										
+										if(jQuery.validaValore(obj.sopraluce)){
+											tmpMacroSopraluce = "PM-ST";	
+											_this.macroFamiglie[tmpMacroSopraluce] += obj.prodotto.quantita;
+										}
+										
+										if(jQuery.validaValore(obj.sistemaChiusura)){
+											if(obj.sistemaChiusura.tipologia != ""){
+												tmpMacroManiglioni = "Maniglioni-PM";	
+												_this.macroFamiglie[tmpMacroManiglioni] += obj.prodotto.quantita;
+												//alert(_this.macroFamiglie["Maniglioni"]);
+											}
+										}
+										
+										tmpMacro = "PM";
+										_this.macroFamiglie[tmpMacro] += obj.prodotto.quantita;
+										
+									}
+									
+									
+									
+									break;
+			case 'PortaTagliafuoco': var tmpValidita = obj.validita;
+									if(tmpValidita){
+										
+										if(jQuery.validaValore(obj.sistemaChiusura)){
+											tmpMacro2Ante = "PT-2-ante";
+											tmpMacro1Ante = "PT-1-ante";
+											if(obj.ante >= 2){
+												_this.macroFamiglie[tmpMacro2Ante] += obj.prodotto.quantita*obj.ante;
+											}else
+												_this.macroFamiglie[tmpMacro1Ante] += obj.prodotto.quantita*obj.ante;
+											
+											var si = false;
+											for(var i = 0;i < obj.sistemaChiusura.length;i++){
+												if(obj.sistemaChiusura[i].tipologia == "IMB"){
+													tmpMacroManiglioni = "Maniglioni-PT";		
+													_this.macroFamiglie[tmpMacroManiglioni] += obj.ante;
+													si = true;
+												}
+											}
+											if(si)
+												_this.macroFamiglie[tmpMacroManiglioni] = _this.macroFamiglie[tmpMacroManiglioni]*obj.prodotto.quantita;
+											
+										}		
+									}
+									break;
+			case 'Sezionale': var tmpValidita = obj.validita;
+			
+									if(tmpValidita){
+										
+										_this.macroFamiglie["Sezionali"] += obj.prodotto.quantita;
+										
+										if(jQuery.validaValore(obj.accessori.struttura)){
+											
+											if(obj.accessori.struttura.veletta){
+												_this.macroFamiglie["Sezionali-Velette"] += obj.prodotto.quantita;
+											}
+											
+											if(obj.accessori.struttura.spallettaSX){
+												_this.macroFamiglie["Sezionali-Spallette-SX"] += obj.prodotto.quantita;
+											}
+											
+											if(obj.accessori.struttura.spallettaDX){
+												_this.macroFamiglie["Sezionali-Spallette-DX"] += obj.prodotto.quantita;
+											}
+										}
+											
+										if(obj.accessori.motorizzazione){
+											var boo = false;
+											for(var i = 0;i < obj.accessori.motorizzazione.accessori.length;i++){
+												if(obj.accessori.motorizzazione.accessori[i].etichetta_extra_costi == 1){
+													boo = true;
+													break;
+												}
+											}
+											
+											if(boo)
+												_this.macroFamiglie["Sezionali-accessori"] += obj.prodotto.quantita;
+											else
+												_this.macroFamiglie["Sezionali-non-accessori"] += obj.prodotto.quantita;
+												
+										}
+									}		
+									
+									break;
+			default: break;
+		}
+		
+		
+		
+
+	}
+	
+	_this.calcolaCostiExtra = function(preventivo){
+		
+		  var dettaglio = "";
+	  
+		  dettaglio += "<h4>COSTI DI TRASPORTO</h4>";
+		  dettaglio += "<input type='checkbox' id='checkCostiTrasporto' /> A carico del cliente<br><br>";
+		  dettaglio += "<div id='boxCostiTrasporto'>";
+		  if(_this.macroFamiglie["ST"]> 0){
+			  dettaglio += "Trasporto basculanti ST zincate non motorizzate<br>";
+			  dettaglio += "Costo aggiuntivo:  € <input type='text' famiglia='ST' class='costi_trasporto' quantita='";
+			  dettaglio += _this.macroFamiglie["ST"]+"' value='0'/> x ";
+			  dettaglio += _this.macroFamiglie["ST"]+"<br><br>";
+		  }
+		  if(_this.macroFamiglie["RF"]> 0){
+			  dettaglio += "Trasporto basculanti RF zincate non motorizzate</b><br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text'  famiglia='RF'  class='costi_trasporto' quantita='";
+			  dettaglio += _this.macroFamiglie["RF"]+"' value='0'/> x ";
+			  dettaglio += _this.macroFamiglie["RF"]+"<br><br>";
+		  }
+		  if(_this.macroFamiglie["SRF"]> 0){
+			  dettaglio += "Trasporto basculanti SRF zincate non motorizzate<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text'  famiglia='SRF' class='costi_trasporto' quantita='";
+			  dettaglio += _this.macroFamiglie["SRF"]+"' value='0'/> x ";
+			  dettaglio += _this.macroFamiglie["SRF"]+"<br><br>";
+		  }
+		  if(_this.macroFamiglie["ST-co"]> 0){
+			  dettaglio += "Trasporto basculanti ST coibentate/rivestite in legno non motorizzate<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' famiglia='ST coibentate' class='costi_trasporto' quantita='";
+			  dettaglio += _this.macroFamiglie["ST-co"]+"' value='0'/> x ";
+			  dettaglio += _this.macroFamiglie["ST-co"]+"<br><br>";
+		  }
+		  if(_this.macroFamiglie["RF-co"]> 0){
+			  dettaglio += "Trasporto basculanti RF coibentate/rivestite in legno non motorizzate<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' famiglia='RF coibentate' class='costi_trasporto' quantita='";
+			  dettaglio += _this.macroFamiglie["RF-co"]+"' value='0'/> x ";
+			  dettaglio += _this.macroFamiglie["RF-co"]+"<br><br>";
+		  }
+		  if(_this.macroFamiglie["SRF-co"]> 0){
+			  dettaglio += "Trasporto basculanti SRF coibentate/rivestite in legno non motorizzate<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' famiglia='SRF coibentate' class='costi_trasporto' quantita='";
+			  dettaglio += _this.macroFamiglie["SRF-co"]+"' value='0'/> x ";
+			  dettaglio += _this.macroFamiglie["SRF-co"]+"<br><br>";
+		  }
+		  if(_this.macroFamiglie["ST-mo"]> 0){
+			  dettaglio += "Trasporto basculanti ST zincate motorizzate<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' famiglia='ST motorizzate' class='costi_trasporto' quantita='";
+			  dettaglio += _this.macroFamiglie["ST-mo"]+"' value='0'/> x ";
+			  dettaglio += _this.macroFamiglie["ST-mo"]+"<br><br>";
+		  }
+		  if(_this.macroFamiglie["RF-mo"]> 0){
+			  dettaglio += "Trasporto basculanti RF zincate motorizzate<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' famiglia='RF motorizzate' class='costi_trasporto' quantita='";
+			  dettaglio += _this.macroFamiglie["RF-mo"]+"' value='0'/> x ";
+			  dettaglio += _this.macroFamiglie["RF-mo"]+"<br><br>";
+		  }
+		  if(_this.macroFamiglie["SRF-mo"]> 0){
+			  dettaglio += "Trasporto basculanti SRF zincate motorizzate<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' famiglia='SRF motorizzate' class='costi_trasporto' quantita='";
+			  dettaglio += _this.macroFamiglie["SRF-mo"]+"' value='0'/> x ";
+			  dettaglio += _this.macroFamiglie["SRF-mo"]+"<br><br>";
+		  }
+		  if(_this.macroFamiglie["ST-co-mo"]> 0){
+			  dettaglio += "Trasporto basculanti ST coibentate/rivestite in legno motorizzate<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' famiglia='ST coibentate motorizzate' class='costi_trasporto' quantita='";
+			  dettaglio += _this.macroFamiglie["ST-co-mo"]+"' value='0'/>";
+			  dettaglio += " x "+_this.macroFamiglie["ST-co-mo"]+"<br><br>";
+		  }
+		  if(_this.macroFamiglie["RF-co-mo"]> 0){
+			  dettaglio += "Trasporto basculanti RF coibentate/rivestite in legno motorizzate<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' famiglia='RF coibentate motorizzate' class='costi_trasporto' quantita='";
+			  dettaglio += _this.macroFamiglie["RF-co-mo"]+"' value='0'/>";
+			  dettaglio += " x "+_this.macroFamiglie["RF-co-mo"]+"<br><br>";
+		  }
+		  if(_this.macroFamiglie["SRF-co-mo"]> 0){
+			  dettaglio += "Trasporto basculanti SRF coibentate/rivestite in legno motorizzate<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' famiglia='SRF coibentate motorizzate' class='costi_trasporto' quantita='";
+			  dettaglio += _this.macroFamiglie["SRF-co-mo"]+"' value='0'/>";
+			  dettaglio += " x "+_this.macroFamiglie["SRF-co-mo"]+"<br><br>";
+		  }
+		   if(_this.macroFamiglie["PC/L"]> 0){
+			  dettaglio += "Trasporto  porte cantina<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' famiglia='Porte cantina' class='costi_trasporto' quantita='";
+			  dettaglio += _this.macroFamiglie["PC/L"]+"' value='0'/>";
+			  dettaglio += " x "+_this.macroFamiglie["PC/L"]+"<br><br>";
+		  }
+		  
+		  if(_this.macroFamiglie["PM"]> 0){
+			  dettaglio += "Trasporto porte multiuso<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' famiglia='Porte multiuso' class='costi_trasporto' quantita='";
+			  dettaglio += _this.macroFamiglie["PM"]+"' value='0'/>";
+			  dettaglio += " x "+_this.macroFamiglie["PM"]+"<br><br>";
+		  }
+		  
+		  if(_this.macroFamiglie["PT-1-ante"]> 0 || _this.macroFamiglie["PT-2-ante"] > 0){
+			  var numPT = _this.macroFamiglie["PT-1-ante"] + _this.macroFamiglie["PT-2-ante"];
+			  dettaglio += "Trasporto porte tagliafuoco<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' famiglia='Porte taglifuoco' class='costi_trasporto' quantita='";
+			  dettaglio += numPT+"' value='0'/>";
+			  dettaglio += " x "+numPT+"<br><br>";
+		  }
+		  
+		  if(_this.macroFamiglie["Sezionali"]> 0){
+			  var sezionali = _this.macroFamiglie["Sezionali"];
+			  dettaglio += "Trasporto sezionali<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' famiglia='Sezionali' class='costi_trasporto' quantita='";
+			  dettaglio += sezionali+"' value='0'/>";
+			  dettaglio += " x "+sezionali+"<br><br>";
+		  }
+		  
+		  var numeroBasculanti = 0;
+		  var numeroPorteCantina = 0;
+		  var numeroPorteMultiuso = 0;
+		  var numeroPorteTagliafuoco = 0;
+		  var numeroSezionali = 0;
+		  
+		  for(var i=0;i<preventivo.carrello.length;i++){
+			  
+			  //console.log("Cosa c'è?");
+			  var prodotto = JSON.parse(preventivo.carrello[i].descrizione);
+			  //console.log(prodotto);
+			  
+			  switch(prodotto.tipologia){
+				case 'Basculante':  numeroBasculanti += Number(preventivo.carrello[i].quantita);	
+									break;
+				case 'PortaCantina': numeroPorteCantina +=  Number(preventivo.carrello[i].quantita);
+									 break;
+				case 'PortaMultiuso': numeroPorteMultiuso +=  Number(preventivo.carrello[i].quantita);
+									 break;
+				case 'PortaTagliafuoco': numeroPorteTagliafuoco +=  Number(preventivo.carrello[i].quantita)*prodotto.ante;
+									 break;
+				case 'Sezionale': numeroSezionali +=  Number(preventivo.carrello[i].quantita);
+									 break;
+			  }
+		  }
+		  
+		  dettaglio += "</div>";
+		  
+		  
+		  
+		  dettaglio += "<h4>COSTI DI DISTRIBUZIONE</h4>";
+		  dettaglio += "<input type='checkbox' id='checkCostiDistribuzione' /> A carico del cliente<br><br>";
+		  dettaglio += "<div id='boxCostiDistribuzione'>";
+		  
+		  if(numeroBasculanti > 0){
+			  
+			  dettaglio += "Distribuzione verticale basculanti<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' class='costi_distribuzione_verticale' famiglia='Tutte le basculanti' quantita='";
+			  dettaglio += numeroBasculanti+"' value='0'/>";
+			  dettaglio += " x "+numeroBasculanti+"<br><br>";
+		  }
+		  
+		  if(numeroPorteCantina > 0){
+			  dettaglio += "Distribuzione verticale porte cantina<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' class='costi_distribuzione_verticale' famiglia='Tutte le porte cantina' quantita='";
+			  dettaglio += numeroPorteCantina+"' value='0'/>";
+			  dettaglio += " x "+numeroPorteCantina+"<br><br>";
+		  }
+		  
+		   if(numeroPorteMultiuso > 0){
+			  dettaglio += "Distribuzione verticale porte multiuso<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' class='costi_distribuzione_verticale' famiglia='Tutte le porte multiuso' quantita='";
+			  dettaglio += numeroPorteMultiuso+"' value='0'/>";
+			  dettaglio += " x "+numeroPorteMultiuso+"<br><br>";
+		  }
+		  
+		   if(numeroPorteTagliafuoco > 0){
+			  dettaglio += "Distribuzione verticale porte tagliafuoco<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' class='costi_distribuzione_verticale' famiglia='Tutte le porte tagliafuoco' quantita='";
+			  dettaglio += numeroPorteTagliafuoco+"' value='0'/>";
+			  dettaglio += " x "+numeroPorteTagliafuoco+"<br><br>";
+		  }
+		  
+		   if(numeroSezionali > 0){
+			  dettaglio += "Distribuzione verticale sezionali<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' class='costi_distribuzione_verticale' famiglia='Tutte le sezionali' quantita='";
+			  dettaglio += numeroSezionali+"' value='0'/>";
+			  dettaglio += " x "+numeroSezionali+"<br><br>";
+		  }
+		  
+		   if(numeroSezionali > 0){
+			  dettaglio += "Distribuzione orizzontale sezionali<br>";
+			  dettaglio += "Costo aggiuntivo: €  <input type='text' class='costi_distribuzione_orizzontale' famiglia='Tutte le sezionali' quantita='";
+			  dettaglio += numeroSezionali+"' value='0'/>";
+			  dettaglio += " x "+numeroSezionali+"<br><br>";
+		  }
+		  
+		  
+		  
+		  var tmpCostiDistribuzione = "";
+		  var boo = false;
+		  if(_this.macroFamiglie["ST"]> 0 || _this.macroFamiglie["ST-mo"]> 0){
+			  
+			  var num  = 0;
+			  if(_this.macroFamiglie["ST"] > 0)
+				  num = _this.macroFamiglie["ST"];
+				  else
+				  num = _this.macroFamiglie["ST-mo"]
+			  
+			  tmpCostiDistribuzione+="Distribuzione orizzontale ST zincate<br>";
+			  tmpCostiDistribuzione+="Costo aggiuntivo: €  <input type='text' famiglia='ST zincate'";
+			  tmpCostiDistribuzione += "class='costi_distribuzione_orizzontale' value='0' quantita='"+num+"'/> x "+num+"<br><br>";
+			  boo = true;
+		  }
+		  if(_this.macroFamiglie["RF"]> 0  || _this.macroFamiglie["RF-mo"]> 0){
+			  
+			  var num  = 0;
+			  if(_this.macroFamiglie["RF"] > 0)
+				  num = _this.macroFamiglie["RF"];
+				  else
+				  num = _this.macroFamiglie["RF-mo"]
+			  
+			  tmpCostiDistribuzione+="Distribuzione orizzontale RF zincate</b><br>";
+			  tmpCostiDistribuzione+="Costo aggiuntivo: €  <input type='text' famiglia='RF zincate'";
+			  tmpCostiDistribuzione += "class='costi_distribuzione_orizzontale' value='0' quantita='"+num+"'/> x "+num+"<br><br>";
+			  boo = true;
+		  }
+		  if(_this.macroFamiglie["SRF"]> 0  || _this.macroFamiglie["SRF-mo"]> 0){
+			  
+			  var num  = 0;
+			  if(_this.macroFamiglie["SRF"] > 0)
+				  num = _this.macroFamiglie["SRF"];
+				  else
+				  num = _this.macroFamiglie["SRF-mo"]
+			  
+			  tmpCostiDistribuzione+="Distribuzione orizzontale SRF zincate<br>";
+			  tmpCostiDistribuzione+="Costo aggiuntivo: €  <input type='text' famiglia='SRF zincate'";
+			  tmpCostiDistribuzione +=" class='costi_distribuzione_orizzontale' value='0' quantita='"+num+"'/> x "+num+"<br><br>";
+			  boo = true;
+		  }
+		  
+		  if(_this.macroFamiglie["ST-co"]> 0  || _this.macroFamiglie["ST-co-mo"]> 0){
+			  var num  = 0;
+			  if(_this.macroFamiglie["ST-co"] > 0)
+				  num = _this.macroFamiglie["ST-co"];
+				  else
+				  num = _this.macroFamiglie["ST-co-mo"];
+				  
+			  
+			  tmpCostiDistribuzione+= "Distribuzione orizzontale ST coibentate/rivestite in legno<br>";
+			  tmpCostiDistribuzione+="Costo aggiuntivo: €  <input type='text' famiglia='ST coibentate/rivestite in legno'";
+			  tmpCostiDistribuzione+=" class='costi_distribuzione_orizzontale' value='0' quantita='"+num+"'/> x "+num+"<br><br>";						
+			  boo = true;
+		  }
+		  if(_this.macroFamiglie["RF-co"]> 0 || _this.macroFamiglie["RF-co-mo"]> 0){
+			  
+			  var num  = 0;
+			  if(_this.macroFamiglie["RF-co"] > 0)
+				  num = _this.macroFamiglie["RF-co"];
+				  else
+				  num = _this.macroFamiglie["RF-co-mo"];
+			  
+			  tmpCostiDistribuzione+= "Distribuzione orizzontale RF coibentate/rivestite in legno<br>";
+			  tmpCostiDistribuzione+= "Costo aggiuntivo: €  <input type='text' famiglia='RF coibentate/rivestite in legno'";
+			  tmpCostiDistribuzione+=" class='costi_distribuzione_orizzontale' value='0' quantita='"+num+"'/> x "+num+"<br><br>";					
+			  boo = true;
+		  }
+		  
+		  if(_this.macroFamiglie["SRF-co"]> 0 || _this.macroFamiglie["SRF-co-mo"]> 0){
+			  
+			  var num  = 0;
+			  if(_this.macroFamiglie["SRF-co"] > 0)
+				  num = _this.macroFamiglie["RF-co"];
+				  else
+				  num = _this.macroFamiglie["SRF-co-mo"];
+			  
+			  tmpCostiDistribuzione+= "Distribuzione orizzontale SRF coibentate/rivestite in legno<br>";
+			  tmpCostiDistribuzione+= "Costo aggiuntivo: €  <input type='text' famiglia='SRF coibentate/rivestite in legno' value='0'";
+			  tmpCostiDistribuzione+=" class='costi_distribuzione_orizzontale' quantita='"+num+"'/> x "+num+"<br><br>";					
+			  boo = true;
+		  }
+		  
+		  if(_this.macroFamiglie["PC/L"]> 0 || _this.macroFamiglie["PC/L"]> 0){
+			  
+			  var num = _this.macroFamiglie["PC/L"];
+			
+			  tmpCostiDistribuzione+= "Distribuzione orizzontale porte cantina<br>";
+			  tmpCostiDistribuzione+= "Costo aggiuntivo: €  <input type='text' famiglia='Porte cantina' value='0'";
+			  tmpCostiDistribuzione+=" class='costi_distribuzione_orizzontale' quantita='"+num+"'/> x "+num+"<br><br>";					
+			  boo = true;
+		  }
+		  
+		  if(_this.macroFamiglie["PM"]> 0 || _this.macroFamiglie["PM"]> 0){
+			  
+			  var num = _this.macroFamiglie["PM"];
+			
+			  tmpCostiDistribuzione+= "Distribuzione orizzontale porte multiuso<br>";
+			  tmpCostiDistribuzione+= "Costo aggiuntivo: €  <input type='text' famiglia='Porte multiuso' value='0'";
+			  tmpCostiDistribuzione+=" class='costi_distribuzione_orizzontale' quantita='"+num+"'/> x "+num+"<br><br>";					
+			  boo = true;
+		  }
+		  
+		  if(_this.macroFamiglie["PT-1-ante"]> 0 || _this.macroFamiglie["PT-2-ante"]> 0){
+			  
+			  var num = _this.macroFamiglie["PT-1-ante"]+_this.macroFamiglie["PT-2-ante"];
+			
+			  tmpCostiDistribuzione+= "Distribuzione orizzontale porte tagliafuoco<br>";
+			  tmpCostiDistribuzione+= "Costo aggiuntivo: €  <input type='text' famiglia='Porte tagliafuoco' value='0'";
+			  tmpCostiDistribuzione+=" class='costi_distribuzione_orizzontale' quantita='"+num+"'/> x "+num+"<br><br>";					
+			  boo = true;
+		  }
+		  
+		  
+		  
+		  if(boo){
+			  //dettaglio += "Distribuzione orizzontale<br>";
+			  dettaglio += tmpCostiDistribuzione;	
+		  }
+		  
+		  dettaglio += "</div>";
+		  
+		  var tmpCostiPosa = "";
+		  var booPosa = false;
+		  if(_this.macroFamiglie["ST"]> 0 || _this.macroFamiglie["ST-mo"]> 0){
+			  
+			  var num  = 0;
+			  if(_this.macroFamiglie["ST"] > 0)
+				  num = _this.macroFamiglie["ST"];
+				  else
+				  num = _this.macroFamiglie["ST-mo"];
+			  
+			  tmpCostiPosa+="Basculanti ST zincate<br>";
+			  tmpCostiPosa+="Costo aggiuntivo: €  <input type='text' famiglia='ST zincate' class='costi_montaggio_meccanica'";
+			  tmpCostiPosa+=" value='0' quantita='"+num+"'/> x "+num+"<br><br>";
+			  booPosa = true;
+		  }
+		  if(_this.macroFamiglie["RF"]> 0 || _this.macroFamiglie["RF-mo"]> 0){
+			  
+			  var num  = 0;
+			  if(_this.macroFamiglie["RF"] > 0)
+				  num = _this.macroFamiglie["RF"];
+				  else
+				  num = _this.macroFamiglie["RF-mo"];
+			  
+			  tmpCostiPosa+="Basculanti RF zincate</b><br>";
+			  tmpCostiPosa+="Costo aggiuntivo: €  <input type='text' famiglia='RF zincate' class='costi_montaggio_meccanica' ";
+			  tmpCostiPosa+="class='costi_montaggio' value='0' quantita='"+num+"'/> x "+num+"<br><br>";
+			  booPosa = true;
+		  }
+		  if(_this.macroFamiglie["SRF"]> 0 || _this.macroFamiglie["SRF-mo"]> 0){
+			  
+			  var num  = 0;
+			  if(_this.macroFamiglie["SRF"] > 0)
+				  num = _this.macroFamiglie["SRF"];
+				  else
+				  num = _this.macroFamiglie["SRF-mo"];
+			  
+			  tmpCostiPosa+="Basculanti SRF zincate<br>";
+			  tmpCostiPosa+="Costo aggiuntivo: €  <input type='text' famiglia='SRF zincate' class='costi_montaggio_meccanica'";
+			  tmpCostiPosa+=" value='0' quantita='"+num+"'/> x "+num+"<br><br>";
+			  booPosa = true;
+		  }
+		  if(_this.macroFamiglie["ST-co"]> 0  || _this.macroFamiglie["ST-co-mo"]> 0){
+			  
+			  var num  = 0;
+			  if(_this.macroFamiglie["ST-co"] > 0)
+				  num = _this.macroFamiglie["ST-co"];
+				  else
+				  num = _this.macroFamiglie["ST-co-mo"];
+			  
+			  tmpCostiPosa+= "Basculanti ST coibentate/rivestite in legno<br>";
+			  tmpCostiPosa+="Costo aggiuntivo: €  <input type='text' famiglia='ST coibentate/rivestite in legno'";
+			  tmpCostiPosa+=" class='costi_montaggio_meccanica' value='0' quantita='"+num+"'/> x "+num+"<br><br>";						
+			  booPosa = true;
+		  }
+		  if(_this.macroFamiglie["RF-co"]> 0  || _this.macroFamiglie["RF-co-mo"]> 0){
+			  
+			  var num  = 0;
+			  if(_this.macroFamiglie["RF-co"] > 0)
+				  num = _this.macroFamiglie["RF-co"];
+				  else
+				  num = _this.macroFamiglie["RF-co-mo"];
+			  
+			  tmpCostiPosa+= "Basculanti RF coibentate/rivestite in legno<br>";
+			  tmpCostiPosa+= "Costo aggiuntivo: €  <input type='text' famiglia='RF coibentate/rivestite in legno'";
+			  tmpCostiPosa+=" class='costi_montaggio_meccanica' value='0' quantita='"+num+"'/> x "+num+"<br><br>";					
+			  booPosa = true;
+		  }
+		  if(_this.macroFamiglie["SRF-co"]> 0  || _this.macroFamiglie["SRF-co-mo"]> 0){
+			  
+			  var num  = 0;
+			  if(_this.macroFamiglie["SRF-co"] > 0)
+				  num = _this.macroFamiglie["SRF-co"];
+				  else
+				  num = _this.macroFamiglie["SRF-co-mo"];
+			  
+			  tmpCostiPosa+= "Basculanti SRF coibentate/rivestite in legno<br>";
+			  tmpCostiPosa+= "Costo aggiuntivo: €  <input type='text' famiglia='SRF coibentate/rivestite in legno'";
+			  tmpCostiPosa+=" class='costi_montaggio_meccanica' value='0' quantita='"+num+"'/> x "+num+"<br><br>";					
+			  booPosa = true;
+		  }
+		  
+		  if(_this.macroFamiglie["PC/L"]> 0){
+			  var num = _this.macroFamiglie["PC/L"];
+			  tmpCostiPosa+= "Posa meccanica porte cantina<br>";
+			  tmpCostiPosa+= "Costo aggiuntivo: €  <input type='text' famiglia='Porte cantina'";
+			  tmpCostiPosa+=" class='costi_montaggio_meccanica' value='0' quantita='"+num+"'/> x "+num+"<br><br>";					
+			  booPosa = true;
+		  }
+		  
+		  if(_this.macroFamiglie["PM"]> 0){
+			  var num = _this.macroFamiglie["PM"];
+			  tmpCostiPosa+= "Posa meccanica porte multiuso<br>";
+			  tmpCostiPosa+= "Costo aggiuntivo: €  <input type='text' famiglia='Porte multiuso'";
+			  tmpCostiPosa+=" class='costi_montaggio_meccanica' value='0' quantita='"+num+"'/> x "+num+"<br><br>";					
+			  booPosa = true;
+		  }
+		  
+		  if(_this.macroFamiglie["PT-1-ante"]> 0){
+			  var num = _this.macroFamiglie["PT-1-ante"];
+			  tmpCostiPosa+= "Posa meccanica porte tagliafuoco ad 1 anta<br>";
+			  tmpCostiPosa+= "Costo aggiuntivo: €  <input type='text' famiglia='Porte tagliafuoco'";
+			  tmpCostiPosa+=" class='costi_montaggio_meccanica' value='0' quantita='"+num+"'/> x "+num+"<br><br>";					
+			  booPosa = true;
+		  }
+		  
+		  if(_this.macroFamiglie["PT-2-ante"]> 0){
+			  var num = _this.macroFamiglie["PT-2-ante"];
+			  tmpCostiPosa+= "Posa meccanica porte tagliafuoco a 2 ante<br>";
+			  tmpCostiPosa+= "Costo aggiuntivo: €  <input type='text' famiglia='Porte tagliafuoco'";
+			  tmpCostiPosa+=" class='costi_montaggio_meccanica' value='0' quantita='"+num+"'/> x "+num+"<br><br>";					
+			  booPosa = true;
+		  }
+		  
+		  if(numeroSezionali > 0){
+			 tmpCostiPosa+= "Posa meccanica sezionali<br>";
+			 tmpCostiPosa+= "Costo aggiuntivo: €  <input type='text' class='costi_montaggio_meccanica' famiglia='Tutte le sezionali ' quantita='";
+			 tmpCostiPosa+= numeroSezionali+"' value='0'/>";
+			 tmpCostiPosa+= " x "+numeroSezionali+"<br><br>";
+			 booPosa = true;  
+		  }
+		  
+		  if(_this.macroFamiglie["Sezionali-Velette"] > 0){
+				tmpCostiPosa+= "Posa meccanica velette<br>";
+			  tmpCostiPosa+= "Costo aggiuntivo: €  <input type='text' class='costi_montaggio_meccanica' famiglia='Tutte le sezionali ' quantita='";
+			  tmpCostiPosa+= _this.macroFamiglie["Sezionali-Velette"]+"' value='0'/>";
+			  tmpCostiPosa+= " x "+_this.macroFamiglie["Sezionali-Velette"]+"<br><br>";  
+		  }
+		  
+		  if(_this.macroFamiglie["Sezionali-Spallette-DX"] > 0){
+			tmpCostiPosa+= "Posa meccanica spallette destre<br>";
+			 tmpCostiPosa+= "Costo aggiuntivo: €  <input type='text' class='costi_montaggio_meccanica' famiglia='Tutte le sezionali ' quantita='";
+			 tmpCostiPosa+= _this.macroFamiglie["Sezionali-Spallette-DX"]+"' value='0'/>";
+			 tmpCostiPosa+= " x "+_this.macroFamiglie["Sezionali-Spallette-DX"]+"<br><br>";  
+		  }
+		  
+		  if(_this.macroFamiglie["Sezionali-Spallette-SX"] > 0){
+			tmpCostiPosa+= "Posa meccanica spallette sinistre<br>";
+			tmpCostiPosa+= "Costo aggiuntivo: €  <input type='text' class='costi_montaggio_meccanica' famiglia='Tutte le sezionali ' quantita='";
+			tmpCostiPosa+= _this.macroFamiglie["Sezionali-Spallette-SX"]+"' value='0'/>";
+			 tmpCostiPosa+= " x "+_this.macroFamiglie["Sezionali-Spallette-SX"]+"<br><br>";  
+		  }
+		  
+		  
+		  var tmpCostiPosaElettrica = "";
+		  var booElettr = false;
+		  
+		  if(_this.macroFamiglie["ST-mo"]> 0 || _this.macroFamiglie["RF-mo"]> 0 || 
+				  _this.macroFamiglie["SRF-mo"]> 0 || _this.macroFamiglie["ST-co-mo"]> 0 || 
+					  _this.macroFamiglie["RF-co-mo"]> 0 || _this.macroFamiglie["SRF-co-mo"]> 0){
+			  
+			  var num = 0;
+			  if(_this.macroFamiglie["ST-mo"]> 0 || _this.macroFamiglie["ST-co-mo"] > 0)
+			  num += _this.macroFamiglie["ST-mo"]+_this.macroFamiglie["ST-co-mo"];
+			  
+			  if(_this.macroFamiglie["RF-mo"]> 0 || _this.macroFamiglie["RF-co-mo"] > 0)
+			  num += _this.macroFamiglie["RF-mo"]+_this.macroFamiglie["RF-co-mo"];
+			  
+			  if(_this.macroFamiglie["SRF-mo"]> 0 || _this.macroFamiglie["SRF-co-mo"] > 0)
+			  num += _this.macroFamiglie["SRF-mo"]+_this.macroFamiglie["SRF-co-mo"];
+			  
+			  
+			  tmpCostiPosaElettrica += "Basculanti motorizzate<br>";
+			  tmpCostiPosaElettrica += "Costo aggiuntivo: €  <input type='text' famiglia='Basculanti motorizzate' class='costi_montaggio_elettrica'";
+			  tmpCostiPosaElettrica +=  " value='0' quantita='"+num+"'/> x "+num+"<br><br>";
+			  booElettr = true;
+		  }
+		  
+		  if(_this.macroFamiglie["Sezionali-non-accessori"]> 0){
+			  tmpCostiPosaElettrica += "Sezionali con collegamento del motore, centrale elettronica, codificazione trasmettitore e allacciamento alla rete elettrica 220V già protetta a monte<br>";
+			  tmpCostiPosaElettrica += "Costo aggiuntivo: €  <input type='text' famiglia='Sez. motorizzate senza accessori' class='costi_montaggio_elettrica'";
+			  tmpCostiPosaElettrica +=  " value='0' quantita='"+_this.macroFamiglie["Sezionali-non-accessori"]+"'/> x "+_this.macroFamiglie["Sezionali-non-accessori"]+"<br><br>";
+			  booElettr = true;
+		  }
+		  
+		   if(_this.macroFamiglie["Sezionali-accessori"]> 0){
+			  tmpCostiPosaElettrica += "Sezionali con collegamento del motore, centrale elettronica, codificazione trasmettitore e allacciamento alla rete elettrica 220V già protetta a monte con accessori previsti (fotocellule, lampeggianti e selettori)<br>";
+			  tmpCostiPosaElettrica += "Costo aggiuntivo: €  <input type='text' famiglia='Sez. motorizzate con accessori' class='costi_montaggio_elettrica'";
+			  tmpCostiPosaElettrica +=  " value='0' quantita='"+_this.macroFamiglie["Sezionali-accessori"]+"'/> x "+_this.macroFamiglie["Sezionali-accessori"]+"<br><br>";
+			  booElettr = true;
+		  }
+		  
+		  
+		  var tmpCostiPosaSopraluce = "";
+		  var booPosaSopraluce = false;
+		  if(_this.macroFamiglie["ST30"]> 0){
+			  
+			  tmpCostiPosaSopraluce+="Basculanti ST sopraluce da 30<br>";
+			  tmpCostiPosaSopraluce+="Costo aggiuntivo: €  <input type='text' famiglia='ST sopraluce da 30' class='costi_montaggio_sopraluce'";
+			  tmpCostiPosaSopraluce+=" value='0' quantita='"+_this.macroFamiglie["ST30"]+"'/> x "+_this.macroFamiglie["ST30"]+"<br><br>";
+			  booPosaSopraluce = true;
+		  }
+		  if(_this.macroFamiglie["ST60"]> 0){
+			  
+			  tmpCostiPosaSopraluce+="Basculanti ST sopraluce da 60<br>";
+			  tmpCostiPosaSopraluce+="Costo aggiuntivo: €  <input type='text' famiglia='ST sopraluce da 60' class='costi_montaggio_sopraluce'";
+			  tmpCostiPosaSopraluce+=" value='0' quantita='"+_this.macroFamiglie["ST60"]+"'/> x "+_this.macroFamiglie["ST60"]+"<br><br>";
+			  booPosaSopraluce = true;
+		  }
+		  if(_this.macroFamiglie["ST90"]> 0){
+			  
+			  tmpCostiPosaSopraluce+="Basculanti ST sopraluce da 90<br>";
+			  tmpCostiPosaSopraluce+="Costo aggiuntivo: €  <input type='text' famiglia='ST sopraluce da 90' class='costi_montaggio_sopraluce'";
+			  tmpCostiPosaSopraluce+=" value='0' quantita='"+_this.macroFamiglie["ST90"]+"'/> x "+_this.macroFamiglie["ST90"]+"<br><br>";
+			  booPosaSopraluce = true;
+		  }
+		  if(_this.macroFamiglie["RF30"]> 0){
+			  
+			  tmpCostiPosaSopraluce+="Basculanti RF sopraluce da 30<br>";
+			  tmpCostiPosaSopraluce+="Costo aggiuntivo: €  <input type='text' famiglia='ST sopraluce da 30' class='costi_montaggio_sopraluce'";
+			  tmpCostiPosaSopraluce+=" value='0'  quantita='"+_this.macroFamiglie["RF30"]+"'/> x "+_this.macroFamiglie["RF30"]+"<br><br>";
+			  booPosaSopraluce = true;
+		  }
+		  if(_this.macroFamiglie["RF60"]> 0){
+			  
+			  tmpCostiPosaSopraluce+="Basculanti RF sopraluce da 60<br>";
+			  tmpCostiPosaSopraluce+="Costo aggiuntivo: €  <input type='text' famiglia='ST sopraluce da 60' class='costi_montaggio_sopraluce'";
+			  tmpCostiPosaSopraluce+=" value='0' quantita='"+_this.macroFamiglie["R630"]+"'/> x "+_this.macroFamiglie["RF60"]+"<br><br>";
+			  booPosaSopraluce = true;
+		  }
+		  if(_this.macroFamiglie["RF90"]> 0){
+			  
+			  tmpCostiPosaSopraluce+="Basculanti RF sopraluce da 90<br>";
+			  tmpCostiPosaSopraluce+="Costo aggiuntivo: €  <input type='text' famiglia='RF sopraluce da 90' class='costi_montaggio_sopraluce'";
+			  tmpCostiPosaSopraluce+=" value='0' quantita='"+_this.macroFamiglie["RF90"]+"'/> x "+_this.macroFamiglie["RF90"]+"<br><br>";
+			  booPosaSopraluce = true;
+		  }
+		  if(_this.macroFamiglie["SRF30"]> 0){
+			  
+			  tmpCostiPosaSopraluce+="Basculanti SRF30 sopraluce da 30<br>";
+			  tmpCostiPosaSopraluce+="Costo aggiuntivo: €  <input type='text' famiglia='SRF30 sopraluce da 30' class='costi_montaggio_sopraluce'";
+			  tmpCostiPosaSopraluce+=" value='0' quantita='"+_this.macroFamiglie["SRF30"]+"'/> x "+_this.macroFamiglie["SRF30"]+"<br><br>";
+			  booPosaSopraluce = true;
+		  }
+		  if(_this.macroFamiglie["SRF60"]> 0){
+			  
+			  tmpCostiPosaSopraluce+="Basculanti SRF sopraluce da 60<br>";
+			  tmpCostiPosaSopraluce+="Costo aggiuntivo: €  <input type='text' famiglia='SRF sopraluce da 60' class='costi_montaggio_sopraluce'";
+			  tmpCostiPosaSopraluce+=" value='0' quantita='"+_this.macroFamiglie["SRF60"]+"'/> x "+_this.macroFamiglie["SRF60"]+"<br><br>";
+			  booPosaSopraluce = true;
+		  }
+		  if(_this.macroFamiglie["SRF90"]> 0){
+			  
+			  tmpCostiPosaSopraluce+="Basculanti SRF sopraluce da 90<br>";
+			  tmpCostiPosaSopraluce+="Costo aggiuntivo: €  <input type='text' famiglia='SRF sopraluce da 90' class='costi_montaggio_sopraluce'";
+			  tmpCostiPosaSopraluce+=" value='0' quantita='"+_this.macroFamiglie["SRF90"]+"'/> x "+_this.macroFamiglie["SRF90"]+"<br><br>";
+			  booPosaSopraluce = true;
+		  }
+		  
+		  if(_this.macroFamiglie["PC/L-ST"]> 0){
+			  
+			  tmpCostiPosaSopraluce+="Posa sopraluce porte cantina<br>";
+			  tmpCostiPosaSopraluce+="Costo aggiuntivo: €  <input type='text' famiglia='SRF sopraluce da 90' class='costi_montaggio_sopraluce'";
+			  tmpCostiPosaSopraluce+=" value='0' quantita='"+_this.macroFamiglie["PC/L-ST"]+"'/> x "+_this.macroFamiglie["PC/L-ST"]+"<br><br>";
+			  booPosaSopraluce = true;
+		  }
+		  
+		  if(_this.macroFamiglie["PM-ST"]> 0){
+			  
+			  tmpCostiPosaSopraluce+="Posa meccanica sopraluce porte multiuso<br>";
+			  tmpCostiPosaSopraluce+="Costo aggiuntivo: €  <input type='text' famiglia='PM sopraluce' class='costi_montaggio_sopraluce'";
+			  tmpCostiPosaSopraluce+=" value='0' quantita='"+_this.macroFamiglie["PM-ST"]+"'/> x "+_this.macroFamiglie["PM-ST"]+"<br><br>";
+			  booPosaSopraluce = true;
+		  }
+		  
+		  
+		  //console.log(booPosaSopraluce);
+		  
+		  //POSA MANIGLIONI
+		   var booPosaManiglioni = false;
+		   var tmpCostiPosaManiglioni = "";
+		 
+		  if(_this.macroFamiglie["Maniglioni-PM"]>0){
+			  tmpCostiPosaManiglioni+="Posa meccanica maniglioni porte multiuso<br>";
+			  tmpCostiPosaManiglioni+="Costo aggiuntivo: €  <input type='text' famiglia='PM sopraluce' class='costi_montaggio_sopraluce'";
+			  tmpCostiPosaManiglioni+=" value='0' quantita='"+_this.macroFamiglie["Maniglioni-PM"]+"'/> x "+_this.macroFamiglie["Maniglioni-PM"]+"<br><br>";
+			  booPosaManiglioni = true;
+			 
+		  }
+		  
+		  if(_this.macroFamiglie["Maniglioni-PT"]>0){
+			  tmpCostiPosaManiglioni+="Posa meccanica maniglioni porte tagliafuoco<br>";
+			  tmpCostiPosaManiglioni+="Costo aggiuntivo: €  <input type='text' famiglia='PM sopraluce' class='costi_montaggio_sopraluce'";
+			  tmpCostiPosaManiglioni+=" value='0' quantita='"+_this.macroFamiglie["Maniglioni-PT"]+"'/> x "+_this.macroFamiglie["Maniglioni-PT"]+"<br><br>";
+			  booPosaManiglioni = true;
+			 
+		  }
+		  
+		  
+		  if(booPosa || booElettr || booPosaManiglioni){
+			  dettaglio += "<h4>COSTI DI MONTAGGIO</h4>";
+			  dettaglio += "<input type='checkbox' id='checkCostiMontaggio' /> A carico del cliente<br><br>";
+			  dettaglio += "<div id='boxCostiMontaggio'>";
+			  if(booPosa){
+				  
+				  dettaglio += 	tmpCostiPosa;
+			  }
+			  if(booPosaSopraluce){
+				  dettaglio += "Posa sopraluce<br>";
+				  dettaglio += tmpCostiPosaSopraluce;
+			  }
+			  if(booElettr){
+				 
+				  dettaglio += tmpCostiPosaElettrica;
+			  }
+			  
+			   if(booPosaManiglioni){
+				
+				  dettaglio += tmpCostiPosaManiglioni;
+			  }
+			  
+			  dettaglio += "</div>";
+		  }
+		  
+		  return dettaglio;
+	}
+	
+	_this.getCostiAggiuntivi = function(){
+		
+	
+		var trasporto = [];
+		var distribuzioneVerticale = [];
+		var distribuzioneOrizzontale = [];
+		var montaggioMeccanica = [];
+		var montaggioElettrico = [];
+		var montaggioSopraluce = [];
+		
+		var costiTrasporto = 0;
+		if(!jQuery("#checkCostiTrasporto").is(":checked")){
+			jQuery(".costi_trasporto").each(function(){
+				
+				if(parseFloat(jQuery(this).val()) > 0){
+					var obj = {
+						"codice": "TRASP",
+						"prezzo": parseFloat(jQuery(this).val()),
+						"nome": jQuery(this).attr("famiglia"),
+						"quantita": jQuery(this).attr("quantita")
+					}
+					trasporto.push(obj);
+				}
+			});
+		}
+		
+		var costiDistribuzione = 0;
+		if(!jQuery("#checkCostiDistribuzione").is(":checked")){
+			jQuery(".costi_distribuzione_verticale").each(function(){
+				if(parseFloat(jQuery(this).val()) > 0){
+					var obj = {
+						"codice": "DISTRVERT",
+						"prezzo": parseFloat(jQuery(this).val()),
+						"nome": jQuery(this).attr("famiglia"),
+						"quantita": jQuery(this).attr("quantita")
+					}
+					distribuzioneVerticale.push(obj);
+				}
+			});
+			
+			jQuery(".costi_distribuzione_orizzontale").each(function(){
+				if(parseFloat(jQuery(this).val()) > 0){
+					var obj = {
+						"codice": "DISTRORIZ",
+						"prezzo": parseFloat(jQuery(this).val()),
+						"nome": jQuery(this).attr("famiglia"),
+						"quantita": jQuery(this).attr("quantita")	
+					}
+					distribuzioneOrizzontale.push(obj);
+				}
+			});
+		}
+		
+		var costiMontaggio = 0;
+		if(!jQuery("#checkCostiMontaggio").is(":checked")){
+			jQuery(".costi_montaggio_meccanica").each(function(){
+				if(parseFloat(jQuery(this).val()) > 0){
+					var obj = {
+						"codice": "MONTMEC",
+						"prezzo": parseFloat(jQuery(this).val()),
+						"nome": jQuery(this).attr("famiglia"),
+						"quantita": jQuery(this).attr("quantita")	
+					}
+					montaggioMeccanica.push(obj);
+				}
+			});
+			
+			jQuery(".costi_montaggio_elettrica").each(function(){
+				if(parseFloat(jQuery(this).val()) > 0){
+					var obj = {
+						"codice": "MONTELE",
+						"prezzo": parseFloat(jQuery(this).val()),
+						"nome": jQuery(this).attr("famiglia"),
+						"quantita": jQuery(this).attr("quantita")	
+					}
+					montaggioElettrico.push(obj);
+				}
+			});
+			
+			jQuery(".costi_montaggio_sopraluce").each(function(){
+				if(parseFloat(jQuery(this).val()) > 0){
+					var obj = {
+						"codice": "MONTSOPR",
+						"prezzo": parseFloat(jQuery(this).val()),
+						"nome": jQuery(this).attr("famiglia"),
+						"quantita": jQuery(this).attr("quantita")	
+					}
+					montaggioSopraluce.push(obj);
+				}
+			});
+		}
+					
+		var servizi = {};			
+		servizi.trasporto = trasporto;
+		servizi.distribuzioneVerticale = distribuzioneVerticale;
+		servizi.distribuzioneOrizzontale = distribuzioneOrizzontale;
+		servizi.montaggioMeccanica = montaggioMeccanica;	
+		servizi.montaggioElettrico = montaggioElettrico;	
+		servizi.montaggioSopraluce = montaggioSopraluce;		
+		
+		return servizi;
+		
+	}
+				
+}

@@ -1,0 +1,65 @@
+<html>
+<head>
+<style>
+
+.selezionato{
+	font-weight:bold;
+	text-decoration:none;
+	background-color:#999;
+
+}
+
+.active{
+	font-weight:bold;
+	text-decoration:none;
+	background-color:#999;
+
+}
+
+#basculanti ul,li{
+	padding:0px;
+	margin:0px;
+}
+#basculanti li{
+	float:left;
+	width:auto;
+	padding:0px 7px;
+	margin:0px 1px;
+	height:30px;
+	line-height:30px;
+	background-color:#002F60;
+	color:#fff;
+	font-size:12px;
+	border-top-right-radius:0px;
+	border-top-left-radius:0px;
+}
+
+
+</style>
+</head>
+<body>
+<div style="color:#fff;width:1000;margin:0 auto;">
+<h3>PORTE BASCULATI</h3>
+
+<div id="basculanti">
+<ul style="list-style-type:decimal">
+<li class="menu-selezione">Misure</li>
+<li class="menu-selezione">Debordatura</li>
+<li class="menu-selezione">Versione</li>
+<li class="menu-selezione">Chiusura</li>
+<li class="menu-selezione">Rifinitura</li>
+<li class="menu-selezione">Sopraluce</li>
+<li class="menu-selezione">Passaggio pedonale</li>
+<li class="menu-selezione">Motorizzazione</li>
+<li class="menu-selezione">Predisp. motorizzazione</li>
+<li class="menu-selezione">Verniciatura</li>
+<li class="menu-selezione">Sconto</li>
+<li class="menu-selezione">Riepilogo</li>
+</ul>
+</div>
+</div>
+<br><br>
+<div style="width:1000px;margin:0 auto;padding:20px 0px 0px 0px;"><a href="http://www.cerratospa.com/linea_residenziale_porte_basculanti.html" target="_blank">Guarda le Caratteristiche Tecniche delle Basculanti</a></div>
+<div id="Content"></div>
+</body>
+</html>
