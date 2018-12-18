@@ -67,6 +67,7 @@ class RegistrazioneUtente{
 
 		$query = "SELECT 	account.email AS email,
 							account.stato as stato,
+							account.sconto_massimo as sconto_massimo,
 							user.nome as nome,
 							user.cognome as cognome,
 							user.sesso as sesso,
@@ -98,7 +99,7 @@ class RegistrazioneUtente{
 				$objJSON["results"]["cognome"] = $rowValori["cognome"];
 				$objJSON["results"]["ruolo"] = $rowValori["ruolo"];
 				$objJSON["results"]["sesso"] = $rowValori["sesso"];
-				$objJSON["results"]["ruolo"] = $rowValori["ruolo"];
+				$objJSON["results"]["sconto_massimo"] = $rowValori["sconto_massimo"];
 			}
 
 			$token = $post['token'];
@@ -151,6 +152,7 @@ class RegistrazioneUtente{
 			account.ruolo AS ruolo,
 			account.stato as stato,
 			account.codice_preventivazione as codice_preventivazione,
+			account.sconto_massimo as sconto_massimo,
 			ruoli.etichetta as etichetta_ruolo,
 			REG.nome as nome_regione,
 			PROV.nome as nome_provincia
@@ -201,6 +203,7 @@ class RegistrazioneUtente{
 				$objJSON["results"]["stato"] = $rowValori["stato"];
 				$objJSON["results"]["etichetta_ruolo"] = $rowValori["etichetta_ruolo"];
 				$objJSON["results"]["codice_preventivazione"] = $rowValori["codice_preventivazione"];
+				$objJSON["results"]["sconto_massimo"] = $rowValori["sconto_massimo"];
 				$objJSON["results"]["ruolo"] = $rowValori["ruolo"];
 				$objJSON["results"]["sesso"] = $rowValori["sesso"];
 				$objJSON["results"]["codice_fiscale"] = $rowValori["codice_fiscale"];
@@ -210,8 +213,8 @@ class RegistrazioneUtente{
 				$objJSON["results"]["nome_regione"] = $rowValori["nome_regione"];
 				$objJSON["results"]["nome_provincia"] = $rowValori["nome_provincia"];
 			}
-
 		}
+		
 		$this->connect->disconnetti();
 		return json_encode($objJSON);
 	}
@@ -566,12 +569,12 @@ $objJSON["mysql_error"] = $this->connect->error();
 		$mail->SMTPDebug  = 1;
 		$mail->CharSet = "UTF-8";
 		$mail->Host = "smtps.aruba.it";
-		$mail->setFrom("notifiche@salernoponteggi.com", "Salerno Ponteggi srl");
+		$mail->setFrom("notifiche@salernoponteggi.com", "Salerno Ponteggi srl - ponteggi autosollevanti e sospesi, ascensori da cantiere");
 		$mail->IsHTML(true);
 		$mail->SMTPKeepAlive = true;
 		$mail->SMTPAuth = true;
-		$mail->Username = "notifiche@cerratospa.com";
-		$mail->Password = "cerratospa2017";
+		$mail->Username = "notifiche@salernoponteggi.com";
+		$mail->Password = "SALPONT2018";
 		$mail->SMTPSecure = "ssl";
 		$mail->Port = 465;
 
@@ -590,6 +593,7 @@ $objJSON["mysql_error"] = $this->connect->error();
 				data_creazione,
 				password,
 				stato,
+				sconto_massimo,
 				ruolo,
 				tipo
 			) VALUES(
@@ -597,6 +601,7 @@ $objJSON["mysql_error"] = $this->connect->error();
 				'".time()."',
 				'".$password_criptata."',
 				'0',
+				'".$account["sconto_massimo"]."',
 				'1',
 				'".addslashes($account["tipo"])."'
 		)";
@@ -687,17 +692,17 @@ $objJSON["mysql_error"] = $this->connect->error();
 		///////////////////////////////////////////////////////////////////////////////////////
 
 		// oggetto
-		$oggetto = "Conferma richiesta di iscrizione alla piattaforma di preventivazione online di Salerno Ponteggi srl";
+		$oggetto = "Conferma richiesta di iscrizione alla piattaforma di preventivazione online di Cerrato SpA";
 
 		// messaggio
 		$messaggio = "
 		<html>
 		<head>
-		<title>Benvenuto sulla piattaforma di preventivazione online di Salerno Ponteggi srl</title>
+		<title>Benvenuto sulla piattaforma di preventivazione online di Cerrato SpA</title>
 		</head>
 		<body>
 		<div style='font-family:courier;font-size:16px'>
-		<p>L'iscrizione alla piattaforma di preventivazione online di Salerno Ponteggi srl è avvenuta con successo.<br>
+		<p>L'iscrizione alla piattaforma di preventivazione online di Cerrato SpA è avvenuta con successo.<br>
 		Il suo account sarà sottoposto a verifica e la sua attivazione verrà notificata attraverso una nuova email di conferma.<br>
 		Le credenziali di accesso scelte sono:<br>
 		------------------------------------------------<br>
@@ -705,21 +710,19 @@ $objJSON["mysql_error"] = $this->connect->error();
 		PASSWORD: ".$account['password']."<br>
 		------------------------------------------------<br>
 		La preghiamo di custodirle in maniera sicura. In caso di smarrimento potrà comunque effettuare la procedura di recupero password.<br>
-		Diversamente la preghiamo di scriverci alla mail info@salernoponteggi.com<br>
-		La ringraziamo per aver scelto Salerno Ponteggi srl.<br>
+		Diversamente la preghiamo di scriverci alla mail info@cerratospa.com<br>
+		La ringraziamo per aver scelto Cerrato SpA.<br>
 		</div>
 		</p>
-		<br><br><i>Questa email è stata generata automaticamente dai sistemi di Salerno Ponteggi srl. Per tanto ogni risposta a questa casella email sarà ignorata.</i><br><br>
-		<img src=\"http://www.salernoponteggi.com/areariservata/images/logo_email.jpg\"><br><br>
-		<b>Salerno Ponteggi srl</b><br>
-		SEDE LEGALE E OPERATIVA<br>
-		via Francesco Petrarca SNC 84098<br>
-		Pontecagnano Faiano (SA)<br>
-		tel. +39 089 382657<br>
-		P.IVA 0571 19 20 651 <br>
-		R.E.A. 428797<br>
-		<a href='mailto:info@salernoponteggi.com'>info@salernoponteggi.com</a><br>
-		<a href='http://www.salernoponteggi.com'>www.salernoponteggi.com</a><br>
+		<br><br><i>Questa email è stata generata automaticamente dai sistemi di Cerrato SpA. Per tanto ogni risposta a questa casella email sarà ignorata.</i><br><br>
+		<img src=\"http://www.cerratospa.com/areariservata/images/logo_email.jpg\"><br><br>
+		<b>Cerrato Chiusure metalliche Spa</b><br>
+		Via A. Vivaldi, 20<br>
+		84090 Montecorvino Pugliano<br>
+		SALERNO – ITALY<br>
+		Tel. +39 0828 350045<br>
+		Fax +39 0828.350617<br>
+		<a href='http://www.cerratospa.com'>www.cerratospa.com</a><br><br>
 		<span style='font-size:9px;'>CLAUSOLA DI RISERVATEZZA: Le informazioni contenute nel presente messaggio sono confidenziali e soggette alla legislazione vigente in materia di privacy e dirette solamente al destinatario.<br>
 L'accesso a questo messaggio da parte di chiunque altro non è autorizzato. Se non siete il destinatario corretto qualsiasi rivelazione, copia o distribuzione di questo messaggio o ogni azione e/o
 <br>
@@ -739,31 +742,29 @@ omissione compiuta in relazione ad esso è proibita ed illegale. È da rilevare 
 		/////////////////////////////////////////////////////////////////////////////////////////
 
 		// oggetto
-		$oggetto = "Completata una procedura di iscrizione sulla piattaforma di preventivazione di Salerno Ponteggi srl";
+		$oggetto = "Completata una procedura di iscrizione sulla piattaforma di preventivazione di Cerrato SpA";
 
 		// messaggio
 		$messaggio = "
 		<html>
 		<head>
-		<title>Completata una procedura di iscrizione sulla piattaforma di preventivazione di Salerno Ponteggi srl</title>
+		<title>Completata una procedura di iscrizione sulla piattaforma di preventivazione di Cerrato SpA</title>
 		</head>
 		<body>
 		<div style='font-family:courier;font-size:16px'>
-		<p>E' stata effettuata una iscrizione sulla piattaforma di preventivazione di Salerno Ponteggi srl con username ".$account["username"].".<br>
+		<p>E' stata effettuata una iscrizione sulla piattaforma di preventivazione di Cerrato Spa con username ".$account["username"].".<br>
 		Le credenziali del nuovo utente sono in attesa di approvazione.
 		</p>
 		</div>
-		<br><br><i>Questa email è stata generata automaticamente dai sistemi di Salerno Ponteggi srl. Per tanto ogni risposta a questa casella email sarà ignorata.</i><br><br>
-		<img src=\"http://www.salernoponteggi.com/areariservata/images/logo_email.jpg\"><br><br>
-		<b>Salerno Ponteggi srl</b><br>
-		SEDE LEGALE E OPERATIVA<br>
-		via Francesco Petrarca SNC 84098<br>
-		Pontecagnano Faiano (SA)<br>
-		tel. +39 089 382657<br>
-		P.IVA 0571 19 20 651 <br>
-		R.E.A. 428797<br>
-		<a href='mailto:info@salernoponteggi.com'>info@salernoponteggi.com</a><br>
-		<a href='http://www.salernoponteggi.com'>www.salernoponteggi.com</a><br>
+		<br><br><i>Questa email è stata generata automaticamente dai sistemi di Cerrato SpA. Per tanto ogni risposta a questa casella email sarà ignorata.</i><br><br>
+		<img src=\"http://www.cerratospa.com/areariservata/images/logo_email.jpg\"><br><br>
+		<b>Cerrato Chiusure metalliche Spa</b><br>
+		Via A. Vivaldi, 20<br>
+		84090 Montecorvino Pugliano<br>
+		SALERNO – ITALY<br>
+		Tel. +39 0828 350045<br>
+		Fax +39 0828.350617<br>
+		<a href='http://www.cerratospa.com'>www.cerratospa.com</a><br><br>
 		<span style='font-size:9px;'>CLAUSOLA DI RISERVATEZZA: Le informazioni contenute nel presente messaggio sono confidenziali e soggette alla legislazione vigente in materia di privacy e dirette solamente al destinatario.<br>
 L'accesso a questo messaggio da parte di chiunque altro non è autorizzato. Se non siete il destinatario corretto qualsiasi rivelazione, copia o distribuzione di questo messaggio o ogni azione e/o
 <br>
@@ -1000,7 +1001,7 @@ omissione compiuta in relazione ad esso è proibita ed illegale. È da rilevare 
 		//$mail->AddReplyTo($this->mailAdmin);
 		$mail->FromName = "Carrato Spa";
 		$mail->Subject = "Invio richiesta di registrazione";
-		$mail->Body = "<html><body>&Egrave; stata effettuata una richiesta di registrazione sui Vostri sistemi da parte di <b>".$tmp["nome"]." ".$tmp["cognome"]."</b> per l'accesso ai servizi di preventivazione online.<br> Puoi consultare i dati inseriti dall'utente per confermare la validit&agrave; dell'account creato direttamente dal pannellino di amministrazione cliccando al seguente link.<br><a href=\"http://www.salernoponteggi.com/areariservata/\">area riservata Salerno Ponteggi srl</a><br><br><br><br></body></html>";
+		$mail->Body = "<html><body>&Egrave; stata effettuata una richiesta di registrazione sui Vostri sistemi da parte di <b>".$tmp["nome"]." ".$tmp["cognome"]."</b> per l'accesso ai servizi di preventivazione online.<br> Puoi consultare i dati inseriti dall'utente per confermare la validit&agrave; dell'account creato direttamente dal pannellino di amministrazione cliccando al seguente link.<br><a href=\"http://www.cerratospa.com/areariservata/\">area riservata Cerrato Spa</a><br><br><br><br></body></html>";
 		//$mail->AddAddress($this->mailAdmin);
 
 		$mail->AddAdress("lorenzo.dev@gmail.com");
@@ -1310,7 +1311,7 @@ omissione compiuta in relazione ad esso è proibita ed illegale. È da rilevare 
 		$this->connect->connetti();
 		//var_dump("SELECT * FROM user WHERE account <> '".$post['account']."' AND codice_preventivazione='".$post["codice_preventivazione"]."' AND tipo='".$post["tipologiaUtente"]."'");
 
-		$query = "SELECT * FROM account WHERE email <> '".$post['account']."' AND codice_preventivazione='".$post["codice_preventivazione"]."'";
+		$query = "SELECT * FROM account WHERE email <> '".$post['account']."' AND codice_preventivazione='".$post["codice_preventivazione"]."' AND sconto_massimo='".$post["sconto_massimo"]."'";
 
 
 		$result = $this->connect->myQuery($query);
@@ -1415,12 +1416,12 @@ omissione compiuta in relazione ad esso è proibita ed illegale. È da rilevare 
 				$mail->IsSMTP();
 				$mail->CharSet = "UTF-8";
 				$mail->Host = "smtps.aruba.it";
-				$mail->setFrom("notifiche@salernoponteggi.com", "Salerno Ponteggi srl");
+				$mail->setFrom("notifiche@salernoponteggi.com", "Salerno Ponteggi srl - ponteggi autosollevanti e sospesi, ascensori da cantiere");
 				$mail->IsHTML(true);
 				$mail->SMTPKeepAlive = true;
 				$mail->SMTPAuth = true;
-				$mail->Username = "notifiche@salernoponteggi.com";
-				$mail->Password = "SALPONT2018";
+				$mail->Username = "notifiche@cerratospa.com";
+				$mail->Password = "cerratospa2017";
 				$mail->SMTPSecure = "ssl";
 				$mail->Port = 465;
 
@@ -1480,7 +1481,7 @@ omissione compiuta in relazione ad esso è proibita ed illegale. È da rilevare 
 		$query = "UPDATE 	account
 					SET 	stato = '".$post["stato"]."',
 							ruolo = '".$post["ruolo"]."',
-							codice_preventivazione = '".$post["codice_preventivazione"]."'
+							sconto_massimo = '".$post["sconto_massimo"]."'
 					WHERE 	email='".$post["account"]."'";
 
 
@@ -1488,7 +1489,7 @@ omissione compiuta in relazione ad esso è proibita ed illegale. È da rilevare 
 
 		if($this->connect->errno()){
 			$objJSON["success"] = false;
-			$objJSON["errorMessage"] = "Siamo spiacenti, l'inserimento del cliente non è andato a buon fine.";
+			$objJSON["errorMessage"] = "Siamo spiacenti, modifica dell'utente non è andato a buon fine.";
 $objJSON["mysql_error"] = $this->connect->error();
 		}else{
 			$objJSON["success"] = true;
@@ -1502,7 +1503,7 @@ $objJSON["mysql_error"] = $this->connect->error();
 				$mail->IsSMTP();
 				$mail->CharSet = "UTF-8";
 				$mail->Host = "smtps.aruba.it";
-				$mail->setFrom("notifiche@cerratospa.com", "Salerno Ponteggi srl");
+				$mail->setFrom("notifiche@salernoponteggi.com", "Salerno Ponteggi srl - ponteggi autosollevanti e sospesi, ascensori da cantiere");
 				$mail->IsHTML(true);
 				$mail->SMTPKeepAlive = true;
 				$mail->SMTPAuth = true;

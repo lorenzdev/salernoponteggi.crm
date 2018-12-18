@@ -65,7 +65,7 @@ var Login = function(main){
 
 				$.DivasCookies({
 					bannerText				: "Qeusto sito usa i cookie per migliorare la tua esperienza sull'applicazione web.",		// text for the Divas Cookies banner
-					cookiePolicyLink		: "http://www.salernoponteggi.com/it/privacy.html",		// link to the extended cookie policy
+					cookiePolicyLink		: "http://www.cerratospa.com/it/privacy.html",		// link to the extended cookie policy
 					cookiePolicyLinkText	: "Per più informazioni",				// text for the link to the extended cookie policy
 					thirdPartyPolicyWidget	: "",						// if set to "iubenda" tries to use the Iubenda widget
 					acceptButtonText		: "Ho capito!",						// text for the close button
@@ -268,6 +268,7 @@ var Login = function(main){
 					"nome": utente.results.nome,
 					"cognome": utente.results.cognome,
 					"ruolo": utente.results.ruolo,
+					"sconto_massimo": utente.results.sconto_massimo,
 					"email": utente.results.email,
 					"tipo": utente.results.tipo,
 					"stato": utente.results.stato,

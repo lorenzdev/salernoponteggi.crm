@@ -472,6 +472,10 @@ var GestioneUtenti = function(content){
 									'+d.cognome+'<br />\
 								  </div>\
 								  <div class="col-md-6">\
+									<label>Codice preventivazione:</label>\
+									'+d.codice_preventivazione+'<br />\
+								  </div>\
+								  <div class="col-md-6">\
 									<label>Sesso:</label>\
 									'+d.sesso+'<br />\
 								  </div>\
@@ -514,8 +518,8 @@ var GestioneUtenti = function(content){
 									</select><br>\
 								  </div>\
 								  <div class="col-md-12">\
-									<label>Codice preventivazione:</label>\
-									<input type="text" class="form-control" id="codice_preventivazione" style="width:150px;" value="'+d.codice_preventivazione+'"><br>\
+									<label>Sconto massimo:</label>\
+									<input type="text" class="form-control" id="sconto_massimo" style="width:70px;" maxlength="2" value="'+d.sconto_massimo+'"/><br>\
 								  </div>\
 							</div>\
 							<center><button id="modifica_utente" class="btn btn-primary">modifica</button></center>\
@@ -556,15 +560,17 @@ var GestioneUtenti = function(content){
 		var stato_precedente = _this.user["stato"];
 		var ruolo = jQuery("#ruolo option:selected").attr("value");
 		var codice_preventivazione = jQuery("#codice_preventivazione").val();
+		var sconto_massimo = jQuery("#sconto_massimo").val();
 		var account = _this.user["email"];
 
+		/*
 		if(!codice_preventivazione){
 			_this.content.loader.remove();
 			alert("Non hai specificato nessun codice preventivazione");
 			return;
 		}
 
-
+		
 		var unique = true;
 		function callBackCodicePreventivazione(datoCodice){
 
@@ -594,14 +600,14 @@ var GestioneUtenti = function(content){
 			alert("Il codice di preventivazione scelto per l'utente è già stato utilizzato. Sceglierne uno alternativo o cambiare la tipologia utente.");
 			return;
 		}
-
+		*/
 
 		var paramAccount = {
 			"account":account,
 			"stato":stato,
 			"stato_precedente":_this.user["stato"],
 			"ruolo":ruolo,
-			"codice_preventivazione": codice_preventivazione
+			"sconto_massimo": sconto_massimo
 		}
 
 		$.Log("AH?");

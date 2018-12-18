@@ -277,6 +277,7 @@ class Clienti{
 								clienti.prefisso_fax as prefisso_fax_cliente,
 								clienti.fax as fax_cliente,
 								clienti.email as email_cliente,
+								clienti.email_pec as email_pec_cliente,
 								clienti.prefisso_cellulare as prefisso_cellulare_cliente,
 								clienti.cellulare as cellulare_cliente,
 								clienti.website as website_cliente,
@@ -393,6 +394,7 @@ class Clienti{
 
 					$objJSON["results"][0]['prefisso_fax_cliente'] = $rowValori['prefisso_fax_cliente'];
 					$objJSON["results"][0]['fax_cliente'] = $rowValori['fax_cliente'];
+					$objJSON["results"][0]['email_pec_cliente'] = $rowValori['email_pec_cliente'];
 					$objJSON["results"][0]['email_cliente'] = $rowValori['email_cliente'];
 
 					$objJSON["results"][0]['prefisso_cellulare_cliente'] = $rowValori['prefisso_cellulare_cliente'];
@@ -490,6 +492,7 @@ class Clienti{
 					  prefisso_fax,
 					  fax,
 					  email,
+					  email_pec,
 					  prefisso_cellulare,
 					  cellulare,
 					  website,
@@ -534,6 +537,7 @@ class Clienti{
 					  '".addslashes($post["prefisso_fax"])."',
 					  '".addslashes($post["fax"])."',
 					  '".addslashes($post["email"])."',
+					  '".addslashes($post["email_pec"])."',
 					  '".addslashes($post["prefisso_cellulare"])."',
 					  '".addslashes($post["cellulare"])."',
 					  '".addslashes($post["website"])."',
@@ -580,6 +584,7 @@ class Clienti{
 				prefisso_fax = VALUES(prefisso_fax),
 				fax = VALUES(fax),
 				email = VALUES(email),
+				email_pec = VALUES(email_pec),
 				prefisso_cellulare = VALUES(prefisso_cellulare),
 				cellulare = VALUES(cellulare),
 				website = VALUES(website),
@@ -638,6 +643,7 @@ class Clienti{
 				telefono='".$post["telefono"]."',
 				fax='".$post["fax"]."',
 				email='".$post["email"]."',
+				email_pec='".$post["email_pec"]."',
 				responsabile='".$post["responsabile"]."',
 				cellulare='".$post["cellulare"]."',
 				banca='".$post["banca"]."',

@@ -264,19 +264,23 @@ function Clienti(content){
 								  </div>\
 								 <div class="col-md-6">\
 									<label>Telefono:</label>\
-									'+d.prefisso_telefono+' '+d.telefono_cliente+'<br />\
+									'+d.prefisso_telefono_cliente+' '+d.telefono_cliente+'<br />\
 								  </div>\
 								 <div class="col-md-6">\
 									<label>Fax:</label>\
-									'+d.prefisso_fax+' '+d.fax_cliente+'<br />\
+									'+d.prefisso_fax_cliente+' '+d.fax_cliente+'<br />\
 								  </div>\
 								  <div class="col-md-6">\
 									<label>Cellulare:</label>\
-									'+d.prefisso_cellulare+' '+d.cellulare_cliente+'<br />\
+									'+d.prefisso_cellulare_cliente+' '+d.cellulare_cliente+'<br />\
 								  </div>\
 								 <div class="col-md-6">\
 									<label>Email:</label>\
 									'+d.email_cliente+'<br />\
+								  </div>\
+								  <div class="col-md-6">\
+									<label>Email PEC:</label>\
+									'+d.email_pec_cliente+'<br />\
 								  </div>\
 								 <div class="col-md-6">\
 									<label>Sito web:</label>\
@@ -824,6 +828,7 @@ function Clienti(content){
 			cliente.agenzia = jQuery("#agenzia").val();
 			cliente.website = jQuery("#website").val();
 			cliente.email = jQuery("#email").val();
+			cliente.email_pec = jQuery("#email_pec").val();
 			cliente.regione = jQuery("#regione option:selected").val();
 			cliente.provincia = jQuery("#provincia option:selected").val();
 			cliente.comune = jQuery("#comune option:selected").val();
@@ -1175,6 +1180,9 @@ function Clienti(content){
 		var rubrica = [];
 		function callBackClienti(dato){
 
+			$.Log("CLIENTEEEE");
+			$.Log(dato);
+
 			if(!dato.success){
 				alert("Errore caricamento rubrica!");
 				return;
@@ -1279,12 +1287,12 @@ function Clienti(content){
 						</div>\
 						<div class="col-md-1">\
 							<div class="cell">\
-								<div class="propertyname"><span class="data-label" data-name="Telefono: "></span>'+d.prefisso_telefono+' '+d.telefono+'</div>\
+								<div class="propertyname"><span class="data-label" data-name="Telefono: "></span>'+(d.prefisso_telefono?d.prefisso_telefono:"")+' '+(d.telefono?d.telefono:"")+'</div>\
 							</div>\
 						</div>\
 						<div class="col-md-1">\
 								<div class="cell">\
-									<div class="propertyname"><span class="data-label" data-name="Cellulare: "></span>'+d.prefisso_cellulare+' '+d.cellulare+'</div>\
+									<div class="propertyname"><span class="data-label" data-name="Cellulare: "></span>'+(d.prefisso_cellulare?d.prefisso_cellulare:"")+' '+(d.cellulare?d.cellulare:"")+'</div>\
 								</div>\
 						</div>\
 						<div class="col-md-2">\
