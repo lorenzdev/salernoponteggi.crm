@@ -5,18 +5,18 @@ class ConnectionDB{
 
 
 
-/*
+
 	private $db_host = "localhost";
 	private $db_user = "root";
 	private $db_password = "root";
 	private $db_database = "salerno_ponteggi";
-*/
 
+/*
 	private $db_host = "62.149.150.205";
 	private $db_user = "Sql723311";
 	private $db_password = "un5vz60256";
 	private $db_database = "Sql723311_2";
-
+*/
 
 	private $attiva = false;
 	public $connessione;

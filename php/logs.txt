@@ -1039,3 +1039,7 @@
 04/12/2018, 01:12:08: Error: Uncaught TypeError: Cannot convert undefined or null to object, Script: http://localhost/js/Preventivi/Preventivi.js  Line: 532
 04/12/2018, 03:12:54: Error: Uncaught TypeError: Cannot read property 'length' of null, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
 04/12/2018, 03:12:23: Error: Uncaught TypeError: Cannot read property 'length' of null, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+18/12/2018, 04:12:39: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+18/12/2018, 04:12:40: Error: Uncaught TypeError: Cannot read property 'length' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+18/12/2018, 04:12:10: Error: Uncaught TypeError: Cannot read property 'nome_file_preventivo_pdf' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5
+18/12/2018, 04:12:34: Error: Uncaught TypeError: Cannot read property 'nome_file_preventivo_pdf' of undefined, Script: http://localhost/js/jquery-1.9.1.min.js  Line: 5

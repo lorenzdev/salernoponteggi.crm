@@ -692,17 +692,17 @@ $objJSON["mysql_error"] = $this->connect->error();
 		///////////////////////////////////////////////////////////////////////////////////////
 
 		// oggetto
-		$oggetto = "Conferma richiesta di iscrizione alla piattaforma di preventivazione online di Cerrato SpA";
+		$oggetto = "Conferma richiesta di iscrizione alla piattaforma di preventivazione online di Salerno Ponteggi srl";
 
 		// messaggio
 		$messaggio = "
 		<html>
 		<head>
-		<title>Benvenuto sulla piattaforma di preventivazione online di Cerrato SpA</title>
+		<title>Benvenuto sulla piattaforma di preventivazione online di Salerno Ponteggi srl</title>
 		</head>
 		<body>
 		<div style='font-family:courier;font-size:16px'>
-		<p>L'iscrizione alla piattaforma di preventivazione online di Cerrato SpA è avvenuta con successo.<br>
+		<p>L'iscrizione alla piattaforma di preventivazione online di Salerno Ponteggi srl è avvenuta con successo.<br>
 		Il suo account sarà sottoposto a verifica e la sua attivazione verrà notificata attraverso una nuova email di conferma.<br>
 		Le credenziali di accesso scelte sono:<br>
 		------------------------------------------------<br>
@@ -710,19 +710,21 @@ $objJSON["mysql_error"] = $this->connect->error();
 		PASSWORD: ".$account['password']."<br>
 		------------------------------------------------<br>
 		La preghiamo di custodirle in maniera sicura. In caso di smarrimento potrà comunque effettuare la procedura di recupero password.<br>
-		Diversamente la preghiamo di scriverci alla mail info@cerratospa.com<br>
-		La ringraziamo per aver scelto Cerrato SpA.<br>
+		Diversamente la preghiamo di scriverci alla mail info@salernoponteggi.com<br>
+		La ringraziamo per aver scelto Salerno Ponteggi srl.<br>
 		</div>
 		</p>
-		<br><br><i>Questa email è stata generata automaticamente dai sistemi di Cerrato SpA. Per tanto ogni risposta a questa casella email sarà ignorata.</i><br><br>
-		<img src=\"http://www.cerratospa.com/areariservata/images/logo_email.jpg\"><br><br>
-		<b>Cerrato Chiusure metalliche Spa</b><br>
-		Via A. Vivaldi, 20<br>
-		84090 Montecorvino Pugliano<br>
-		SALERNO – ITALY<br>
-		Tel. +39 0828 350045<br>
-		Fax +39 0828.350617<br>
-		<a href='http://www.cerratospa.com'>www.cerratospa.com</a><br><br>
+		<br><br><i>Questa email è stata generata automaticamente dai sistemi di Salerno Ponteggi srl. Per tanto ogni risposta a questa casella email sarà ignorata.</i><br><br>
+		<img src=\"http://www.salernoponteggi.com/areariservata/images/logo_email.jpg\"><br><br>
+		<b>Salerno Ponteggi srl</b><br>
+		SEDE LEGALE E OPERATIVA<br>
+		via Francesco Petrarca SNC 84098<br>
+		Pontecagnano Faiano (SA)<br>
+		tel. +39 089 382657<br>
+		P.IVA 0571 19 20 651 <br>
+		R.E.A. 428797<br>
+		<a href='mailto:info@salernoponteggi.com'>info@salernoponteggi.com</a><br>
+		<a href='http://www.salernoponteggi.com'>www.salernoponteggi.com</a><br>
 		<span style='font-size:9px;'>CLAUSOLA DI RISERVATEZZA: Le informazioni contenute nel presente messaggio sono confidenziali e soggette alla legislazione vigente in materia di privacy e dirette solamente al destinatario.<br>
 L'accesso a questo messaggio da parte di chiunque altro non è autorizzato. Se non siete il destinatario corretto qualsiasi rivelazione, copia o distribuzione di questo messaggio o ogni azione e/o
 <br>
@@ -742,29 +744,31 @@ omissione compiuta in relazione ad esso è proibita ed illegale. È da rilevare 
 		/////////////////////////////////////////////////////////////////////////////////////////
 
 		// oggetto
-		$oggetto = "Completata una procedura di iscrizione sulla piattaforma di preventivazione di Cerrato SpA";
+		$oggetto = "Completata una procedura di iscrizione sulla piattaforma di preventivazione di Salerno Ponteggi srl";
 
 		// messaggio
 		$messaggio = "
 		<html>
 		<head>
-		<title>Completata una procedura di iscrizione sulla piattaforma di preventivazione di Cerrato SpA</title>
+		<title>Completata una procedura di iscrizione sulla piattaforma di preventivazione di Salerno Ponteggi srl</title>
 		</head>
 		<body>
 		<div style='font-family:courier;font-size:16px'>
-		<p>E' stata effettuata una iscrizione sulla piattaforma di preventivazione di Cerrato Spa con username ".$account["username"].".<br>
+		<p>E' stata effettuata una iscrizione sulla piattaforma di preventivazione di Salerno Ponteggi srl con username ".$account["username"].".<br>
 		Le credenziali del nuovo utente sono in attesa di approvazione.
 		</p>
 		</div>
-		<br><br><i>Questa email è stata generata automaticamente dai sistemi di Cerrato SpA. Per tanto ogni risposta a questa casella email sarà ignorata.</i><br><br>
-		<img src=\"http://www.cerratospa.com/areariservata/images/logo_email.jpg\"><br><br>
-		<b>Cerrato Chiusure metalliche Spa</b><br>
-		Via A. Vivaldi, 20<br>
-		84090 Montecorvino Pugliano<br>
-		SALERNO – ITALY<br>
-		Tel. +39 0828 350045<br>
-		Fax +39 0828.350617<br>
-		<a href='http://www.cerratospa.com'>www.cerratospa.com</a><br><br>
+		<br><br><i>Questa email è stata generata automaticamente dai sistemi di Salerno Ponteggi srl. Per tanto ogni risposta a questa casella email sarà ignorata.</i><br><br>
+		<img src=\"http://www.salernoponteggi.com/areariservata/images/logo_email.jpg\"><br><br>
+		<b>Salerno Ponteggi srl</b><br>
+		SEDE LEGALE E OPERATIVA<br>
+		via Francesco Petrarca SNC 84098<br>
+		Pontecagnano Faiano (SA)<br>
+		tel. +39 089 382657<br>
+		P.IVA 0571 19 20 651 <br>
+		R.E.A. 428797<br>
+		<a href='mailto:info@salernoponteggi.com'>info@salernoponteggi.com</a><br>
+		<a href='http://www.salernoponteggi.com'>www.salernoponteggi.com</a><br>
 		<span style='font-size:9px;'>CLAUSOLA DI RISERVATEZZA: Le informazioni contenute nel presente messaggio sono confidenziali e soggette alla legislazione vigente in materia di privacy e dirette solamente al destinatario.<br>
 L'accesso a questo messaggio da parte di chiunque altro non è autorizzato. Se non siete il destinatario corretto qualsiasi rivelazione, copia o distribuzione di questo messaggio o ogni azione e/o
 <br>
@@ -1001,7 +1005,7 @@ omissione compiuta in relazione ad esso è proibita ed illegale. È da rilevare 
 		//$mail->AddReplyTo($this->mailAdmin);
 		$mail->FromName = "Carrato Spa";
 		$mail->Subject = "Invio richiesta di registrazione";
-		$mail->Body = "<html><body>&Egrave; stata effettuata una richiesta di registrazione sui Vostri sistemi da parte di <b>".$tmp["nome"]." ".$tmp["cognome"]."</b> per l'accesso ai servizi di preventivazione online.<br> Puoi consultare i dati inseriti dall'utente per confermare la validit&agrave; dell'account creato direttamente dal pannellino di amministrazione cliccando al seguente link.<br><a href=\"http://www.cerratospa.com/areariservata/\">area riservata Cerrato Spa</a><br><br><br><br></body></html>";
+		$mail->Body = "<html><body>&Egrave; stata effettuata una richiesta di registrazione sui Vostri sistemi da parte di <b>".$tmp["nome"]." ".$tmp["cognome"]."</b> per l'accesso ai servizi di preventivazione online.<br> Puoi consultare i dati inseriti dall'utente per confermare la validit&agrave; dell'account creato direttamente dal pannellino di amministrazione cliccando al seguente link.<br><a href=\"http://www.salernoponteggi.com/areariservata/\">area riservata Salerno Ponteggi srl</a><br><br><br><br></body></html>";
 		//$mail->AddAddress($this->mailAdmin);
 
 		$mail->AddAdress("lorenzo.dev@gmail.com");

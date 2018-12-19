@@ -1115,6 +1115,36 @@ function Clienti(content){
 			_this.content.loader.remove();
 			return;
 		}
+		
+		var control = false;
+		function checkCliente(dato){
+			
+			$.Log("CLIENTETEETTEETTE CHECK");
+			$.Log(dato);
+			
+			if(!dato.success){
+			  alert(dato.errorMessage);
+			  return;
+		  	}
+			
+			if(dato.results.length>0){
+				var h = "<div class='alert alert-danger'>Alcuni dati inseriti corrispondono già ai dati del cliente <b>"+dato.results[0].ragione_sociale+"</b>";
+				if(dato.results[0].nome && dato.results[0].cognome){
+				 	h += " assegnato all'agente <b>"+dato.results[0].nome+" "+dato.results[0].cognome+"</b>. Impossibile completare la procedura";
+				}
+			  h += "</div><br>";
+			  $("#errori_compilazione_cliente").html(h);
+			  control = true;
+			  return;
+		  	}
+		}
+		
+		jQuery.postJSON("Clienti","checkCliente", "private", {"cliente":cliente}, false, checkCliente);
+
+		if(control){
+			_this.content.loader.remove();
+			return;
+		}
 
 		return response.result;
 

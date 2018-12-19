@@ -37,13 +37,14 @@ var CostiExtra = function(mainPreventivi){
 		  dettaglio += "<h4 class='title_h4'>Dettagli extra</h4>";
 
 		  dettaglio += "<div style='padding:10px;'>";
-		  dettaglio += "<b>IVA: </b>";
+		  dettaglio += "<fieldset><legend style=\"font-size:14px;\"><b>IVA</b></legend></fieldset>";
 		  dettaglio += "<input type='text' id='iva' class='form-control' value='"+preventivo.iva+"' maxlength='2' style='width:50px;'>";
 		  dettaglio += "</div>";
 
 		  dettaglio += "<div style='padding:10px;'>";
-		  dettaglio += "<b>ULTERIORE SCONTO: </b>";
+		  dettaglio += "<fieldset><legend style=\"font-size:14px;\"><b>ULTERIORE SCONTO</b></legend></fieldset>";
 		  dettaglio += "<input type='text' id='sconto' class='form-control' value='"+preventivo.sconto+"' maxlength='2' style='width:50px;'>";
+		  dettaglio += "<span id='errore_sconto'></span>";
 		  dettaglio += "</div>";
 
 		  var bool_trasporto = false;
@@ -128,7 +129,7 @@ var CostiExtra = function(mainPreventivi){
 
 		  
 		  dettaglio += "<div style='padding:10px;display:block;'>";
-		  dettaglio += "<b>CONSEGNA</b><br>";
+		  dettaglio += "<fieldset><legend style=\"font-size:14px;\"><b>CONSEGNA</b></legend></fieldset>";
 		  dettaglio += "<div style='display:inline-block;width:90px;margin-top: 3px;'>Settimana n.</div>";
 		  dettaglio += "<input type='text' id='numero_settimana' maxlength='2' style='width:50px;display:inline-block;' class=' form-control'/>&nbsp;&nbsp;&nbsp;";
 
@@ -158,14 +159,29 @@ var CostiExtra = function(mainPreventivi){
 
 
 		  dettaglio += "<div style='padding:10px;display:block;'>";
-		  dettaglio += "<b>VETTORE</b><br>";
+		  dettaglio += "<fieldset><legend style=\"font-size:14px;\"><b>VETTORE</b></legend></fieldset>";
 		  dettaglio += "<input type='text' id='vettore' style='width:150px;display:inline-block;' class='form-control' value='"+preventivo.vettore+"'/>";
 			dettaglio += "</div><br>";
 
-		   dettaglio += "<div style='padding:10px;display:block;'>";
-		  dettaglio += "<b>DESCRIZIONE</b><br>";
+		  dettaglio += "<div style='padding:10px;display:block;'>";
+		  dettaglio += "<fieldset><legend style=\"font-size:14px;\"><b>DESCRIZIONE</b></legend></fieldset>";
 		  dettaglio += "<textarea id='nota' style='width:320px;height:160px;display:inline-block;resize:vertical;' class='form-control'>"+preventivo.nota+"</textarea>";
-			dettaglio += "</div><br><br>";
+		  dettaglio += "</div><br><br>";
+		  
+		  var checked = "";
+		  if(Number(preventivo.check_hide_articles)){
+		  	checked = " checked ";
+		  }
+		  
+		  dettaglio += "<div style='padding:10px;display:block;'>";
+		  dettaglio += "<fieldset><legend style=\"font-size:14px;\"><b>OPZIONI DI VISUALIZZAZIONE</b></legend></fieldset>";
+          dettaglio += '<div class="checkbox checkbox-primary" style="margin:0px 0px 20px 0px;">\
+									<input id="check_hide_articles" type="checkbox" value="si" '+checked+'>\
+									<label for="check_hide_articles">\
+										Nascondi elenco articoli dal preventivo in formato pdf\
+									</label>\
+								</div>';
+		  dettaglio += "</div><br><br>";
 		 /*
 		  dettaglio += "<div style='float:left;width:27px;text-align:right;padding-right:10px;margin-top: 3px;'>dal</div><div style='float:left;'>";
 		  dettaglio += "<input type='text' id='data_consegna' style='width: 100px;' readonly/></div>";
@@ -279,7 +295,7 @@ var CostiExtra = function(mainPreventivi){
 
 		  dettaglio += "</div><br><br>";
 
-		  dettaglio += "<center><button data-loading=\"<i class='fa fa-spinner fa-spin' aria-hidden='true'></i>\"  class='action btn btn-primary' id='salva_cliente_preventivo'>Salva cliente</button>&nbsp;&nbsp;<button id='aggiungi_rubrica' class='btn btn-primary'>Aggiungi un cliente</button></center><br>";
+		  dettaglio += "<center><button data-loading=\"<i class='fa fa-spinner fa-spin' aria-hidden='true'></i>\"  class='action btn btn-primary' id='salva_cliente_preventivo'>Salva cliente</button>&nbsp;&nbsp;<button id='aggiungi_rubrica' class='btn btn-primary'>Inserisci un cliente</button></center><br>";
 		  dettaglio += "<div class='line2'></div>";
 
 		  dettaglio += "</div>";
@@ -394,6 +410,7 @@ var CostiExtra = function(mainPreventivi){
 		servizi.anno_settimana = _this.anno_settimana;
 		servizi.data_consegna = _this.data_consegna;
 		servizi.nota = $("#nota").val();
+		servizi.check_hide_articles = ($("#check_hide_articles").is(":checked")?1:0);
 		servizi.vettore = $("#vettore").val();
 
 

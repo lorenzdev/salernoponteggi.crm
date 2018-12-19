@@ -222,9 +222,6 @@ class FunctionPreventivi{
  'L');
 
 
-
-
-
  		//$mpdf = new \Mpdf\Mpdf();
 
 		$mpdf_support->ignore_invalid_utf8 = true;
@@ -232,7 +229,7 @@ class FunctionPreventivi{
 		$body = file_get_contents("../htmls/templates/preventivi/body.html");
 		$doc = phpQuery::newDocument($body);
 
-		$doc->find("#agente")->html($preventivo["cliente"]["nome_agente_cliente"]." ".$preventivo["cliente"]["cognome_agente_cliente"]);
+		$doc->find("#agente")->html($preventivo["cliente"]["nome_agente_cliente"]." ".$preventivo["cliente"]["cognome_agente_cliente"]."<br>".$preventivo["cliente"]["cellulare_agente_cliente"]."<br>".$preventivo["cliente"]["email_agente_cliente"]);
 		$doc->find("#resp_area")->html($preventivo["cliente"]["capo_area_cliente"]);
 
 		$doc->find("#data")->html(date("d/m/Y",$preventivo["data"]));
@@ -289,23 +286,27 @@ class FunctionPreventivi{
 		//$doc->find("#footer_ragione_sociale")->html((string)$xml->cliente);
 		*/
 
-		// INSERIMENTO ARTICOLI
-		$html = "";
-		for($i = 0;$i < count($preventivo["carrello"]);$i++){
+		
+		if(!$preventivo["check_hide_articles"]){
 
-			$articolo = $preventivo["carrello"][$i]["descrizione"];
-			$tipologia = $articolo["articolo"]["tipologia"];
-
-			switch($tipologia){
-
-				case 'Ascensore': 		$this->ArticoloAscensore = new ArticoloAscensore();
-										$this->ArticoloAscensore->init($this);
-										$html .= $this->ArticoloAscensore->get($articolo, $i, $doc);
-										break;
-				default: break;
+			// INSERIMENTO ARTICOLI
+			$html = "";
+			for($i = 0;$i < count($preventivo["carrello"]);$i++){
+	
+				$articolo = $preventivo["carrello"][$i]["descrizione"];
+				$tipologia = $articolo["articolo"]["tipologia"];
+	
+				switch($tipologia){
+	
+					case 'Ascensore': 		$this->ArticoloAscensore = new ArticoloAscensore();
+											$this->ArticoloAscensore->init($this);
+											$html .= $this->ArticoloAscensore->get($articolo, $i, $doc);
+											break;
+					default: break;
+				}
+	
 			}
-
-		}
+		}else $doc->find("#TabellaArticoli")->remove();
 
 
 		$doc->find("#articoli")->html($html);
@@ -369,20 +370,9 @@ class FunctionPreventivi{
 		$mpdf->ignore_invalid_utf8 = true;
 
 
-		$modalita_pagamento = "";
-		switch($preventivo["cliente"]["modalita_pagamento_cliente"]){
-				case '5': $modalita_pagamento =  "NR. 1 R.B. 60 GG. F.M.";break;
-				case '11': $modalita_pagamento =  "NR. 1 R.B. A 90 GG. F.M.";break;
-				case '13': $modalita_pagamento =  "NR. 2 R. B. 30-60 GG. FM";break;
-				case '16': $modalita_pagamento =  "ALLA CONSEGNA CON VS. TITOLO";break;
-				case '32': $modalita_pagamento =  "30%+IVA ACC, RESTO TITOLO SCARI";break;
-				case '35': $modalita_pagamento =  "CON VS. ASS. AD AVVISO MERCE PRO";break;
-				case '64': $modalita_pagamento =  "BONIFICO BANCARIO A 60gg";break;
-				case '68': $modalita_pagamento =  "BONIFICO A 30gg";break;
-				default: $modalita_pagamento = $preventivo["cliente"]["mod_altro_pagamento_cliente"];
-		}
-
-
+		$modalita_pagamento = $preventivo["cliente"]["modalita_pagamento_cliente"];
+		if(!$modalita_pagamento)
+			$modalita_pagamento = $preventivo["cliente"]["mod_altro_pagamento_cliente"];
 
 		$doc_footer->find("#modalita_pagamento")->html($modalita_pagamento);
 		$doc_footer->find("#banca")->html($preventivo["cliente"]["banca_cliente"]);

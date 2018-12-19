@@ -176,6 +176,7 @@ class Preventivi{
 					preventivi.data_consegna as data_consegna,
 					preventivi.vettore as vettore,
 					preventivi.nota as nota,
+					preventivi.check_hide_articles as check_hide_articles,
 					REG.nome as regione_cantiere,
 					PROV.nome as provincia_cantiere,
 					PROV.sigla as provincia_sigla_cantiere,
@@ -235,7 +236,9 @@ class Preventivi{
 					CLIENTE.cellulare_r_cliente as cellulare_r_cliente,
 					CLIENTE.email_r_cliente as email_r_cliente,
 					CLIENTE.nome_agente_cliente as nome_agente,
-					CLIENTE.cognome_agente_cliente as cognome_agente
+					CLIENTE.cognome_agente_cliente as cognome_agente,
+					CLIENTE.email_agente_cliente as email_agente,
+					CLIENTE.cellulare_agente_cliente as cellulare_agente
 
 
 			FROM 	preventivi
@@ -298,7 +301,9 @@ class Preventivi{
 							clienti.cellulare_r as cellulare_r_cliente,
 							clienti.email_r as email_r_cliente,
 						 	AGENTE.nome_agente as nome_agente_cliente,
-							AGENTE.cognome_agente as cognome_agente_cliente
+							AGENTE.cognome_agente as cognome_agente_cliente,
+							AGENTE.email_agente as email_agente_cliente,
+							AGENTE.cellulare_agente as cellulare_agente_cliente
 
 					FROM 	clienti
 
@@ -324,9 +329,10 @@ class Preventivi{
 					LEFT JOIN(
 						SELECT	user.nome as nome_agente,
 								user.cognome as cognome_agente,
-								user.email as email
+								user.cellulare as cellulare_agente,
+								user.email as email_agente
 						FROM	user
-					) as AGENTE ON AGENTE.email = clienti.agente
+					) as AGENTE ON AGENTE.email_agente = clienti.agente
 
 				) as CLIENTE ON CLIENTE.id_cliente = preventivi.cliente
 
@@ -388,6 +394,8 @@ class Preventivi{
 				$objJSON["results"]["cliente"]['email_r_cliente'] = $rowValori['email_r_cliente'];
 				$objJSON["results"]["cliente"]['nome_agente_cliente'] = $rowValori['nome_agente'];
 				$objJSON["results"]["cliente"]['cognome_agente_cliente'] = $rowValori['cognome_agente'];
+				$objJSON["results"]["cliente"]['email_agente_cliente'] = $rowValori['email_agente'];
+				$objJSON["results"]["cliente"]['cellulare_agente_cliente'] = $rowValori['cellulare_agente'];
 
 				$objJSON["results"]["cliente"]['iban_cliente'] = $rowValori['iban_cliente'];
 				$objJSON["results"]["cliente"]['abi_cliente'] = $rowValori['abi_cliente'];
@@ -435,6 +443,7 @@ class Preventivi{
 				
 				$objJSON["results"]['vettore'] = $rowValori['vettore'];
 				$objJSON["results"]['nota'] = $rowValori['nota'];
+				$objJSON["results"]['check_hide_articles'] = $rowValori['check_hide_articles'];
 
 				$objJSON["results"]["cantiere"]['regione_cantiere'] = $rowValori['regione_cantiere'];
 				$objJSON["results"]["cantiere"]['provincia_cantiere'] = $rowValori['provincia_cantiere'];
@@ -1219,7 +1228,8 @@ class Preventivi{
 					totaleCostiMontaggio = '".$post["totaleCostiMontaggio"]."',
 					nettoAPagare = '".$post["preventivo"]["nettoAPagare"]."',
 					vettore = '".stripslashes($post["preventivo"]["vettore"])."',
-					nota = '".stripslashes($post["preventivo"]["nota"])."'
+					nota = '".stripslashes($post["preventivo"]["nota"])."',
+					check_hide_articles = '".$post["preventivo"]["check_hide_articles"]."'
 					WHERE data = '".$post["preventivo"]["data"]."'";
 
 

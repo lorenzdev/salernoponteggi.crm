@@ -37,6 +37,130 @@ class Clienti{
 		return json_encode($objJSON);
 	}
 
+
+	public function checkCliente($post){
+
+		$this->connect->connetti();
+		$query = "	SELECT 	clienti.ragione_sociale as ragione_sociale,
+							USER.nome as nome,
+							USER.cognome as cognome	
+			 		FROM 	clienti
+					
+					LEFT JOIN (
+						SELECT 	user.email as email,
+								user.nome as nome,
+								user.cognome as cognome
+						FROM 	user
+					) as USER ON USER.email = clienti.agente
+					 
+					WHERE 	(clienti.codice_fiscale='".$post["cliente"]['codice_fiscale']."' AND clienti.codice_fiscale <> '') OR 
+							(clienti.partita_iva='".$post["cliente"]['partita_iva']."' AND clienti.partita_iva <> '') OR 
+							(clienti.email = '".$post["cliente"]['email']."' AND clienti.email <> '') OR 
+							(clienti.email_pec = '".$post["cliente"]['email_pec']."' AND clienti.email_pec <> '') OR 
+							(clienti.iban = '".$post["cliente"]['iban']."' AND clienti.iban <> '')";
+							
+						
+		$result = $this->connect->myQuery($query);
+		$objJSON =  array();
+		if($this->connect->errno()){
+			$objJSON["success"] = false;
+			$objJSON["messageError"] = "Siamo spiacenti, si è verificato un errore";
+			$objJSON["mysql_error"] = $this->connect->error();
+		}else{
+			$objJSON["success"] = true;
+			$objJSON["results"] = array();
+			$cont = 0;
+			$ce = false;
+			while($rowValori = mysqli_fetch_array($result)){
+				$ce = true;
+				$tmp = array();
+				$tmp["ragione_sociale"] = $rowValori["ragione_sociale"];
+				$tmp["nome"] = $rowValori["nome"];
+				$tmp["cognome"] = $rowValori["cognome"];
+				$objJSON["results"][$cont] = $tmp;
+				$cont++;
+			}
+			
+			if($ce){
+				
+				$mail = new PHPMailer();
+				$mail->IsSMTP();
+				$mail->SMTPDebug  = 1;
+				$mail->CharSet = "UTF-8";
+				$mail->Host = "smtps.aruba.it";
+				$mail->setFrom("notifiche@salernoponteggi.com", "Salerno Ponteggi srl - ponteggi autosollevanti e sospesi, ascensori da cantiere");
+				$mail->IsHTML(true);
+				$mail->SMTPKeepAlive = true;
+				$mail->SMTPAuth = true;
+				$mail->Username = "notifiche@salernoponteggi.com";
+				$mail->Password = "SALPONT2018";
+				$mail->SMTPSecure = "ssl";
+				$mail->Port = 465;	
+					
+				///////////////////////////////////////////////////////////////////////////////////////
+				/////// EMAIL ALLA CASELLA EMAIL COMMERCIALE //////////////////////////////////////////
+				///////////////////////////////////////////////////////////////////////////////////////
+		
+				// oggetto
+				$oggetto =  "Conflitto nell'inserimento di un cliente in rubrica";
+
+				$messaggio = "
+				<html>
+				<head>
+				<title>Conflitto nell'inserimento di un cliente in rubrica</title>
+				</head>
+				<body>
+				<div style='font-family:courier;font-size:16px'>
+				<p>L'agente <b>".$this->cookie->nome." ".$this->cookie->cognome."</b> sta tentanto di inserire il cliente <b>".$post["cliente"]["ragione_sociale"]."</b> ma alcuni dati sono indentici al cliente <b>".$objJSON["results"][0]["ragione_sociale"]."</b> già presente nella banca dati.<br>
+				La procedura fallisce!<br>
+				L'agente dovrebbe verificare i campi email, email pec, partita iva e codice fiscale prima di ritentare.
+				</p>
+				</div>
+				<br><br><i>Questa email è stata generata automaticamente dai sistemi di Salerno Ponteggi srl. Per tanto ogni risposta a questa casella email sarà ignorata.</i><br><br>
+				<img src=\"http://www.salernoponteggi.com/areariservata/images/logo_email.jpg\"><br><br>
+				<b>Salerno Ponteggi srl</b><br>
+				SEDE LEGALE<br>
+				via Francesco Petrarca SNC 84098<br>
+				Pontecagnano Faiano (SA)<br>
+				tel. +39 089 382657/ +39 089 8426480<br><br>
+				
+				SEDE OPERATIVA<br>
+				via Picentino, 1 - 84131<br>
+				Salerno<br><br>
+				P.IVA 0571 19 20 651 <br>
+				R.E.A. 428797<br>
+				<a href='http://www.salernoponteggi.com'>www.salernoponteggi.com</a><br><br>
+				
+				ITALIA<br>
+				<a href='mailto:comerciale@salernoponteggi.com'>comerciale@salernoponteggi.com</a><br>
+				<a href='mailto:marketing@salernoponteggi.com'>marketing@salernoponteggi.com</a><br><br>
+				ESTERO<br>
+				<a href='mailto:export@salernoponteggi.com'>export@salernoponteggi.com</a><br><br>
+				
+				<span style='font-size:9px;'>CLAUSOLA DI RISERVATEZZA: Le informazioni contenute nel presente messaggio sono confidenziali e soggette alla legislazione vigente in materia di privacy e dirette solamente al destinatario.<br>
+L'accesso a questo messaggio da parte di chiunque altro non è autorizzato. Se non siete il destinatario corretto qualsiasi rivelazione, copia o distribuzione di questo messaggio o ogni azione e/o
+<br>
+omissione compiuta in relazione ad esso è proibita ed illegale. È da rilevare inoltre che l'attuale infrastruttura tecnologica non può garantire l'autenticità del mittente, né tanto meno l'integrità dei contenuti.</span>
+				</body>
+				</html>";
+		
+				$mail->AddAddress("lorenzo.dev@gmail.com");
+				$mail->Subject = $oggetto;
+				$mail->Body = $messaggio;
+				$mail->Send();
+				$mail->ClearAllRecipients();
+		
+		
+				/////////////////////////////////////////////////////////////////////////////////////////
+				/////////////////////////// EMAIL DI AVVENUTA ISCRIZIONE
+				/////////////////////////////////////////////////////////////////////////////////////////
+			}
+		}
+		
+		$this->connect->disconnetti();
+		return json_encode($objJSON);
+	}
+
 	public function getClienti($post){
 
 		$this->connect->connetti();

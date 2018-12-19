@@ -364,6 +364,8 @@ var Preventivi = function(content){
 
 				});
 
+
+				
 				function callBackRubrica(datoRubrica){
 
 					$.Log("DATI CLIENTE");
@@ -387,13 +389,13 @@ var Preventivi = function(content){
 					}
 
 
-                    $("#select_rubrica").trigger("change");
+                    //$("#select_rubrica").trigger("change");
 
 					_this.content.loader.remove();
 				}
 
 				jQuery.postJSON("Clienti", "getClienti", "private", {}, true, callBackRubrica);
-
+				
 
 				if(_this.preventivo.invio_solo_agente_capo_area){
 					$("#invio_solo_agente_capo_area").prop("checked", true);
@@ -521,6 +523,7 @@ var Preventivi = function(content){
 		_this.preventivo.anno_settimana = servizi.anno_settimana;
 		_this.preventivo.vettore = servizi.vettore;
 		_this.preventivo.nota = servizi.nota;
+		_this.preventivo.check_hide_articles = servizi.check_hide_articles;
 
 		var json = {
 			"preventivo": _this.preventivo,
@@ -827,6 +830,14 @@ var Preventivi = function(content){
 
 
 		$("#iva, #sconto").off().on("keyup", function(e){
+			
+			var sconto = Number($(this).val());
+			
+			if(sconto > Number(jQuery.getCookie("utente").sconto_massimo)){
+				$(this).val(Number(jQuery.getCookie("utente").sconto_massimo));
+				$("#errore_sconto").html("<br><div class=\"alert alert-warning\"><i class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\"></i> Attenzione! Non puoi inserire uno sconto maggiore di "+jQuery.getCookie("utente").sconto_massimo+"</div>");	
+			}
+			
 			_this.aggiornaTotalePreventivo();
 		});
 
@@ -874,6 +885,9 @@ var Preventivi = function(content){
 		$(".cantiere").off().on("keypress change", function(){
 			_this.aggiornaCantiere();
 		});
+
+
+
 
 		$(".comune").off().on("change", function(){
 			_this.aggiornaCantiere();
@@ -985,7 +999,7 @@ var Preventivi = function(content){
 
 
 		$.Log("ECCO IL PREVENTIVO");
-		$.Log(preventivo);
+		$.Log(_this.preventivo);
 
 		function callBack(dato){
 
