@@ -44,7 +44,7 @@ class Ascensore{
 
 		$modello = $post["modello"];
 
-		$query = "SELECT altezza, descrizione, prezzo FROM articolo_ha_componenti WHERE articolo_ha_componenti.articolo = '$modello'";
+		$query = "SELECT altezza, descrizione, prezzo FROM articolo_ha_componenti WHERE articolo_ha_componenti.articolo = '$modello' ORDER BY ABS(prezzo)";
 
 		//var_dump($query);
 

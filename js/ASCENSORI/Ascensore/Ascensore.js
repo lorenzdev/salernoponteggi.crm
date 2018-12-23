@@ -96,7 +96,9 @@ var Ascensore = function(content) {
 			var modello = $(this).val();
 			_this.cookie_carrello.articolo.modello = modello;
 			//_this.cleanOptions();
+			_this.initAltezze();
 			_this.getOptionals();
+			$("#select_altezza").trigger("change");
 		});
 
 		//LORENZO: applicato un off().on() all'evento change così da innescarlo una sola volta
@@ -191,15 +193,17 @@ var Ascensore = function(content) {
 
 			if (componenti.length > 0) {
 
+				$("#select_altezza").html("");
+
 				for (var i = 0; i < componenti.length; i++) {
 
 					if (i == 0) {
-						var tmp = '<option selected="selected">' + componenti[i].altezza + '</option>';
+						var tmp = '<option selected="selected">' + componenti[i].altezza + ' m</option>';
 						_this.cookie_carrello.articolo.prezzo_con_componenti = componenti[i].prezzo;
 						_this.cookie_carrello.prezzo_totale = _this.cookie_carrello.articolo.prezzo_con_componenti;
 						_this.cookie_carrello.articolo.componenti = componenti[i].descrizione;
 					} else {
-						var tmp = '<option>' + componenti[i].altezza + '</option>';
+						var tmp = '<option>' + componenti[i].altezza + ' m</option>';
 					}
 
 					var obj = $.parseHTML(tmp);
@@ -351,7 +355,8 @@ var Ascensore = function(content) {
 
 	_this.calcolaPrezzi = function() {
 		var quantita = Number($("#quantita").val());
-		var sconto = Number($("#sconto").val());
+		//var sconto = Number($("#sconto").val());
+		var sconto = 0;
 
 		if(quantita <= 0)
 			quantita = 1;
@@ -374,7 +379,7 @@ var Ascensore = function(content) {
 			if ($(this).prop("checked")) {
 				var prezzo = $(this).parent().data("prezzo");
 				$.Log(prezzo);
-				totale += parseFloat(prezzo);
+				totale += quantita*parseFloat(prezzo);
 			}
 		});
 
